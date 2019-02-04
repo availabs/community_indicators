@@ -76,6 +76,7 @@ const NON_ORDINAL_LEGEND = {
 
 class ParcelLayer extends MapLayer {
   onAdd(map) {
+
     super.onAdd(map)
 
     this.loading = true;

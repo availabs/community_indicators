@@ -23,14 +23,36 @@ const NON_ORDINAL_LEGEND = {
     vertical: false,
     range: QUANTILE_RANGE
 }
-const counties = ['36001','36083','36093','36091','36039','360021','36115','36113']
+const counties = ['36001','36083','36093','36091','36039','360021','36115','36113'];
+
 const year = [2014,2015,2016,2017,2018];
 class acsLayer extends MapLayer{
+
+    /* commented it to debug the below functions to understand Response code :0git
+    onAdd(map) {
+        console.log('in add hello')
+        super.onAdd(map)
+        this.loading = true;
+        console.log('loading...')
+        return falcorGraph.get(['acs','config'])
+            .then(res => {
+            console.log(typeof res)
+            //let censusConfig = ;
+            console.log('censusConfig')
+        })
+
+
+        /*
+        .then(res => {
+            var censusConfig = res.json.acs.config.key;
+            console.log('censusConfig', censusConfig)
+        })
+         */
 
     fetchData(){
         console.log('got to fetch data');
         return falcorGraph.get(
-            ['geo', counties, [2016], ['population']]
+            ['geo', counties, [this.filters.year.value], [this.filters.measures.value]]
         ).then(data => {
             console.log('fetch data',data);
             return data
@@ -54,7 +76,7 @@ class acsLayer extends MapLayer{
                 scale;
 
             counties.forEach(geoid => {
-                const value = graph[geoid]['2016']['population'];
+                const value = graph[geoid][this.filters.year.value][this.filters.measures.value];
             values[geoid] = value;
             domain.push(value);
             min = Math.min(min, value);
@@ -129,14 +151,22 @@ const buildingsLayer = new acsLayer("ACS Layer", {
     show: false
 },
 filters: {
+
             year: {
                 name: 'year',
                 type: 'dropdown',
                 domain: [2015,2016,2017],
                 value: 2017
-            }
+            },
+            measures: {
+                name: "measures",
+                type: "dropdown",
+                domain: ['population','poverty','non_english_speaking','under_5','over_64','vulnerable','population_change','poverty_change','non_english_speaking_change','under_5_change','over_64_change','vulnerable_change'],
+                value: "population"
+    }
 
 },
+
 actions: [
     {
         Icon: ArrowDown,
