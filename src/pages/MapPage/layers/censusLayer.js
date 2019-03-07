@@ -32,7 +32,6 @@ class CensusLayer extends MapLayer{
             this.filters.measures.domain = Object.keys(censusConfig).map(function(key){
                 return {name: censusConfig[key].name,value:key}
             })
-            this.filters.BlockGroups.domain = this.censusBlockGroups
             map.setFilter('density_layer',['in','GEOID',...this.censusBlockGroups])
             return this.fetchData()
             })
@@ -101,12 +100,6 @@ const censusLayer = new CensusLayer("Census Layer", {
                 type: 'dropdown',
                 domain: [2014, 2015, 2016, 2017],
                 value: 2014
-            },
-            BlockGroups:{
-                name: 'BlockGroups',
-                type: 'dropdown',
-                domain: [],
-                value: '360010137054'
             },
             measures: {
                 name: "measures",
