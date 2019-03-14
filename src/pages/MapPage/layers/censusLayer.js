@@ -13,7 +13,13 @@ import {
 import MapLayer from "AvlMap/MapLayer"
 import {falcorGraph} from "store/falcorGraph";
 import ColorRanges from 'constants/color-ranges'
+/*
+Note: for the county 36039-
+    The measure Median Age by sex (B01002) doesn`t work
+    for the blockgroup (index = 33) as one of the submeasures is negative
+    and the step expression needs the values to be in ascending order as range
 
+ */
 const counties = ['36001','36083','36093','36091','36039','36021','36115','36113'];
 const year = [2016,2017,2018];
 let blockGroups = []
@@ -22,7 +28,7 @@ class CensusLayer extends MapLayer{
         console.log('in add')
         super.onAdd(map)
         this.loading = true;
-        return falcorGraph.get(['geo',['36001','36083','36093','36091'],'blockgroup'],['acs','config'])
+        return falcorGraph.get(['geo',['36001','36083','36093'],'blockgroup'],['acs','config'])
             .then(res => {
                 Object.values(res.json.geo).forEach(function(item){
                      if (item.blockgroup !== undefined){
@@ -103,7 +109,7 @@ class CensusLayer extends MapLayer{
         }
         //---------------------If there are multiple subvariables------------------------------------
         else{
-            //console.log('subvars',subvars)
+            console.log('subvars',subvars)
             let subvarColors = ColorRanges[subvars.length+1].filter(d => d.name === 'Set3')[0].colors
             let trans_color = '#ffffff'
             let paintInfo =[
@@ -117,13 +123,12 @@ class CensusLayer extends MapLayer{
                 }
             })
             this.censusBlockGroups.forEach((blockGroup,index) => {
-                //if(index < 100){
+                //if(index === 33){
                 let subVariable = graph[blockGroup][this.filters.year.value][this.filters.measures.value]
                 console.log('subVariable', subVariable)
                 let stepper = [["step",
                     ["get", "i"],
                     subvarColors[0]]]
-
                 let sum = 0
                 subvars.forEach(function(subvar, i) {
                 let value = parseFloat(subVariable[subvar])
@@ -208,7 +213,7 @@ const censusLayer = new CensusLayer("Census Layer", {
                         2
                     ],
                     'circle-opacity': 0.8,
-                    'circle-color': ['string', '#bab']
+                    'circle-color': ['string', '#3455AB']
                 }
             },
             {
