@@ -19,16 +19,27 @@ Note: for the county 36039-
     for the blockgroup (index = 33) as one of the submeasures is negative
     and the step expression needs the values to be in ascending order as range
 
+    counties | Blockgroups length
+   - 36001   | 235
+   - 36083   | 125
+   - 36093   | 138
+   - 36091   | 139
+   - 36039   | 43
+   - 36021   | 61
+   - 36115   | 46
+   - 36113   | 47
+
  */
 const counties = ['36001','36083','36093','36091','36039','36021','36115','36113'];
 const year = [2016,2017,2018];
 let blockGroups = []
+const requests = [],
+    num = 50;
 class CensusLayer extends MapLayer{
     onAdd(map){
-        console.log('in add')
         super.onAdd(map)
         this.loading = true;
-        return falcorGraph.get(['geo',['36001','36083','36093'],'blockgroup'],['acs','config'])
+        return falcorGraph.get(['geo',counties,'blockgroup'],['acs','config'])
             .then(res => {
                 Object.values(res.json.geo).forEach(function(item){
                      if (item.blockgroup !== undefined){
@@ -49,23 +60,35 @@ class CensusLayer extends MapLayer{
     }
 
     fetchData(){
-        console.log('in fetch')
-        return falcorGraph.get(['acs',this.censusBlockGroups,[this.filters.year.value],[this.filters.measures.value]])
-            .then(data => {
-                return data
-            })
+        const requests = [],
+            num = 150;
+        for (let i = 0; i < this.censusBlockGroups.length; i += num) {
+            requests.push(this.censusBlockGroups.slice(i, i + num))
+        }
+        return requests.reduce((a, c) => a.then(() => falcorGraph.get(['acs', c, [this.filters.year.value], [this.filters.measures.value]])), Promise.resolve())
 
     }
 
-    receiveData(map,data){
-        console.log('in receive data')
-        let graph = data.json.acs,
+    receiveData(map,result){
+        let graph = falcorGraph.getCache(),
             domain = [];
+        let subvars = []
+        let year = this.filters.year.value
+        let measure = this.filters.measures.value
+        Object.values(graph.acs).forEach(function(value,i){
+            if(i > 0){
+                Object.values(value[year]).forEach(function(acsvar,i){
+                    if (Object.keys(acsvar.value)[0].slice(0,-5) === measure){
+                        subvars = Object.keys(acsvar.value)
+                    }
+                })
+            }
+        })
         let config = this.acsConfig
         let legend_domain = []
         let colors = ['#8dd3c7']
-        let subvars = Object.keys(graph[this.censusBlockGroups[0]][this.filters.year.value][this.filters.measures.value])
-        //------------------- If there is only one sub variable----------------------------------------
+
+            //------------------- If there is only one sub variable----------------------------------------
         if (subvars.length === 1){
             let subvarColors = 'rgba(0,0,0,0)'
             let paintInfo =[
@@ -80,14 +103,13 @@ class CensusLayer extends MapLayer{
             })
             this.censusBlockGroups.forEach((blockGroup,index) => {
                 //if(index < 100){
-                let subVariable = graph[blockGroup][this.filters.year.value][this.filters.measures.value]
-                console.log('subVariable', subVariable)
+                let subVariable = graph.acs[blockGroup][this.filters.year.value][this.filters.measures.value]
                 let stepper = [["step",
                     ["get", "i"],
                     '#8dd3c7']]
                 let sum = 0
                 subvars.forEach(function(subvar, i) {
-                    let value = parseFloat(subVariable[subvar])
+                    let value = parseFloat(subVariable.value[subvar])
                     if(value !== 0){
                         stepper[0].push(
                             sum += value,
@@ -102,14 +124,10 @@ class CensusLayer extends MapLayer{
             paintInfo.push("rgba(0,0,0,0)")
             this.legend.range = colors;
             this.legend.domain = legend_domain;
-            console.log('paintInfo',JSON.stringify(paintInfo))
-            //console.log('legend.domain',this.legend.domain)
-            //console.log('legend.range', this.legend.range)
             map.setPaintProperty('density_layer', 'circle-color', paintInfo)
         }
         //---------------------If there are multiple subvariables------------------------------------
         else{
-            console.log('subvars',subvars)
             let subvarColors = ColorRanges[subvars.length+1].filter(d => d.name === 'Set3')[0].colors
             let trans_color = '#ffffff'
             let paintInfo =[
@@ -124,14 +142,13 @@ class CensusLayer extends MapLayer{
             })
             this.censusBlockGroups.forEach((blockGroup,index) => {
                 //if(index === 33){
-                let subVariable = graph[blockGroup][this.filters.year.value][this.filters.measures.value]
-                console.log('subVariable', subVariable)
+                let subVariable = graph.acs[blockGroup][this.filters.year.value][this.filters.measures.value]
                 let stepper = [["step",
                     ["get", "i"],
                     subvarColors[0]]]
                 let sum = 0
                 subvars.forEach(function(subvar, i) {
-                let value = parseFloat(subVariable[subvar])
+                let value = parseFloat(subVariable.value[subvar])
                     if(value !== 0){
                         stepper[0].push(
                             sum += value,
@@ -151,7 +168,6 @@ class CensusLayer extends MapLayer{
                 }
                 else{
                     stepper[0].push(0,'#ffffff')
-                    console.log('stepper',stepper)
                     paintInfo.push([blockGroup])
                     paintInfo.push(...stepper)
                 }
@@ -166,9 +182,6 @@ class CensusLayer extends MapLayer{
             })
             this.legend.range = colors;
             this.legend.domain = legend_domain;
-            console.log('paintInfo',JSON.stringify(paintInfo))
-            //console.log('legend.domain',this.legend.domain)
-            //console.log('legend.range', this.legend.range)
             map.setPaintProperty('density_layer', 'circle-color', paintInfo)
         }
 
