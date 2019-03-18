@@ -50,7 +50,7 @@ class acsLayer extends MapLayer{
 
                 this.acsConfig = censusConfig
                 this.filters.geolevel.domain = ['counties','cousubs','tracts']
-                //console.log('I get here')
+                this.component.forceUpdate()
                 return this.fetchData()
                     .then(data => this.receiveData(map, data))
                     .then(() => this.loading = false)
@@ -59,18 +59,15 @@ class acsLayer extends MapLayer{
     }
 
     fetchData(){
-        console.log('fetch data')
         return falcorGraph.get(
             ['acs',counties,[this.filters.year.value],[this.filters.measures.value]],
             ['geo',counties,[this.filters.geolevel.value]]
         ).then(data => {
-            console.log('first data', data)
             if (this.filters.geolevel.value === 'counties') {
-                console.log('gonna return data')
                 return data
             }
 
-        else if (this.filters.geolevel.value === 'cousubs') {
+            else if (this.filters.geolevel.value === 'cousubs') {
             Object.values(data.json.geo).forEach(function (acsGeoLevel) {
                 countyCousubs.push(acsGeoLevel.cousubs)
 
@@ -106,7 +103,6 @@ class acsLayer extends MapLayer{
 
 
     receiveData(map,data){
-        console.log('recieve data called', data)
         const geolevel = this.filters.geolevel.value;
         let graph = data.json.acs,
 
@@ -199,7 +195,7 @@ class acsLayer extends MapLayer{
 }
 
 const buildingsLayer = new acsLayer("ACS Layer", {
-        active: true,
+        active: false,
         loading: true,
         sources: [
             { id: "counties",
