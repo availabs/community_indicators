@@ -136,6 +136,7 @@ class CensusBarChart extends React.Component {
                 obj2[Object.keys(each_val)] = parseFloat(Object.values(each_val));
             }
         })
+
         var obj1_percent =[] // state
         obj1_percent.push({
             "Total Living with two parents" : (parseFloat(obj1[Object.keys(obj1)[1]])),
@@ -145,6 +146,7 @@ class CensusBarChart extends React.Component {
             "Total Living with mother": (parseFloat(obj1[Object.keys(obj1)[3]])),
             "Living with mother" : ((parseFloat(obj1[Object.keys(obj1)[3]])/parseFloat(obj1[Object.keys(obj1)[0]]) * 100).toFixed(2)),
         })
+
         var obj2_percent = [] // county
         obj2_percent.push({
             "Total Living with two parents": (parseFloat(obj2[Object.keys(obj2)[1]])),
@@ -154,7 +156,7 @@ class CensusBarChart extends React.Component {
             "Total Living with mother" : (parseFloat(obj2[Object.keys(obj2)[3]])),
             "Living with mother" : ((parseFloat(obj2[Object.keys(obj2)[3]])/parseFloat(obj2[Object.keys(obj2)[0]]) * 100).toFixed(2))
         })
-        var tier = Number
+
         Object.values(obj1_percent).forEach(function(obj1,i){
                 compareData.push({
                     "Category" : Object.keys(obj1)[1],
@@ -188,26 +190,87 @@ class CensusBarChart extends React.Component {
         return compareData
     }
 
+    languageData(response){
+        response = this.props.falcor.getCache()
+        let geoid = this.props.geoids
+        let langData_vw = [] //Speak English very well
+        let langData_nvw = []// Speak English less than very well
+        let langData = []
+        let responseData_language = {}
+        let cenKey_language = this.props.censusKey[1]
+        let censusConfig = {}
+        Object.values(response).forEach(function(value,i){
+            censusConfig = value['config'].value
+            Object.keys(value[geoid]['2014']).forEach(function(each_key,i){
+                if (each_key === cenKey_language){
+                    responseData_language = value[geoid]['2014'][each_key].value
+
+                }
+            })
+        })
+
+        Object.keys(responseData_language).forEach(function(language,i){
+            Object.keys(censusConfig).forEach(function(config,i){
+                if (language.slice(0,-5) === config){
+                    Object.values(censusConfig[config].variables).forEach(function(subvar,i){
+                        if (language === subvar.value){
+                            if(subvar.name.includes('Speak English very well')){
+                                langData_vw.push({
+                                    "language":subvar.name.split('Speak')[0],
+                                    "Speakers":responseData_language[language]
+                                })
+                            }
+                            else if (subvar.name.includes('Speak English Less than very well')) {
+                                langData_nvw.push({
+                                    "language": subvar.name.split('Speak')[0],
+                                    "Speakers": responseData_language[language]
+                                })
+                            }
+                        }
+                    })
+                }
+            })
+        })
+        let subvarColors = ['#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C','#1AA3CB','#790576',
+            '#F7C9B9','#F4F3AF' , '#C2ECF3','#F4AD4D','#2AF70E','#D8AFE7','#88DE73' ,'#718CD1','#EA6A7D',
+            '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C'
+        ]
+        Object.values(langData_nvw).forEach(function(nvw,i){
+            //if (i < 2){
+            if(nvw.language === langData_vw[i].language){
+                langData.push({
+                    "language" : nvw.language,
+                    "Speakers" : parseFloat(nvw.Speakers) + parseFloat(langData_vw[i].Speakers),
+                    "Percent" : parseFloat((parseFloat(nvw.Speakers) / (parseFloat(langData_vw[i].Speakers) + parseFloat(nvw.Speakers)) * 100).toFixed(2)),
+                    "language_color" : subvarColors[i]
+                })
+            }
+            //}
+
+        })
+        langData.sort(function(a,b){
+            var a1 = parseFloat(a.Percent)
+            var b1 = parseFloat(b.Percent)
+            return b1 - a1
+        })
+        return langData
+    }
+
     transformData(response) {
         console.log('in transform data')
         let year = parseFloat(this.state.value)
         response = this.props.falcor.getCache()
-        console.log('response',response)
         let geoid = this.props.geoids
         let cenKey_age = this.props.censusKey[0]
-        let cenKey_language = this.props.censusKey[1]
         let censusConfig = {}
         let responseData_age = {}
-        let responseData_language = {}
         let axisData_m = []
         let axisData_f =[]
         let axisData =[]
         let stackData_m = []
         let stackData_f = []
         let stackData = []
-        let langData_vw = [] //Speak English very well
-        let langData_nvw = []// Speak English less than very well
-        let langData = []
+
         let obj ={}
         if (year === 2014){
             Object.values(response).forEach(function(value,i){
@@ -318,73 +381,17 @@ class CensusBarChart extends React.Component {
             obj = {...stackData_m[i],...stack_f}
             stackData.push(obj)
         })
-        // ---------------------- For the language Graph---------------------------------------------------
-        Object.values(response).forEach(function(value,i){
-            Object.keys(value[geoid]['2014']).forEach(function(each_key,i){
-                if (each_key === cenKey_language){
-                    responseData_language = value[geoid]['2014'][each_key].value
-                }
-            })
-        })
 
-        Object.keys(responseData_language).forEach(function(language,i){
-            Object.keys(censusConfig).forEach(function(config,i){
-                if (language.slice(0,-5) === config){
-                    Object.values(censusConfig[config].variables).forEach(function(subvar,i){
-                        if (language === subvar.value){
-                            if(subvar.name.includes('Speak English very well')){
-                                langData_vw.push({
-                                    "language":subvar.name.split('Speak')[0],
-                                    "Speakers":responseData_language[language]
-                                })
-                            }
-                            else if (subvar.name.includes('Speak English Less than very well')) {
-                                langData_nvw.push({
-                                    "language": subvar.name.split('Speak')[0],
-                                    "Speakers": responseData_language[language]
-                                })
-                            }
-                        }
-                    })
-                }
-            })
-        })
-        let subvarColors = ['#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C','#1AA3CB','#790576',
-            '#F7C9B9','#F4F3AF' , '#C2ECF3','#F4AD4D','#2AF70E','#D8AFE7','#88DE73' ,'#718CD1','#EA6A7D',
-            '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C'
-        ]
-        Object.values(langData_nvw).forEach(function(nvw,i){
-            //if (i < 2){
-            if(nvw.language === langData_vw[i].language){
-                langData.push({
-                    "language" : nvw.language,
-                    "Speakers" : parseFloat(nvw.Speakers) + parseFloat(langData_vw[i].Speakers),
-                    "Percent" : parseFloat((parseFloat(nvw.Speakers) / (parseFloat(langData_vw[i].Speakers) + parseFloat(nvw.Speakers)) * 100).toFixed(2)),
-                    "language_color" : subvarColors[i]
-                })
-            }
-            //}
-
-        })
-        langData.sort(function(a,b){
-            var a1 = parseFloat(a.Percent)
-            var b1 = parseFloat(b.Percent)
-            return b1 - a1
-        })
-
-        return [axisData,stackData,langData]
+        return [axisData,stackData]
     }
 
 
     render () {
         console.log('in render')
-        {/*let graphData1 = this.transformData(this.props.graph.acs)[0]*/}
-        {/*console.log('graphData2',graphData2)*/}
-        {/*console.log('graphData3',graphData3)*/}
-        if (this.props.compareGeoid.length === 0 ){
+        if (this.props.compareGeoid.length === 0){
             let graphData2 = this.transformData(this.props.graph.acs)[1]
-            let graphData3 = this.transformData(this.props.graph.acs)[2]
-            return (
+            let graphData3 = this.languageData(this.props.graph.acs)
+            return(
                 <div>
                 <Bar
             data={graphData2}
@@ -488,7 +495,9 @@ class CensusBarChart extends React.Component {
             step="1"
                 />
                 </label>
-                <Bar
+
+
+            <Bar
             data={graphData3}
             width={900}
             height={500}
@@ -578,11 +587,11 @@ class CensusBarChart extends React.Component {
             />
             </div>
 
-        )
+        );
         }
         else{
             let graphData4 = this.compareData(this.props.graph.acs)
-            return (
+            return(
             <div>
             <Bar
             data={graphData4}
@@ -663,11 +672,10 @@ class CensusBarChart extends React.Component {
             </text>
             )}
             />
-            </div>
+                </div>
             )
         }
-
-    }
+        }
     static defaultProps = {
         censusKey: ['B01001','B16001','B23008'],
         geoids: ['36001'],
@@ -687,258 +695,7 @@ const mapStateToProps = state => {
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusBarChart))
 
 /*
-{/*
-                <div style = {{height : 200}}>
-        {
-        } <BarChart data={graphData} />
-            {JSON.stringify(this.props.graph)}
-         }
-        </div>
 
+change the cenKey_parent in compareData if you include censusKey as attribute in index
 
-<ResponsiveBar
-                data = {graphData1}
-                indexBy ="age"
-                keys = {["Male","Female"]}
-                margin={{
-                    "top": 50,
-                        "right": 130,
-                        "bottom": 50,
-                        "left": 60
-                }}
-                padding={0.3}
-                layout = "horizontal"
-                groupMode="grouped"
-                colors="nivo"
-                colorBy="id"
-                borderColor="inherit:darker(1.6)"
-                axisBottom={{
-                    "orient": "bottom",
-                        "tickSize": 5,
-                        "tickPadding": 5,
-                        "tickRotation": 0,
-                        "legendPosition": "center",
-                        "legendOffset": 36
-                }}
-                axisLeft={{
-                    "orient": "left",
-                        "tickSize": 5,
-                        "tickPadding": 5,
-                        "tickRotation": 0,
-                        "legendPosition": "center",
-                        "legendOffset": -40
-                }}
-                labelSkipWidth={10}
-                labelSkipHeight={12}
-                labelTextColor="inherit:darker(1.6)"
-                animate={true}
-                motionStiffness={90}
-                motionDamping={15}
-                tooltip={function(e){
-                        console.log('bar e', e)
-                }}
-                legends={[
-                        {
-                            "dataFrom": "keys",
-                            "anchor": "bottom-right",
-                            "direction": "column",
-                            "translateX": 120,
-                            "itemWidth": 100,
-                            "itemHeight": 100,
-                            "itemsSpacing": 2,
-                            "symbolSize": 20,
-                            "effects": [
-                                {
-                                    "on": "hover",
-                                    "style": {
-                                        "itemOpacity": 1
-                                    }
-                                }
-                            ]
-                        }
-                ]}
-                theme={{
-                    "tooltip": {
-                        "container": {
-                            "fontSize": "14px",
-                                "background": "#ffffff"
-                        }
-                    },
-                    "labels": {
-                        "textColor": "#555"
-                    }
-                }}
-            />
-
-let sampleData = [
-            {
-                "age" : 'Two parents',
-                "county": 5,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "NY": 10,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '5-9',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '10-14',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '15-17',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '18-19',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '20',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '21',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '22-24',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '22-24',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '25-29',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '30-34',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '35-39',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '40-44',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '45-49',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '50-54',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '55-59',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '60-61',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '62-64',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '65-66',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '67-69',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '70-74',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '75-79',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '80-84',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-            {
-                "age" : '>85',
-                "Male": 0,
-                "MaleColor1": "rgb(82, 65, 119)",
-                "Female": 0,
-                "FemaleColor2": "rgb(229, 148, 93)"
-            },
-
-        ]
  */
