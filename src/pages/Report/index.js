@@ -11,11 +11,10 @@ class Home extends Component {
             Report
             Test 123
             <div style = {{height : 10000}}>
-            <CensusBarChart censusKey ={['B01001','B16001']}/>
-            <CensusBarChart geoid={['36001']} compareGeoid ={['36']} />
-
+            <CensusBarChart geoid={['36001']} compareGeoid ={['36']}/>
+            {/* <CensusBarChart geoid={['36001']} compareGeoid ={['36']}/>
+            <CensusBarChart />*/}
             </div>
-            {/*<CensusBarChart censusKey='B03046' />  geoid={['36001']} censusKey = {['B01001','B16001']}*/}
         </Element>
         </div>
     )
@@ -38,3 +37,4 @@ export default {
     auth: false,
     component: Home
 }
+
