@@ -4,8 +4,7 @@
 
 // import PublicPlan from './pages/PublicPlan'
 import MapPage from "./pages/MapPage"
-
-
+import Report from "./pages/Report"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 
@@ -17,6 +16,7 @@ import NoMatch from './pages/404.js'
 
 const routes = [
   MapPage,
+  Report,
   Login,
   Signup,
   NoMatch

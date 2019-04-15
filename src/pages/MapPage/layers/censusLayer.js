@@ -31,7 +31,6 @@ Note: for the county 36039-
 
  */
 const counties = ['36001','36083','36093','36091','36039','36021','36115','36113'];
-const year = [2016,2017,2018];
 let blockGroups = []
 const requests = [],
     num = 50;
@@ -65,7 +64,17 @@ class CensusLayer extends MapLayer{
         for (let i = 0; i < this.censusBlockGroups.length; i += num) {
             requests.push(this.censusBlockGroups.slice(i, i + num))
         }
-        return requests.reduce((a, c) => a.then(() => falcorGraph.get(['acs', c, [this.filters.year.value], [this.filters.measures.value]])), Promise.resolve())
+        let census_route = []
+        let census_config = this.acsConfig
+        let census_topvar = this.filters.measures.value
+        Object.keys(this.acsConfig).forEach(function(census_var,i){
+            if(census_topvar === census_var){
+                census_config[census_var].variables.forEach(function(census_subvar,i){
+                    census_route.push(census_subvar.value)
+                })
+            }
+        })
+        return requests.reduce((a, c) => a.then(() => falcorGraph.get(['acs', c, [this.filters.year.value], [...census_route]])), Promise.resolve())
 
     }
 
@@ -77,17 +86,20 @@ class CensusLayer extends MapLayer{
         let measure = this.filters.measures.value
         Object.values(graph.acs).forEach(function(value,i){
             if(i > 0){
-                Object.values(value[year]).forEach(function(acsvar,i){
-                    if (Object.keys(acsvar.value)[0].slice(0,-5) === measure){
-                        subvars = Object.keys(acsvar.value)
+                Object.keys(value[year]).forEach(function(acsvar,i){
+                    if (acsvar.slice(0,-5) === measure){
+                    subvars.push(acsvar)
                     }
                 })
             }
         })
+        subvars = subvars.filter(function(elem, index, self) {
+            return index === self.indexOf(elem);
+        })
+
         let config = this.acsConfig
         let legend_domain = []
         let colors = ['#8dd3c7']
-
             //------------------- If there is only one sub variable----------------------------------------
         if (subvars.length === 1){
             let subvarColors = 'rgba(0,0,0,0)'
@@ -103,13 +115,13 @@ class CensusLayer extends MapLayer{
             })
             this.censusBlockGroups.forEach((blockGroup,index) => {
                 //if(index < 100){
-                let subVariable = graph.acs[blockGroup][this.filters.year.value][this.filters.measures.value]
+                let subVariable = graph.acs[blockGroup][this.filters.year.value]
                 let stepper = [["step",
                     ["get", "i"],
                     '#8dd3c7']]
                 let sum = 0
                 subvars.forEach(function(subvar, i) {
-                    let value = parseFloat(subVariable.value[subvar])
+                    let value = parseFloat(subVariable[subvar].value)
                     if(value !== 0){
                         stepper[0].push(
                             sum += value,
@@ -128,6 +140,7 @@ class CensusLayer extends MapLayer{
         }
         //---------------------If there are multiple subvariables------------------------------------
         else{
+
             let subvarColors = ColorRanges[subvars.length+1].filter(d => d.name === 'Set3')[0].colors
             let trans_color = '#ffffff'
             let paintInfo =[
@@ -142,13 +155,13 @@ class CensusLayer extends MapLayer{
             })
             this.censusBlockGroups.forEach((blockGroup,index) => {
                 //if(index === 33){
-                let subVariable = graph.acs[blockGroup][this.filters.year.value][this.filters.measures.value]
+                let subVariable = graph.acs[blockGroup][this.filters.year.value]
                 let stepper = [["step",
                     ["get", "i"],
                     subvarColors[0]]]
                 let sum = 0
                 subvars.forEach(function(subvar, i) {
-                let value = parseFloat(subVariable.value[subvar])
+                let value = parseFloat(subVariable[subvar].value)
                     if(value !== 0){
                         stepper[0].push(
                             sum += value,
@@ -190,7 +203,7 @@ class CensusLayer extends MapLayer{
 }
 
 const censusLayer = new CensusLayer("Census Layer", {
-        active: true,
+        active: true, //make both active and loading true
         loading: true,
         sources: [
             { id: "dot_density",
@@ -254,15 +267,20 @@ const censusLayer = new CensusLayer("Census Layer", {
                 let popoverData = []
                 Object.values(graph).forEach(function(item){
                     Object.keys(item).forEach(function(acsVar){
-                        if(acsVar === measure){
-                            subVar_values = item[acsVar].value
-                            acs_config.value[acsVar].variables.forEach(function(subvar){
-                                subVarNames.push([subvar.name])
-                                subVarValues.push([subVar_values[subvar.value]])
-                            })
+                        if(acsVar.slice(0,-5) === measure){
+                        subVar_values = item[acsVar].value
+                        acs_config.value[acsVar.slice(0,-5)].variables.forEach(function(subvar){
+                            subVarNames.push(subvar.name)
+                            subVarValues.push(subVar_values)
+                        })
                         }
-
                     })
+                })
+                subVarNames = subVarNames.filter(function(elem, index, self) {
+                    return index === self.indexOf(elem);
+                })
+                subVarValues = subVarValues.filter(function(elem, index, self) {
+                    return index === self.indexOf(elem);
                 })
                 popoverData = [feature.properties.GEOID]
                 subVarNames.forEach(function(name,i){
@@ -289,8 +307,8 @@ const censusLayer = new CensusLayer("Census Layer", {
             year: {
                 name: 'year',
                 type: 'dropdown',
-                domain: [2014, 2015, 2016, 2017],
-                value: 2014
+                domain: [2017,2016,2015,2014], // not yet working for 2014,2015
+                value: 2017
             },
             measures: {
                 name: "measures",

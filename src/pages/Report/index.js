@@ -11,10 +11,10 @@ class Home extends Component {
             Report
             Test 123
             <div style = {{height : 10000}}>
+            <CensusBarChart geoid={['36001']} />
             <CensusBarChart geoid={['36001']} compareGeoid ={['36']}/>
-            {/* <CensusBarChart geoid={['36001']} compareGeoid ={['36']}/>
-            <CensusBarChart />*/}
             </div>
+        {/* */}
         </Element>
         </div>
     )

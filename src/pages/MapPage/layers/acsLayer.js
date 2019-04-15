@@ -29,6 +29,7 @@ let countyCousubs =[]
 let countyTracts =[]
 let acsCensusCousubs =[]
 let acsCensusTracts =[]
+
 class acsLayer extends MapLayer{
 
 
@@ -59,8 +60,22 @@ class acsLayer extends MapLayer{
     }
 
     fetchData(){
+        /*
+        need to fetch the subvars of the measure here in an array
+        that can be done by fetching them from the config
+         */
+        let census_route = []
+        let census_config = this.acsConfig
+        let census_topvar = this.filters.measures.value
+        Object.keys(this.acsConfig).forEach(function(census_var,i){
+            if(census_topvar === census_var){
+                census_config[census_var].variables.forEach(function(census_subvar,i){
+                    census_route.push(census_subvar.value)
+                })
+            }
+        })
         return falcorGraph.get(
-            ['acs',counties,[this.filters.year.value],[this.filters.measures.value]],
+            ['acs',counties,[this.filters.year.value],[...census_route]],
             ['geo',counties,[this.filters.geolevel.value]]
         ).then(data => {
             if (this.filters.geolevel.value === 'counties') {
@@ -85,7 +100,7 @@ class acsLayer extends MapLayer{
 
         if(this.filters.geolevel.value === 'cousubs'){
             return falcorGraph.get(
-                ['acs', acsCensusCousubs, [this.filters.year.value], [this.filters.measures.value]]
+                ['acs', acsCensusCousubs, [this.filters.year.value], [...census_route]]
             ).then(res => {
             return res
         })
@@ -93,7 +108,7 @@ class acsLayer extends MapLayer{
 
         if (this.filters.geolevel.value === 'tracts') {
             return falcorGraph.get(
-                ['acs', acsCensusTracts, [this.filters.year.value], [this.filters.measures.value]]
+                ['acs', acsCensusTracts, [this.filters.year.value], [...census_route]]
             ).then(res => {
                 return res
             })
@@ -116,7 +131,7 @@ class acsLayer extends MapLayer{
         scale;
         if(geolevel === 'counties'){
             counties.forEach(geoid => {
-                let acsVar = graph[geoid][this.filters.year.value][this.filters.measures.value]
+                let acsVar = graph[geoid][this.filters.year.value]
                 let subVar = [this.filters.submeasure.value]
                 let value = acsVar[subVar]
                 domain.push(value);
@@ -134,7 +149,7 @@ class acsLayer extends MapLayer{
         if(geolevel === 'cousubs'){
             acsCensusCousubs.forEach(cousub => {
                 if (cousub !== undefined){
-                let acsVar = graph[cousub][this.filters.year.value][this.filters.measures.value]
+                let acsVar = graph[cousub][this.filters.year.value]
                 let subVar = [this.filters.submeasure.value]
                 let value = acsVar[subVar]
                 domain.push(value);
@@ -152,7 +167,7 @@ class acsLayer extends MapLayer{
         if (geolevel === 'tracts'){
             acsCensusTracts.forEach(tract => {
                 if (tract !== undefined){
-                let acsVar = graph[tract][this.filters.year.value][this.filters.measures.value]
+                let acsVar = graph[tract][this.filters.year.value]
                 let subVar = [this.filters.submeasure.value]
                 let value = acsVar[subVar]
                 domain.push(value);
@@ -288,8 +303,6 @@ filters: {
                     onChange: (map, layer, value) => {
                     Object.keys(layer.acsConfig).forEach(function(item){
                         if (value === item){
-
-
                             layer.filters.submeasure = {
                                     name:'submeasure',
                                     type: 'dropdown',

@@ -14,7 +14,12 @@ class CensusBarChart extends React.Component {
         super(props);
 
         this.state = {
-            value: 2014
+            value: 2014,
+            temp:2014,
+            graphData1: [],
+            graphData2: [],
+            graphData3: [],
+            graphData4: []
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -23,403 +28,255 @@ class CensusBarChart extends React.Component {
     }
     fetchFalcorDeps() {
         let year = [2010,2011,2012,2013,2014,2015,2016]
+        let census_var = this.props.censusKey
+        let censusConfig ={}
+        let census_subvars = []
+        return falcorGraph.get(['acs','config'])
+            .then(res=> {
+            Object.values(res.json.acs).forEach(function (config, i) {
+                censusConfig = config
+            })
+
+            Object.keys(censusConfig).forEach(function (censvar, i) {
+                if (census_var.includes(censvar)) {
+                    Object.values(censusConfig[censvar].variables).forEach(function (subvar, i) {
+                        census_subvars.push(subvar.value)
+                    })
+                }
+            })
+            return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],year,[...census_subvars]],['acs','config'])
+                .then(response =>{
+                    return response
+            })
+        })
+
         //return this.props.censusKey.reduce((a, c) => a.then(() => falcorGraph.get(['acs',[...this.props.geoids,...this.props.compareGeoid],year,c],['acs','config'])), Promise.resolve())
-        return this.props.censusKey.reduce((a,c) => a.then(() => falcorGraph.get(['acs',[...this.props.geoids,...this.props.compareGeoid],year,c],['acs','config'])),Promise.resolve())
+        //return this.props.censusKey.reduce((a,c) => a.then(() => falcorGraph.get(['acs',[...this.props.geoids,...this.props.compareGeoid],year,c])),Promise.resolve())
     }
 
     componentDidUpdate(){
-        if(this.state.value !== 2014){
-            this.fetchFalcorDeps().then(response => this.transformData(response))
+        if (this.state.value !== this.state.temp){
+            this.transformData().then(res =>{
+                this.setState({
+                    graphData1 : res[1],
+                    temp : this.state.value
+                });
+        })
         }
 
-    }
 
-    lineData(data){
-        console.log('in lineData')
-        data = this.props.falcor.getCache()
-        console.log('response',data)
-        let response_lineData = []
-        let response_data = {}
-        let geoid = this.props.geoids
-        let years = []
-        let cenKey_income = this.props.censusKey[0]
-        let lineData = []
-        let censusConfig = {}
-        let axis_data = []
-        Object.values(data).forEach(function(value,i){
-            response_data = value[geoid]
-            years.push(...Object.keys(value[geoid]))
-            censusConfig = value['config'].value
-
-        })
-        Object.values(response_data).forEach(function(response,i){
-            response_lineData.push(response[cenKey_income])
-        })
-        response_lineData.forEach(function(value,index){
-            Object.keys(censusConfig).forEach(function(config,i){
-                Object.values(censusConfig[config].variables).forEach(function(subvar,i){
-                    if (Object.keys(value.value).toString() === subvar.value){
-                        axis_data.push({
-                            "x" : years[index],
-                            "y" : parseInt(value.value[subvar.value])
-                        })
-                    }
-
-                })
-            })
-
-        })
-        lineData.push({
-            "id": 'years',
-            "color": "hsl(157, 70%, 50%)",
-            "data" : axis_data
-        })
-        console.log('lineData',lineData)
-        return lineData
 
     }
 
-    compareData(data) {
-        console.log('in compareData')
-        data = this.props.falcor.getCache()
-        console.log('response',data)
-        let response_countyData = {}
-        let response_stateData = {}
-        let year = 2014
-        let cenKey_parent = this.props.censusKey[1]
-        let stateData =[]
-        let countyData =[]
-        let censusConfig ={}
-        let compareData = []
-        Object.values(data).forEach(function(value,i){
-            // for the state of NY
-            if (value['36'][year][cenKey_parent] !== undefined){
-                response_stateData = value['36'][year][cenKey_parent].value
-            }
-
-            if (value['36001'][year][cenKey_parent] !== undefined){
-                response_countyData = value['36001'][year][cenKey_parent].value
-            }
-            if (value['config'] !== undefined){
-                censusConfig = value['config'].value
-            }
+    componentWillMount()
+    {
+        this.transformData().then(res =>{
+            this.setState({
+                graphData1 : res[1],
+            })
         })
-        Object.keys(response_stateData).forEach(function(stData,i){
-            Object.keys(censusConfig).forEach(function(config,i){
-                if (stData.slice(0,-5) === config){
-                    Object.values(censusConfig[config].variables).forEach(function(subvar,i){
-                        if (stData === subvar.value){
-                            if (subvar.name.includes("Total")){
-                                stateData.push({
-                                    "Total" : response_stateData[stData]
-                                })
-                            }
-                            if(subvar.name.includes("Living with two parent")){
-                                stateData.push({
-                                    "Living with 2 Parents" : response_stateData[stData]
-                                })
-                            }
-                            if(subvar.name.includes("Living with mother")){
-                                stateData.push({
-                                    "Living with mother" : response_stateData[stData]
-                                })
-                            }
-                            if (subvar.name.includes("Living with father")){
-                                stateData.push({
-                                    "Living with father" : response_stateData[stData]
-                                })
-                            }
-                        }
-                    })
-                }
+        this.languageData().then(res =>{
+            this.setState({
+                graphData2 : res
+            })
+        })
+        this.lineData().then(res =>{
+            this.setState({
+                graphData3 : res
+            })
+        })
+        this.compareData().then(res =>{
+            this.setState({
+                graphData4 : res
             })
         })
 
-
-        var obj1 ={}
-        stateData.forEach(function(each_val,i){
-            if (obj1[Object.keys(each_val)]){
-                obj1[Object.keys(each_val)] += parseFloat(Object.values(each_val));
-            }else{
-                obj1[Object.keys(each_val)] = parseFloat(Object.values(each_val));
-            }
-        })
-
-        Object.keys(response_countyData).forEach(function(ctData,i){
-            Object.keys(censusConfig).forEach(function(config,i){
-                if (ctData.slice(0,-5) === config){
-                    Object.values(censusConfig[config].variables).forEach(function(subvar,i){
-                        if (ctData === subvar.value){
-                            if (subvar.name.includes("Total")){
-                                countyData.push({
-                                    "Total" : response_countyData[ctData]
-                                })
-                            }
-                            if(subvar.name.includes("Living with two parent")){
-                                countyData.push({
-                                    "Living with 2 Parents" : response_countyData[ctData]
-                                })
-                            }
-                            if(subvar.name.includes("Living with mother")){
-                                countyData.push({
-                                    "Living with mother" : response_countyData[ctData]
-                                })
-                            }
-                            if (subvar.name.includes("Living with father")){
-                                countyData.push({
-                                    "Living with father" : response_countyData[ctData]
-                                })
-                            }
-                        }
-                    })
-                }
-            })
-        })
-        var obj2 ={}
-        countyData.forEach(function(each_val,i){
-            if (obj2[Object.keys(each_val)]){
-                obj2[Object.keys(each_val)] += parseFloat(Object.values(each_val));
-            }else{
-                obj2[Object.keys(each_val)] = parseFloat(Object.values(each_val));
-            }
-        })
-
-        var obj1_percent =[] // state
-        obj1_percent.push({
-            "Total Living with two parents" : (parseFloat(obj1[Object.keys(obj1)[1]])),
-            "Living with two parents": ((parseFloat(obj1[Object.keys(obj1)[1]])/parseFloat(obj1[Object.keys(obj1)[0]]) * 100).toFixed(2)),
-            "Total Living with father": (parseFloat(obj1[Object.keys(obj1)[2]])),
-            "Living with father" : ((parseFloat(obj1[Object.keys(obj1)[2]])/parseFloat(obj1[Object.keys(obj1)[0]]) * 100).toFixed(2)),
-            "Total Living with mother": (parseFloat(obj1[Object.keys(obj1)[3]])),
-            "Living with mother" : ((parseFloat(obj1[Object.keys(obj1)[3]])/parseFloat(obj1[Object.keys(obj1)[0]]) * 100).toFixed(2)),
-        })
-
-        var obj2_percent = [] // county
-        obj2_percent.push({
-            "Total Living with two parents": (parseFloat(obj2[Object.keys(obj2)[1]])),
-            "Living with two parents" : ((parseFloat(obj2[Object.keys(obj2)[1]])/parseFloat(obj2[Object.keys(obj2)[0]]) * 100).toFixed(2)),
-            "Total Living with father": (parseFloat(obj2[Object.keys(obj2)[2]])),
-            "Living with father" : ((parseFloat(obj2[Object.keys(obj2)[2]])/parseFloat(obj2[Object.keys(obj2)[0]]) * 100).toFixed(2)),
-            "Total Living with mother" : (parseFloat(obj2[Object.keys(obj2)[3]])),
-            "Living with mother" : ((parseFloat(obj2[Object.keys(obj2)[3]])/parseFloat(obj2[Object.keys(obj2)[0]]) * 100).toFixed(2))
-        })
-
-        Object.values(obj1_percent).forEach(function(obj1,i){
-                compareData.push({
-                    "Category" : Object.keys(obj1)[1],
-                    "Two Parents in Albany County" :  numeral(parseFloat(Object.values(obj1)[0])).format('0.00a'),
-                    "Albany county" : Object.values(obj1)[1],
-                    "countyColor" : '#DAF7A6',
-                    "Two Parents in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[0])).format('0.00a'),
-                    "New York state" : Object.values(obj2_percent[i])[1],
-                    "stateColor" : '#FFC300'
-                },
-                {
-                    "Category": Object.keys(obj1)[3],
-                    "One Parent(father) in Albany County" : numeral(parseFloat(Object.values(obj1)[2])).format('0.0a'),
-                    "Albany county": Object.values(obj1)[3],
-                    "countyColor": '#FF5733',
-                    "One Parent(father) in New York State" : numeral(parseFloat(Object.values(obj2_percent[i])[2])).format('0.0a'),
-                    "New York state": Object.values(obj2_percent[i])[3],
-                    "stateColor" : '#C70039'
-                },
-                {
-                    "Category": Object.keys(obj1)[5],
-                    "One Parent(mother) in Albany County": numeral(parseFloat(Object.values(obj1)[4])).format('0.0a'),
-                    "Albany county": Object.values(obj1)[5],
-                    "countyColor": '#00A01B',
-                    "One Parent(mother) in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[4])).format('0.0a'),
-                    "New York state": Object.values(obj2_percent[i])[5],
-                    "stateColor": '#0091A0'
-                }
-                )
-        })
-        return compareData
     }
 
-    languageData(response){
-        response = this.props.falcor.getCache()
-        let geoid = this.props.geoids
-        let langData_vw = [] //Speak English very well
-        let langData_nvw = []// Speak English less than very well
-        let langData = []
-        let responseData_language = {}
-        let cenKey_language = this.props.censusKey[1]
-        let censusConfig = {}
-        Object.values(response).forEach(function(value,i){
-            censusConfig = value['config'].value
-            Object.keys(value[geoid]['2014']).forEach(function(each_key,i){
-                if (each_key === cenKey_language){
-                    responseData_language = value[geoid]['2014'][each_key].value
-
-                }
-            })
-        })
-
-        Object.keys(responseData_language).forEach(function(language,i){
-            Object.keys(censusConfig).forEach(function(config,i){
-                if (language.slice(0,-5) === config){
-                    Object.values(censusConfig[config].variables).forEach(function(subvar,i){
-                        if (language === subvar.value){
-                            if(subvar.name.includes('Speak English very well')){
-                                langData_vw.push({
-                                    "language":subvar.name.split('Speak')[0],
-                                    "Speakers":responseData_language[language]
-                                })
-                            }
-                            else if (subvar.name.includes('Speak English Less than very well')) {
-                                langData_nvw.push({
-                                    "language": subvar.name.split('Speak')[0],
-                                    "Speakers": responseData_language[language]
-                                })
-                            }
-                        }
-                    })
-                }
-            })
-        })
-        let subvarColors = ['#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C','#1AA3CB','#790576',
-            '#F7C9B9','#F4F3AF' , '#C2ECF3','#F4AD4D','#2AF70E','#D8AFE7','#88DE73' ,'#718CD1','#EA6A7D',
-            '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C'
-        ]
-        Object.values(langData_nvw).forEach(function(nvw,i){
-            //if (i < 2){
-            if(nvw.language === langData_vw[i].language){
-                langData.push({
-                    "language" : nvw.language,
-                    "Speakers" : parseFloat(nvw.Speakers) + parseFloat(langData_vw[i].Speakers),
-                    "Percent" : parseFloat((parseFloat(nvw.Speakers) / (parseFloat(langData_vw[i].Speakers) + parseFloat(nvw.Speakers)) * 100).toFixed(2)),
-                    "language_color" : subvarColors[i]
-                })
-            }
-            //}
-
-        })
-        langData.sort(function(a,b){
-            var a1 = parseFloat(a.Percent)
-            var b1 = parseFloat(b.Percent)
-            return b1 - a1
-        })
-        return langData
-    }
-
-    transformData(response) {
-        console.log('in transform data')
-        let year = parseFloat(this.state.value)
-        response = this.props.falcor.getCache()
-        console.log('response',response)
-        let geoid = this.props.geoids
-        let cenKey_age = this.props.censusKey[0]
-        let censusConfig = {}
-        let responseData_age = {}
-        let axisData_m = []
-        let axisData_f =[]
-        let axisData =[]
-        let stackData_m = []
-        let stackData_f = []
-        let stackData = []
-
-        let obj ={}
+    transformData() {
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response => {
+        let year = parseFloat(this.state.value);
+        let geoid = this.props.geoids;
+        let cenKey_age = this.props.censusKey[0];
+        let censusConfig = {};
+        let responseData_age = {};
+        let axisData_m = [];
+        let axisData_f =[];
+        let axisData =[];
+        let stackData_m = [];
+        let stackData_f = [];
+        let stackData = [];
+        let obj ={};
         if (year === 2014){
-            Object.values(response).forEach(function(value,i){
-                responseData_age = value[geoid][year][cenKey_age].value
-                censusConfig = value['config'].value
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                if (value[geoid] !== undefined){
+                    Object.keys(value[geoid]).forEach(function(val,i){
+                        if (val === '2014'){
+                            responseData_age = value[geoid][val]
+
+                        }
+
+                    })
+                }
+
             })
         }
 
         if (year === 2010){
-            if (response.acs[geoid]['2010'] !== undefined){
-                responseData_age = response.acs[geoid][year][cenKey_age].value
-                censusConfig = response.acs['config'].value
-            }
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                if (value[geoid] !== undefined){
+                    Object.keys(value[geoid]).forEach(function(val,i){
+                        if (val === '2010'){
+                            responseData_age = value[geoid][val]
+
+                        }
+
+                    })
+                }
+
+            })
 
         }
 
         if (year === 2011){
-            if (response.acs[geoid]['2011'] !== undefined){
-                responseData_age = response.acs[geoid][year][cenKey_age].value
-                censusConfig = response.acs['config'].value
-            }
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                if (value[geoid] !== undefined){
+                    Object.keys(value[geoid]).forEach(function(val,i){
+                        if (val === '2011'){
+                            responseData_age = value[geoid][val]
+
+                        }
+
+                    })
+                }
+
+            })
 
         }
 
         if (year === 2012){
-            if (response.acs[geoid]['2012'] !== undefined){
-                responseData_age = response.acs[geoid][year][cenKey_age].value
-                censusConfig = response.acs['config'].value
-            }
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                if (value[geoid] !== undefined){
+                    Object.keys(value[geoid]).forEach(function(val,i){
+                        if (val === '2012'){
+                            responseData_age = value[geoid][val]
+
+                        }
+
+                    })
+                }
+
+            })
 
         }
 
         if (year === 2013){
-            if (response.acs[geoid]['2013'] !== undefined){
-                responseData_age = response.acs[geoid][year][cenKey_age].value
-                censusConfig = response.acs['config'].value
-            }
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                Object.values(value).forEach(function(val,i){
+                    if ( i === 0){
+                        responseData_age = val[year]
+                    }
+                })
+            })
 
         }
 
         if (year === 2015){
-            if (response.acs[geoid]['2015'] !== undefined){
-                responseData_age = response.acs[geoid][year][cenKey_age].value
-                censusConfig = response.acs['config'].value
-            }
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                if (value[geoid] !== undefined){
+                    Object.keys(value[geoid]).forEach(function(val,i){
+                        if (val === '2015'){
+                            responseData_age = value[geoid][val]
+
+                        }
+
+                    })
+                }
+
+            })
 
         }
         if (year === 2016){
-            if (response.acs[geoid]['2016'] !== undefined){
-                responseData_age = response.acs[geoid][year][cenKey_age].value
-                censusConfig = response.acs['config'].value
-            }
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                if (value[geoid] !== undefined){
+                    Object.keys(value[geoid]).forEach(function(val,i){
+                        if (val === '2016'){
+                            responseData_age = value[geoid][val]
+
+                        }
+
+                    })
+                }
+
+            })
 
         }
-        /*
         if (year === 2017){
-            if (response.acs[geoid]['2017'] !== undefined){
-                responseData_age = response.acs[geoid][year][cenKey].value
-                censusConfig = response.acs['config'].value
-            }
+            Object.values(response.json).forEach(function(value,i){
+                censusConfig = value['config']
+                if (value[geoid] !== undefined){
+                    Object.keys(value[geoid]).forEach(function(val,i){
+                        if (val === '2017'){
+                            responseData_age = value[geoid][val]
+
+                        }
+
+                    })
+                }
+
+            })
 
         }
-         */
+
         //----------------------------- For the age by population graph -----------------------------
         Object.keys(responseData_age).forEach(function(res,index){
-            if (index > 1 && index !== 25){
-                Object.keys(censusConfig).forEach(function(config,i){
-                    if (res.slice(0,-5) === config){
-                        Object.values(censusConfig[config].variables).forEach(function(subvar,i) {
-                            if (res === subvar.value) {
-                                if (subvar.name.includes('Male')) {
-                                    axisData_m.push({
-                                        "age": subvar.name.slice(5),
-                                        "Male": responseData_age[res],
-                                        "MaleColor1": "rgb(82, 65, 119)"
-                                    })
+            if (res.slice(0,-5)===cenKey_age){
+                if (index > 2 && index !== 26){
+                    Object.keys(censusConfig).forEach(function(config,i){
+                        if (res.slice(0,-5) === config){
+                            Object.values(censusConfig[config].variables).forEach(function(subvar,i) {
+                                if (res === subvar.value) {
+                                    if (subvar.name.includes('Male')) {
+                                        axisData_m.push({
+                                            "age": subvar.name.slice(5),
+                                            "Male": responseData_age[res],
+                                            "MaleColor1": "rgb(82, 65, 119)"
+                                        })
 
-                                    stackData_m.push({
-                                        "age" : subvar.name.slice(5),
-                                        "Male":responseData_age[res]
-                                    })
+                                        stackData_m.push({
+                                            "age" : subvar.name.slice(5),
+                                            "Male":responseData_age[res]
+                                        })
 
 
+                                    }
+                                    else if (subvar.name.includes('Female')) {
+                                        axisData_f.push({
+                                            "Female": responseData_age[res],
+                                            "FemaleColor1": "rgb(229, 148, 93)"
+                                        })
+
+                                        stackData_f.push({
+                                            "Female" : -(parseFloat(responseData_age[res]))
+                                        })
+
+                                    }
                                 }
-                                else if (subvar.name.includes('Female')) {
-                                    axisData_f.push({
-                                        "Female": responseData_age[res],
-                                        "FemaleColor1": "rgb(229, 148, 93)"
-                                    })
-
-                                    stackData_f.push({
-                                        "Female" : -(parseFloat(responseData_age[res]))
-                                    })
-
-                                }
-                            }
-                        })
+                            })
                         }
                     })
                 }
-            })
+            }
+
+        })
         Object.values(axisData_f).forEach(function(axis_f,i){
             obj = {...axisData_m[i],...axis_f}
             axisData.push(obj)
@@ -429,21 +286,298 @@ class CensusBarChart extends React.Component {
             obj = {...stackData_m[i],...stack_f}
             stackData.push(obj)
         })
+        resolve([axisData,stackData])
+    })
+    })
 
-        return [axisData,stackData]
+
     }
 
+    lineData(){
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response => {
+                let response_lineData = [];
+                let response_data = {};
+                let geoid = this.props.geoids;
+                let years = [2010,2011,2012,2013,2014,2015,2016];
+                let cenKey_income = this.props.censusKey[2];
+                let lineData = [];
+                let censusConfig = {};
+                let axis_data = [];
+                Object.values(response.json).forEach(function(value,i){
+                    censusConfig = value['config']
+                    Object.values(value).forEach(function(val,i){
+                        if ( i === 0){
+                            response_data = val
+                        }
+                    })
+                })
+                Object.keys(response_data).forEach(function(response,i){
+                    Object.keys(response_data[response]).forEach(function(data,i){
+                        if (data === (cenKey_income + '_001E') ){
+                            response_lineData.push(response_data[response][cenKey_income + '_001E'])
+                        }
+
+                    })
+                })
+
+                response_lineData.forEach(function(value,index){
+                            axis_data.push({
+                                "x" : years[index],
+                                "y" : parseInt(value)
+                            })
+
+
+                })
+
+                axis_data = axis_data.filter(function(elem, index, self) {
+                    return index === self.indexOf(elem);
+                })
+                lineData.push({
+                    "id": 'years',
+                    "color": "hsl(157, 70%, 50%)",
+                    "data" : axis_data
+                })
+
+                resolve(lineData)
+            })
+        })
+
+
+    }
+
+    compareData() {
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response => {
+                let response_countyData = {};
+                let response_stateData = {};
+                let year = 2014;
+                let cenKey_parent = this.props.censusKey[3];
+                let stateData =[];
+                let countyData =[];
+                let censusConfig ={};
+                let compareData = [];
+                Object.values(response.json).forEach(function(value,i){
+                    censusConfig = value['config']
+                    if (value['36'] !== undefined){
+                        response_stateData = value['36'][year]
+                    }
+                    if(value['36001'] !== undefined){
+                        response_countyData = value['36001'][year]
+                    }
+                })
+                Object.keys(response_stateData).forEach(function(stData,i){
+                    Object.keys(censusConfig).forEach(function(config,i){
+                        if (stData.slice(0,-5) === config){
+                            Object.values(censusConfig[config].variables).forEach(function(subvar,i){
+                                if (stData === subvar.value){
+                                    if (subvar.name.includes("Total")){
+                                        stateData.push({
+                                            "Total" : response_stateData[stData]
+                                        })
+                                    }
+                                    if(subvar.name.includes("Living with two parent")){
+                                        stateData.push({
+                                            "Living with 2 Parents" : response_stateData[stData]
+                                        })
+                                    }
+                                    if(subvar.name.includes("Living with mother")){
+                                        stateData.push({
+                                            "Living with mother" : response_stateData[stData]
+                                        })
+                                    }
+                                    if (subvar.name.includes("Living with father")){
+                                        stateData.push({
+                                            "Living with father" : response_stateData[stData]
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    })
+                })
+                var obj1 ={}
+                stateData.forEach(function(each_val,i){
+                    if (obj1[Object.keys(each_val)]){
+                        obj1[Object.keys(each_val)] += parseFloat(Object.values(each_val));
+                    }else{
+                        obj1[Object.keys(each_val)] = parseFloat(Object.values(each_val));
+                    }
+                })
+
+                Object.keys(response_countyData).forEach(function(ctData,i){
+                    Object.keys(censusConfig).forEach(function(config,i){
+                        if (ctData.slice(0,-5) === config){
+                            Object.values(censusConfig[config].variables).forEach(function(subvar,i){
+                                if (ctData === subvar.value){
+                                    if (subvar.name.includes("Total")){
+                                        countyData.push({
+                                            "Total" : response_countyData[ctData]
+                                        })
+                                    }
+                                    if(subvar.name.includes("Living with two parent")){
+                                        countyData.push({
+                                            "Living with 2 Parents" : response_countyData[ctData]
+                                        })
+                                    }
+                                    if(subvar.name.includes("Living with mother")){
+                                        countyData.push({
+                                            "Living with mother" : response_countyData[ctData]
+                                        })
+                                    }
+                                    if (subvar.name.includes("Living with father")){
+                                        countyData.push({
+                                            "Living with father" : response_countyData[ctData]
+                                        })
+                                    }
+                                }
+                            })
+                        }
+                    })
+                })
+                var obj2 ={}
+                countyData.forEach(function(each_val,i){
+                    if (obj2[Object.keys(each_val)]){
+                        obj2[Object.keys(each_val)] += parseFloat(Object.values(each_val));
+                    }else{
+                        obj2[Object.keys(each_val)] = parseFloat(Object.values(each_val));
+                    }
+                })
+
+                var obj1_percent =[] // state
+                obj1_percent.push({
+                    "Total Living with two parents" : (parseFloat(obj1[Object.keys(obj1)[1]])),
+                    "Living with two parents": ((parseFloat(obj1[Object.keys(obj1)[1]])/parseFloat(obj1[Object.keys(obj1)[0]]) * 100).toFixed(2)),
+                    "Total Living with father": (parseFloat(obj1[Object.keys(obj1)[2]])),
+                    "Living with father" : ((parseFloat(obj1[Object.keys(obj1)[2]])/parseFloat(obj1[Object.keys(obj1)[0]]) * 100).toFixed(2)),
+                    "Total Living with mother": (parseFloat(obj1[Object.keys(obj1)[3]])),
+                    "Living with mother" : ((parseFloat(obj1[Object.keys(obj1)[3]])/parseFloat(obj1[Object.keys(obj1)[0]]) * 100).toFixed(2)),
+                })
+
+                var obj2_percent = [] // county
+                obj2_percent.push({
+                    "Total Living with two parents": (parseFloat(obj2[Object.keys(obj2)[1]])),
+                    "Living with two parents" : ((parseFloat(obj2[Object.keys(obj2)[1]])/parseFloat(obj2[Object.keys(obj2)[0]]) * 100).toFixed(2)),
+                    "Total Living with father": (parseFloat(obj2[Object.keys(obj2)[2]])),
+                    "Living with father" : ((parseFloat(obj2[Object.keys(obj2)[2]])/parseFloat(obj2[Object.keys(obj2)[0]]) * 100).toFixed(2)),
+                    "Total Living with mother" : (parseFloat(obj2[Object.keys(obj2)[3]])),
+                    "Living with mother" : ((parseFloat(obj2[Object.keys(obj2)[3]])/parseFloat(obj2[Object.keys(obj2)[0]]) * 100).toFixed(2))
+                })
+
+                Object.values(obj1_percent).forEach(function(obj1,i){
+                    compareData.push({
+                            "Category" : Object.keys(obj1)[1],
+                            "Two Parents in Albany County" :  numeral(parseFloat(Object.values(obj1)[0])).format('0.00a'),
+                            "Albany county" : Object.values(obj1)[1],
+                            "countyColor" : '#DAF7A6',
+                            "Two Parents in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[0])).format('0.00a'),
+                            "New York state" : Object.values(obj2_percent[i])[1],
+                            "stateColor" : '#FFC300'
+                        },
+                        {
+                            "Category": Object.keys(obj1)[3],
+                            "One Parent(father) in Albany County" : numeral(parseFloat(Object.values(obj1)[2])).format('0.0a'),
+                            "Albany county": Object.values(obj1)[3],
+                            "countyColor": '#FF5733',
+                            "One Parent(father) in New York State" : numeral(parseFloat(Object.values(obj2_percent[i])[2])).format('0.0a'),
+                            "New York state": Object.values(obj2_percent[i])[3],
+                            "stateColor" : '#C70039'
+                        },
+                        {
+                            "Category": Object.keys(obj1)[5],
+                            "One Parent(mother) in Albany County": numeral(parseFloat(Object.values(obj1)[4])).format('0.0a'),
+                            "Albany county": Object.values(obj1)[5],
+                            "countyColor": '#00A01B',
+                            "One Parent(mother) in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[4])).format('0.0a'),
+                            "New York state": Object.values(obj2_percent[i])[5],
+                            "stateColor": '#0091A0'
+                        }
+                    )
+                })
+                resolve(compareData)
+            })
+        })
+    }
+
+    languageData(){
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response => {
+                let geoid = this.props.geoids;
+                let langData_vw = []; //Speak English very well
+                let langData_nvw = [];// Speak English less than very well
+                let langData = [];
+                let responseData_language = {};
+                let cenKey_language = this.props.censusKey[1];
+                let censusConfig = {};
+                let year = 2015
+                Object.values(response.json).forEach(function(value,i){
+                    censusConfig = value['config']
+                    Object.values(value).forEach(function(val,i){
+                        if ( i === 0){
+                            responseData_language = val[year]
+                        }
+                    })
+                })
+                Object.keys(responseData_language).forEach(function(language,i){
+                    if (language.slice(0,-5) === cenKey_language){
+                        Object.keys(censusConfig).forEach(function(config,i){
+                            if (language.slice(0,-5) === config){
+                                Object.values(censusConfig[config].variables).forEach(function(subvar,i){
+                                    if (language === subvar.value){
+                                        if(subvar.name.includes('Speak English very well')){
+                                            langData_vw.push({
+                                                "language":subvar.name.split('Speak')[0],
+                                                "Speakers":responseData_language[language]
+                                            })
+                                        }
+                                        else if (subvar.name.includes('Speak English Less than very well')) {
+                                            langData_nvw.push({
+                                                "language": subvar.name.split('Speak')[0],
+                                                "Speakers": responseData_language[language]
+                                            })
+                                        }
+                                    }
+                                })
+                            }
+                        })
+                    }
+
+                })
+
+                let subvarColors = ['#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C','#1AA3CB','#790576',
+                    '#F7C9B9','#F4F3AF' , '#C2ECF3','#F4AD4D','#2AF70E','#D8AFE7','#88DE73' ,'#718CD1','#EA6A7D',
+                    '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C'
+                ]
+                Object.values(langData_nvw).forEach(function(nvw,i){
+                    //if (i < 2){
+                    if(nvw.language === langData_vw[i].language){
+                        langData.push({
+                            "language" : nvw.language,
+                            "Speakers" : parseFloat(nvw.Speakers) + parseFloat(langData_vw[i].Speakers),
+                            "Percent" : parseFloat((parseFloat(nvw.Speakers) / (parseFloat(langData_vw[i].Speakers) + parseFloat(nvw.Speakers)) * 100).toFixed(2)),
+                            "language_color" : subvarColors[i]
+                        })
+                    }
+                    //}
+
+                })
+                langData.sort(function(a,b){
+                    var a1 = parseFloat(a.Percent)
+                    var b1 = parseFloat(b.Percent)
+                    return b1 - a1
+                })
+                resolve(langData)
+            })
+        })
+
+    }
 
     render () {
-        console.log('in render')
-        this.lineData(this.props.graph.acs)
-        if (this.props.compareGeoid.length === 0){
-            let graphData2 = this.transformData(this.props.graph.acs)[1]
-            let graphData3 = this.languageData(this.props.graph.acs)
+        if (this.props.compareGeoid.length === 0) {
             return(
-                <div>
-                <Bar
-            data={graphData2}
+            <div>
+            <Bar
+            data={this.state.graphData1}
             width={900}
             height={500}
             margin={{
@@ -538,16 +672,14 @@ class CensusBarChart extends React.Component {
             <input
             id="typeinp"
             type="range"
-            min='2010' max='2016'
+            min='2010'max='2016'
             value={this.state.value}
             onChange={this.handleChange}
-            step="1"
-                />
-                </label>
-
+            step="1" />
+            </label>
 
             <Bar
-            data={graphData3}
+            data={this.state.graphData2}
             width={900}
             height={500}
             indexBy="language"
@@ -600,18 +732,7 @@ class CensusBarChart extends React.Component {
             {id} Speaking English less than very well: {value}%
         </text>
         )}
-            legends={[
-                    {
-                        "effects": [
-                            {
-                                "on": "hover",
-                                "style": {
-                                    "itemOpacity": 1
-                                }
-                            }
-                        ]
-                    }
-                    ]}
+
             markers={[
                     {
                         axis: 'x',
@@ -634,97 +755,8 @@ class CensusBarChart extends React.Component {
                 }
             }}
             />
-            </div>
-
-        );
-        }
-        else{
-            let graphData4 = this.compareData(this.props.graph.acs)
-            let graphData5 = this.lineData(this.props.graph.acs)
-            console.log('graphData5',graphData5)
-            return(
-            <div>
-            <Bar
-            data={graphData4}
-            width={900}
-            height={500}
-            indexBy="Category"
-            keys = {["Albany county","New York state"]}
-            margin={{
-                "top": 100,
-                    "right": 130,
-                    "bottom": 170,
-                    "left": 60
-            }}
-            padding={0.1}
-            groupMode="grouped"
-            colors = 'nivo'
-            colorBy = "id"
-            layout = "vertical"
-            borderColor="inherit:darker(1.6)"
-            enableGridX = {true}
-            enableGridY={true}
-            axisBottom={{
-                "orient": "bottom",
-                    "tickSize": 5,
-                    "tickPadding": 5,
-                    "tickRotation": 0,
-                    "legendPosition": "center",
-                    "legendOffset": 36
-            }}
-            axisLeft={{
-                "orient": "left",
-                    "tickSize": 5,
-                    "tickPadding": 5,
-                    "tickRotation": 0,
-                    "legendPosition": "middle",
-                    "legendOffset": -50,
-                    "legend" : "Percentage of Population",
-                    format: v => `${v}%`
-            }}
-            labelSkipWidth={12}
-            labelSkipHeight={36}
-            enableLabel = {false}
-            labelTextColor="inherit:darker(1.6)"
-            labelFormat = "0"
-            animate={true}
-            motionStiffness={90}
-            motionDamping={15}
-            legends={[
-                    {
-                        "dataFrom": "keys",
-                        "anchor": "bottom",
-                        "direction": "row",
-                        "translateX": 30,
-                        "translateY": 65,
-                        "itemWidth": 100,
-                        "itemHeight": 20,
-                        "itemsSpacing": 2,
-                        "symbolSize": 20
-                    }
-                    ]}
-            markers={[
-                    ]}
-            theme={{
-                "tooltip": {
-                    "container": {
-                        "fontSize": "13px"
-                    }
-                },
-                "labels": {
-                    "textColor": "#555"
-                }
-            }}
-            tooltip={({ id, indexValue, value, color,data }) => (
-            <text>
-            <b><big>{indexValue}</big></b>
-            <br/> <br/>
-            {id} :{(id.includes('Albany county')) ? Object.values(data)[4] : Object.values(data)[1]}, {value}%
-            </text>
-            )}
-            />
             <Line
-            data={graphData5}
+            data={this.state.graphData3}
             width={900}
             height={500}
             margin={{
@@ -809,18 +841,106 @@ class CensusBarChart extends React.Component {
             <b><big>Albany County</big></b>
             <br/> <br/>
             Year : {id}
-            <br/>
+        <br/>
             Median Income : ${Object.values(data)[0]['data'].y}
                 </text>
-            )}
+        )}
 
             />
             </div>
-            )
+        )
+    }
+    else{
+            return(
+                <div>
+                <Bar
+            data={this.state.graphData4}
+            width={900}
+            height={500}
+            indexBy="Category"
+            keys = {["Albany county","New York state"]}
+            margin={{
+                "top": 100,
+                    "right": 130,
+                    "bottom": 170,
+                    "left": 60
+            }}
+            padding={0.1}
+            groupMode="grouped"
+            colors = 'nivo'
+            colorBy = "id"
+            layout = "vertical"
+            borderColor="inherit:darker(1.6)"
+            enableGridX = {true}
+            enableGridY={true}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "center",
+                    "legendOffset": 36
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+                    "legend" : "Percentage of Population",
+                    format: v => `${v}%`
+            }}
+            labelSkipWidth={12}
+            labelSkipHeight={36}
+            enableLabel = {false}
+            labelTextColor="inherit:darker(1.6)"
+            labelFormat = "0"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            legends={[
+                    {
+                        "dataFrom": "keys",
+                        "anchor": "bottom",
+                        "direction": "row",
+                        "translateX": 30,
+                        "translateY": 65,
+                        "itemWidth": 100,
+                        "itemHeight": 20,
+                        "itemsSpacing": 2,
+                        "symbolSize": 20
+                    }
+                    ]}
+            markers={[
+                    ]}
+            theme={{
+                "tooltip": {
+                    "container": {
+                        "fontSize": "13px"
+                    }
+                },
+                "labels": {
+                    "textColor": "#555"
+                }
+            }}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{indexValue}</big></b>
+            <br/> <br/>
+            {id} :{(id.includes('Albany county')) ? Object.values(data)[4] : Object.values(data)[1]}, {value}%
+        </text>
+        )}
+            />
+            </div>
+        );
         }
-        }
+
+    }
+
+
     static defaultProps = {
-        censusKey: ['B19013','B23008'], //'B01001','B16001',
+        censusKey: ['B01001','B16001','B19013','B23008'], //'B19013',,
         geoids: ['36001'],
         compareGeoid: []
     }
@@ -836,8 +956,3 @@ const mapStateToProps = state => {
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusBarChart))
-
-/*
-
-change the cenKey_parent in compareData if you include censusKey as attribute in index
- */
