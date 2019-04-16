@@ -31,7 +31,6 @@ Note: for the county 36039-
 
  */
 const counties = ['36001','36083','36093','36091','36039','36021','36115','36113'];
-let blockGroups = []
 const requests = [],
     num = 50;
 let censusConfig = {}
@@ -39,6 +38,7 @@ class CensusLayer extends MapLayer{
     onAdd(map){
         super.onAdd(map)
         this.loading = true;
+        let blockGroups = [];
         return falcorGraph.get(['geo',counties,'blockgroup'],['acs','config'])
             .then(res => {
                 Object.values(res.json.geo).forEach(function(item){
@@ -86,9 +86,10 @@ class CensusLayer extends MapLayer{
     receiveData(map,result){
         this.fetchData().then(res=>{
             let subvars = [];
+            let paintInfo = [];
             let year = this.filters.year.value;
             let measure = this.filters.measures.value;
-            let graph = falcorGraph.getCache()
+            let graph = falcorGraph.getCache();
             Object.values(graph).forEach(function(value,i){
                 Object.values(value).forEach(function(geoval,i){
                     if (geoval[year] !== undefined){
@@ -110,39 +111,41 @@ class CensusLayer extends MapLayer{
             let colors = ['#8dd3c7']
             //------------------- If there is only one sub variable----------------------------------------
             if (subvars.length === 1){
-            let subvarColors = 'rgba(0,0,0,0)'
-            let paintInfo =[
+            let subvarColors = 'rgba(0,0,0,0)';
+            paintInfo =[
                 "match",
-                ["get", "GEOID"]]
+                ["get", "GEOID"]];
             Object.values(config[subvars[0].slice(0,-5)]).forEach(function(item,index) {
                 if(index === 1){
                     item.forEach(function(value){
                         legend_domain.push(value.name)
                     })
                 }
-            })
+            });
             this.censusBlockGroups.forEach((blockGroup,index) => {
                 let subVariable = graph.acs[blockGroup][this.filters.year.value];
-                let stepper = [["step",
-                    ["get", "i"],
-                    '#8dd3c7']];
-                let sum = 0;
-                subvars.forEach(function(subvar, i) {
-                    let value = parseFloat(subVariable[subvar].value)
-                    if(value !== 0){
-                        stepper[0].push(
-                            sum += value,
-                            subvarColors
-                        )
-                    }
-                })
-                paintInfo.push([blockGroup])
-                paintInfo.push(...stepper)
+            let stepper = [["step",
+                ["get", "i"],
+                '#8dd3c7']];
+            let sum = 0;
+            subvars.forEach(function(subvar, i) {
+                let value = parseFloat(subVariable[subvar].value)
+                if(value !== 0){
+                    stepper[0].push(
+                        sum += value,
+                        subvarColors
+                    )
+                }
+            })
+            paintInfo.push([blockGroup])
+            paintInfo.push(...stepper)
         })
-            paintInfo.push("rgba(0,0,0,0)")
+            paintInfo.push("rgba(0,0,0,0)");
             this.legend.range = colors;
             this.legend.domain = legend_domain;
             map.setPaintProperty('density_layer', 'circle-color', paintInfo)
+
+
         }
         //---------------------If there are multiple subvariables------------------------------------
             else{
@@ -196,6 +199,7 @@ class CensusLayer extends MapLayer{
                                     //}
                     })
                     paintInfo.push("rgba(0,0,0,0)")
+                    console.log('painInfo',paintInfo)
                     let paintInfo_str = JSON.stringify(paintInfo)
                     colors.forEach(function(color,index){
                         if (!paintInfo_str.includes(color)){
@@ -251,7 +255,7 @@ const censusLayer = new CensusLayer("Census Layer", {
                         2
                     ],
                     'circle-opacity': 0.8,
-                    'circle-color': '#3455AB'
+                    'circle-color': 'rgb(171, 72, 33)'
                 }
             },
             {
