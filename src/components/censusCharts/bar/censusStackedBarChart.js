@@ -78,145 +78,26 @@ class CensusStackedBarChart extends React.Component {
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
                 let year = parseFloat(this.state.value);
-        let geoid = this.props.geoids;
-        let cenKey_age = this.props.censusKey[0];
-        let censusConfig = {};
-        let responseData_age = {};
-        let axisData_m = [];
-        let axisData_f =[];
-        let axisData =[];
-        let stackData_m = [];
-        let stackData_f = [];
-        let stackData = [];
-        let obj ={};
-        if (year === 2014){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                if (value[geoid] !== undefined){
-                    Object.keys(value[geoid]).forEach(function(val,i){
-                        if (val === '2014'){
-                            responseData_age = value[geoid][val]
+                let geoid = this.props.geoids;
+                let cenKey_age = this.props.censusKey[0];
+                let censusConfig = {};
+                let responseData_age = {};
+                let axisData_m = [];
+                let axisData_f =[];
+                let axisData =[];
+                let stackData_m = [];
+                let stackData_f = [];
+                let stackData = [];
+                let obj ={};
+            
 
-                        }
+                censusConfig = response.json.acs.config
+                responseData_age = response.json.acs[geoid][year] // || {}
 
-                    })
-                }
+               //  _.get(response.json, `acs[${goeid}][${year}]`, {})
 
-            })
-        }
-
-        if (year === 2010){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                if (value[geoid] !== undefined){
-                    Object.keys(value[geoid]).forEach(function(val,i){
-                        if (val === '2010'){
-                            responseData_age = value[geoid][val]
-
-                        }
-
-                    })
-                }
-
-            })
-
-        }
-
-        if (year === 2011){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                if (value[geoid] !== undefined){
-                    Object.keys(value[geoid]).forEach(function(val,i){
-                        if (val === '2011'){
-                            responseData_age = value[geoid][val]
-
-                        }
-
-                    })
-                }
-
-            })
-
-        }
-
-        if (year === 2012){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                if (value[geoid] !== undefined){
-                    Object.keys(value[geoid]).forEach(function(val,i){
-                        if (val === '2012'){
-                            responseData_age = value[geoid][val]
-
-                        }
-
-                    })
-                }
-
-            })
-
-        }
-
-        if (year === 2013){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                Object.values(value).forEach(function(val,i){
-                    if ( i === 0){
-                        responseData_age = val[year]
-                    }
-                })
-            })
-
-        }
-
-        if (year === 2015){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                if (value[geoid] !== undefined){
-                    Object.keys(value[geoid]).forEach(function(val,i){
-                        if (val === '2015'){
-                            responseData_age = value[geoid][val]
-
-                        }
-
-                    })
-                }
-
-            })
-
-        }
-        if (year === 2016){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                if (value[geoid] !== undefined){
-                    Object.keys(value[geoid]).forEach(function(val,i){
-                        if (val === '2016'){
-                            responseData_age = value[geoid][val]
-
-                        }
-
-                    })
-                }
-
-            })
-
-        }
-        if (year === 2017){
-            Object.values(response.json).forEach(function(value,i){
-                censusConfig = value['config']
-                if (value[geoid] !== undefined){
-                    Object.keys(value[geoid]).forEach(function(val,i){
-                        if (val === '2017'){
-                            responseData_age = value[geoid][val]
-
-                        }
-
-                    })
-                }
-
-            })
-
-        }
-
+          
+        console.log(responseData_age)
         //----------------------------- For the age by population graph -----------------------------
         Object.keys(responseData_age).forEach(function(res,index){
             if (res.slice(0,-5)===cenKey_age){
