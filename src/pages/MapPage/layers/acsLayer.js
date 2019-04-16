@@ -29,7 +29,7 @@ let countyCousubs =[]
 let countyTracts =[]
 let acsCensusCousubs =[]
 let acsCensusTracts =[]
-
+let censusConfig = {}
 class acsLayer extends MapLayer{
 
 
@@ -38,17 +38,18 @@ class acsLayer extends MapLayer{
         this.loading = true;
         return falcorGraph.get(['acs', 'config'])
             .then(res => {
-                let censusConfig = res.json.acs.config
+                Object.keys(res.json.acs.config).forEach(function(cenKey,i){
+                    if (cenKey === 'B01003' || cenKey === 'B19013'){
+                        censusConfig[cenKey] = res.json.acs.config[cenKey];
+                    }
+                });
                 this.filters.measures.domain = Object.keys(censusConfig).map(function(key){
                     return {name: censusConfig[key].name,value:key}
-
                 })
                 this.filters.submeasure.domain = censusConfig[this.filters.measures.value]
                     .variables.map(function(subvar){
                         return {name: subvar.name,value:subvar.value}
                     })
-
-
                 this.acsConfig = censusConfig
                 this.filters.geolevel.domain = ['counties','cousubs','tracts']
                 this.component.forceUpdate()
@@ -241,6 +242,7 @@ const buildingsLayer = new acsLayer("ACS Layer", {
                 'type': 'fill',
                 'paint': {
                     'fill-color': 'rgba(196, 0, 0, 0.1)',
+                    'fill-opacity': 0.5
                 },
                 filter : ['all',['in','geoid',...counties]]
             },
@@ -250,6 +252,7 @@ const buildingsLayer = new acsLayer("ACS Layer", {
                 'type': 'fill',
                 'paint': {
                     'fill-color': 'rgba(195, 0, 0, 0.1)',
+                    'fill-opacity': 0.5
                 },
                 filter : ['in','geoid','']
             },
@@ -259,6 +262,7 @@ const buildingsLayer = new acsLayer("ACS Layer", {
                 'type': 'fill',
                 'paint': {
                     'fill-color': 'rgba(196, 0, 0, 0.1)',
+                    'fill-opacity': 0.5
                 },
                 filter : ['in','geoid','']
             }
