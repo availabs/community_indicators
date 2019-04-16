@@ -198,8 +198,7 @@ class CensusLayer extends MapLayer{
                                     }
                                     //}
                     })
-                    paintInfo.push("rgba(0,0,0,0)")
-                    console.log('painInfo',paintInfo)
+                    paintInfo.push("rgba(0,0,0,0)");
                     let paintInfo_str = JSON.stringify(paintInfo)
                     colors.forEach(function(color,index){
                         if (!paintInfo_str.includes(color)){
