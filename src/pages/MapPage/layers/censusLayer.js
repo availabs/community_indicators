@@ -364,7 +364,7 @@ const censusLayer = new CensusLayer("Census Layer", {
             year: {
                 name: 'year',
                 type: 'dropdown',
-                domain: [2017,2015,2014], // not yet working for 2014,2015
+                domain: [2017,2016,2015,2014], // not yet working for 2014,2015
                 value: 2017
             },
             measures: {
