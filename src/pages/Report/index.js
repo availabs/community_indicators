@@ -1,26 +1,30 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Element from 'components/light-admin/containers/Element'
-//import CensusBarChart from "components/censusCharts/censusBarChart"
 import CensusStackedBarChart from "components/censusCharts/bar/censusStackedBarChart"
 import CensusBarChart from "components/censusCharts/bar/censusBarChart"
 import CensusGroupedBarChart from "components/censusCharts/bar/censusGroupedBarChart"
 import CensusLineChart from "components/censusCharts/line/censusLineChart"
+import CensusPieChart from "components/censusCharts/pie/censusPieChart"
+import CensusPieCompare from "components/censusCharts/pie/censusPieCompare"
+import CensusDomGraph from 'components/censusCharts/bar/censusDomGraph'
 class Home extends Component {
     render () {
+
         return (
             <div>
             <Element>
-            Report
-            Test 123
-            <div style = {{height : 10000}}>
-            <CensusStackedBarChart geoid={['36001']} censusKey={['B01001']}/>
-            <CensusBarChart geoid={['36001']} censusKey={['B16001']}/>
-            <CensusGroupedBarChart geoid={['36001']} compareGeoid={['36']} censusKey={['B23008']}/>
-            <CensusLineChart geoid={['36001']} censusKey={['B19013']} />
+                <div style = {{height :800}}>
+                <h1> Racial Population </h1>
+                <CensusPieCompare geoid={['36001','36083','36093','36091','36039','36021','36115','36113']} censusKey={['B02001']}/>
+                    <div style={{height: '100vh', width: '50vw'}}>
+                    <div style={{padding: 20, position: 'relative'}}>
+                        <CensusDomGraph geoid={['36001']} censusKey={['B02001']}/>
+                    </div>
+                    </div>
+                </div>
+            </Element>
             </div>
-        </Element>
-        </div>
     )
     }
 }
