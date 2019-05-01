@@ -9,7 +9,7 @@ import { Line } from '@nivo/line'
 import {ResponsiveLine} from '@nivo/line'
 var numeral = require('numeral')
 
-class CensusBarChart extends React.Component {
+class CensusGroupedBarChart extends React.Component {
     constructor(props) {
         super(props);
 
@@ -26,6 +26,8 @@ class CensusBarChart extends React.Component {
     handleChange(event) {
         this.setState({value: event.target.value});
     }
+
+
     fetchFalcorDeps() {
         let year = [2010,2011,2012,2013,2014,2015,2016]
         let census_var = this.props.censusKey
@@ -43,7 +45,7 @@ class CensusBarChart extends React.Component {
                         census_subvars.push(subvar.value)
                     })
                 }
-            })
+            });
             return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],year,[...census_subvars]],['acs','config'])
     .then(response =>{
             return response
@@ -72,7 +74,7 @@ class CensusBarChart extends React.Component {
                 let response_countyData = {};
         let response_stateData = {};
         let year = 2014;
-        let cenKey_parent = this.props.censusKey[3];
+        let cenKey_parent = this.props.censusKey;
         let stateData =[];
         let countyData =[];
         let censusConfig ={};
@@ -310,8 +312,8 @@ class CensusBarChart extends React.Component {
 
 
     static defaultProps = {
-        censusKey: ['B01001','B16001','B19013','B23008'], //'B19013',,
-        geoids: ['36001'],
+        censusKey: [], //'B19013',,
+        geoid: [],
         compareGeoid: []
     }
 
@@ -320,9 +322,11 @@ class CensusBarChart extends React.Component {
 
 const mapDispatchToProps = { };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state,ownProps) => {
     return {
+        geoid:ownProps.geoid,
+        compareGeoid:ownProps.compareGeoid,
         graph: state.graph // so componentWillReceiveProps will get called.
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusBarChart))
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusGroupedBarChart))
