@@ -11,7 +11,8 @@ class CensusPieChart extends React.Component {
 
         this.state = {
             height : [],
-            width: []
+            width: [],
+            graphData5: []
         }
     }
 
@@ -20,6 +21,7 @@ class CensusPieChart extends React.Component {
         let censusConfig ={};
         let census_subvars = [];
         let censusKey = this.props.censusKey;
+        let geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
         return this.props.falcor.get(['acs','config']).then(res => {
 
             Object.values(res.json.acs).forEach( (config, i) =>{
@@ -35,7 +37,7 @@ class CensusPieChart extends React.Component {
             })
 
             // console.log('census subvars', s)
-            return this.props.falcor.get(['acs',[...this.props.geoid],[...this.props.year],[...census_subvars]])
+            return this.props.falcor.get(['acs',[...geoids],[...this.props.year],[...census_subvars]],['acs','config'])
                 .then(response=>{
                     //console.log('FETCH SERVER PIE', this.props.geoid, this.props.year, census_subvars, response)
                     return response
@@ -58,35 +60,38 @@ class CensusPieChart extends React.Component {
 
     }
 
+    componentWillMount(){
+        this.pieData().then(res=>{
+            this.setState({
+                graphData5: res
+            })
+        })
+    }
+
     pieData(){
-            //console.log('geoid',geoid)
-            let response = this.props.graph
-            //console.log('response',this.props.graph)
-            if(!response.acs || !response.acs.config) {
-                return []
-            }
-            let census_config = {};
-            let responseData_race = {};
-            let pieData = [];
-
-
-            census_config = response.acs.config.value;
-            let config = census_config[this.props.censusKey].variables;
-            responseData_race = response.acs[this.props.geoid][this.props.year];
-            let colors = ColorRanges[Object.keys(responseData_race).shift().length+1].filter(d => d.name === 'Set3')[0].colors
-            Object.keys(responseData_race).forEach(function(race_key,i){
-                if (i !== 0){
-                    pieData.push({
-                        'id':config[i].name,
-                        'label':config[i].name,
-                        'value':responseData_race[race_key],
-                        'color': colors[i]
-                    })
-                }
-            });
-
-            return pieData
-
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response =>{
+                let census_config = {};
+                let responseData_race = {};
+                let pieData = [];
+                census_config = response.json.acs.config[this.props.censusKey].variables;
+                responseData_race = response.json.acs[this.props.geoid][this.props.year]
+                let colors = ColorRanges[Object.keys(responseData_race).shift().length+1].filter(d => d.name === 'Set3')[0].colors
+                Object.keys(responseData_race).forEach(function(race_key,i){
+                    if (i > 1){
+                        if (census_config[i] !== undefined){
+                            pieData.push({
+                                'id':census_config[i-1].name,
+                                'label':census_config[i-1].name,
+                                'value':responseData_race[race_key],
+                                'color': colors[i-1]
+                            })
+                        }
+                    }
+                })
+                resolve(pieData)
+            })
+        })
 
     }
 
@@ -94,9 +99,9 @@ class CensusPieChart extends React.Component {
         return(
         <div>
         <PieCanvas
-        data={this.pieData()}
-        width={this.state.width}
-        height={this.state.height}
+        data={this.state.graphData5}
+        width={200}
+        height={200}
         margin={{
             "top": 0,
                 "right": 10,
@@ -108,7 +113,7 @@ class CensusPieChart extends React.Component {
         innerRadius={0.5}
         padAngle={0.7}
         cornerRadius={3}
-        colors={this.pieData().map(d => d.color)}
+        colors= {this.state.graphData5.map(d => d.color)}
         borderColor="inherit:darker(0.6)"
         radialLabel="value"
         enableRadialLabels ={false}
