@@ -84,52 +84,108 @@ class CensusDomGraph extends React.Component{
     constructor(props) {
         super(props);
 
+        this.state={
+            graphData6: []
+        }
+
     }
 
-    domData(){
-            let response = this.props.graph;
-            let data =[];
-            if(!response.acs || !response.acs.config) {
-                return []
-            }
-            let censusConfig = response.acs.config.value[this.props.censusKey].variables;
-            if (this.props.geoid.length === 1){
-                let domData = response.acs[this.props.geoid][this.props.year];
-                let colors = COLOR_RANGES[Object.keys(domData).shift().length+1].filter(d => d.name === 'Set3')[0].colors
-                Object.keys(domData).forEach(function(dom,i){
-                    if(i !== 0){
-                        data.push({
-                            'name' : censusConfig[i].name,
-                            'value': domData[dom],
-                            'color': colors[i]
-                        })
-                    }
-                })
-            }
-            /*
-            else{
-                console.log(this.props.geoid);
-                let domData = [];
-                let year = this.props.year;
-                this.props.geoid.forEach(function(geoid){
-                    domData = response.acs[geoid][year];
-                    console.log('domData',domData);
-                    let colors = COLOR_RANGES[Object.keys(domData).shift().length+1].filter(d => d.name === 'Set3')[0].colors;
-                    Object.keys(domData).forEach(function(dom,i){
-                        console.log('dom',i+i)
+
+    fetchFalcorDeps() {
+        let censusConfig ={};
+        let census_subvars = [];
+        let censusKey = this.props.censusKey;
+        let geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
+        return this.props.falcor.get(['acs','config']).then(res => {
+
+            Object.values(res.json.acs).forEach( (config, i) =>{
+                censusConfig = config
+            });
+
+            Object.keys(censusConfig).forEach(function (censvar, i) {
+                if (censusKey.includes(censvar)) {
+                    Object.values(censusConfig[censvar].variables).forEach(function (subvar, i) {
+                        census_subvars.push(subvar.value)
                     })
+                }
+            })
 
+            // console.log('census subvars', s)
+            return this.props.falcor.get(['acs',[...geoids],[...this.props.year],[...census_subvars]],['acs','config'])
+                .then(response=>{
+                    //console.log('FETCH SERVER PIE', this.props.geoid, this.props.year, census_subvars, response)
+                    return response
                 })
 
-            }
-             */
-            return data
+        })
+    }
+
+    componentWillMount(){
+        this.domData().then(res=>{
+            this.setState({
+                graphData6 : res
+            })
+        })
+    }
+    domData(){
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response =>{
+                let data =[];
+                let finalDomData = {}
+                let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                if (this.props.geoid.length === 1){
+                    let domData = response.json.acs[this.props.geoid][this.props.year];
+                    let colors = COLOR_RANGES[Object.keys(domData).shift().length+1].filter(d => d.name === 'Set3')[0].colors
+                    Object.keys(domData).forEach(function(dom,i){
+                        if(i !== 0){
+                            data.push({
+                                'name' : censusConfig[i].name,
+                                'value': domData[dom],
+                                'color': colors[i]
+                            })
+                        }
+                    });
+                    resolve(data)
+                }
+
+                else{
+                    let domData = [];
+                    let year = this.props.year;
+                    this.props.geoid.forEach(function(geoid){
+                        domData.push(response.json.acs[geoid][year]);
+                    });
+                    finalDomData = domData.reduce((a,b) =>{
+                        for (let k in b){
+                            if (b.hasOwnProperty(k)){
+                                a[k] = (a[k] || 0) + b[k];
+                            }
+                        }
+                        return a
+                    });
+                    let colors = COLOR_RANGES[Object.keys(finalDomData).shift().length+1].filter(d => d.name === 'Set3')[0].colors
+                    Object.keys(finalDomData).forEach(function(finalDom,i){
+                        if( i !== 0){
+                            if (censusConfig[i] !== undefined){
+                                data.push({
+                                    'name': censusConfig[i].name,
+                                    'value': finalDomData[finalDom],
+                                    'color': colors[i]
+                                })
+                            }
+                        }
+                    });
+                    resolve(data)
+                }
+            })
+        })
+
 
 
     }
 
     renderCensusSelector(data) {
         try {
+            data = this.state.graphData6;
             let totalPopulation = [];
             data.forEach(function(value){
                 totalPopulation.push(value.value)
@@ -140,7 +196,7 @@ class CensusDomGraph extends React.Component{
             const name = bar.name;
                 return (
                     <GraphListItem>
-                        <BarContainer>
+                        <BarContainer onClick={this.props.onClick.bind(this,bar.name)}>
                             <GraphLabel>
                                 <NameLabel>
                                     {name}
@@ -180,7 +236,8 @@ class CensusDomGraph extends React.Component{
         censusKey: [],
         geoids: [],
         year: ['2016'],
-        data: []
+        data: [],
+        onClick: () => {}
     }
 
 }
