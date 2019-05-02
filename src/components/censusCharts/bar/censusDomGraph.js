@@ -95,7 +95,10 @@ class CensusDomGraph extends React.Component{
         let censusConfig ={};
         let census_subvars = [];
         let censusKey = this.props.censusKey;
+        /*
+        console.log('geoid',this.props.geoid);
         let geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
+         */
         return this.props.falcor.get(['acs','config']).then(res => {
 
             Object.values(res.json.acs).forEach( (config, i) =>{
@@ -108,10 +111,8 @@ class CensusDomGraph extends React.Component{
                         census_subvars.push(subvar.value)
                     })
                 }
-            })
-
-            // console.log('census subvars', s)
-            return this.props.falcor.get(['acs',[...geoids],[...this.props.year],[...census_subvars]],['acs','config'])
+            });
+            return this.props.falcor.get(['acs',[...this.props.geoid],[...this.props.year],[...census_subvars]],['acs','config'])
                 .then(response=>{
                     //console.log('FETCH SERVER PIE', this.props.geoid, this.props.year, census_subvars, response)
                     return response
@@ -135,13 +136,13 @@ class CensusDomGraph extends React.Component{
                 let censusConfig = response.json.acs.config[this.props.censusKey].variables;
                 if (this.props.geoid.length === 1){
                     let domData = response.json.acs[this.props.geoid][this.props.year];
-                    let colors = COLOR_RANGES[Object.keys(domData).shift().length+1].filter(d => d.name === 'Set3')[0].colors
+                    let colors = COLOR_RANGES[Object.keys(domData).shift().length+2].filter(d => d.name === 'Set3')[0].colors
                     Object.keys(domData).forEach(function(dom,i){
-                        if(i !== 0){
+                        if(i > 1){
                             data.push({
-                                'name' : censusConfig[i].name,
+                                'name' : censusConfig[i-1].name,
                                 'value': domData[dom],
-                                'color': colors[i]
+                                'color': colors[i-1]
                             })
                         }
                     });
@@ -162,18 +163,19 @@ class CensusDomGraph extends React.Component{
                         }
                         return a
                     });
-                    let colors = COLOR_RANGES[Object.keys(finalDomData).shift().length+1].filter(d => d.name === 'Set3')[0].colors
+                    let colors = COLOR_RANGES[Object.keys(finalDomData).shift().length+2].filter(d => d.name === 'Set3')[0].colors;
                     Object.keys(finalDomData).forEach(function(finalDom,i){
-                        if( i !== 0){
+                        if( i > 1){
                             if (censusConfig[i] !== undefined){
                                 data.push({
-                                    'name': censusConfig[i].name,
+                                    'name': censusConfig[i-1].name,
                                     'value': finalDomData[finalDom],
-                                    'color': colors[i]
+                                    'color': colors[i-1]
                                 })
                             }
                         }
                     });
+                    console.log('data',data);
                     resolve(data)
                 }
             })
