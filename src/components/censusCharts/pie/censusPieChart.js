@@ -21,7 +21,10 @@ class CensusPieChart extends React.Component {
         let censusConfig ={};
         let census_subvars = [];
         let censusKey = this.props.censusKey;
+        /*
+        console.log('geoid',this.props.geoid)
         let geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
+         */
         return this.props.falcor.get(['acs','config']).then(res => {
 
             Object.values(res.json.acs).forEach( (config, i) =>{
@@ -36,10 +39,8 @@ class CensusPieChart extends React.Component {
                 }
             })
 
-            // console.log('census subvars', s)
-            return this.props.falcor.get(['acs',[...geoids],[...this.props.year],[...census_subvars]],['acs','config'])
+            return this.props.falcor.get(['acs',[...this.props.geoid],[...this.props.year],[...census_subvars]],['acs','config'])
                 .then(response=>{
-                    //console.log('FETCH SERVER PIE', this.props.geoid, this.props.year, census_subvars, response)
                     return response
             })
 
@@ -75,8 +76,8 @@ class CensusPieChart extends React.Component {
                 let responseData_race = {};
                 let pieData = [];
                 census_config = response.json.acs.config[this.props.censusKey].variables;
-                responseData_race = response.json.acs[this.props.geoid][this.props.year]
-                let colors = ColorRanges[Object.keys(responseData_race).shift().length+1].filter(d => d.name === 'Set3')[0].colors
+                responseData_race = response.json.acs[this.props.geoid][this.props.year];
+                let colors = ColorRanges[Object.keys(responseData_race).shift().length+2].filter(d => d.name === 'Set3')[0].colors;
                 Object.keys(responseData_race).forEach(function(race_key,i){
                     if (i > 1){
                         if (census_config[i] !== undefined){
