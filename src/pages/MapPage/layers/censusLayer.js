@@ -69,9 +69,9 @@ class CensusLayer extends MapLayer{
         for (let i = 0; i < this.censusBlockGroups.length; i += num) {
             requests.push(this.censusBlockGroups.slice(i, i + num))
         }
-        let census_route = []
-        let census_config = this.acsConfig
-        let census_topvar = this.filters.measures.value
+        let census_route = [];
+        let census_config = this.acsConfig;
+        let census_topvar = this.filters.measures.value;
         Object.keys(this.acsConfig).forEach(function(census_var,i){
             if(census_topvar === census_var){
                 census_config[census_var].variables.forEach(function(census_subvar,i){
@@ -129,7 +129,7 @@ class CensusLayer extends MapLayer{
                 '#8dd3c7']];
             let sum = 0;
             subvars.forEach(function(subvar, i) {
-                let value = parseFloat(subVariable[subvar].value)
+                let value = parseFloat(subVariable[subvar])
                 if(value !== 0){
                     stepper[0].push(
                         sum += value,
@@ -173,7 +173,7 @@ class CensusLayer extends MapLayer{
                             subvarColors[0]]]
                         let sum = 0
                         subvars.forEach(function(subvar, i) {
-                            let value = parseFloat(subVariable[subvar].value)
+                            let value = parseFloat(subVariable[subvar])
                             if(value !== 0){
                                 stepper[0].push(
                                     sum += value,
@@ -284,7 +284,7 @@ const censusLayer = new CensusLayer("Census Layer", {
                             Object.values(graph).forEach(function(item){
                                 Object.keys(item).forEach(function(acsVar){
                                     if(acsVar.slice(0,-5) === measure){
-                                        subVar_values = item[acsVar].value
+                                        subVar_values = item[acsVar]
                                         acs_config.value[acsVar.slice(0,-5)].variables.forEach(function(subvar,i){
                                             if (i> 0){
                                                 subVarNames.push(subvar.name)
@@ -322,7 +322,7 @@ const censusLayer = new CensusLayer("Census Layer", {
                             Object.values(graph).forEach(function(item){
                                 Object.keys(item).forEach(function(acsVar){
                                     if(acsVar.slice(0,-5) === measure){
-                                        subVar_values = item[acsVar].value
+                                        subVar_values = item[acsVar]
                                         acs_config.value[acsVar.slice(0,-5)].variables.forEach(function(subvar,i){
                                                 subVarNames.push(subvar.name)
                                                 subVarValues.push(subVar_values)

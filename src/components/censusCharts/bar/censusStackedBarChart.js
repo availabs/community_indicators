@@ -6,6 +6,7 @@ import {Bar} from '@nivo/bar'
 var numeral = require('numeral')
 
 class CensusStackedBarChart extends React.Component {
+    _isMounted = false;
     constructor(props) {
         super(props);
 
@@ -24,7 +25,7 @@ class CensusStackedBarChart extends React.Component {
     }
     fetchFalcorDeps() {
         let year = [2010,2011,2012,2013,2014,2015,2016]
-        let census_var = this.props.censusKey
+        let census_var = this.props.censusKey;
         let censusConfig ={}
         let census_subvars = []
         return falcorGraph.get(['acs','config'])
@@ -42,6 +43,7 @@ class CensusStackedBarChart extends React.Component {
             })
             return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],year,[...census_subvars]],['acs','config'])
     .then(response =>{
+           // console.log('response',response)
             return response
         })
     })
@@ -60,12 +62,11 @@ class CensusStackedBarChart extends React.Component {
         })
         }
 
-
-
     }
 
     componentWillMount()
     {
+        this._isMounted = true;
         this.transformData().then(res =>{
             this.setState({
                 graphData1 : res[1],
@@ -74,12 +75,16 @@ class CensusStackedBarChart extends React.Component {
 
     }
 
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
+
     transformData() {
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
                 let year = parseFloat(this.state.value);
-                let geoid = this.props.geoids;
-                let cenKey_age = this.props.censusKey[0];
+                let geoid = this.props.geoid;
+                let cenKey_age = this.props.censusKey;
                 let censusConfig = {};
                 let responseData_age = {};
                 let axisData_m = [];
@@ -92,15 +97,9 @@ class CensusStackedBarChart extends React.Component {
             
 
                 censusConfig = response.json.acs.config
-                responseData_age = response.json.acs[geoid][year] // || {}
-
-               //  _.get(response.json, `acs[${goeid}][${year}]`, {})
-
-          
-        console.log(responseData_age)
+                responseData_age = response.json.acs[geoid][year]
         //----------------------------- For the age by population graph -----------------------------
         Object.keys(responseData_age).forEach(function(res,index){
-            if (res.slice(0,-5)===cenKey_age){
                 if (index > 2 && index !== 26){
                     Object.keys(censusConfig).forEach(function(config,i){
                         if (res.slice(0,-5) === config){
@@ -136,7 +135,6 @@ class CensusStackedBarChart extends React.Component {
                         }
                     })
                 }
-            }
 
         })
         Object.values(axisData_f).forEach(function(axis_f,i){
@@ -270,8 +268,8 @@ class CensusStackedBarChart extends React.Component {
 
 
     static defaultProps = {
-        censusKey: ['B01001','B16001','B19013','B23008'], //'B19013',,
-        geoids: ['36001'],
+        censusKey: [], //'B19013',,
+        geoid: [],
         compareGeoid: []
     }
 
@@ -280,8 +278,9 @@ class CensusStackedBarChart extends React.Component {
 
 const mapDispatchToProps = { };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state,ownProps) => {
     return {
+        geoid:ownProps.geoid,
         graph: state.graph // so componentWillReceiveProps will get called.
     };
 };

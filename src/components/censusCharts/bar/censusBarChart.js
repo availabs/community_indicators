@@ -2,11 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
-import BarChart from "components/charts/bar/simple"
-import { ResponsiveBar } from '@nivo/bar'
 import {Bar} from '@nivo/bar'
-import { Line } from '@nivo/line'
-import {ResponsiveLine} from '@nivo/line'
 var numeral = require('numeral')
 
 class CensusBarChart extends React.Component {
@@ -27,10 +23,10 @@ class CensusBarChart extends React.Component {
         this.setState({value: event.target.value});
     }
     fetchFalcorDeps() {
-        let year = [2010,2011,2012,2013,2014,2015,2016]
-        let census_var = this.props.censusKey
-        let censusConfig ={}
-        let census_subvars = []
+        let years = [2010,2011,2012,2013,2014,2015,2016];
+        let census_var = this.props.censusKey;
+        let censusConfig ={};
+        let census_subvars = [];
         return falcorGraph.get(['acs','config'])
             .then(res=> {
             Object.values(res.json.acs).forEach(function (config, i) {
@@ -44,7 +40,7 @@ class CensusBarChart extends React.Component {
                     })
                 }
             })
-            return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],year,[...census_subvars]],['acs','config'])
+            return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],years,[...census_subvars]],['acs','config'])
     .then(response =>{
             return response
         })
@@ -69,12 +65,12 @@ class CensusBarChart extends React.Component {
     languageData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
-                let geoid = this.props.geoids;
+                let geoid = this.props.geoid;
         let langData_vw = []; //Speak English very well
         let langData_nvw = [];// Speak English less than very well
         let langData = [];
         let responseData_language = {};
-        let cenKey_language = 'B16001';
+        let cenKey_language = this.props.censusKey;
         let censusConfig = {};
         let year = 2015
         Object.values(response.json).forEach(function(value,i){
@@ -86,7 +82,6 @@ class CensusBarChart extends React.Component {
             })
         })
         Object.keys(responseData_language).forEach(function(language,i){
-            if (language.slice(0,-5) === cenKey_language){
                 Object.keys(censusConfig).forEach(function(config,i){
                     if (language.slice(0,-5) === config){
                         Object.values(censusConfig[config].variables).forEach(function(subvar,i){
@@ -107,7 +102,6 @@ class CensusBarChart extends React.Component {
                         })
                     }
                 })
-            }
 
         })
 
@@ -133,6 +127,7 @@ class CensusBarChart extends React.Component {
             var b1 = parseFloat(b.Percent)
             return b1 - a1
         })
+
         resolve(langData)
     })
     })
@@ -229,8 +224,8 @@ class CensusBarChart extends React.Component {
 
 
     static defaultProps = {
-        censusKey: ['B01001','B16001','B19013','B23008'], //'B19013',,
-        geoids: ['36001'],
+        censusKey: [],
+        geoid: [],
         compareGeoid: []
     }
 
@@ -239,8 +234,10 @@ class CensusBarChart extends React.Component {
 
 const mapDispatchToProps = { };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state,ownProps) => {
     return {
+        geoid:ownProps.geoid,
+        censusKey:ownProps.censusKey,
         graph: state.graph // so componentWillReceiveProps will get called.
     };
 };

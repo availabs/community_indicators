@@ -12,10 +12,7 @@ class CensusLineChart extends React.Component {
         this.state = {
             value: 2014,
             temp:2014,
-            graphData1: [],
-            graphData2: [],
             graphData3: [],
-            graphData4: []
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -24,7 +21,7 @@ class CensusLineChart extends React.Component {
     }
     fetchFalcorDeps() {
         let year = [2010,2011,2012,2013,2014,2015,2016]
-        let census_var = this.props.censusKey
+        let census_var = this.props.censusKey;
         let censusConfig ={}
         let census_subvars = []
         return falcorGraph.get(['acs','config'])
@@ -67,9 +64,9 @@ class CensusLineChart extends React.Component {
             this.fetchFalcorDeps().then(response => {
                 let response_lineData = [];
         let response_data = {};
-        let geoid = this.props.geoids;
+        let geoid = this.props.geoid;
         let years = [2010,2011,2012,2013,2014,2015,2016];
-        let cenKey_income = 'B19013';
+        let cenKey_income = this.props.censusKey;
         let lineData = [];
         let censusConfig = {};
         let axis_data = [];
@@ -221,8 +218,8 @@ class CensusLineChart extends React.Component {
 
 
     static defaultProps = {
-        censusKey: ['B01001','B16001','B19013','B23008'], //'B19013',,
-        geoids: ['36001'],
+        censusKey: [], //'B19013',,
+        geoid: [],
         compareGeoid: []
     }
 
@@ -231,8 +228,9 @@ class CensusLineChart extends React.Component {
 
 const mapDispatchToProps = { };
 
-const mapStateToProps = state => {
+const mapStateToProps = (state,ownProps) => {
     return {
+        geoid:ownProps.geoid,
         graph: state.graph // so componentWillReceiveProps will get called.
     };
 };
