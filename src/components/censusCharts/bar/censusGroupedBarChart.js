@@ -239,7 +239,10 @@ class CensusGroupedBarChart extends React.Component {
             }}
             padding={0.1}
             groupMode="grouped"
-            colors = 'nivo'
+            colors = {[
+                    '#4C24A2',
+                '#E59D4B',
+            ]}
             colorBy = "id"
             layout = "vertical"
             borderColor="inherit:darker(1.6)"
