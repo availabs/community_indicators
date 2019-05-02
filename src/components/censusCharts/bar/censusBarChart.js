@@ -151,7 +151,7 @@ class CensusBarChart extends React.Component {
                     "left": 60
             }}
             padding={0.3}
-            colors = 'set3'
+            colors = {this.state.graphData2.map(d => d.language_color)}
             colorBy = "index"
             layout = "vertical"
             borderColor="inherit:darker(1.6)"
