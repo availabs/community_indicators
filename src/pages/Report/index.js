@@ -13,24 +13,23 @@ import AvlMap from 'AvlMap'
 import TractsLayer from 'components/layers/TractsLayers.js'
 import CensusPieCompare from "components/censusCharts/pie/censusPieCompare"
 import CensusDomGraph from 'components/censusCharts/bar/censusDomGraph'
+
+import subMenus from 'pages/Report/countyPage-submenu.js'
+
 //let update = 0;
 class Home extends Component {
-    //constuctor(props){} declare a state and then setState
-    // click on a name here which changes the value d and increments the update variable.
-    // the update variable should go as props in AvlMap and the check condition in componenetDidUpdate
     constructor(props){
-        super(props)
+        super(props);
         this.state ={
-            update: 0
+            update: {id:0}
         }
         this.onMeasureClick = this.onMeasureClick.bind(this)
     }
     onMeasureClick (d) {
-        console.log('measure click', d);
         TractsLayer.filters.censvar.value = d;
-        this.setState({
-            update: this.state.update + 1
-        })
+        let update = Object.assign({},this.state.update);
+        update.id = update.id+1;
+        this.setState({update})
     }
     render () {
         return (
@@ -91,30 +90,12 @@ export default {
         scheme: 'color-scheme-dark',
         position: 'menu-position-left',
         layout: 'menu-layout-mini',
-        style: 'color-style-default'
+        style: 'color-style-default',
+        subemenustyle: 'sub-menu-style-over'
     },
+    subMenus:subMenus,
     name: 'Home',
     auth: false,
     component: Home
 }
 
-/*
-// pe charts and dom graph
-<div style = {{height :800}}>
-    <h1> Racial Population </h1>
-
-
-
-        </div>
- */
-
-
-/*
-<div>
-            <Element>
-            <div style={{height:800}}/>
-
-            </div>
-            </Element>
-            </div>
- */
