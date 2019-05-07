@@ -20,7 +20,6 @@ const counties = ['36001','36083','36093','36091','36039','36021','36115','36113
 class TractLayer extends MapLayer{
 
     onAdd(map){
-        console.log('in add');
         let tracts = []
         return falcorGraph.get(['geo',[...counties],'tracts'],['acs','config'])
             .then(data =>{
@@ -37,7 +36,6 @@ class TractLayer extends MapLayer{
             })
     }
     fetchData(){
-        console.log('in fetch data');
         let censusSubvars = [];
         this.subvars.forEach(function(subvar,i){
             censusSubvars.push(subvar.value)
@@ -48,8 +46,6 @@ class TractLayer extends MapLayer{
             })
     }
     receiveData(map,data) {
-        console.log('in receive data');
-        console.log('censusSubVar',this.filters.censvar.value);
         let censusSubVar = this.filters.censvar.value;
         let censVars = this.config['B02001'].variables;
         let censusSubVarKey = '';
@@ -64,7 +60,6 @@ class TractLayer extends MapLayer{
             out[curr] = data.json.acs[curr]['2016'][censusSubVarKey];
             return out;
         }, {});
-        console.log('keyDomain', keyDomain)
         let range = [["#EAD676","#E3CA56","#C6A612","#fee493","#fee392"],
             ["#CFAFD1","#773D7A","#5F1463","#966E99","#7A497E"],
             ['#DF3939','#8E1212','#D88383','#F34F4F','#8E0606'],
@@ -80,7 +75,6 @@ class TractLayer extends MapLayer{
             out[curr] = colorScale(keyDomain[curr]);
             return out;
         },{});
-        console.log('mapColors',mapColors);
         map.setPaintProperty(
             'tracts-layer',
             'fill-color',
@@ -122,6 +116,12 @@ const tractLayer = new TractLayer("Tracts Layer", {
             type: "hidden",
             domain: [],
             value: "White"
+        },
+        year:{
+            name: 'year',
+            type: 'hidden',
+            domain: [],
+            value: '2016'
         }
     }
 
