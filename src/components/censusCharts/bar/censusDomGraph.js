@@ -95,10 +95,6 @@ class CensusDomGraph extends React.Component{
         let censusConfig ={};
         let census_subvars = [];
         let censusKey = this.props.censusKey;
-        /*
-        console.log('geoid',this.props.geoid);
-        let geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
-         */
         return this.props.falcor.get(['acs','config']).then(res => {
 
             Object.values(res.json.acs).forEach( (config, i) =>{
@@ -114,7 +110,6 @@ class CensusDomGraph extends React.Component{
             });
             return this.props.falcor.get(['acs',[...this.props.geoid],[...this.props.year],[...census_subvars]],['acs','config'])
                 .then(response=>{
-                    //console.log('FETCH SERVER PIE', this.props.geoid, this.props.year, census_subvars, response)
                     return response
                 })
 
@@ -175,7 +170,6 @@ class CensusDomGraph extends React.Component{
                             }
                         }
                     });
-                    console.log('data',data);
                     resolve(data)
                 }
             })
