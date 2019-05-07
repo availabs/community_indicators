@@ -37,7 +37,7 @@ class CensusLineChart extends React.Component {
                     })
                 }
             })
-            return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],year,[...census_subvars]],['acs','config'])
+            return falcorGraph.get(['acs',[...this.props.geoid],year,[...census_subvars]],['acs','config'])
     .then(response =>{
             return response
         })
@@ -47,39 +47,46 @@ class CensusLineChart extends React.Component {
         //return this.props.censusKey.reduce((a,c) => a.then(() => falcorGraph.get(['acs',[...this.props.geoids,...this.props.compareGeoid],year,c])),Promise.resolve())
     }
 
-
-    componentWillMount()
-    {
+    componentWillMount(){
         this.lineData().then(res =>{
             this.setState({
                 graphData3 : res
             })
         })
-
     }
 
+    componentDidUpdate(oldProps)
+    {
+        if(oldProps.geoid !== this.props.geoid){
+            this.lineData().then(res =>{
+                this.setState({
+                    graphData3 : res
+                })
+            })
+        }
+
+    }
 
     lineData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
                 let response_lineData = [];
         let response_data = {};
-        let geoid = this.props.geoid;
         let years = [2010,2011,2012,2013,2014,2015,2016];
         let cenKey_income = this.props.censusKey;
         let lineData = [];
         let censusConfig = {};
         let axis_data = [];
-        Object.values(response.json).forEach(function(value,i){
-            censusConfig = value['config']
+        Object.values(response.json).forEach(function(value){
+            censusConfig = value['config'];
             Object.values(value).forEach(function(val,i){
                 if ( i === 0){
                     response_data = val
                 }
             })
         })
-        Object.keys(response_data).forEach(function(response,i){
-            Object.keys(response_data[response]).forEach(function(data,i){
+        Object.keys(response_data).forEach(function(response){
+            Object.keys(response_data[response]).forEach(function(data){
                 if (data === (cenKey_income + '_001E') ){
                     response_lineData.push(response_data[response][cenKey_income + '_001E'])
                 }
@@ -104,7 +111,6 @@ class CensusLineChart extends React.Component {
             "color": "hsl(157, 70%, 50%)",
             "data" : axis_data
         })
-
         resolve(lineData)
     })
     })
@@ -114,7 +120,7 @@ class CensusLineChart extends React.Component {
 
 
     render () {
-        if (Object.values(this.props.censusKey).includes('B19013') && Object.values(this.props.geoid).includes('36001')){
+        if (Object.values(this.props.censusKey).includes('B19013')){
             return(
                 <div>
                 <Line
@@ -200,7 +206,7 @@ class CensusLineChart extends React.Component {
                     ]}
             tooltip={({ id, indexValue, value, color,data }) => (
             <text>
-            <b><big>Albany County</big></b>
+            <b><big>{this.props.geoid}</big></b>
             <br/> <br/>
             Year : {id}
         <br/>
@@ -216,11 +222,9 @@ class CensusLineChart extends React.Component {
 
     }
 
-
     static defaultProps = {
-        censusKey: [], //'B19013',,
-        geoid: [],
-        compareGeoid: []
+        censusKey: ['B19013'], //'B19013',,
+        geoid: ['36001']
     }
 
 }
