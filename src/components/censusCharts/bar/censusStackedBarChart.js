@@ -43,16 +43,12 @@ class CensusStackedBarChart extends React.Component {
             })
             return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],year,[...census_subvars]],['acs','config'])
     .then(response =>{
-           // console.log('response',response)
             return response
         })
     })
-
-        //return this.props.censusKey.reduce((a, c) => a.then(() => falcorGraph.get(['acs',[...this.props.geoids,...this.props.compareGeoid],year,c],['acs','config'])), Promise.resolve())
-        //return this.props.censusKey.reduce((a,c) => a.then(() => falcorGraph.get(['acs',[...this.props.geoids,...this.props.compareGeoid],year,c])),Promise.resolve())
     }
 
-    componentDidUpdate(){
+    componentDidUpdate(oldProps){
         if (this.state.value !== this.state.temp){
             this.transformData().then(res =>{
                 this.setState({
@@ -60,6 +56,14 @@ class CensusStackedBarChart extends React.Component {
                     temp : this.state.value
                 });
         })
+        }
+
+        if (oldProps.geoid !== this.props.geoid){
+            this.transformData().then(res =>{
+                this.setState({
+                    graphData1 : res[1],
+                })
+            })
         }
 
     }
@@ -155,7 +159,7 @@ class CensusStackedBarChart extends React.Component {
 
 
     render () {
-        if (Object.values(this.props.censusKey).includes('B01001') && Object.values(this.props.geoid).includes('36001')) {
+        if (Object.values(this.props.censusKey).includes('B01001')) {
             return(
                 <div>
                 <Bar
@@ -268,7 +272,7 @@ class CensusStackedBarChart extends React.Component {
 
 
     static defaultProps = {
-        censusKey: [], //'B19013',,
+        censusKey: [],
         geoid: [],
         compareGeoid: []
     }
