@@ -135,7 +135,7 @@ class CensusBarChart extends React.Component {
     }
 
     render () {
-        if(Object.values(this.props.censusKey).includes('B16001') && Object.values(this.props.geoid).includes('36001')){
+        if(Object.values(this.props.censusKey).includes('B16001')){
             return(
                 <div>
                 <Bar
