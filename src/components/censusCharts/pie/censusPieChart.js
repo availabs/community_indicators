@@ -21,10 +21,6 @@ class CensusPieChart extends React.Component {
         let censusConfig ={};
         let census_subvars = [];
         let censusKey = this.props.censusKey;
-        /*
-        console.log('geoid',this.props.geoid)
-        let geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
-         */
         return this.props.falcor.get(['acs','config']).then(res => {
 
             Object.values(res.json.acs).forEach( (config, i) =>{
