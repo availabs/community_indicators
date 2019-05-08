@@ -28,7 +28,7 @@ class Menu extends Component {
   		'submenucolor': 'sub-menu-color-light',
   		'position': this.props.menuSettings.position ? this.props.menuSettings.position : 'menu-position-top', 
   		'layout': this.props.menuSettings.layout  ? this.props.menuSettings.layout : 'menu-layout-full',
-  		'subemenustyle': 'sub-menu-style-inside'
+  		'subemenustyle': this.props.menuSettings.subemenustyle ? this.props.menuSettings.subemenustyle : 'sub-menu-style-inside'
   	}
     let displayOptions = Object.values(defaultOptions).join(' ')
 
