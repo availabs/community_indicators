@@ -4,7 +4,7 @@ import { reduxFalcor } from 'utils/redux-falcor'
 import CensusLineChart from 'components/censusCharts/line/censusLineChart'
 import subMenus from 'pages/Report/countyPage-submenu.js'
 
-class CountyPage extends React.Component{
+class GeoPage extends React.Component{
     render(){
         let geoid = this.props.match.params.geoid ?
             this.props.match.params.geoid
@@ -45,5 +45,5 @@ export default
                 subemenustyle: 'sub-menu-style-over'
             },
         subMenus: subMenus,
-        component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CountyPage))
+        component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(GeoPage))
     }
