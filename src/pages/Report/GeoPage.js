@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor } from 'utils/redux-falcor'
 import CensusLineChart from 'components/censusCharts/line/censusLineChart'
+import CensusStackedLineChart from 'components/censusCharts/line/censusStackedLineChart'
+import CensusMultiStackedLineChart from 'components/censusCharts/line/censusMultiStackedLineChart'
 import subMenus from 'pages/Report/countyPage-submenu.js'
 
 class GeoPage extends React.Component{
@@ -12,6 +14,9 @@ class GeoPage extends React.Component{
         return (
             <div>
                 <CensusLineChart geoid={[geoid]} censusKey={['B19013']}/>
+                <CensusStackedLineChart geoid={[geoid]} censusKey={['B25002']}/>
+                <CensusLineChart geoid={[geoid]} censusKey={['B17001']}/>
+                <CensusMultiStackedLineChart geoid={[geoid]} censusKey={['B15003']}/>
             </div>
         )
     }
