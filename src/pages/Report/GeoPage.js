@@ -4,6 +4,7 @@ import { reduxFalcor } from 'utils/redux-falcor'
 import CensusLineChart from 'components/censusCharts/line/censusLineChart'
 import CensusStackedLineChart from 'components/censusCharts/line/censusStackedLineChart'
 import CensusMultiStackedLineChart from 'components/censusCharts/line/censusMultiStackedLineChart'
+import CensusPieChart from 'components/censusCharts/pie/censusPieChart'
 import subMenus from 'pages/Report/countyPage-submenu.js'
 
 class GeoPage extends React.Component{
@@ -13,6 +14,8 @@ class GeoPage extends React.Component{
             :36001;
         return (
             <div>
+                <h1> Racial Population for the year: 2017 </h1>
+                <CensusPieChart geoid={[geoid]} censusKey={['B02001']} year={['2017']}/>
                 <CensusLineChart geoid={[geoid]} censusKey={['B19013']}/>
                 <CensusStackedLineChart geoid={[geoid]} censusKey={['B25002']}/>
                 <CensusLineChart geoid={[geoid]} censusKey={['B17001']}/>
