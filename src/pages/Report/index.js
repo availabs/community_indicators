@@ -9,7 +9,7 @@ import CensusGroupedBarChart from "components/censusCharts/bar/censusGroupedBarC
 import CensusLineChart from "components/censusCharts/line/censusLineChart"
 import CensusStackedLineChart from "components/censusCharts/line/censusStackedLineChart"
 import CensusMultiStackedLineChart from "components/censusCharts/line/censusMultiStackedLineChart"
-
+import CensusPieChart from "components/censusCharts/pie/censusPieChart"
 import AvlMap from 'AvlMap'
 import TractsLayer from 'components/layers/TractsLayers.js'
 import CensusPieCompare from "components/censusCharts/pie/censusPieCompare"
@@ -44,6 +44,8 @@ class Home extends Component {
             <CensusLineChart geoid={['36001']} censusKey={['B17001']}/>
             <CensusStackedLineChart geoid={['36001']} censusKey={['B25002']}/>
             <CensusMultiStackedLineChart geoid={['36001']} censusKey={['B15003']}/>
+            <h1> Racial Population year for the 2017 </h1>
+            <CensusPieChart geoid={['36001']} censusKey={['B02001']} year={['2017']}/>
             <h1>Racial Population</h1>
             <CensusPieCompare geoid={['36001','36083','36093','36091','36039','36021','36115','36113']} censusKey={['B02001']}/>
             <div style={{width: '90%', height: '100vh', display: 'flex', alignContent: 'stretch', alignItems:'stretch', marginLeft: 40}}>
