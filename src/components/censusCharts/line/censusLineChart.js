@@ -114,8 +114,6 @@ class CensusLineChart extends React.Component {
 
 
     }
-
-
     render () {
         if (Object.values(this.props.censusKey).includes('B19013')){
             return(
@@ -208,6 +206,104 @@ class CensusLineChart extends React.Component {
             Year : {id}
         <br/>
             Median Income : ${Object.values(data)[0]['data'].y}
+                </text>
+        )}
+
+            />
+            </div>
+        )
+        }
+        if(Object.values(this.props.censusKey).includes('B17001')){
+            return(
+                <div>
+                <Line
+            data={this.state.graphData3}
+            width={900}
+            height={500}
+            margin={{
+                "top": 30,
+                    "right": 150,
+                    "bottom": 60,
+                    "left": 140
+            }}
+            xScale={{
+                "type": "point"
+            }}
+            yScale={{
+                "type": 'linear',
+                    "stacked": false,
+                    "min": 'auto',
+                    "max": 'auto'
+            }}
+            curve= 'linear'
+            lineWidth = {2.5}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Poverty Status",
+                    "legendOffset": 36,
+                    "legendPosition": "center"
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Income in the past 12 months below poverty level",
+                    "legendOffset": -60,
+                    "legendPosition": "center"
+            }}
+            dotSize={5}
+            dotColor="inherit:darker(0.3)"
+            dotBorderWidth={2}
+            dotBorderColor="#ffffff"
+            enableDotLabel={false}
+            dotLabel="y"
+            dotLabelYOffset={-12}
+            animate={true}
+            enableGridX={true}
+            enableGridY={true}
+            enableArea={false}
+            areaOpacity={0.35}
+            motionStiffness={90}
+            motionDamping={15}
+            legends={[
+                    {
+                        "anchor": "bottom-right",
+                        "direction": "column",
+                        "justify": false,
+                        "translateX": 100,
+                        "translateY": 0,
+                        "itemsSpacing": 0,
+                        "itemDirection": "left-to-right",
+                        "itemWidth": 80,
+                        "itemHeight": 20,
+                        "itemOpacity": 0.75,
+                        "symbolSize": 12,
+                        "symbolShape": "circle",
+                        "symbolBorderColor": "rgba(0, 0, 0, .5)",
+                        "effects": [
+                            {
+                                "on": "hover",
+                                "style": {
+                                    "itemBackground": "rgba(0, 0, 0, .03)",
+                                    "itemOpacity": 1
+                                }
+                            }
+                        ]
+                    }
+                    ]}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{this.props.geoid}</big></b>
+            <br/> <br/>
+            Year : {id}
+        <br/>
+            Income : ${Object.values(data)[0]['data'].y}
                 </text>
         )}
 
