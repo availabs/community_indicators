@@ -64,7 +64,6 @@ class CensusMultiStackedLineChart extends React.Component{
     multiStackedLineData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
-                console.log('response',response)
                 let censusConfig = response.json.acs.config[this.props.censusKey].variables;
                 let response_data = response.json.acs[this.props.geoid];
                 let years = Object.keys(response_data).filter(d => d !== '$__path');
