@@ -65,6 +65,18 @@ class CensusPieChart extends React.Component {
         })
     }
 
+    componentDidUpdate(oldProps)
+    {
+        if(oldProps.geoid !== this.props.geoid){
+            this.pieData().then(res =>{
+                this.setState({
+                    graphData5 : res
+                })
+            })
+        }
+
+    }
+
     pieData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
@@ -184,18 +196,3 @@ const mapStateToProps = (state,ownProps) => {
 export default  connect(mapStateToProps,mapDispatchToProps)(reduxFalcor(CensusPieChart))
 
 
-
-/*
-         legends={[
-                {
-                    "anchor": "right",
-                    "direction": "column",
-                    "translateX": -10,
-                    "itemWidth": 80,
-                    "itemHeight": 20,
-                    "itemsSpacing": 2,
-                    "symbolSize": 14,
-                    "symbolShape": "circle"
-                }
-                ]}
-         */
