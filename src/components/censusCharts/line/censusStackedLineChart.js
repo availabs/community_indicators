@@ -13,6 +13,7 @@ class CensusStackedLineChart extends React.Component{
             value: 2014,
             temp:2014,
             graphData7: [],
+            graphData8: []
         }
     }
 
@@ -47,6 +48,7 @@ class CensusStackedLineChart extends React.Component{
                 graphData7 : res
             })
         })
+
     }
 
     componentDidUpdate(oldProps)
@@ -86,7 +88,7 @@ class CensusStackedLineChart extends React.Component{
                             })
                         }
                     })
-                })
+                });
                 stackedLineData.push(
                     {
                         "id":"Occupied",
@@ -98,118 +100,114 @@ class CensusStackedLineChart extends React.Component{
                         "color":"hsl(180, 70%, 50%)",
                         "data":vaccantData
                     }
-                )
+                );
                 resolve(stackedLineData)
             })
         })
     }
 
     render(){
-        return(
-        <div>
-            <Line
-        data={this.state.graphData7}
-        width={900}
-        height={500}
-        margin={{
-            "top": 30,
-                "right": 150,
-                "bottom": 60,
-                "left": 140
-        }}
-        xScale={{
-            "type": "point"
-        }}
-        yScale={{
-            "type": 'linear',
-                "stacked": false,
-                "min": 0,
-                "max": 140000
-        }}
-        curve='linear'
-        colors={this.state.graphData7.map(d => d.color)}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-            "orient": "bottom",
-                "tickSize": 5,
-                "tickPadding": 5,
-                "tickRotation": 0,
-                "legend": "Occupancy of Housing Units",
-                "legendOffset": 36,
-                "legendPosition": "center"
-        }}
-        axisLeft={{
-            "orient": "left",
-                "tickSize": 5,
-                "tickPadding": 5,
-                "tickRotation": 0,
-                "legend": "Units",
-                "legendOffset": -60,
-                "legendPosition": "center"
-        }}
-        dotSize={5}
-        dotColor="inherit:darker(0.3)"
-        dotBorderWidth={2}
-        dotBorderColor="#ffffff"
-        enableDotLabel={false}
-        dotLabel="y"
-        dotLabelYOffset={-12}
-        animate={true}
-        enableGridX={true}
-        enableGridY={true}
-        enableArea={false}
-        areaOpacity={0.35}
-        motionStiffness={90}
-        motionDamping={15}
-        legends={[
-                {
-                    "anchor": "bottom-right",
-                    "direction": "column",
-                    "justify": false,
-                    "translateX": 100,
-                    "translateY": 0,
-                    "itemsSpacing": 0,
-                    "itemDirection": "left-to-right",
-                    "itemWidth": 80,
-                    "itemHeight": 20,
-                    "itemOpacity": 0.75,
-                    "symbolSize": 12,
-                    "symbolShape": "circle",
-                    "symbolBorderColor": "rgba(0, 0, 0, .5)",
-                    "effects": [
-                        {
-                            "on": "hover",
-                            "style": {
-                                "itemBackground": "rgba(0, 0, 0, .03)",
-                                "itemOpacity": 1
+            return(
+                <div>
+                <Line
+            data={this.state.graphData7}
+            width={900}
+            height={500}
+            margin={{
+                "top": 30,
+                    "right": 150,
+                    "bottom": 60,
+                    "left": 140
+            }}
+            xScale={{
+                "type": "point"
+            }}
+            yScale={{
+                "type": 'linear',
+                    "stacked": false,
+                    "min": 0,
+                    "max": 140000
+            }}
+            curve='linear'
+            colors={this.state.graphData7.map(d => d.color)}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Occupancy of Housing Units",
+                    "legendOffset": 36,
+                    "legendPosition": "center"
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Units",
+                    "legendOffset": -60,
+                    "legendPosition": "center"
+            }}
+            dotSize={5}
+            dotColor="inherit:darker(0.3)"
+            dotBorderWidth={2}
+            dotBorderColor="#ffffff"
+            enableDotLabel={false}
+            dotLabel="y"
+            dotLabelYOffset={-12}
+            animate={true}
+            enableGridX={true}
+            enableGridY={true}
+            enableArea={false}
+            areaOpacity={0.35}
+            motionStiffness={90}
+            motionDamping={15}
+            legends={[
+                    {
+                        "anchor": "bottom-right",
+                        "direction": "column",
+                        "justify": false,
+                        "translateX": 100,
+                        "translateY": 0,
+                        "itemsSpacing": 0,
+                        "itemDirection": "left-to-right",
+                        "itemWidth": 80,
+                        "itemHeight": 20,
+                        "itemOpacity": 0.75,
+                        "symbolSize": 12,
+                        "symbolShape": "circle",
+                        "symbolBorderColor": "rgba(0, 0, 0, .5)",
+                        "effects": [
+                            {
+                                "on": "hover",
+                                "style": {
+                                    "itemBackground": "rgba(0, 0, 0, .03)",
+                                    "itemOpacity": 1
+                                }
                             }
-                        }
-                    ]
-                }
-                ]}
-        tooltip={({ id, indexValue, value, color,data }) => (
-        <text>
-        <b><big>{this.props.geoid}</big></b>
-        <br/> <br/>
-        Year : {id}
-    <br/>
-        Vaccant Units : {Object.values(data)[0]['data'].y}
+                        ]
+                    }
+                    ]}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{this.props.geoid}</big></b>
+            <br/> <br/>
+            Year : {id}
         <br/>
-        Occupied Units: {Object.values(data)[1]['data'].y}
-    </text>
-    )}
-        />
-        </div>
-    )
-
-        /*
-
-         */
+            Vaccant Units : {Object.values(data)[0]['data'].y}
+        <br/>
+            Occupied Units: {Object.values(data)[1]['data'].y}
+        </text>
+        )}
+            />
+            </div>
+        )
     }
 
     static defaultProps = {
-        censusKey: ['B19013'], //'B19013',,
+        censusKey: ['B25002'], //'B19013',,
         geoid: ['36001']
     }
 }
