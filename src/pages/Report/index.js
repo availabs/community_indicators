@@ -7,7 +7,8 @@ import CensusStackedBarChart from "components/censusCharts/bar/censusStackedBarC
 import CensusBarChart from "components/censusCharts/bar/censusBarChart"
 import CensusGroupedBarChart from "components/censusCharts/bar/censusGroupedBarChart"
 import CensusLineChart from "components/censusCharts/line/censusLineChart"
-import CensusPieChart from "components/censusCharts/pie/censusPieChart"
+import CensusStackedLineChart from "components/censusCharts/line/censusStackedLineChart"
+import CensusMultiStackedLineChart from "components/censusCharts/line/censusMultiStackedLineChart"
 
 import AvlMap from 'AvlMap'
 import TractsLayer from 'components/layers/TractsLayers.js'
@@ -40,6 +41,9 @@ class Home extends Component {
             <CensusBarChart geoid={['36001']} censusKey={['B16001']}/>
             <CensusGroupedBarChart geoid={['36001']} compareGeoid={['36']} censusKey={['B23008']}/>
             <CensusLineChart geoid={['36001']} censusKey={['B19013']}/>
+            <CensusLineChart geoid={['36001']} censusKey={['B17001']}/>
+            <CensusStackedLineChart geoid={['36001']} censusKey={['B25002']}/>
+            <CensusMultiStackedLineChart geoid={['36001']} censusKey={['B15003']}/>
             <h1>Racial Population</h1>
             <CensusPieCompare geoid={['36001','36083','36093','36091','36039','36021','36115','36113']} censusKey={['B02001']}/>
             <div style={{width: '90%', height: '100vh', display: 'flex', alignContent: 'stretch', alignItems:'stretch', marginLeft: 40}}>
