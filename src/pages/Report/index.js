@@ -14,10 +14,9 @@ import AvlMap from 'AvlMap'
 import TractsLayer from 'components/layers/TractsLayers.js'
 import CensusPieCompare from "components/censusCharts/pie/censusPieCompare"
 import CensusDomGraph from 'components/censusCharts/bar/censusDomGraph'
+import CensusStatBox from 'components/censusCharts/statBox/censusStatBox.js'
 
 import subMenus from 'pages/Report/countyPage-submenu.js'
-
-//let update = 0;
 class Home extends Component {
     constructor(props){
         super(props);
@@ -37,13 +36,38 @@ class Home extends Component {
             <div>
             <Element>
             <div style={{height:5000}}>
+            <h4>Demographics</h4>
+            <div class="Demographics" style={{color:'rgba(0,0,0,.8)',fontSize:'12px',fontWeight: '400',display: 'flex', alignContent: 'center', alignItems:'center', justifyContent:'flex-start',flexWrap: 'wrap',flexDirection:'row',margin: '0 5px'}}>
+                <CensusStatBox geoid={['36001']} censusKey={['B01003']} year={['2017']}/>
+                <CensusStatBox geoid={['36001']} censusKey={['B01002']} year={['2017']}/>
+            </div>
             <CensusStackedBarChart geoid={['36001']} censusKey={['B01001']}/>
             <CensusBarChart geoid={['36001']} censusKey={['B16001']}/>
             <CensusGroupedBarChart geoid={['36001']} compareGeoid={['36']} censusKey={['B23008']}/>
+            <div class="Economy" style={{color:'rgba(0,0,0,.8)',fontSize:'12px',fontWeight: '400',display: 'flex', alignContent: 'center', alignItems:'center', justifyContent:'flex-start',flexWrap: 'wrap',flexDirection:'row',margin: '0 5px'}}>
             <CensusLineChart geoid={['36001']} censusKey={['B19013']}/>
+            <h4>Economy
+            <CensusStatBox geoid={['36001']} censusKey={['B19013']} amount={true}/>
+            </h4>
+            </div>
+            <div class="Poverty" style={{color:'rgba(0,0,0,.8)',fontSize:'12px',fontWeight: '400',display: 'flex', alignContent: 'center', alignItems:'center', justifyContent:'flex-start',flexWrap: 'wrap',flexDirection:'row',margin: '0 5px'}}>
             <CensusLineChart geoid={['36001']} censusKey={['B17001']}/>
+            <h4>Poverty
+            <CensusStatBox geoid={['36001']} censusKey={['B17001']} poverty={true}/>
+            </h4>
+            </div>
+            <div class="Housing" style={{color:'rgba(0,0,0,.8)',fontSize:'12px',fontWeight: '400',display: 'flex', alignContent: 'center', alignItems:'center', justifyContent:'flex-start',flexWrap: 'wrap',flexDirection:'row',margin: '0 5px'}}>
             <CensusStackedLineChart geoid={['36001']} censusKey={['B25002']}/>
+            <h4>Housing
+            <CensusStatBox geoid={['36001']} censusKey={['B25002']} housing={true}/>
+            </h4>
+            </div>
+            <div class="Education" style={{color:'rgba(0,0,0,.8)',fontSize:'12px',fontWeight: '400',display: 'flex', alignContent: 'center', alignItems:'center', justifyContent:'flex-start',flexWrap: 'wrap',flexDirection:'row',margin: '0 5px'}}>
             <CensusMultiStackedLineChart geoid={['36001']} censusKey={['B15003']}/>
+            <h4>Education
+            <CensusStatBox geoid={['36001']} censusKey={['B15003']} education={true}/>
+            </h4>
+            </div>
             <h1> Racial Population for the year 2017 </h1>
             <CensusPieChart geoid={['36001']} censusKey={['B02001']} year={['2017']}/>
             <h1>Racial Population</h1>
