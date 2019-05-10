@@ -64,41 +64,44 @@ class CensusMultiStackedLineChart extends React.Component{
     multiStackedLineData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
+                console.log('response',response)
                 let censusConfig = response.json.acs.config[this.props.censusKey].variables;
                 let response_data = response.json.acs[this.props.geoid];
                 let years = Object.keys(response_data).filter(d => d !== '$__path');
                 let data = [];
                 let multiStackedLineData = [];
-                let colors = ColorRanges[Object.keys(response_data).length+3].filter(d => d.name === 'Set3')[0].colors;
+                let colors = ColorRanges[Object.keys(response_data).length+4].filter(d => d.name === 'Set3')[0].colors;
                 for(var k =0; k<=censusConfig.length-1;k++){
                     data.push([])
                 }
                 Object.keys(response_data).filter(d => d !== '$__path').forEach(function (item,i) {
                     let testData = response_data[item]
                     censusConfig.forEach(function(config,j){
+                        if(j > 0){
                             data[j].push({
                                 "x":years[i],
                                 "y":parseInt(testData[config.value])
                             })
-
+                        }
                     })
                 });
                 censusConfig.forEach(function(census,l){
-                    multiStackedLineData.push(
-                        {
-                            "id":census.name,
-                            "colors":colors[l],
-                            "data":data[l]
-                        }
-                    )
+                    if(l>0){
+                        multiStackedLineData.push(
+                            {
+                                "id":census.name,
+                                "colors":colors[l],
+                                "data":data[l]
+                            }
+                        )
+                    }
+
                 });
                 resolve(multiStackedLineData)
             })
 
         })
     }
-
-
 
     render(){
         return(
