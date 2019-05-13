@@ -95,6 +95,7 @@ class CensusStackedLineChart extends React.Component{
                         "color":"hsl(223, 70%, 50%)",
                         "data":occupiedData
                     },
+
                     {
                         "id":"Vaccant",
                         "color":"hsl(180, 70%, 50%)",
