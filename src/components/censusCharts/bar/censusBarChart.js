@@ -62,6 +62,8 @@ class CensusBarChart extends React.Component {
     }
 
 
+
+
     languageData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
