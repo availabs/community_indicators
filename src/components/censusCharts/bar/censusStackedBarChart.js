@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
-import {Bar} from '@nivo/bar'
+import {ResponsiveBar} from '@nivo/bar'
 var numeral = require('numeral')
 
 class CensusStackedBarChart extends React.Component {
@@ -159,13 +159,14 @@ class CensusStackedBarChart extends React.Component {
 
 
     render () {
+        const style={
+            height: 500
+        }
         if (Object.values(this.props.censusKey).includes('B01001')) {
             return(
-                <div>
-                <Bar
+                <div style={style}>
+                <ResponsiveBar
             data={this.state.graphData1}
-            width={900}
-            height={500}
             margin={{
                 top: 60,
                     right: 80,
