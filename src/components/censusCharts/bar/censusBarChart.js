@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
-import {Bar} from '@nivo/bar'
+import {ResponsiveBar} from '@nivo/bar'
 var numeral = require('numeral')
 
 class CensusBarChart extends React.Component {
@@ -12,10 +12,9 @@ class CensusBarChart extends React.Component {
         this.state = {
             value: 2014,
             temp:2014,
-            graphData1: [],
             graphData2: [],
-            graphData3: [],
-            graphData4: []
+            height:0,
+            width:0
         }
         this.handleChange = this.handleChange.bind(this)
     }
@@ -53,6 +52,7 @@ class CensusBarChart extends React.Component {
 
     componentWillMount()
     {
+
         this.languageData().then(res =>{
             this.setState({
                 graphData2 : res
@@ -61,6 +61,15 @@ class CensusBarChart extends React.Component {
 
     }
 
+    componentDidUpdate(oldProps,oldState){
+        if(oldProps.geoid !== this.props.geoid){
+            this.languageData().then(res =>{
+                this.setState({
+                    graphData2 : res
+                })
+            })
+        }
+    }
 
 
 
@@ -137,13 +146,14 @@ class CensusBarChart extends React.Component {
     }
 
     render () {
+        const style = {
+            height:500
+        };
         if(Object.values(this.props.censusKey).includes('B16001')){
             return(
-                <div>
-                <Bar
+                <div style={style}>
+                <ResponsiveBar
             data={this.state.graphData2}
-            width={900}
-            height={500}
             indexBy="language"
             keys = {["Percent"]}
             margin={{
@@ -164,7 +174,7 @@ class CensusBarChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": -90,
-                    "legendPosition": "center",
+                    "legendPosition": "middle",
                     "legendOffset": 36
             }}
             axisLeft={{
@@ -194,28 +204,6 @@ class CensusBarChart extends React.Component {
             {id} Speaking English less than very well: {value}%
         </text>
         )}
-
-            markers={[
-                    {
-                        axis: 'x',
-                        value: 0,
-                        legend: 'Language',
-                        legendPosition: 'top-left',
-                        legendOrientation: 'horizontal',
-                        legendOffsetX: 100,
-                        legendOffsetY: 20,
-                    }
-                    ]}
-            theme={{
-                "tooltip": {
-                    "container": {
-                        "fontSize": "13px"
-                    }
-                },
-                "labels": {
-                    "textColor": "#555"
-                }
-            }}
             />
             </div>
         )
