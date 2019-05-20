@@ -6,7 +6,6 @@ import {falcorGraph} from "store/falcorGraph";
 class CensusStatBox extends React.Component{
     constructor(props) {
         super(props);
-
         this.state = {
             graphData9: []
         }
@@ -62,6 +61,7 @@ class CensusStatBox extends React.Component{
                         census_config.forEach(function(config,j){
                             if (j !== 0){
                                 statData.push({
+                                    "title": 'Poverty',
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": (data[value[1]] / data[value[0]] * 100).toFixed(2) + '%'
@@ -78,6 +78,7 @@ class CensusStatBox extends React.Component{
                         census_config.forEach(function(config,j){
                             if (j === 2){
                                 statData.push({
+                                    "title":"Housing",
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": (data[value[2]] / data[value[0]] * 100).toFixed(2) + '%'
@@ -93,6 +94,7 @@ class CensusStatBox extends React.Component{
                         census_config.forEach(function(config,j){
                             if (j===0){
                                 statData.push({
+                                    "title": "Economy",
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": '$' + data[config.value].toLocaleString()
@@ -107,6 +109,7 @@ class CensusStatBox extends React.Component{
                         let data = response_data[item];
                         let value= Object.keys(data).filter(d => d!== '$__path');
                             statData.push({
+                                "title":"Education",
                                 "censusVarName": 'HS ED. & Above',
                                 "year": year,
                                 "value": ((data[value[1]] + data[value[2]] + data[value[3]] + data[[value[4]]] + data[value[5]] + data[value[6]] + data[value[7]] + data[value[8]] + data[value[9]])/ data[value[0]] * 100).toFixed(2) + '%'
@@ -120,6 +123,7 @@ class CensusStatBox extends React.Component{
                         census_config.forEach(function(config,j){
                             if (j===0){
                                 statData.push({
+                                    "title":"Demographics",
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": data[config.value].toLocaleString()
@@ -137,13 +141,15 @@ class CensusStatBox extends React.Component{
     render(){
             return(
                 <div>
-                <div class="stats" style={{display:'block',letterSpacing: '1px',margin: '0 0 16px'}}>
-        <div class='pop-container'>
-                <div class='demo-col'>
+                <h4 style={{color:'rgba(0,0,0,.8)',fontWeight: '700'}}>
+                {this.state.graphData9.map(d => d.title)}</h4>
+                <div className="stats" style={{display:'block',letterSpacing: '1px',margin: '0 0 16px'}}>
+        <div className='pop-container'>
+                <div className='demo-col'>
                 <h5 style={{color:'rgba(0,0,0,.8)',display: 'block',fontSize: '12px',fontWeight: '400',letterSpacing: '1px',margin:'0 0 16px',textTransform: 'uppercase',width: '100%'}}> {this.state.graphData9.map(d => d.censusVarName)}
         <span style={{color:'rgba(0,0,0,.4)',marginLeft: '6px',textDecoration:'underline',textDecorationStyle:'dashed'}}> {this.state.graphData9.map(d => d.year)} </span>
             </h5>
-            <span class='stat' style={{clear: 'both',color:'#09f',display:'block',fontSize: '32px',fontWeight:'700',marginBottom: '0'}}>{this.state.graphData9.map(d => d.value)}</span>
+            <span className='stat' style={{clear: 'both',color:'#09f',display:'block',fontSize: '32px',fontWeight:'700',marginBottom: '0'}}>{this.state.graphData9.map(d => d.value)}</span>
             </div>
             </div>
             </div>
@@ -159,7 +165,8 @@ class CensusStatBox extends React.Component{
         amount: false,
         poverty: false,
         housing: false,
-        education: false
+        education: false,
+        demographics: false
     }
 }
 
