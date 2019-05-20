@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
-import { Line } from '@nivo/line'
+import { ResponsiveLine } from '@nivo/line'
 var numeral = require('numeral')
 
 class CensusLineChart extends React.Component {
@@ -53,14 +53,14 @@ class CensusLineChart extends React.Component {
     }
 
     componentDidUpdate(oldProps)
-    {
-        if(oldProps.geoid !== this.props.geoid){
-            this.lineData().then(res =>{
-                this.setState({
-                    graphData3 : res
-                })
+    {if(oldProps.geoid !== this.props.geoid){
+        this.lineData().then(res =>{
+            this.setState({
+                graphData3 : res
             })
-        }
+        })
+    }
+
 
     }
 
@@ -117,11 +117,8 @@ class CensusLineChart extends React.Component {
     render () {
         if (Object.values(this.props.censusKey).includes('B19013')){
             return(
-                <div>
-                <Line
+            <ResponsiveLine
             data={this.state.graphData3}
-            width={900}
-            height={500}
             margin={{
                 "top": 30,
                     "right": 150,
@@ -210,16 +207,12 @@ class CensusLineChart extends React.Component {
         )}
 
             />
-            </div>
         )
         }
         if(Object.values(this.props.censusKey).includes('B17001')){
             return(
-                <div>
-                <Line
+            <ResponsiveLine
             data={this.state.graphData3}
-            width={900}
-            height={500}
             margin={{
                 "top": 30,
                     "right": 150,
@@ -302,13 +295,13 @@ class CensusLineChart extends React.Component {
             <b><big>{this.props.geoid}</big></b>
             <br/> <br/>
             Year : {id}
-        <br/>
+            <br/>
             Income : ${Object.values(data)[0]['data'].y}
-                </text>
+            </text>
         )}
 
             />
-            </div>
+
         )
         }
 
