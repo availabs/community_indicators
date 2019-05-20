@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import GridLayout from './GridLayout'
 import subMenus from './GeoReport-submenu.js'
-import '/home/nayanika/IdeaProjects/community_indicators/node_modules/react-grid-layout/css/styles.css'
 const GRAPH_CONFIG = require('pages/Report/graphConfig.js')
 
 const GraphLayoutContainer = styled.div`

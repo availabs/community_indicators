@@ -1,5 +1,4 @@
 import React from 'react'
-import '/home/nayanika/IdeaProjects/community_indicators/node_modules/react-grid-layout/css/styles.css'
 //import WidthProvider from 'pages/auth/NetworkView/components/utils/WidthProvider'
 import { WidthProvider, Responsive as ResponsiveGridLayout} from 'react-grid-layout'
 import GraphFactory from './GraphFactory'
