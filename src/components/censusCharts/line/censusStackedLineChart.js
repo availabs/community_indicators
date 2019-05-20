@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
-import { Line } from '@nivo/line'
+import { ResponsiveLine } from '@nivo/line'
 var numeral = require('numeral')
 
 class CensusStackedLineChart extends React.Component{
@@ -109,11 +109,8 @@ class CensusStackedLineChart extends React.Component{
 
     render(){
             return(
-                <div>
-                <Line
+            <ResponsiveLine
             data={this.state.graphData7}
-            width={900}
-            height={500}
             margin={{
                 "top": 30,
                     "right": 150,
@@ -203,7 +200,7 @@ class CensusStackedLineChart extends React.Component{
         </text>
         )}
             />
-            </div>
+
         )
     }
 
