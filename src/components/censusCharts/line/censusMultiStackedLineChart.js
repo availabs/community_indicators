@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
-import { Line } from '@nivo/line'
+import { ResponsiveLine } from '@nivo/line'
 import ColorRanges from 'constants/color-ranges'
 
 class CensusMultiStackedLineChart extends React.Component{
@@ -64,7 +64,6 @@ class CensusMultiStackedLineChart extends React.Component{
     multiStackedLineData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
-                console.log('response',response)
                 let censusConfig = response.json.acs.config[this.props.censusKey].variables;
                 let response_data = response.json.acs[this.props.geoid];
                 let years = Object.keys(response_data).filter(d => d !== '$__path');
@@ -105,11 +104,8 @@ class CensusMultiStackedLineChart extends React.Component{
 
     render(){
         return(
-            <div>
-            <Line
+        <ResponsiveLine
         data={this.state.graphData8}
-        width={900}
-        height={500}
         margin={{
             "top": 30,
                 "right": 150,
@@ -213,7 +209,7 @@ class CensusMultiStackedLineChart extends React.Component{
         </text>
         )}
         />
-        </div>
+
     )
     }
 
