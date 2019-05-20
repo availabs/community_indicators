@@ -2,13 +2,13 @@
 // -- Landing Routes
 //import Landing from './pages/Landing'
 
-// import PublicPlan from './pages/PublicPlan'
 import MapPage from "./pages/MapPage"
 import Report from "./pages/Report"
+import GraphLayout from "./pages/Analysis/GraphLayout"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-import CountyPage from "./pages/Report/CountyPage.js"
-
+import GeoPage from "./pages/Report/GeoPage.js"
+import GeoReport from "./pages/Report/GeoReport"
 
 // -- Util Routes
 // import Login from './pages/Login'
@@ -18,10 +18,13 @@ import NoMatch from './pages/404.js'
 const routes = [
   MapPage,
   Report,
-  CountyPage,
+  GeoPage,
+  GeoReport,
+  GraphLayout,
   Login,
   Signup,
   NoMatch
+
 ]
 
 export default routes
