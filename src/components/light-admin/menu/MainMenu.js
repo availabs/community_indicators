@@ -1,14 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 
-const test = [
-    {name: 'Albany City',  path: '/report/3600101000'},
-    {name: 'Berne town', path: '/report/3600106211'},
-    {name: 'Bethlehem town', path: '/report/3600106354'},
-    {name: 'Coeymans town', path: '/report/3600116694'},
-    {name: 'Cohoes City',path: '/report/3600116749'},
-    {name: 'Colonie town',path: '/report/3600117343'}
-]
 class MainMenu extends Component {
 
   constructor(props) {
@@ -19,9 +11,15 @@ class MainMenu extends Component {
   
   renderMenus (menus) {
     return menus
-      .filter(menu => menu.mainNav)
-      .filter(menu => !menu.auth || this.props.authed)
+      .filter(menu => {
+          //console.log('- ',menu);
+          return menu.mainNav;
+      })
+      .filter(menu => {
+          return (!menu.auth || this.props.authed);
+      })
       .map((menu, index) => {
+          //console.log('menu',menu)
         let topMenu = menu.path ? menu.path.split('/')[1] : ''
         let currentTop = this.props.path ? this.props.path.split('/')[1] : ' ' 
         let isActive = topMenu === currentTop
@@ -143,33 +141,3 @@ class MainMenu extends Component {
 }
 
 export default MainMenu
-
-/*
-let children =[]
-menu.subMenus[0].forEach(function(d){
-    if (d.children !== undefined){
-        children.push(d.children)
-    }
-})
-menu.subMenus.map((subMenu,sindex) =>{
-  subMenu.map((item,ssindex) =>{
-      item.children.map((subSubMenu,cindex)=>{
-          console.log('subSubMenu',subSubMenu)
-      })
-  })
-})
- */
-
-/*
-   <ul
-                                  className ="sub-sub-menu"
-                                  key={'subItem_'+ 'aaa'}
-                                  id= {'subItem_'}>
-                                  return (
-                                      <li key='0'>
-                                      <Link to={'#'}>{'aaaaaaa'}</Link>
-
-                                      </li>
-                              );
-                              </ul>
- */
