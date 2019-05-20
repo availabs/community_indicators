@@ -199,7 +199,7 @@ class CensusGroupedBarChart extends React.Component {
             compareData.push({
                     "Category" : Object.keys(obj1)[1],
                     "Two Parents in Albany County" :  numeral(parseFloat(Object.values(obj1)[0])).format('0.00a'),
-                    "county" : Object.values(obj1)[1],
+                    "county/cousub" : Object.values(obj1)[1],
                     "countyColor" : '#DAF7A6',
                     "Two Parents in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[0])).format('0.00a'),
                     "New York state" : Object.values(obj2_percent[i])[1],
@@ -208,7 +208,7 @@ class CensusGroupedBarChart extends React.Component {
                 {
                     "Category": Object.keys(obj1)[3],
                     "One Parent(father) in Albany County" : numeral(parseFloat(Object.values(obj1)[2])).format('0.0a'),
-                    "county": Object.values(obj1)[3],
+                    "county/cousub": Object.values(obj1)[3],
                     "countyColor": '#FF5733',
                     "One Parent(father) in New York State" : numeral(parseFloat(Object.values(obj2_percent[i])[2])).format('0.0a'),
                     "New York state": Object.values(obj2_percent[i])[3],
@@ -217,7 +217,7 @@ class CensusGroupedBarChart extends React.Component {
                 {
                     "Category": Object.keys(obj1)[5],
                     "One Parent(mother) in Albany County": numeral(parseFloat(Object.values(obj1)[4])).format('0.0a'),
-                    "county": Object.values(obj1)[5],
+                    "county/cousub": Object.values(obj1)[5],
                     "countyColor": '#00A01B',
                     "One Parent(mother) in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[4])).format('0.0a'),
                     "New York state": Object.values(obj2_percent[i])[5],
@@ -240,7 +240,7 @@ class CensusGroupedBarChart extends React.Component {
                 <ResponsiveBar
             data={this.state.graphData4}
             indexBy="Category"
-            keys = {["county","New York state"]}
+            keys = {["county/cousub","New York state"]}
             margin={{
                 "top": 100,
                     "right": 130,
@@ -313,7 +313,7 @@ class CensusGroupedBarChart extends React.Component {
             <text>
             <b><big>{indexValue}</big></b>
             <br/> <br/>
-            {id} :{(id.includes('county')) ? Object.values(data)[4] : Object.values(data)[1]}, {value}%
+            {id} :{(id.includes('county/cousub')) ? Object.values(data)[4] : Object.values(data)[1]}, {value}%
         </text>
         )}
             />
