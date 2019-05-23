@@ -89,80 +89,62 @@ class CensusBarChart extends React.Component {
     languageData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
-                console.log('res',response)
-                let geoid = this.props.geoid;
-        let langData_vw = []; //Speak English very well
-        let langData_nvw = [];// Speak English less than very well
-        let langData = [];
-        let responseData_language = {};
-        let cenKey_language = this.props.censusKey;
-        let censusConfig = {};
-        let year = this.props.year
-        Object.values(response.json).forEach(function(value,i){
-            censusConfig = value['config']
-            Object.values(value).forEach(function(val,i){
-                if ( i === 0){
-                    responseData_language = val[year]
-                }
-            })
-        })
-                console.log('first error', responseData_language)
-        Object.keys(responseData_language).forEach(function(language,i){
-                Object.keys(censusConfig).forEach(function(config,i){
-                    if (language.slice(0,-5) === config){
-                        Object.values(censusConfig[config].variables).forEach(function(subvar,i){
-                            if (language === subvar.value){
-                                if(subvar.name.includes('Speak English very well')){
-                                    langData_vw.push({
-                                        "language":subvar.name.split('Speak')[0],
-                                        "Speakers":responseData_language[language]
-                                    })
-                                }
-                                else if (subvar.name.includes('Speak English Less than very well')) {
-                                    langData_nvw.push({
-                                        "language": subvar.name.split('Speak')[0],
-                                        "Speakers": responseData_language[language]
-                                    })
-                                }
+                let langData_vw = []; //Speak English very well
+                let langData_nvw = [];// Speak English less than very well
+                let langData = [];
+                let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                let responseData_language = response.json.acs[this.props.geoid][this.props.year]
+                Object.keys(responseData_language).forEach(function (language, i) {
+                    censusConfig.forEach(function (subvar) {
+                        if (language === subvar.value) {
+                            if (subvar.name.includes('Speak English very well')) {
+                                langData_vw.push({
+                                    "language": subvar.name.split('Speak')[0],
+                                    "Speakers": responseData_language[language]
+                                })
                             }
+                            else if (subvar.name.includes('Speak English Less than very well')) {
+                                langData_nvw.push({
+                                    "language": subvar.name.split('Speak')[0],
+                                    "Speakers": responseData_language[language]
+                                })
+                            }
+                        }
+                    })
+
+                })
+
+
+                let subvarColors = ['#C01616', '#091860', '#E0E540', '#C15E0A', '#074F28', '#564B8E', '#287F2C', '#1AA3CB', '#790576',
+                    '#F7C9B9', '#F4F3AF', '#C2ECF3', '#F4AD4D', '#2AF70E', '#D8AFE7', '#88DE73', '#718CD1', '#EA6A7D',
+                    '#C01616', '#091860', '#E0E540', '#C15E0A', '#074F28', '#564B8E', '#287F2C'
+                ]
+                Object.values(langData_nvw).forEach(function (nvw, i) {
+                    if (nvw.language === langData_vw[i].language) {
+                        langData.push({
+                            "language": nvw.language,
+                            "Speakers": parseFloat(nvw.Speakers) + parseFloat(langData_vw[i].Speakers),
+                            "Percent": parseFloat((parseFloat(nvw.Speakers) / (parseFloat(langData_vw[i].Speakers) + parseFloat(nvw.Speakers)) * 100).toFixed(2)),
+                            "language_color": subvarColors[i]
                         })
                     }
+
                 })
-
-        })
-
-        let subvarColors = ['#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C','#1AA3CB','#790576',
-            '#F7C9B9','#F4F3AF' , '#C2ECF3','#F4AD4D','#2AF70E','#D8AFE7','#88DE73' ,'#718CD1','#EA6A7D',
-            '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C'
-        ]
-        Object.values(langData_nvw).forEach(function(nvw,i){
-            //if (i < 2){
-            if(nvw.language === langData_vw[i].language){
-                langData.push({
-                    "language" : nvw.language,
-                    "Speakers" : parseFloat(nvw.Speakers) + parseFloat(langData_vw[i].Speakers),
-                    "Percent" : parseFloat((parseFloat(nvw.Speakers) / (parseFloat(langData_vw[i].Speakers) + parseFloat(nvw.Speakers)) * 100).toFixed(2)),
-                    "language_color" : subvarColors[i]
+                langData.sort(function (a, b) {
+                    var a1 = parseFloat(a.Percent)
+                    var b1 = parseFloat(b.Percent)
+                    return b1 - a1
                 })
-            }
-            //}
+                resolve(langData)
+            })
+        })
 
-        })
-        langData.sort(function(a,b){
-            var a1 = parseFloat(a.Percent)
-            var b1 = parseFloat(b.Percent)
-            return b1 - a1
-        })
-        resolve(langData)
-    })
-    })
 
     }
 
     familyData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
-                console.log(response.json.acs[this.props.geoid], this.props.geoid, this.props.year )
                 let responseData_family =response.json.acs[this.props.geoid][this.props.year];
                 let censusConfig = response.json.acs.config[this.props.censusKey].variables;
                 let familyData = [];
