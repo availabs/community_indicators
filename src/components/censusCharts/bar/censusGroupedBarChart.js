@@ -45,7 +45,6 @@ class CensusGroupedBarChart extends React.Component {
             });
             return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],year,[...census_subvars]],['acs','config'])
     .then(response =>{
-            console.log('response',response)
             return response
         })
     })
