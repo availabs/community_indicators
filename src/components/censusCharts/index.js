@@ -35,20 +35,25 @@ export default {
     NA
 }
 
-export const GRAPH_TYPES = [
-    { type: "Language Bar Graph", category: "Bar Graphs" },
-    { type: "Racial Population Dom Graph", category: "Bar Graphs" },
-    { type: "Parents Bar Graph", category: "Bar Graphs" },
-    { type: "Population by Sex Bar Graph", category: "Bar Graphs" },
-    { type: "Median Income Line Graph", category: "Line Graphs" },
-    { type: "Poverty level Line Graph", category:"Line Graph"},
-    { type: "Education level Line Graph", category: "Line Graphs" },
-    { type: "Housing units Line Graph", category: "Line Graphs" },
-    { type: "Racial Population 2017", category: "Pie Graphs" },
-    { type: "Racial Population", category: "Pie Graphs" },
-    { type: "Population Stat Box", category: "Stat Box" },
-    { type: "Median Age Stat Box", category: "Stat Box" },
-    { type: "Household income Stat Box", category: "Stat Box" },
-    { type: "Housing units Stat Box", category: "Stat Box" },
-    { type: "Education Level Stat Box", category: "Stat Box" }
-];
+export const GRAPH_TYPES = {
+    overview:
+        [
+            {type: "Language Bar Graph", category: "Bar Graphs"},
+            {type: "Racial Population Dom Graph", category: "Bar Graphs"},
+            {type: "Parents Bar Graph", category: "Bar Graphs"},
+            {type: "Population by Sex Bar Graph", category: "Bar Graphs"},
+            {type: "Median Income Line Graph", category: "Line Graphs"},
+            {type: "Poverty level Line Graph", category: "Line Graph"},
+            {type: "Education level Line Graph", category: "Line Graphs"},
+            {type: "Housing units Line Graph", category: "Line Graphs"},
+            {type: "Racial Population 2017", category: "Pie Graphs"},
+            {type: "Racial Population", category: "Pie Graphs"},
+            {type: "Population Stat Box", category: "Stat Box"},
+            {type: "Median Age Stat Box", category: "Stat Box"},
+            {type: "Household income Stat Box", category: "Stat Box"},
+            {type: "Housing units Stat Box", category: "Stat Box"},
+            {type: "Education Level Stat Box", category: "Stat Box"}
+        ]
+
+
+};
