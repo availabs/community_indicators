@@ -59,12 +59,12 @@ class CensusStatBox extends React.Component{
                         let data = response_data[item];
                         let value= Object.keys(data).filter(d => d!== '$__path');
                         census_config.forEach(function(config,j){
-                            if (j !== 0){
+                            if (j === 0){
                                 statData.push({
                                     "title": 'Poverty',
                                     "censusVarName": config.name,
                                     "year": year,
-                                    "value": (data[value[1]] / data[value[0]] * 100).toFixed(2) + '%'
+                                    "value": (data[value[0]] / data[value[1]] * 100).toFixed(2) + '%'
                                 })
                             }
                         })
