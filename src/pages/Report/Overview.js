@@ -2,11 +2,11 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor } from 'utils/redux-falcor'
 import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
-import subMenus from 'pages/Analysis/GraphLayout/GeoReport-submenu.js'
+import subMenus from 'pages/Overview/Overview-submenu.js'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 const GRAPH_CONFIG = require('pages/Report/graphConfig.js')
 
-class GeoReport extends React.Component{
+class Overview extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -24,7 +24,7 @@ class GeoReport extends React.Component{
         let geoid = this.props.match.params.geoid ?
             this.props.match.params.geoid
             :36001;
-        this.state.graphConfig.map(function(config){
+        this.state.graphConfig.overview.map(function(config){
             config['geoid'] = [geoid]
         })
         return (
@@ -35,13 +35,12 @@ class GeoReport extends React.Component{
                     isOpen={1}
                     title={''}
                     viewing={false}
-                    graphs={this.state.graphConfig}
+                    graphs={this.state.graphConfig.overview}
                     onOpenOrClose={function noop() {}}
                     onLayoutChange={ this.props.onLayoutChange }
                     verticalCompact={false}
             />
         </div>
-
     )
     }
 
@@ -64,11 +63,11 @@ const mapDispatchToProps = {};
 export default
 {
 
-    path: '/edit/:geoid',
-    name: 'Geo Report',
+    path: '/overview/:geoid',
+    name: 'Overview Report',
     mainNav: false,
     breadcrumbs: [
-        {param: 'geoid', path: '/edit/'}
+        {param: 'geoid', path: '/overview/'}
     ],
     menuSettings:
         {
@@ -80,5 +79,5 @@ export default
             subemenustyle: 'sub-menu-style-over'
         },
     subMenus: subMenus,
-    component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(GeoReport))
+    component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Overview))
 }
