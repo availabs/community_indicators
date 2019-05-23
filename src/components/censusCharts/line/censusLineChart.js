@@ -67,45 +67,38 @@ class CensusLineChart extends React.Component {
     lineData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
-                let response_lineData = [];
-        let response_data = {};
+        let response_data = response.json.acs[this.props.geoid];
         let years = [2010,2011,2012,2013,2014,2015,2016];
-        let cenKey_income = this.props.censusKey;
         let lineData = [];
-        let censusConfig = {};
+        let censusConfig = response.json.acs.config[this.props.censusKey].variables;
         let axis_data = [];
-        Object.values(response.json).forEach(function(value){
-            censusConfig = value['config'];
-            Object.values(value).forEach(function(val,i){
-                if ( i === 0){
-                    response_data = val
-                }
-            })
-        })
-        Object.keys(response_data).forEach(function(response){
-            Object.keys(response_data[response]).forEach(function(data){
-                if (data === (cenKey_income + '_001E') ){
-                    response_lineData.push(response_data[response][cenKey_income + '_001E'])
-                }
 
-            })
-        })
+        Object.keys(response_data).forEach(function(item,i){
+            if (item !== '$__path'){
+                let testData = response_data[item]
+                censusConfig.forEach(function(config,j){
+                    if ( j === 0){
+                        if (Number.isNaN(parseInt(testData[config.value]))){
+                            axis_data.push({
+                                "x" : years[i],
+                                "y" : 0
+                            })
+                        }
+                        else{
+                            axis_data.push({
+                                "x" : years[i],
+                                "y" : parseInt(testData[config.value])
+                            })
+                        }
 
-        response_lineData.forEach(function(value,index){
-            axis_data.push({
-                "x" : years[index],
-                "y" : parseInt(value)
-            })
-
-
-        })
-
-        axis_data = axis_data.filter(function(elem, index, self) {
-            return index === self.indexOf(elem);
+                    }
+                })
+            }
         })
         lineData.push({
             "id": 'years',
             "color": "hsl(157, 70%, 50%)",
+            "title": censusConfig[0].name,
             "data" : axis_data
         })
         resolve(lineData)
@@ -115,7 +108,8 @@ class CensusLineChart extends React.Component {
 
     }
     render () {
-        if (Object.values(this.props.censusKey).includes('B19013')){
+        let title = this.state.graphData3.map(d => d.title)[0]
+       if (this.props.PovertyPopulationBySex === false){
             return(
             <ResponsiveLine
             data={this.state.graphData3}
@@ -143,7 +137,7 @@ class CensusLineChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": 0,
-                    "legend": "Median Household Income in the Past 12 Months (In 2010 Inflation-Adjusted Dollars)",
+                    "legend": "Median Household Income in the Past 12 Months",
                     "legendOffset": 36,
                     "legendPosition": "center"
             }}
@@ -196,20 +190,21 @@ class CensusLineChart extends React.Component {
                         ]
                     }
                     ]}
-            tooltip={({ id, indexValue, value, color,data }) => (
+            tooltip={({ id, indexValue, value, color, data }) => (
             <text>
+            <h6>{title}</h6>
             <b><big>{this.props.geoid}</big></b>
             <br/> <br/>
             Year : {id}
-        <br/>
-            Median Income : ${Object.values(data)[0]['data'].y}
-                </text>
+            <br/>
+            Median Income: ${Object.values(data)[0]['data'].y}
+            </text>
         )}
 
             />
         )
         }
-        if(Object.values(this.props.censusKey).includes('B17001')){
+        if(this.props.PovertyPopulationBySex === true){
             return(
             <ResponsiveLine
             data={this.state.graphData3}
@@ -246,7 +241,7 @@ class CensusLineChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": 0,
-                    "legend": "Income in the past 12 months below poverty level",
+                    "legend": "Income in the past months below poverty level",
                     "legendOffset": -60,
                     "legendPosition": "center"
             }}
@@ -310,7 +305,8 @@ class CensusLineChart extends React.Component {
 
     static defaultProps = {
         censusKey: ['B19013'], //'B19013',,
-        geoid: ['36001']
+        geoid: ['36001'],
+        PovertyPopulationBySex: false
     }
 
 }
