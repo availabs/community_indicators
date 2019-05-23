@@ -89,6 +89,7 @@ class CensusBarChart extends React.Component {
     languageData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response => {
+                console.log('res',response)
                 let geoid = this.props.geoid;
         let langData_vw = []; //Speak English very well
         let langData_nvw = [];// Speak English less than very well
@@ -105,6 +106,7 @@ class CensusBarChart extends React.Component {
                 }
             })
         })
+                console.log('first error', responseData_language)
         Object.keys(responseData_language).forEach(function(language,i){
                 Object.keys(censusConfig).forEach(function(config,i){
                     if (language.slice(0,-5) === config){
@@ -160,6 +162,7 @@ class CensusBarChart extends React.Component {
     familyData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
+                console.log(response.json.acs[this.props.geoid], this.props.geoid, this.props.year )
                 let responseData_family =response.json.acs[this.props.geoid][this.props.year];
                 let censusConfig = response.json.acs.config[this.props.censusKey].variables;
                 let familyData = [];
@@ -185,6 +188,7 @@ class CensusBarChart extends React.Component {
                     })
 
                 })
+
                 resolve(familyData)
             })
         })
