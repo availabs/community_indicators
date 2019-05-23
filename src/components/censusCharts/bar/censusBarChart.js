@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
 import {ResponsiveBar} from '@nivo/bar'
+import ColorRanges from 'constants/color-ranges'
 var numeral = require('numeral')
 
 class CensusBarChart extends React.Component {
@@ -13,6 +14,7 @@ class CensusBarChart extends React.Component {
             value: 2014,
             temp:2014,
             graphData2: [],
+            graphData10: [],
             height:0,
             width:0
         }
@@ -22,7 +24,6 @@ class CensusBarChart extends React.Component {
         this.setState({value: event.target.value});
     }
     fetchFalcorDeps() {
-        let years = [2010,2011,2012,2013,2014,2015,2016];
         let census_var = this.props.censusKey;
         let censusConfig ={};
         let census_subvars = [];
@@ -39,7 +40,7 @@ class CensusBarChart extends React.Component {
                     })
                 }
             })
-            return falcorGraph.get(['acs',[...this.props.geoid,...this.props.compareGeoid],years,[...census_subvars]],['acs','config'])
+            return falcorGraph.get(['acs',[...this.props.geoid],[...this.props.year],[...census_subvars]],['acs','config'])
     .then(response =>{
             return response
         })
@@ -59,6 +60,12 @@ class CensusBarChart extends React.Component {
             })
         })
 
+        this.familyData().then(res =>{
+            this.setState({
+                graphData10: res
+            })
+        })
+
     }
 
     componentDidUpdate(oldProps,oldState){
@@ -68,9 +75,15 @@ class CensusBarChart extends React.Component {
                     graphData2 : res
                 })
             })
+
+            this.familyData().then(res =>{
+                this.setState({
+                    graphData10: res
+                })
+            })
+
         }
     }
-
 
 
     languageData(){
@@ -83,7 +96,7 @@ class CensusBarChart extends React.Component {
         let responseData_language = {};
         let cenKey_language = this.props.censusKey;
         let censusConfig = {};
-        let year = 2015
+        let year = this.props.year
         Object.values(response.json).forEach(function(value,i){
             censusConfig = value['config']
             Object.values(value).forEach(function(val,i){
@@ -138,21 +151,55 @@ class CensusBarChart extends React.Component {
             var b1 = parseFloat(b.Percent)
             return b1 - a1
         })
-
         resolve(langData)
     })
     })
 
     }
 
+    familyData(){
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response =>{
+                let responseData_family =response.json.acs[this.props.geoid][this.props.year];
+                let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                let familyData = [];
+                let colors = ['#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C']
+                Object.keys(responseData_family).filter(d => d !== '$__path').forEach(function(item){
+                    censusConfig.forEach(function(config,j){
+                        if ( j !== 0){
+                            if (responseData_family[config.value] < 0){
+                                familyData.push({
+                                    "family":config.name,
+                                    "familyIncome":Math.abs(responseData_family[config.value])/1000,
+                                    "color": colors[j]
+                                })
+                            }
+                            else{
+                                familyData.push({
+                                    "family":config.name,
+                                    "familyIncome":responseData_family[config.value],
+                                    "color": colors[j]
+                                })
+                            }
+                        }
+                    })
+
+                })
+                resolve(familyData)
+            })
+        })
+    }
+
+
+
     render () {
         const style = {
             height:500
         };
-        if(Object.values(this.props.censusKey).includes('B16001')){
-            return(
-                <div style={style}>
-                <ResponsiveBar
+        if(this.props.familyIncome === false){
+        return(
+            <div style={style}>
+            <ResponsiveBar
             data={this.state.graphData2}
             indexBy="language"
             keys = {["Percent"]}
@@ -208,15 +255,78 @@ class CensusBarChart extends React.Component {
             </div>
         )
         }
+        if(this.props.familyIncome === true){
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData10}
+            indexBy="family"
+            keys = {["familyIncome"]}
+            margin={{
+                "top": 100,
+                    "right": 130,
+                    "bottom": 170,
+                    "left": 60
+            }}
+            minValue={0}
+            maxValue={200000}
+            padding={0.5}
+            colors = {this.state.graphData10.map(d => d.color)}
+            colorBy = "index"
+            layout = "vertical"
+            borderColor="inherit:darker(1.6)"
+            enableGridX = {true}
+            enableGridY={true}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": -90,
+                    "legendPosition": "middle",
+                    "legendOffset": 36
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+                    "legend" : "Median Income by Family Size",
+                    format: v => `${v}`
+            }}
+            labelSkipWidth={12}
+            labelSkipHeight={36}
+            enableLabel = {false}
+            labelTextColor="inherit:darker(1.6)"
+            labelFormat = "0"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{indexValue}</big></b>
+            <br/> <br/>
+            {['Family Size']} : {data.family}
+        <br/>
+            Median Income by Family Size: ${value}
+        </text>
+        )}
+            />
+            </div>
+        )
+        }
+
 
 
     }
 
 
     static defaultProps = {
+        year: ['2015'],
         censusKey: [],
         geoid: [],
-        compareGeoid: []
+        familyIncome: false
     }
 
 }
