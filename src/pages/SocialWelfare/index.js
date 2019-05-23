@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import GridLayout from './GridLayout'
-import subMenus from './GeoReport-submenu.js'
+import GridLayout from 'pages/Analysis/GraphLayout/GridLayout'
+import subMenus from './SocialWelfare-submenu.js'
+import '/home/nayanika/IdeaProjects/community_indicators/node_modules/react-grid-layout/css/styles.css'
 const GRAPH_CONFIG = require('pages/Report/graphConfig.js')
 
 const GraphLayoutContainer = styled.div`
@@ -14,7 +15,7 @@ const GraphLayoutContainer = styled.div`
   
 `;
 
-class GraphLayout extends Component {
+class GraphLayoutSocial extends Component {
     constructor(props){
         super(props);
             this.state ={
@@ -58,14 +59,14 @@ class GraphLayout extends Component {
         isOpen: 1,
         title: '',
         viewing: false,
-        graph: GRAPH_CONFIG,
+        graph: GRAPH_CONFIG.socialWelfare,
         onOpenOrClose: function noop() {}
     };
 }
 
 export default {
     icon: 'os-icon-home',
-    path: '/edit',
+    path: '/social',
     mainNav:true,
     exact:true,
     menuSettings: {
@@ -75,9 +76,9 @@ export default {
         layout: 'menu-layout-mini',
         style: 'color-style-default'
     },
-    name: 'GraphLayout',
+    name: 'GraphLayout-SocialWelfare',
     auth:false,
     subMenus: subMenus,
-    component: GraphLayout
+    component: GraphLayoutSocial
 }
 
