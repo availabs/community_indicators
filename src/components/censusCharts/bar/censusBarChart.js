@@ -119,15 +119,14 @@ class CensusBarChart extends React.Component {
                     '#F7C9B9', '#F4F3AF', '#C2ECF3', '#F4AD4D', '#2AF70E', '#D8AFE7', '#88DE73', '#718CD1', '#EA6A7D',
                     '#C01616', '#091860', '#E0E540', '#C15E0A', '#074F28', '#564B8E', '#287F2C'
                 ]
+
                 Object.values(langData_nvw).forEach(function (nvw, i) {
-                    if (nvw.language === langData_vw[i].language) {
                         langData.push({
                             "language": nvw.language,
                             "Speakers": parseFloat(nvw.Speakers) + parseFloat(langData_vw[i].Speakers),
                             "Percent": parseFloat((parseFloat(nvw.Speakers) / (parseFloat(langData_vw[i].Speakers) + parseFloat(nvw.Speakers)) * 100).toFixed(2)),
                             "language_color": subvarColors[i]
                         })
-                    }
 
                 })
                 langData.sort(function (a, b) {
