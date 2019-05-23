@@ -4,11 +4,12 @@
 
 import MapPage from "./pages/MapPage"
 import Report from "./pages/Report"
-import GraphLayout from "./pages/Analysis/GraphLayout"
+import GraphLayoutOverview from "./pages/Overview"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-import GeoPage from "./pages/Report/GeoPage.js"
-import GeoReport from "./pages/Report/GeoReport"
+import Overview from "./pages/Report/Overview"
+import GraphLayoutSocial from './pages/SocialWelfare'
+import Social from './pages/Report/Social'
 
 // -- Util Routes
 // import Login from './pages/Login'
@@ -18,9 +19,10 @@ import NoMatch from './pages/404.js'
 const routes = [
   MapPage,
   Report,
-  GeoPage,
-  GeoReport,
-  GraphLayout,
+  Overview,
+  GraphLayoutOverview,
+  Social,
+  GraphLayoutSocial,
   Login,
   Signup,
   NoMatch
