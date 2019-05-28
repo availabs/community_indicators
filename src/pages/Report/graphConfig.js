@@ -162,7 +162,7 @@ module.exports = {
     //---------------------------------------Social Welfare-----------------------------------
     socialWelfare:[
         {
-            id:'1',
+            id:'13',
             type:'CensusBarChart',
             censusKey:['B19119'],
             year: ['2017'],
@@ -176,7 +176,7 @@ module.exports = {
             }
         },
         {
-            id:'2', // The year slider doesn`t work if static is false
+            id:'14', // The year slider doesn`t work if static is false
             type: 'CensusStackedBarChart',
             censusKey:['B01001'],
             PopulationByAge:true,
@@ -189,7 +189,7 @@ module.exports = {
             }
         },
         {
-            id: '3',
+            id: '15',
             type: 'CensusBarChart',
             censusKey: ['B16001'],
             layout: {
@@ -201,7 +201,7 @@ module.exports = {
             }
         },
         {
-            id: '4',
+            id: '16',
             type: 'CensusLineChart',
             censusKey: ['B19013A'],
             layout: {
@@ -213,7 +213,7 @@ module.exports = {
             }
         },
         {
-            id: '5',
+            id: '17',
             type: 'CensusLineChart',
             censusKey: ['B19013B'],
             layout: {
@@ -225,7 +225,7 @@ module.exports = {
             }
         },
         {
-            id: '6',
+            id: '18',
             type: 'CensusLineChart',
             censusKey: ['B19013C'],
             layout: {
@@ -237,7 +237,7 @@ module.exports = {
             }
         },
         {
-            id: '7',
+            id: '19',
             type: 'CensusLineChart',
             censusKey: ['B19013D'],
             layout: {
@@ -249,7 +249,7 @@ module.exports = {
             }
         },
         {
-            id: '8',
+            id: '20',
             type: 'CensusLineChart',
             censusKey: ['B19013E'],
             layout: {
@@ -261,7 +261,7 @@ module.exports = {
             }
         },
         {
-            id: '9',
+            id: '21',
             type: 'CensusLineChart',
             censusKey: ['B19013F'],
             layout: {
@@ -273,7 +273,7 @@ module.exports = {
             }
         },
         {
-            id: '10',
+            id: '22',
             type: 'CensusLineChart',
             censusKey: ['B19013G'],
             layout: {
@@ -309,7 +309,7 @@ module.exports = {
             }
         },
         {
-            id:'13', // The year slider doesn`t work if static is false
+            id:'23', // The year slider doesn`t work if static is false
             type:'CensusStackedBarChart',
             censusKey:['B17001'],
             PovertyPopulationBySex: true,
@@ -322,7 +322,7 @@ module.exports = {
             }
         },
         {
-            id:'14',// The year slider doesn`t work if static is false
+            id:'24',// The year slider doesn`t work if static is false
             type:'CensusStackedBarChart',
             censusKey:['B21001'],
             CivilianStatus: true,
