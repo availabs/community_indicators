@@ -33,12 +33,13 @@ class Report extends React.Component{
         this.state.graphConfig.socialWelfare.map(function(config){
             config['geoid'] = [geoid]
         })
+
         return (
-            <div>
-            <div>
-            <h1 align='center'> Overview </h1>
-            <br/>
-            <GridLayout
+        <div>
+        <div>
+        <h1 align='center'> Overview </h1>
+        <br/>
+        <GridLayout
         sideWidth={800}
         minifiedWidth={1}
         isOpen={1}

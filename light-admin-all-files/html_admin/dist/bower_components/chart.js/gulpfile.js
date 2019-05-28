@@ -171,7 +171,7 @@ function startTest() {
     {pattern: './test/fixtures/**/*.json', included: false},
     {pattern: './test/fixtures/**/*.png', included: false},
     './node_modules/moment/min/moment.min.js',
-    './test/jasmine.index.js',
+    '.index.js',
     './src/**/*.js',
   ].concat(
     argv.inputs ?

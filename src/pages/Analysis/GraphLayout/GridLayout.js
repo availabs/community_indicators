@@ -5,8 +5,6 @@ import GraphFactory from './GraphFactory'
 import _ from "lodash";
 const ReactGridLayout = WidthProvider(ResponsiveGridLayout);
 
-
-
 const DEFAULT_LAYOUT = {
     h: 15,
     w: 10,
@@ -29,9 +27,10 @@ class GridLayout extends React.Component {
         this.state = { layout };
     }
     loadComps() {
-        const { graphs, viewing, ...rest } = this.props;
+        const {graphs,viewing, ...rest } = this.props;
         return graphs.map((graph, i) => {
-            let layout = { ...getDefaultLayout(graph.id) }
+            let layout = { ...getDefaultLayout(graph.id) };
+            console.log('layout',graph.layout)
             if (graph.layout) {
                 layout = {
                     ...layout,

@@ -1,12 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="381afa48-1dff-4567-b0b7-4d2126fee405" name="Default Changelist" comment="">
+    <list default="true" id="381afa48-1dff-4567-b0b7-4d2126fee405" name="Default Changelist" comment="updates">
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/censusCharts/censusBarChart.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MapPage/layers/acsLayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MapPage/layers/acsLayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/MapPage/layers/censusLayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/MapPage/layers/censusLayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Report/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/chart.js/dist/Chart.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/chart.js/dist/Chart.bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/chart.js/dist/Chart.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/chart.js/dist/Chart.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/chart.js/gulpfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/chart.js/gulpfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/datatables.net/js/jquery.dataTables.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/datatables.net/js/jquery.dataTables.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/slick-carousel/slick/slick.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/dist/bower_components/slick-carousel/slick/slick.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/chart.js/dist/Chart.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/chart.js/dist/Chart.bundle.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/chart.js/dist/Chart.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/chart.js/dist/Chart.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/chart.js/gulpfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/chart.js/gulpfile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/datatables.net/js/jquery.dataTables.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/datatables.net/js/jquery.dataTables.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/slick-carousel/slick/slick.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/light-admin-all-files/html_admin/source/bower_components/slick-carousel/slick/slick.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/common/item-selector/keyevent.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/common/item-selector/keyevent.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GeoReport-submenu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Overview/Overview-submenu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Overview/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Report/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/Report.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SocialWelfare/SocialWelfare-submenu.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/SocialWelfare/index.js" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,10 +39,10 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/acsLayer.js">
+        <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="450">
-              <caret line="213" column="21" selection-start-line="213" selection-start-column="21" selection-end-line="213" selection-end-column="21" />
+            <state relative-caret-position="162">
+              <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -33,12 +51,57 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/censusLayer.js">
+        <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1484">
-              <caret line="338" column="63" selection-start-line="338" selection-start-column="63" selection-end-line="338" selection-end-column="63" />
+            <state relative-caret-position="540">
+              <caret line="47" column="34" lean-forward="true" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/Report/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="17" column="2" lean-forward="true" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
               <folding>
-                <element signature="e#0#25#0" expanded="true" />
+                <element signature="e#0#39#0" expanded="true" />
+                <element signature="e#204#263#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/Report/Report.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="630">
+              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+              <folding>
+                <element signature="e#0#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/routes.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+              <folding>
+                <element signature="e#63#100#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/Signup.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <folding>
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,6 +112,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="SCSS File" />
         <option value="JavaScript File" />
       </list>
     </option>
@@ -61,7 +125,34 @@
       <find>onAdd</find>
       <find>fetchData</find>
       <find>console.log</find>
+      <find>PieRadialLabels</find>
+      <find>censusPieChart</find>
+      <find>componentWillMount</find>
+      <find>.json</find>
+      <find>this.state</find>
+      <find>state</find>
+      <find>County</find>
+      <find>filterFetch</find>
+      <find>onFilterFetch</find>
+      <find>react</find>
+      <find>rest</find>
+      <find>report</find>
+      <find>consol</find>
+      <find>/edit/</find>
+      <find>/overview/</find>
+      <find>styled</find>
+      <find>Poverty</find>
+      <find>FemaleNP</find>
+      <find>&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream</find>
+      <find>theme</find>
     </findStrings>
+    <replaceStrings>
+      <replace>edit</replace>
+      <replace>/overview/</replace>
+      <replace>/social/</replace>
+      <replace>Veteran</replace>
+      <replace>FemaleNotPoverty</replace>
+    </replaceStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,30 +160,76 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/src/store/index.js" />
-        <option value="$PROJECT_DIR$/src/pages/MapPage/index.js" />
-        <option value="$PROJECT_DIR$/src/AvlMap/MapLayer.js" />
-        <option value="$PROJECT_DIR$/src/pages/MapPage/layers/parcelLayer.js" />
-        <option value="$PROJECT_DIR$/src/store/config.js" />
-        <option value="$PROJECT_DIR$/src/store/falcorGraph.js" />
-        <option value="$PROJECT_DIR$/src/routes.js" />
-        <option value="$PROJECT_DIR$/src/pages/MapPage/layers/acsLayer.js" />
-        <option value="$PROJECT_DIR$/src/pages/MapPage/layers/censusLayer.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/censusBarChart.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusGroupedBarChart.js" />
-        <option value="$PROJECT_DIR$/src/pages/Report/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/auth/Routes/reports/edit/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/auth/Routes/analysis/components/GraphLayout/GridLayout.js" />
+        <option value="$PROJECT_DIR$/src/pages/auth/Routes/analysis/reports/edit/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/auth/Routes/analysis/components/GraphLayout/GraphFactory.js" />
+        <option value="$PROJECT_DIR$/src/pages/auth/Routes/analysis/components/GraphLayout/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/GraphGrid/GraphFactory.js" />
+        <option value="$PROJECT_DIR$/src/pages/GraphGrid/GridLayout.js" />
+        <option value="$PROJECT_DIR$/src/pages/GraphGrid/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/edit/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/GraphLayout/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/GraphLayout/GraphFactory.js" />
+        <option value="$PROJECT_DIR$/src/pages/GraphLayout/GridLayout.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/SideBar/ActiveGraphComponents.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/SideBar/GraphSelector.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/SideBar/SidebarContainer.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/SideBar/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" />
+        <option value="$PROJECT_DIR$/src/styles/_react_grid.scss" />
+        <option value="$PROJECT_DIR$/src/pages/Report/GeoReport-submenu.js" />
+        <option value="$PROJECT_DIR$/src/components/light-admin/menu/MainMenu.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/pie/censusPieChart.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/GeoPage.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/line/censusStackedLineChart.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GeoReport-submenu.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/SocialWelfare/GridLayout.js" />
+        <option value="$PROJECT_DIR$/src/pages/SocialWelfare/SocialWelfare-submenu.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/GeoReport.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/SocialWelfare/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/Social.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" />
         <option value="$PROJECT_DIR$/src/components/censusCharts/line/censusLineChart.js" />
+        <option value="$PROJECT_DIR$/package-lock.json" />
+        <option value="$PROJECT_DIR$/src/components/common/item-selector/keyevent.js" />
+        <option value="$PROJECT_DIR$/src/App.js" />
+        <option value="$PROJECT_DIR$/src/store/falcorGraph.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js" />
+        <option value="$PROJECT_DIR$/src/pages/MapPage/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/Landing.js" />
+        <option value="$PROJECT_DIR$/src/pages/Overview/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/Overview.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/ReportIndex.js" />
+        <option value="$PROJECT_DIR$/src/routes.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/index.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusGroupedBarChart.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/Report.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js" />
       </list>
     </option>
+  </component>
+  <component name="JsBowerSettings">
+    <node-interpreter value="project" />
+    <bower-package value="" />
+    <bower.json value="" />
   </component>
   <component name="JsFlowSettings">
     <service-enabled>true</service-enabled>
     <exe-path />
     <other-services-enabled>true</other-services-enabled>
     <auto-save>true</auto-save>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand />
+      <select />
+    </treeState>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="183" />
@@ -106,6 +243,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -128,34 +266,71 @@
               <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
               <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="components" type="462c0819:PsiDirectoryNode" />
-              <item name="censusCharts" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="Analysis" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="Analysis" type="462c0819:PsiDirectoryNode" />
+              <item name="GraphLayout" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="Report" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
       <pane id="Scope" />
-      <pane id="PackagesPane" />
     </panes>
   </component>
   <component name="PropertiesComponent">
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1548367046912" />
     <property name="jsx.switch.disabled" value="true" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="list.type.of.created.stylesheet" value="SCSS" />
     <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.standard" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.standard" value="project" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.standard" value="" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="project.structure.last.edited" value="Project" />
-    <property name="project.structure.proportion" value="0.0" />
-    <property name="project.structure.side.proportion" value="0.0" />
-    <property name="settings.editor.selected.configurable" value="JavaScript.Libraries" />
+    <property name="project.structure.last.edited" value="SDKs" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/Overview" />
+      <recent name="$PROJECT_DIR$/src/pages/Analysis/GraphLayout" />
+      <recent name="$PROJECT_DIR$/src/pages/Report" />
+      <recent name="$PROJECT_DIR$/src/pages/Analysis" />
+      <recent name="$PROJECT_DIR$/src/pages/edit" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/SocialWelfare" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -192,26 +367,381 @@
       <workItem from="1554827515704" duration="650000" />
       <workItem from="1554828342416" duration="753000" />
       <workItem from="1554909174333" duration="11786000" />
-      <workItem from="1554927447649" duration="75792000" />
+      <workItem from="1554927447649" duration="98964000" />
+      <workItem from="1555511554971" duration="57089000" />
+      <workItem from="1555701870625" duration="18053000" />
+      <workItem from="1555957948559" duration="7523000" />
+      <workItem from="1556030203444" duration="5000" />
+      <workItem from="1556031413780" duration="34952000" />
+      <workItem from="1556198968480" duration="2039000" />
+      <workItem from="1556201560740" duration="37542000" />
+      <workItem from="1556315849730" duration="122699000" />
+      <workItem from="1557253601962" duration="8996000" />
+      <workItem from="1557262981733" duration="6078000" />
+      <workItem from="1557328514377" duration="5237000" />
+      <workItem from="1557337706340" duration="45770000" />
+      <workItem from="1557515311482" duration="679000" />
+      <workItem from="1557518471178" duration="10847000" />
+      <workItem from="1557771707902" duration="56362000" />
+      <workItem from="1558015228203" duration="62258000" />
+      <workItem from="1558451982630" duration="52097000" />
+      <workItem from="1559063994820" duration="10105000" />
     </task>
-    <task id="LOCAL-00001" summary="fetching from DB for county, cousub, tract and blockgroups">
-      <created>1555342258792</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
+    <task id="LOCAL-00056" summary="added a css">
+      <created>1557853512378</created>
+      <option name="number" value="00056" />
+      <option name="presentableId" value="LOCAL-00056" />
       <option name="project" value="LOCAL" />
-      <updated>1555342258792</updated>
+      <updated>1557853512379</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00057" summary="changes">
+      <created>1557861764922</created>
+      <option name="number" value="00057" />
+      <option name="presentableId" value="LOCAL-00057" />
+      <option name="project" value="LOCAL" />
+      <updated>1557861764922</updated>
+    </task>
+    <task id="LOCAL-00058" summary="updates">
+      <created>1558361113554</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361113556</updated>
+    </task>
+    <task id="LOCAL-00059" summary="updates">
+      <created>1558361132101</created>
+      <option name="number" value="00059" />
+      <option name="presentableId" value="LOCAL-00059" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361132102</updated>
+    </task>
+    <task id="LOCAL-00060" summary="updates">
+      <created>1558361147424</created>
+      <option name="number" value="00060" />
+      <option name="presentableId" value="LOCAL-00060" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361147424</updated>
+    </task>
+    <task id="LOCAL-00061" summary="updates">
+      <created>1558361170874</created>
+      <option name="number" value="00061" />
+      <option name="presentableId" value="LOCAL-00061" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361170875</updated>
+    </task>
+    <task id="LOCAL-00062" summary="updates">
+      <created>1558361185983</created>
+      <option name="number" value="00062" />
+      <option name="presentableId" value="LOCAL-00062" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361185984</updated>
+    </task>
+    <task id="LOCAL-00063" summary="updates">
+      <created>1558361202025</created>
+      <option name="number" value="00063" />
+      <option name="presentableId" value="LOCAL-00063" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361202025</updated>
+    </task>
+    <task id="LOCAL-00064" summary="updates">
+      <created>1558361225227</created>
+      <option name="number" value="00064" />
+      <option name="presentableId" value="LOCAL-00064" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361225227</updated>
+    </task>
+    <task id="LOCAL-00065" summary="showing all graphs">
+      <created>1558361245204</created>
+      <option name="number" value="00065" />
+      <option name="presentableId" value="LOCAL-00065" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361245204</updated>
+    </task>
+    <task id="LOCAL-00066" summary="GraphFactory">
+      <created>1558361272347</created>
+      <option name="number" value="00066" />
+      <option name="presentableId" value="LOCAL-00066" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361272347</updated>
+    </task>
+    <task id="LOCAL-00067" summary="updates">
+      <created>1558361294821</created>
+      <option name="number" value="00067" />
+      <option name="presentableId" value="LOCAL-00067" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361294821</updated>
+    </task>
+    <task id="LOCAL-00068" summary="GraphLayout and GridComponent">
+      <created>1558361356598</created>
+      <option name="number" value="00068" />
+      <option name="presentableId" value="LOCAL-00068" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361356599</updated>
+    </task>
+    <task id="LOCAL-00069" summary="updates">
+      <created>1558361409289</created>
+      <option name="number" value="00069" />
+      <option name="presentableId" value="LOCAL-00069" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361409289</updated>
+    </task>
+    <task id="LOCAL-00070" summary="updates">
+      <created>1558361425198</created>
+      <option name="number" value="00070" />
+      <option name="presentableId" value="LOCAL-00070" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361425198</updated>
+    </task>
+    <task id="LOCAL-00071" summary="Showing all the graph layouts/grids">
+      <created>1558361452241</created>
+      <option name="number" value="00071" />
+      <option name="presentableId" value="LOCAL-00071" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361452241</updated>
+    </task>
+    <task id="LOCAL-00072" summary="GraphConfig">
+      <created>1558361472564</created>
+      <option name="number" value="00072" />
+      <option name="presentableId" value="LOCAL-00072" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361472564</updated>
+    </task>
+    <task id="LOCAL-00073" summary="updates">
+      <created>1558361486531</created>
+      <option name="number" value="00073" />
+      <option name="presentableId" value="LOCAL-00073" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361486531</updated>
+    </task>
+    <task id="LOCAL-00074" summary="updates">
+      <created>1558361892192</created>
+      <option name="number" value="00074" />
+      <option name="presentableId" value="LOCAL-00074" />
+      <option name="project" value="LOCAL" />
+      <updated>1558361892192</updated>
+    </task>
+    <task id="LOCAL-00075" summary="updates">
+      <created>1558373060970</created>
+      <option name="number" value="00075" />
+      <option name="presentableId" value="LOCAL-00075" />
+      <option name="project" value="LOCAL" />
+      <updated>1558373060970</updated>
+    </task>
+    <task id="LOCAL-00076" summary="additions">
+      <created>1558633288961</created>
+      <option name="number" value="00076" />
+      <option name="presentableId" value="LOCAL-00076" />
+      <option name="project" value="LOCAL" />
+      <updated>1558633288961</updated>
+    </task>
+    <task id="LOCAL-00077" summary="added social welfare">
+      <created>1558637289865</created>
+      <option name="number" value="00077" />
+      <option name="presentableId" value="LOCAL-00077" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637289865</updated>
+    </task>
+    <task id="LOCAL-00078" summary="updates">
+      <created>1558637318633</created>
+      <option name="number" value="00078" />
+      <option name="presentableId" value="LOCAL-00078" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637318633</updated>
+    </task>
+    <task id="LOCAL-00079" summary="localhost">
+      <created>1558637371594</created>
+      <option name="number" value="00079" />
+      <option name="presentableId" value="LOCAL-00079" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637371594</updated>
+    </task>
+    <task id="LOCAL-00080" summary="social-welfare submenu">
+      <created>1558637406399</created>
+      <option name="number" value="00080" />
+      <option name="presentableId" value="LOCAL-00080" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637406399</updated>
+    </task>
+    <task id="LOCAL-00081" summary="social welfare">
+      <created>1558637445802</created>
+      <option name="number" value="00081" />
+      <option name="presentableId" value="LOCAL-00081" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637445802</updated>
+    </task>
+    <task id="LOCAL-00082" summary="Social welfare">
+      <created>1558637508063</created>
+      <option name="number" value="00082" />
+      <option name="presentableId" value="LOCAL-00082" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637508063</updated>
+    </task>
+    <task id="LOCAL-00083" summary="overview">
+      <created>1558637526142</created>
+      <option name="number" value="00083" />
+      <option name="presentableId" value="LOCAL-00083" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637526143</updated>
+    </task>
+    <task id="LOCAL-00084" summary="graphConfig- additions">
+      <created>1558637549050</created>
+      <option name="number" value="00084" />
+      <option name="presentableId" value="LOCAL-00084" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637549050</updated>
+    </task>
+    <task id="LOCAL-00085" summary="Overview-submenu">
+      <created>1558637581043</created>
+      <option name="number" value="00085" />
+      <option name="presentableId" value="LOCAL-00085" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637581043</updated>
+    </task>
+    <task id="LOCAL-00086" summary="Overview">
+      <created>1558637597145</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637597145</updated>
+    </task>
+    <task id="LOCAL-00087" summary="updates">
+      <created>1558637615793</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637615793</updated>
+    </task>
+    <task id="LOCAL-00088" summary="updates">
+      <created>1558637629353</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637629353</updated>
+    </task>
+    <task id="LOCAL-00089" summary="updates">
+      <created>1558637648086</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637648086</updated>
+    </task>
+    <task id="LOCAL-00090" summary="updates">
+      <created>1558637664967</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637664967</updated>
+    </task>
+    <task id="LOCAL-00091" summary="updates">
+      <created>1558637684426</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637684426</updated>
+    </task>
+    <task id="LOCAL-00092" summary="updates">
+      <created>1558637703315</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1558637703316</updated>
+    </task>
+    <task id="LOCAL-00093" summary="updates">
+      <created>1558639268881</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1558639268881</updated>
+    </task>
+    <task id="LOCAL-00094" summary="updates">
+      <created>1558639700025</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1558639700025</updated>
+    </task>
+    <task id="LOCAL-00095" summary="updates">
+      <created>1559053859568</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1559053859568</updated>
+    </task>
+    <task id="LOCAL-00096" summary="changed path">
+      <created>1559069947156</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1559069947161</updated>
+    </task>
+    <task id="LOCAL-00097" summary="updates">
+      <created>1559069968120</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1559069968120</updated>
+    </task>
+    <task id="LOCAL-00098" summary="Report index with overview ad social welfare of the default county">
+      <created>1559069999331</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1559069999331</updated>
+    </task>
+    <task id="LOCAL-00099" summary="overview of single geography">
+      <created>1559070034641</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1559070034641</updated>
+    </task>
+    <task id="LOCAL-00100" summary="report of overview and social welfare with county/city change">
+      <created>1559070086318</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1559070086318</updated>
+    </task>
+    <task id="LOCAL-00101" summary="landing page">
+      <created>1559070103554</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1559070103554</updated>
+    </task>
+    <task id="LOCAL-00102" summary="updates">
+      <created>1559070126241</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1559070126241</updated>
+    </task>
+    <task id="LOCAL-00103" summary="updates">
+      <created>1559070771632</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1559070771632</updated>
+    </task>
+    <task id="LOCAL-00104" summary="updates">
+      <created>1559070958552</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1559070958552</updated>
+    </task>
+    <option name="localTasksCounter" value="105" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="117803000" />
+    <option name="totallyTimeSpent" value="679306000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="77" y="32" width="1843" height="1048" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2512591" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49721915" visible="true" weight="0.2691662" />
+      <window_info id="Structure" order="1" sideWeight="0.50278085" side_tool="true" weight="0.25853387" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -219,16 +749,16 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.31393397" weight="0.5862069" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" visible="true" weight="0.04226919" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.04226919" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.68606603" side_tool="true" weight="0.04894327" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -239,12 +769,12 @@
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" />
-      <window_info anchor="right" id="Maven" order="9" />
+      <window_info anchor="right" id="Maven" order="9" weight="0.3296027" />
       <window_info anchor="right" id="SciView" order="10" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.25767368" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49721915" visible="true" weight="0.2691662" />
+      <window_info id="Structure" order="1" sideWeight="0.50278085" side_tool="true" weight="0.25853387" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -252,16 +782,17 @@
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.31393397" weight="0.5862069" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" />
-      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.04226919" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.68606603" side_tool="true" weight="0.04894327" />
+      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -271,14 +802,40 @@
       <window_info anchor="right" id="Palette&#9;" order="6" />
       <window_info anchor="right" id="Database" order="7" />
       <window_info anchor="right" id="Maven Projects" order="8" />
+      <window_info anchor="right" id="Maven" order="9" weight="0.3296027" />
+      <window_info anchor="right" id="SciView" order="10" />
     </layout-to-restore>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="1" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="fetching from DB for county, cousub, tract and blockgroups" />
-    <option name="LAST_COMMIT_MESSAGE" value="fetching from DB for county, cousub, tract and blockgroups" />
+    <MESSAGE value="stat box" />
+    <MESSAGE value="added a css" />
+    <MESSAGE value="changes" />
+    <MESSAGE value="showing all graphs" />
+    <MESSAGE value="GraphFactory" />
+    <MESSAGE value="GraphLayout and GridComponent" />
+    <MESSAGE value="Showing all the graph layouts/grids" />
+    <MESSAGE value="GraphConfig" />
+    <MESSAGE value="additions" />
+    <MESSAGE value="for social welfare" />
+    <MESSAGE value="added social welfare" />
+    <MESSAGE value="localhost" />
+    <MESSAGE value="social-welfare submenu" />
+    <MESSAGE value="social welfare" />
+    <MESSAGE value="Social welfare" />
+    <MESSAGE value="overview" />
+    <MESSAGE value="graphConfig- additions" />
+    <MESSAGE value="Overview-submenu" />
+    <MESSAGE value="Overview" />
+    <MESSAGE value="changed path" />
+    <MESSAGE value="Report index with overview ad social welfare of the default county" />
+    <MESSAGE value="overview of single geography" />
+    <MESSAGE value="report of overview and social welfare with county/city change" />
+    <MESSAGE value="landing page" />
+    <MESSAGE value="updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -292,61 +849,92 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/store/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="510">
-          <caret line="34" column="10" selection-start-line="34" selection-start-column="10" selection-end-line="34" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/community_indicators.iml">
+    <entry file="file://$PROJECT_DIR$/node_modules/react-grid-layout/css/styles.css">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/AvlMap/index.js" />
-    <entry file="file://$PROJECT_DIR$/src/store/falcorGraph.js">
+    <entry file="file://$PROJECT_DIR$/src/styles/_react_grid.scss">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="10" column="26" lean-forward="true" selection-start-line="10" selection-start-column="26" selection-end-line="10" selection-end-column="26" />
+        <state relative-caret-position="1278">
+          <caret line="71" column="1" lean-forward="true" selection-start-line="71" selection-start-column="1" selection-end-line="71" selection-end-column="1" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/index.js">
+    <entry file="file://$PROJECT_DIR$/src/components/light-admin/menu/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="31" column="16" selection-start-line="31" selection-start-column="16" selection-end-line="31" selection-end-column="16" />
+        <state relative-caret-position="540">
+          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
+          <folding>
+            <element signature="e#3#43#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/light-admin/menu/MobileMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1026" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" lean-forward="true" selection-start-column="24" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Login.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1972">
+          <caret line="116" column="2" lean-forward="true" selection-start-line="116" selection-start-column="2" selection-end-line="116" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/light-admin/menu/MainMenu.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="52" column="13" lean-forward="true" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Login.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/registerServiceWorker.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/messages/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/routes.js">
+    <entry file="file://$PROJECT_DIR$/src/components/messages/SystemMessage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="9" selection-start-line="18" selection-start-column="9" selection-end-line="18" selection-end-column="9" />
+        <state>
           <folding>
-            <element signature="e#110#147#0" expanded="true" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/cms/Content.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="26" selection-start-column="26" selection-end-line="10" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/layers/acsLayer.js">
+    <entry file="file://$PROJECT_DIR$/src/store/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
-            <element signature="e#0#34#0" expanded="true" />
+            <element signature="e#0#69#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/layers/buildingsLayer.js">
+    <entry file="file://$PROJECT_DIR$/src/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <folding>
@@ -355,9 +943,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/layers/layer_modals/ParcelLayerModal.js">
+    <entry file="file://$PROJECT_DIR$/src/AvlMap/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-702">
+        <state>
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
@@ -365,187 +953,283 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/AvlMap/MapLayer.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/3d-buildingsLayer.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="-5264" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/pie/censusPieCompare.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="396">
+          <caret line="22" column="13" selection-start-line="22" selection-start-column="13" selection-end-line="22" selection-end-column="13" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/pie/censusPieChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="586">
+          <caret line="235" column="14" selection-start-line="235" selection-start-column="14" selection-end-line="235" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusDomGraph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2702">
+          <caret line="229" lean-forward="true" selection-start-line="229" selection-end-line="229" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/line/censusStackedLineChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="856">
+          <caret line="112" column="40" selection-start-line="112" selection-start-column="40" selection-end-line="112" selection-end-column="40" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/SocialWelfare/GridLayout.js" />
+    <entry file="file://$PROJECT_DIR$/src/pages/SocialWelfare/GraphFactory.js" />
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="882">
+          <caret line="55" column="8" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/buildingsLayer.js">
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        <state relative-caret-position="396">
+          <caret line="70" column="23" lean-forward="true" selection-start-line="70" selection-start-column="23" selection-end-line="70" selection-end-column="23" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/parcelLayer.js">
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1854">
-          <caret line="103" column="15" selection-start-line="103" selection-start-column="15" selection-end-line="103" selection-end-column="15" />
+        <state relative-caret-position="450">
+          <caret line="76" column="20" selection-start-line="76" selection-start-column="20" selection-end-line="76" selection-end-column="54" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/modals/ParcelLayerModal.js">
+    <entry file="file://$PROJECT_DIR$/package-lock.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-594">
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/data-adapters/geoApi.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="432">
-          <caret line="24" column="6" lean-forward="true" selection-start-line="24" selection-start-column="6" selection-end-line="24" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="18">
-          <caret line="17509" column="12" selection-start-line="17509" selection-start-column="12" selection-end-line="17509" selection-end-column="12" />
+        <state relative-caret-position="-1188">
+          <caret line="3" column="23" lean-forward="true" selection-start-line="3" selection-start-column="23" selection-end-line="3" selection-end-column="23" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="5" column="28" lean-forward="true" selection-start-line="5" selection-start-column="28" selection-end-line="5" selection-end-column="28" />
+        <state relative-caret-position="280">
+          <caret line="52" column="14" lean-forward="true" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/constants/color-ranges.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
+    <entry file="file://$PROJECT_DIR$/src/store/falcorGraph.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="468">
-          <caret line="26" lean-forward="true" selection-start-line="26" selection-end-line="26" />
+        <state relative-caret-position="72">
+          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/App.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="432">
+          <caret line="62" column="22" lean-forward="true" selection-start-line="62" selection-start-column="22" selection-end-line="62" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/common/item-selector/keyevent.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="378">
+          <caret line="21" column="35" selection-start-line="21" selection-start-column="35" selection-end-line="21" selection-end-column="35" />
           <folding>
-            <element signature="e#0#25#0" expanded="true" />
+            <element signature="n#!!doc" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
+    <entry file="file://$PROJECT_DIR$/src/pages/Overview/Overview-submenu.js" />
+    <entry file="file://$PROJECT_DIR$/src/pages/SocialWelfare/SocialWelfare-submenu.js" />
+    <entry file="file://$PROJECT_DIR$/src/pages/Overview/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/pages/SocialWelfare/index.js" />
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/Social.js" />
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/GeoPage.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="277" column="15" selection-start-line="277" selection-start-column="15" selection-end-line="277" selection-end-column="15" />
+        <state relative-caret-position="18">
+          <caret line="60" column="14" lean-forward="true" selection-start-line="60" selection-start-column="14" selection-end-line="60" selection-end-column="14" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#fetchFalcorDeps#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#componentDidUpdate#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#transformData#0;n#CensusBarChart#0" />
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="704">
+          <caret line="46" column="16" lean-forward="true" selection-start-line="46" selection-start-column="16" selection-end-line="46" selection-end-column="16" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
+        <state relative-caret-position="-4734">
+          <caret line="12" column="22" lean-forward="true" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#fetchFalcorDeps#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#languageData#0;n#CensusBarChart#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusGroupedBarChart.js">
+    <entry file="file://$PROJECT_DIR$/src/pages/Landing.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="65" column="5" lean-forward="true" selection-start-line="65" selection-start-column="5" selection-end-line="65" selection-end-column="5" />
+        <state relative-caret-position="288">
+          <caret line="16" column="14" selection-start-line="16" selection-start-column="14" selection-end-line="16" selection-end-column="14" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#fetchFalcorDeps#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#compareData#0;n#CensusBarChart#0" />
+            <element signature="e#1#42#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/censusBarChart.js">
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/Report.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="957" lean-forward="true" selection-end-line="969" />
+        <state relative-caret-position="514">
+          <caret line="96" column="9" lean-forward="true" selection-end-line="108" />
           <folding>
-            <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#fetchFalcorDeps#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#componentDidUpdate#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#componentWillMount#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#transformData#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#lineData#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#compareData#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#languageData#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#render#0;n#CensusBarChart#0" />
+            <element signature="e#0#26#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/index.js">
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/GeoPage-submenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
-          <caret line="19" column="72" selection-start-line="19" selection-start-column="72" selection-end-line="19" selection-end-column="72" />
+          <caret line="19" column="64" selection-start-line="19" selection-start-column="64" selection-end-line="19" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-8">
+          <caret line="291" column="30" lean-forward="true" selection-start-line="291" selection-start-column="30" selection-end-line="291" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/Overview.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="68" column="20" selection-start-line="68" selection-start-column="20" selection-end-line="68" selection-end-column="20" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <element signature="e#215#300#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/routes.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="2" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+          <folding>
+            <element signature="e#63#100#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="229">
+          <caret line="542" column="24" selection-start-line="542" selection-start-column="24" selection-end-line="542" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/censusCharts/line/censusLineChart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="4" column="33" selection-start-line="4" selection-start-column="33" selection-end-line="4" selection-end-column="33" />
+        <state relative-caret-position="-108">
+          <caret line="102" column="10" selection-start-line="102" selection-start-column="10" selection-end-line="102" selection-end-column="10" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
-            <element signature="n#!!block;n#constructor#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#fetchFalcorDeps#0;n#CensusBarChart#0" />
-            <element signature="n#!!block;n#lineData#0;n#CensusBarChart#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/acsLayer.js">
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusGroupedBarChart.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="213" column="21" selection-start-line="213" selection-start-column="21" selection-end-line="213" selection-end-column="21" />
+        <state relative-caret-position="-1548">
+          <caret line="200" column="38" lean-forward="true" selection-start-line="200" selection-start-column="38" selection-end-line="200" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="17" column="2" lean-forward="true" selection-start-line="17" selection-start-column="2" selection-end-line="17" selection-end-column="2" />
+          <folding>
+            <element signature="e#0#39#0" expanded="true" />
+            <element signature="e#204#263#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/Report.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="630">
+          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Signup.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="9" column="1" lean-forward="true" selection-start-line="9" selection-start-column="1" selection-end-line="9" selection-end-column="1" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/MapPage/layers/censusLayer.js">
+    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1484">
-          <caret line="338" column="63" selection-start-line="338" selection-start-column="63" selection-end-line="338" selection-end-column="63" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="540">
+          <caret line="47" column="34" lean-forward="true" selection-start-line="47" selection-start-column="34" selection-end-line="47" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -566,6 +1250,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
+          <last-edited>No facets are configured</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -577,6 +1262,7 @@
       </state>
       <state key="GlobalLibrariesConfigurable.UI">
         <settings>
+          <last-edited>Python 2.7 (mitigate-api) interpreter library</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -588,6 +1274,7 @@
       </state>
       <state key="JdkListConfigurable.UI">
         <settings>
+          <last-edited>11</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -599,10 +1286,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
+          <last-edited>community_indicators</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
