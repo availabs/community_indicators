@@ -11,7 +11,6 @@ class Home extends Component {
             <div className='property-single'>
             <div className='property-info-w'>
             <div className="property-info-main">
-
             <div className="property-section">
 
         </div>
