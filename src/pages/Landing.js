@@ -12,11 +12,10 @@ class Home extends Component {
             <div className='property-info-w'>
             <div className="property-info-main">
             <div className="property-section">
-
-        </div>
-        </div>
-        </div>
-        </div>
+            </div>
+            </div>
+            </div>
+            </div>
 
     )
     }
