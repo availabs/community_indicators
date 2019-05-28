@@ -2,11 +2,12 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor } from 'utils/redux-falcor'
 import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
-import subMenus from 'pages/SocialWelfare/SocialWelfare-submenu.js'
+import subMenus from 'pages/Report/GeoPage-submenu.js'
+import Overview from "./Overview";
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 const GRAPH_CONFIG = require('pages/Report/graphConfig.js')
 
-class Social extends React.Component{
+class Report extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -24,13 +25,36 @@ class Social extends React.Component{
         let geoid = this.props.match.params.geoid ?
             this.props.match.params.geoid
             :36001;
+
+        this.state.graphConfig.overview.map(function(config){
+            config['geoid'] = [geoid]
+        })
+
         this.state.graphConfig.socialWelfare.map(function(config){
             config['geoid'] = [geoid]
         })
         return (
             <div>
+            <div>
+            <h1 align='center'> Overview </h1>
+            <br/>
             <GridLayout
         sideWidth={800}
+        minifiedWidth={1}
+        isOpen={1}
+        title={''}
+        viewing={false}
+        graphs={this.state.graphConfig.overview}
+        onOpenOrClose={function noop() {}}
+        onLayoutChange={ this.props.onLayoutChange }
+        verticalCompact={false}
+        />
+        </div>
+        <div>
+        <h1 align='center'> Social Welfare </h1>
+        <br/>
+        <GridLayout
+        sideWidth={1000}
         minifiedWidth={1}
         isOpen={1}
         title={''}
@@ -41,6 +65,8 @@ class Social extends React.Component{
         verticalCompact={false}
         />
         </div>
+        </div>
+
     )
     }
 
@@ -62,12 +88,11 @@ const mapDispatchToProps = {};
 
 export default
 {
-
-    path: '/social/:geoid',
-    name: 'Social Welfare Report',
+    path: '/report/:geoid',
+    name: 'Report',
     mainNav: false,
     breadcrumbs: [
-        {param: 'geoid', path: '/social/'}
+        {param: 'geoid', path: '/report/'}
     ],
     menuSettings:
         {
@@ -79,5 +104,6 @@ export default
             subemenustyle: 'sub-menu-style-over'
         },
     subMenus: subMenus,
-    component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Social))
+    auth: false,
+    component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Report))
 }
