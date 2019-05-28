@@ -262,7 +262,7 @@ class CensusGroupedBarChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": 0,
-                    "legendPosition": "center",
+                    "legendPosition": "middle",
                     "legendOffset": 36
             }}
             axisLeft={{
