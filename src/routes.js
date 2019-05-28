@@ -3,26 +3,20 @@
 //import Landing from './pages/Landing'
 
 import MapPage from "./pages/MapPage"
-import Report from "./pages/Report"
-import GraphLayoutOverview from "./pages/Overview"
+import Overview from "./pages/Report/Overview"
+import ReportIndex from "./pages/Report/"
+import Report from "./pages/Report/Report"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-import Overview from "./pages/Report/Overview"
-import GraphLayoutSocial from './pages/SocialWelfare'
-import Social from './pages/Report/Social'
-
-// -- Util Routes
-// import Login from './pages/Login'
-// import Logout from './pages/Logout'
+import Landing from './pages/Landing.js'
 import NoMatch from './pages/404.js'
 
 const routes = [
+  Landing,
   MapPage,
-  Report,
   Overview,
-  GraphLayoutOverview,
-  Social,
-  GraphLayoutSocial,
+  ReportIndex,
+  Report,
   Login,
   Signup,
   NoMatch
