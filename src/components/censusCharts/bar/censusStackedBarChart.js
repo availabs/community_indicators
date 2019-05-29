@@ -532,7 +532,7 @@ class CensusStackedBarChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": 0,
-                    "legendPosition": "center",
+                    "legendPosition": "middle",
                     "legendOffset": -50,
 
             }}
@@ -541,7 +541,7 @@ class CensusStackedBarChart extends React.Component {
                         axis: 'x',
                         value: 0,
                         lineStyle: { stroke: '#E5945D', strokeWidth: 1 },
-                        textStyle: { fill: '#E5945D' },
+                        textColor: { fill: '#E5945D' },
                         legend: 'FEMALE POPULATION',
                         legendPosition: 'bottom-left',
                         legendOrientation: 'horizontal',
@@ -551,7 +551,7 @@ class CensusStackedBarChart extends React.Component {
                 axis: 'x',
                     value: 0,
                 lineStyle: { stroke: '#4C24A2', strokeWidth: 1 },
-                textStyle: { fill: '#4C24A2' },
+                textColor: { fill: '#4C24A2' },
                 legend: 'MALE POPULATION',
                     legendPosition: 'bottom-right',
                 legendOrientation: 'horizontal',
@@ -638,7 +638,7 @@ class CensusStackedBarChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": 0,
-                    "legendPosition": "center",
+                    "legendPosition": "middle",
                     "legendOffset": -50,
 
             }}
@@ -746,7 +746,7 @@ class CensusStackedBarChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": 0,
-                    "legendPosition": "center",
+                    "legendPosition": "middle",
                     "legendOffset": -50,
 
             }}

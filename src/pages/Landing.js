@@ -1,61 +1,33 @@
+
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import Element from 'components/light-admin/containers/Element'
-import ElementBox from 'components/light-admin/containers/ElementBox'
 import Content from 'components/cms/Content'
+import ProjectBox from 'components/light-admin/containers/ProjectBox'
 
 class Home extends Component {
-  render () {
-   return (
-     <div>
-       <Element>
-          <h6 className="element-header">NPMRDS</h6>
-          <div className='row'>
-            <div className='col-6'>
-              <Link to='/incidents'>
-                <ElementBox style={{height: '25vh', textAlign:'center', paddingTop: '14%'}}>
-                  <h4 style={{color:'#047bf8'}}>Incidents</h4>
-                </ElementBox>
-              </Link>
+    render () {
+        return (
+            <div className='property-single'>
+            <div className='property-info-w'>
+            <div className="property-info-main">
+            <div className="property-section">
             </div>
-            <div className='col-6'>
-              <ElementBox style={{height: '25vh', textAlign:'center', paddingTop: '14%'}}>
-                <h4 style={{color:'#ddd'}}></h4>
-              </ElementBox>
             </div>
-          </div>
-          <div className='row'>
-            <div className='col-6'>
-               <ElementBox style={{height: '25vh', textAlign:'center', paddingTop: '14%'}}>
-                <h4 style={{color:'#ddd'}}></h4>
-              </ElementBox>
             </div>
-            <div className='col-6' >
-               <ElementBox style={{height: '25vh', textAlign:'center', paddingTop: '14%'}}>
-                <h4 style={{color:'#ddd'}}></h4>
-              </ElementBox>
             </div>
-          </div>
-        </Element>     
-     </div>
+
     )
-  }
+    }
 }
 
 export default {
-	icon: 'os-icon-home',
-	path: '/',
-	exact: true,
-	mainNav: true,
-  menuSettings: {
-    image: 'none',
-    scheme: 'color-scheme-dark', 
-    position: 'menu-position-left',
-    layout: 'menu-layout-mini',
-    style: 'color-style-default'  
-  },
-  name: 'Home',
-	auth: false,
-	component: Home
+    icon: 'icon-map',
+    path: '/',
+    exact: true,
+    mainNav: false,
+    title: 'Welcome to Community Indicators',
+    name: 'Home',
+    auth: false,
+    component: Home
 }

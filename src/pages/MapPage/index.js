@@ -32,7 +32,7 @@ const MapPage = ({}) =>
 
 export default {
 	icon: 'os-icon-map',
-	path: '/',
+	path: '/map',
 	exact: true,
 	mainNav: true,
     menuSettings: {
