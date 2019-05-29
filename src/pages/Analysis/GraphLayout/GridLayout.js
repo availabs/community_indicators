@@ -56,24 +56,6 @@ class GridLayout extends React.Component {
 
     }
 
-    /*
-    componentDidUpdate(oldProps,newState){
-        console.log('grid size changed')
-        oldProps.graphs.forEach(function(old){
-            Object.keys(old.layout).forEach(function(oKey,i){
-                console.log(old.layout[oKey],i)
-
-            })
-        })
-        if (this.state.layouts !== undefined){
-            console.log('new',...this.state.layouts)
-        }
-
-    }
-     */
-
-
-
     loadComps() {
         const {graphs,viewing, ...rest } = this.props;
         return graphs.map((graph, i) => {
