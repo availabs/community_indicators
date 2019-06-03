@@ -2,7 +2,9 @@ import React from 'react'
 //import WidthProvider from 'pages/auth/NetworkView/components/utils/WidthProvider'
 import { WidthProvider, Responsive as ResponsiveGridLayout} from 'react-grid-layout'
 import GraphFactory from './GraphFactory'
+import TrackVisibility from 'react-on-screen';
 //import _ from "lodash";
+
 var _ = require('lodash');
 const ReactGridLayout = WidthProvider(ResponsiveGridLayout);
 const originalLayouts = getFromLS("layouts") || {};
@@ -56,6 +58,7 @@ class GridLayout extends React.Component {
 
     }
 
+
     loadComps() {
         const {graphs,viewing, ...rest } = this.props;
         return graphs.map((graph, i) => {
@@ -81,7 +84,6 @@ class GridLayout extends React.Component {
                     border: '1px dashed rgba(0, 0, 0, 0.25)',
                     zIndex: 100
                 } }>
-
                 <GraphFactory
                     viewing={ viewing }
                     graph={ graph }
@@ -98,7 +100,7 @@ class GridLayout extends React.Component {
     render() {
         return (
             <div className='container'>
-            <ReactGridLayout
+             <ReactGridLayout
                     rowHeight={ 30 }
                     cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
                     layouts = {this.state.layouts}
@@ -117,6 +119,7 @@ class GridLayout extends React.Component {
         className: "layout",
         items: 20,
         rowHeight: 30,
+        isVisible:true,
         cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
     };
 }

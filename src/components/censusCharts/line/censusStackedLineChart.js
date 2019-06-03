@@ -92,13 +92,13 @@ class CensusStackedLineChart extends React.Component{
                 stackedLineData.push(
                     {
                         "id":"Occupied",
-                        "color":"hsl(223, 70%, 50%)",
+                        "color":"#44A0C5",
                         "data":occupiedData
                     },
 
                     {
                         "id":"Vaccant",
-                        "color":"hsl(180, 70%, 50%)",
+                        "color":"#1D1190",
                         "data":vaccantData
                     }
                 );
@@ -108,7 +108,17 @@ class CensusStackedLineChart extends React.Component{
     }
 
     render(){
+        const style = {
+            height:500
+        };
+        let colors = [];
+        if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+            colors = this.props.colorRange
+        }else{
+            this.state.graphData7.map(d => colors.push(d.color))
+        }
             return(
+            <div style={style}>
             <ResponsiveLine
             data={this.state.graphData7}
             margin={{
@@ -127,7 +137,7 @@ class CensusStackedLineChart extends React.Component{
                     "max": 140000
             }}
             curve='linear'
-            colors={this.state.graphData7.map(d => d.color)}
+            colors={colors}
             axisTop={null}
             axisRight={null}
             axisBottom={{
@@ -189,7 +199,7 @@ class CensusStackedLineChart extends React.Component{
                     }
                     ]}
             tooltip={({ id, indexValue, value, color,data }) => (
-            <text>
+            <h6>
             <b><big>{this.props.geoid}</big></b>
             <br/> <br/>
             Year : {id}
@@ -197,16 +207,18 @@ class CensusStackedLineChart extends React.Component{
             Vaccant Units : {Object.values(data)[0]['data'].y}
         <br/>
             Occupied Units: {Object.values(data)[1]['data'].y}
-        </text>
+        </h6>
         )}
             />
+            </div>
 
         )
     }
 
     static defaultProps = {
         censusKey: ['B25002'], //'B19013',,
-        geoid: ['36001']
+        geoid: ['36001'],
+        colorRange:[]
     }
 }
 

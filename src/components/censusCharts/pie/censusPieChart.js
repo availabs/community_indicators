@@ -106,6 +106,12 @@ class CensusPieChart extends React.Component {
 
     render () {
         if (this.props.single === true){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange
+            }else{
+                colors = this.state.graphData5.map(d => d.color)
+            }
             const style={
                 height:200,
                 display:'flex',
@@ -131,7 +137,7 @@ class CensusPieChart extends React.Component {
             innerRadius={0.6}
             padAngle={0.7}
             cornerRadius={3}
-            colors= {this.state.graphData5.map(d => d.color)}
+            colors= {colors}
             borderColor="inherit:darker(0.6)"
             radialLabel="value"
             enableRadialLabels ={false}
@@ -178,9 +184,18 @@ class CensusPieChart extends React.Component {
             const styles={
                 height:200
             }
+            let colors=[];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange
+                console.log('in',colors)
+
+            }else{
+                colors = this.state.graphData5.map(d => d.color)
+            }
+
             return(
                 <div style={styles}>
-                <ResponsivePieCanvas
+            <ResponsivePieCanvas
             data={this.state.graphData5}
             width={200}
             height={200}
@@ -195,7 +210,7 @@ class CensusPieChart extends React.Component {
             innerRadius={0.6}
             padAngle={0.7}
             cornerRadius={3}
-            colors= {this.state.graphData5.map(d => d.color)}
+            colors= {colors}
             borderColor="inherit:darker(0.6)"
             radialLabel="value"
             enableRadialLabels ={false}
@@ -251,7 +266,8 @@ class CensusPieChart extends React.Component {
         year: ['2016'],
         pieWidth: [],
         pieHeight:[],
-        single:false
+        single:false,
+        colorRange:[]
     }
 
 }

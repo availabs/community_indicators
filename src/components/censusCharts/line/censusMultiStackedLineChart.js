@@ -103,7 +103,17 @@ class CensusMultiStackedLineChart extends React.Component{
     }
 
     render(){
+        const style = {
+            height:500
+        };
+        let colors =[];
+        if(this.props.colorRange !== undefined && this.props.colorRange.length >0){
+            colors = this.props.colorRange
+        }else{
+            colors = this.state.graphData8.map( d => d.colors)
+        }
         return(
+        <div style={style}>
         <ResponsiveLine
         data={this.state.graphData8}
         margin={{
@@ -122,7 +132,7 @@ class CensusMultiStackedLineChart extends React.Component{
                 "max": 'auto'
         }}
         curve='linear'
-        colors={this.state.graphData8.map(d => d.colors)}
+        colors={colors}
         axisTop={null}
         axisRight={null}
         axisBottom={{
@@ -209,13 +219,15 @@ class CensusMultiStackedLineChart extends React.Component{
         </text>
         )}
         />
+        </div>
 
     )
     }
 
     static defaultProps = {
         censusKey: ['B15003'],
-        geoid: ['36001']
+        geoid: ['36001'],
+        colorRange:[]
     }
 }
 

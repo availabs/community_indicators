@@ -233,6 +233,7 @@ class CensusDomGraph extends React.Component{
         geoids: [],
         year: ['2016'],
         data: [],
+        colorRange:[],
         onClick: () => {}
     }
 

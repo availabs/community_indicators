@@ -114,23 +114,25 @@ class CensusStackedBarChart extends React.Component {
                                                 axisData_m.push({
                                                     "age": subvar.name.slice(5),
                                                     "Male": responseData_age[res],
-                                                    "MaleColor1": "rgb(82, 65, 119)"
+                                                    "MaleColor1": "#4C24A2"
                                                 })
 
                                                 stackData_m.push({
                                                     "age": subvar.name.slice(5),
-                                                    "Male": responseData_age[res]
+                                                    "Male": responseData_age[res],
+                                                    "MaleColor1": "#4C24A2"
                                                 })
 
 
                                             } else if (subvar.name.includes('Female')) {
                                                 axisData_f.push({
                                                     "Female": responseData_age[res],
-                                                    "FemaleColor1": "rgb(229, 148, 93)"
+                                                    "FemaleColor1": "#E5945D"
                                                 })
 
                                                 stackData_f.push({
-                                                    "Female": -(parseFloat(responseData_age[res]))
+                                                    "Female": -(parseFloat(responseData_age[res])),
+                                                    "FemaleColor1": "#E5945D"
                                                 })
 
                                             }
@@ -172,48 +174,6 @@ class CensusStackedBarChart extends React.Component {
                     let axisDataFemale = []
                     let axisData = []
                     let stackData = [];
-
-                    /*
-                    axisData.push(
-                        {
-                        'status':'18 years',
-                        'MaleP': -(parseFloat(20000)),
-                        'MaleColorP': "rgb(82, 65, 119)",
-                        'FemaleP':-(parseFloat(30000)),
-                        'FemaleColor': "rgb(82, 65, 119)",
-                        'MaleNP':10000,
-                        'MaleColorNP': "rgb(82, 65, 119)",
-                        'FemaleNP':5000,
-                        'FemaleColorNP': "rgb(82, 65, 119)",
-
-                        },
-                        {
-                        "status":'25 years',
-                        'Male': 10000,
-                        'MaleColor': "rgb(82, 65, 119)",
-                        'Female': 5000,
-                        'FemaleColor': "rgb(82, 65, 119)"
-
-                        }
-                    )
-                    stackData.push(
-                        {
-                            'status':'18 years',
-                            'MaleP': -(parseFloat(20000)),
-                            'FemaleP':-(parseFloat(30000)),
-                            'MaleNP':10000,
-                            'FemaleNP':5000
-
-                        },
-                        {
-                            "status":'25 years',
-                            'Male': 10000,
-                            'Female': 5000,
-
-
-                        }
-                     */
-
                     Object.keys(responseData_sex).forEach(function (res, index) {
                         if (index >= 4 && index <= 16) {
                             Object.keys(censusConfig).forEach(function (config) {
@@ -223,11 +183,12 @@ class CensusStackedBarChart extends React.Component {
                                             axisDataPoverty_m.push({
                                                 "age": subvar.name.slice(5),
                                                 "MaleNumber": responseData_sex[res],
-                                                "MaleColor1": "rgb(82, 65, 119)"
+                                                "MaleColorP": "#82BDCF"
                                             })
                                             stackDataPoverty_m.push({
                                                 "age": subvar.name.slice(5),
                                                 "MaleNumber": parseFloat(responseData_sex[res]),
+                                                "MaleColorP": "#82BDCF"
                                             })
                                         }
                                     })
@@ -242,11 +203,12 @@ class CensusStackedBarChart extends React.Component {
                                             axisDataNotPoverty_m.push({
                                                 "age": subvar.name.slice(5),
                                                 "MaleNumber": responseData_sex[res],
-                                                "MaleColor1": "rgb(82, 65, 119)"
+                                                "MaleColorNP": "#2A738A"
                                             })
                                             stackDataNotPoverty_m.push({
                                                 "age": subvar.name.slice(5),
                                                 "MaleNumber": responseData_sex[res],
+                                                "MaleColorNP": "#2A738A"
                                             })
                                         }
                                     })
@@ -261,11 +223,12 @@ class CensusStackedBarChart extends React.Component {
                                             axisDataPoverty_f.push({
                                                 "age": subvar.name.slice(6),
                                                 "FemaleNumber": responseData_sex[res],
-                                                "FemaleColor1": "rgb(82, 65, 119)"
+                                                "FemaleColorP": "#E295A0"
                                             })
                                             stackDataPoverty_f.push({
                                                 "age": subvar.name.slice(6),
                                                 "FemaleNumber": -parseFloat(responseData_sex[res]),
+                                                "FemaleColorP": "#E295A0"
                                             })
                                         }
                                     })
@@ -280,11 +243,12 @@ class CensusStackedBarChart extends React.Component {
                                             axisDataNotPoverty_f.push({
                                                 "age": subvar.name.slice(6),
                                                 "FemaleNumber": responseData_sex[res],
-                                                "FemaleColor1": "rgb(82, 65, 119)"
+                                                "FemaleColorNP": "#EF2642"
                                             })
                                             stackDataNotPoverty_f.push({
                                                 "age": subvar.name.slice(6),
                                                 "FemaleNumber": -(parseFloat(responseData_sex[res])),
+                                                "FemaleColorNP": "#EF2642"
                                             })
                                         }
                                     })
@@ -298,16 +262,18 @@ class CensusStackedBarChart extends React.Component {
                         axisDataMale.push({
                             'age': axis.age,
                             'MalePoverty': parseFloat(axis.MaleNumber),
-                            'colorP': axis.MaleColor1,
+                            'MaleColorP': axis.MaleColorP,
                             'MaleNotPoverty': parseFloat(axisDataNotPoverty_m[i].MaleNumber),
-                            'colorNP': axisDataNotPoverty_m[i].MaleColor1
+                            'MaleColorNP': axisDataNotPoverty_m[i].MaleColorNP
 
 
                         })
                         stackDataMale.push({
                             'age': axis.age,
+                            'MaleColorP': axis.MaleColorP,
                             'MalePoverty': parseFloat(stackDataPoverty_m[i].MaleNumber),
-                            'MaleNotPoverty': parseFloat(stackDataNotPoverty_m[i].MaleNumber)
+                            'MaleNotPoverty': parseFloat(stackDataNotPoverty_m[i].MaleNumber),
+                            'MaleColorNP': stackDataNotPoverty_m[i].MaleColorNP
                         })
 
                     })
@@ -316,15 +282,17 @@ class CensusStackedBarChart extends React.Component {
                         axisDataFemale.push({
                             'age': axis.age,
                             'FemalePoverty': parseFloat(axis.FemaleNumber),
-                            'colorP': axis.FemaleColor1,
+                            'FemaleColorP': axis.FemaleColorP,
                             'FemaleNotPoverty': parseFloat(axisDataNotPoverty_f[i].FemaleNumber),
-                            'colorNP': axisDataNotPoverty_f[i].FemaleColor1
+                            'FemaleColorNP': axisDataNotPoverty_f[i].FemaleColorNP
 
                         })
                         stackDataFemale.push({
                             'age': axis.age,
+                            'FemaleColorP': axis.FemaleColorP,
                             'FemalePoverty': (parseFloat(stackDataPoverty_f[i].FemaleNumber)),
-                            'FemaleNotPoverty': parseFloat(stackDataNotPoverty_f[i].FemaleNumber)
+                            'FemaleNotPoverty': parseFloat(stackDataNotPoverty_f[i].FemaleNumber),
+                            'FemaleColorNP': stackDataNotPoverty_f[i].FemaleColorNP
                         })
                     })
                     Object.values(axisDataFemale).forEach(function (axis_f, i) {
@@ -369,11 +337,12 @@ class CensusStackedBarChart extends React.Component {
                                                     axisDataNotVeteran_m.push({
                                                         "age": subvar.name.slice(5,-10),
                                                         "MaleNumber": responseData_vet[res],
-                                                        "MaleColor1": "#4BE5E3"
+                                                        "MaleColorNV": "#82BDCF"
                                                     })
                                                     stackDataNotVeteran_m.push({
                                                         "age": subvar.name.slice(5,-10),
                                                         "MaleNumber": responseData_vet[res],
+                                                        "MaleColorNV": "#82BDCF"
                                                     })
                                                 }
                                             }
@@ -382,11 +351,12 @@ class CensusStackedBarChart extends React.Component {
                                                     axisDataVeteran_m.push({
                                                         "age": subvar.name.slice(5,-10),
                                                         "MaleNumber": responseData_vet[res],
-                                                        "MaleColor1": "#4BE5E3"
+                                                        "MaleColorV": "#2A738A"
                                                     })
                                                     stackDataVeteran_m.push({
                                                         "age": subvar.name.slice(5,-10),
                                                         "MaleNumber": responseData_vet[res],
+                                                        "MaleColorV": "#2A738A"
                                                     })
                                                 }
                                             }
@@ -406,11 +376,12 @@ class CensusStackedBarChart extends React.Component {
                                                     axisDataNotVeteran_f.push({
                                                         "age": subvar.name.slice(6,-8),
                                                         "FemaleNumber": responseData_vet[res],
-                                                        "MaleColor1": "rgb(82, 65, 119)"
+                                                        "FemaleColorNV": "#E295A0"
                                                     })
                                                     stackDataNotVeteran_f.push({
                                                         "age": subvar.name.slice(6,-8),
                                                         "FemaleNumber": -(parseFloat(responseData_vet[res])),
+                                                        "FemaleColorNV": "#E295A0"
                                                     })
                                                 }
                                             }
@@ -419,11 +390,12 @@ class CensusStackedBarChart extends React.Component {
                                                     axisDataVeteran_f.push({
                                                         "age": subvar.name.slice(6,-8),
                                                         "FemaleNumber": responseData_vet[res],
-                                                        "MaleColor1": "rgb(82, 65, 119)"
+                                                        "FemaleColorV": "#EF2642"
                                                     })
                                                     stackDataVeteran_f.push({
                                                         "age": subvar.name.slice(6,-8),
                                                         "FemaleNumber": -(parseFloat(responseData_vet[res])),
+                                                        "FemaleColorV": "#EF2642"
                                                     })
                                                 }
                                             }
@@ -440,16 +412,18 @@ class CensusStackedBarChart extends React.Component {
                         axisDataMale.push({
                             'age': axis.age,
                             'MaleVeteran': parseFloat(axis.MaleNumber),
-                            'colorP': axis.MaleColor1,
+                            'MaleColorV': axis.MaleColorV,
                             'MaleNotVeteran': parseFloat(axisDataNotVeteran_m[i].MaleNumber),
-                            'colorNP': axisDataNotVeteran_m[i].MaleColor1
+                            'MaleColorNV': axisDataNotVeteran_m[i].MaleColorNV
 
 
                         })
                         stackDataMale.push({
                             'age': axis.age,
+                            'MaleColorV': axis.MaleColorV,
                             'MaleVeteran': parseFloat(stackDataVeteran_m[i].MaleNumber),
-                            'MaleNotVeteran': parseFloat(stackDataNotVeteran_m[i].MaleNumber)
+                            'MaleNotVeteran': parseFloat(stackDataNotVeteran_m[i].MaleNumber),
+                            'MaleColorNV': stackDataNotVeteran_m[i].MaleColorNV
                         })
 
                     })
@@ -458,15 +432,17 @@ class CensusStackedBarChart extends React.Component {
                         axisDataFemale.push({
                             'age': axis.age,
                             'FemaleVeteran': parseFloat(axis.FemaleNumber),
-                            'colorP': axis.FemaleColor1,
+                            'FemaleColorV': axis.FemaleColorV,
                             'FemaleNotVeteran': parseFloat(axisDataNotVeteran_f[i].FemaleNumber),
-                            'colorNP': axisDataNotVeteran_f[i].FemaleColor1
+                            'FemaleColorNV': axisDataNotVeteran_f[i].FemaleColorNV
 
                         })
                         stackDataFemale.push({
                             'age': axis.age,
+                            'FemaleColorV': axis.FemaleColorV,
                             'FemaleVeteran': (parseFloat(stackDataVeteran_f[i].FemaleNumber)),
-                            'FemaleNotVeteran': parseFloat(stackDataNotVeteran_f[i].FemaleNumber)
+                            'FemaleNotVeteran': parseFloat(stackDataNotVeteran_f[i].FemaleNumber),
+                            'FemaleColorNV': stackDataNotVeteran_f[i].FemaleColorNV
                         })
                     })
 
@@ -494,7 +470,14 @@ class CensusStackedBarChart extends React.Component {
         const style={
             height: 500
         }
+
         if (this.props.PopulationByAge === true) {
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange;
+            }else{
+                this.state.graphData1.map(d => colors.push(d.FemaleColor1,d.MaleColor1))
+            }
             return(
                 <div style={style}>
                 <ResponsiveBar
@@ -540,33 +523,29 @@ class CensusStackedBarChart extends React.Component {
                     {
                         axis: 'x',
                         value: 0,
-                        lineStyle: { stroke: '#E5945D', strokeWidth: 1 },
-                        textColor: { fill: '#E5945D' },
                         legend: 'FEMALE POPULATION',
                         legendPosition: 'bottom-left',
                         legendOrientation: 'horizontal',
                         legendOffsetY: 420,
                     },
-            {
-                axis: 'x',
-                    value: 0,
-                lineStyle: { stroke: '#4C24A2', strokeWidth: 1 },
-                textColor: { fill: '#4C24A2' },
-                legend: 'MALE POPULATION',
-                    legendPosition: 'bottom-right',
-                legendOrientation: 'horizontal',
-                legendOffsetY: 420,
-            },
-            {
-                axis: 'x',
-                    value: 0,
-                legend: 'Age',
-                legendPosition: 'bottom-right',
-                legendOrientation: 'horizontal',
-                legendOffsetX: 300,
-                legendOffsetY: -300
-            }
-        ]}
+                    {
+                        axis: 'x',
+                        value: 0,
+                        legend: 'MALE POPULATION',
+                        legendPosition: 'bottom-right',
+                        legendOrientation: 'horizontal',
+                        legendOffsetY: 420,
+                    },
+                    {
+                        axis: 'x',
+                        value: 0,
+                        legend: 'Age',
+                        legendPosition: 'bottom-right',
+                        legendOrientation: 'horizontal',
+                        legendOffsetX: 300,
+                        legendOffsetY: -300
+                    }
+                    ]}
             legends={[
                     {
                         "dataFrom": "keys",
@@ -582,10 +561,7 @@ class CensusStackedBarChart extends React.Component {
                     ]}
             tooltipFormat={value => `${Math.abs(value)}`
         }
-            colors={[
-                    '#4C24A2',
-                '#E5945D',
-        ]}
+            colors={colors}
             />
             <label><h4>{this.state.value}</h4>
             <input
@@ -601,6 +577,12 @@ class CensusStackedBarChart extends React.Component {
         }
 
         if(this.props.PovertyPopulationBySex){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange;
+            }else{
+                this.state.graphData1.map(d => colors.push(d.MaleColorP,d.MaleColorNP,d.FemaleColorP,d.FemaleColorNP))
+            }
             return(
                 <div style={style}>
                 <ResponsiveBar
@@ -646,8 +628,6 @@ class CensusStackedBarChart extends React.Component {
                     {
                         axis: 'x',
                         value: 0,
-                        lineStyle: { stroke: '#EF2642', strokeWidth: 1 },
-                        textStyle: { fill: '#EF2642' },
                         legend: 'FEMALES',
                         legendPosition: 'bottom-left',
                         legendOrientation: 'horizontal',
@@ -656,8 +636,6 @@ class CensusStackedBarChart extends React.Component {
             {
                 axis: 'x',
                     value: 0,
-                lineStyle: { stroke: '#2A738A', strokeWidth: 1 },
-                textStyle: { fill: '#2A738A' },
                 legend: 'MALES',
                     legendPosition: 'bottom-right',
                 legendOrientation: 'horizontal',
@@ -688,12 +666,7 @@ class CensusStackedBarChart extends React.Component {
                     ]}
             tooltipFormat={value => `${Math.abs(value)}`
         }
-            colors={[
-                    '#82BDCF',
-                '#2A738A',
-                '#E295A0',
-                '#EF2642'
-        ]}
+            colors={colors}
             />
             <label><h4>{this.state.value}</h4>
             <input
@@ -709,6 +682,12 @@ class CensusStackedBarChart extends React.Component {
         }
 
         if(this.props.CivilianStatus){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange;
+            }else{
+                this.state.graphData1.map(d => colors.push(d.MaleColorV,d.MaleColorNV,d.FemaleColorV,d.FemaleColorNV))
+            }
             return(
                 <div style={style}>
                 <ResponsiveBar
@@ -754,8 +733,6 @@ class CensusStackedBarChart extends React.Component {
                     {
                         axis: 'x',
                         value: 0,
-                        lineStyle: { stroke: '#EF2642', strokeWidth: 1 },
-                        textStyle: { fill: '#EF2642' },
                         legend: 'FEMALES',
                         legendPosition: 'bottom-left',
                         legendOrientation: 'horizontal',
@@ -764,8 +741,6 @@ class CensusStackedBarChart extends React.Component {
             {
                 axis: 'x',
                     value: 0,
-                lineStyle: { stroke: '#2A738A', strokeWidth: 1 },
-                textStyle: { fill: '#2A738A' },
                 legend: 'MALES',
                     legendPosition: 'bottom-right',
                 legendOrientation: 'horizontal',
@@ -796,12 +771,7 @@ class CensusStackedBarChart extends React.Component {
                     ]}
             tooltipFormat={value => `${Math.abs(value)}`
         }
-            colors={[
-                    '#82BDCF',
-                '#2A738A',
-                '#E295A0',
-                '#EF2642'
-        ]}
+            colors={colors}
             />
             <label><h4>{this.state.value}</h4>
             <input
@@ -826,6 +796,7 @@ class CensusStackedBarChart extends React.Component {
         PopulationByAge: false,
         PovertyPopulationBySex: false,
         CivilianStatus: false,
+        colorRange:[]
 
     }
 

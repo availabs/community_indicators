@@ -39,6 +39,7 @@ class CensusLineChart extends React.Component {
             })
             return falcorGraph.get(['acs',[...this.props.geoid],year,[...census_subvars]],['acs','config'])
     .then(response =>{
+
             return response
         })
     })
@@ -97,7 +98,7 @@ class CensusLineChart extends React.Component {
         })
         lineData.push({
             "id": 'years',
-            "color": "hsl(157, 70%, 50%)",
+            "color": "#9CCD58",
             "title": censusConfig[0].name,
             "data" : axis_data
         })
@@ -108,9 +109,20 @@ class CensusLineChart extends React.Component {
 
     }
     render () {
+        const style = {
+            height:500
+        };
         let title = this.state.graphData3.map(d => d.title)[0]
        if (this.props.PovertyPopulationBySex === false){
+           let colors =[]
+           if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+               colors = this.props.colorRange
+           }else{
+               colors = this.state.graphData3.map(d => d.color)
+           }
+           if(this.props)
             return(
+            <div style={style}>
             <ResponsiveLine
             data={this.state.graphData3}
             margin={{
@@ -129,6 +141,7 @@ class CensusLineChart extends React.Component {
                     "max": 'auto'
             }}
             curve= 'linear'
+            colors={colors}
             lineWidth = {2.5}
             axisTop={null}
             axisRight={null}
@@ -202,10 +215,18 @@ class CensusLineChart extends React.Component {
         )}
 
             />
+           </div>
         )
         }
         if(this.props.PovertyPopulationBySex === true){
+            let colors =[]
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange
+            }else{
+                colors = this.state.graphData3.map(d => d.color)
+            }
             return(
+            <div style={style}>
             <ResponsiveLine
             data={this.state.graphData3}
             margin={{
@@ -224,6 +245,7 @@ class CensusLineChart extends React.Component {
                     "max": 'auto'
             }}
             curve= 'linear'
+            colors={colors}
             lineWidth = {2.5}
             axisTop={null}
             axisRight={null}
@@ -296,6 +318,7 @@ class CensusLineChart extends React.Component {
         )}
 
             />
+            </div>
 
         )
         }
@@ -306,7 +329,8 @@ class CensusLineChart extends React.Component {
     static defaultProps = {
         censusKey: ['B19013'], //'B19013',,
         geoid: ['36001'],
-        PovertyPopulationBySex: false
+        PovertyPopulationBySex: false,
+        colorRange:[]
     }
 
 }

@@ -10,13 +10,14 @@ class CensusPieCompare extends React.Component {
 
     render () {
         let countyNames=['Albany ','Rensselaer ','Schenectady ','Saratoga ','Greene ','Columbia ','Washington ','Warren ']
+        let colors= this.props.colorRange;
         return(
         <div style={{display:'flex', justifyContent: 'space-evenly',flexWrap: 'wrap',flexDirection:'row',alignContent:'center'}}>
             {this.props.geoid.map(function(county,index){
             return (
                 <div style={{width: '25%' }}>
                 <h5>{countyNames[index]} County</h5>
-                <CensusPieChart geoid={[county]} censusKey={['B02001']} pieWidth={200} pieHeight={200}/>
+                <CensusPieChart geoid={[county]} censusKey={['B02001']} pieWidth={200} pieHeight={200} colorRange={colors}/>
                 </div>
             )
                 })
@@ -29,7 +30,8 @@ class CensusPieCompare extends React.Component {
     static defaultProps = {
         censusKey: [],
         geoids: [],
-        year: ['2016']
+        year: ['2016'],
+        colorRange:[]
     }
 
 }

@@ -198,29 +198,29 @@ class CensusGroupedBarChart extends React.Component {
             compareData.push({
                     "Category" : Object.keys(obj1)[1],
                     "Two Parents in Albany County" :  numeral(parseFloat(Object.values(obj1)[0])).format('0.00a'),
-                    "county/cousub" : Object.values(obj1)[1],
-                    "countyColor" : '#DAF7A6',
+                    "county/cousub" : parseFloat(Object.values(obj1)[1]),
+                    "countyColor" : '#FF5733',
                     "Two Parents in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[0])).format('0.00a'),
-                    "New York state" : Object.values(obj2_percent[i])[1],
-                    "stateColor" : '#FFC300'
+                    "New York state" : parseFloat(Object.values(obj2_percent[i])[1]),
+                    "stateColor" : '#C70039'
                 },
                 {
                     "Category": Object.keys(obj1)[3],
                     "One Parent(father) in Albany County" : numeral(parseFloat(Object.values(obj1)[2])).format('0.0a'),
-                    "county/cousub": Object.values(obj1)[3],
+                    "county/cousub": parseFloat(Object.values(obj1)[3]),
                     "countyColor": '#FF5733',
                     "One Parent(father) in New York State" : numeral(parseFloat(Object.values(obj2_percent[i])[2])).format('0.0a'),
-                    "New York state": Object.values(obj2_percent[i])[3],
+                    "New York state": parseFloat(Object.values(obj2_percent[i])[3]),
                     "stateColor" : '#C70039'
                 },
                 {
                     "Category": Object.keys(obj1)[5],
                     "One Parent(mother) in Albany County": numeral(parseFloat(Object.values(obj1)[4])).format('0.0a'),
-                    "county/cousub": Object.values(obj1)[5],
-                    "countyColor": '#00A01B',
+                    "county/cousub": parseFloat(Object.values(obj1)[5]),
+                    "countyColor": '#FF5733',
                     "One Parent(mother) in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[4])).format('0.0a'),
-                    "New York state": Object.values(obj2_percent[i])[5],
-                    "stateColor": '#0091A0'
+                    "New York state": parseFloat(Object.values(obj2_percent[i])[5]),
+                    "stateColor": '#C70039'
                 }
             )
         })
@@ -233,6 +233,12 @@ class CensusGroupedBarChart extends React.Component {
         const style = {
             height:500
         };
+        let colors =[];
+        if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+            colors = this.props.colorRange
+        }else{
+            this.state.graphData4.map(d => colors.push(d.stateColor,d.countyColor))
+        }
         if(Object.values(this.props.censusKey).includes('B23008') && Object.values(this.props.compareGeoid).includes('36')){
             return(
                 <div style={style}>
@@ -248,10 +254,7 @@ class CensusGroupedBarChart extends React.Component {
             }}
             padding={0.1}
             groupMode="grouped"
-            colors = {[
-                    '#4C24A2',
-                '#E59D4B',
-            ]}
+            colors = {colors}
             colorBy = "id"
             layout = "vertical"
             borderColor="inherit:darker(1.6)"
@@ -298,16 +301,7 @@ class CensusGroupedBarChart extends React.Component {
                     ]}
             markers={[
                     ]}
-            theme={{
-                "tooltip": {
-                    "container": {
-                        "fontSize": "13px"
-                    }
-                },
-                "labels": {
-                    "textColor": "#555"
-                }
-            }}
+
             tooltip={({ id, indexValue, value, color,data }) => (
             <text>
             <b><big>{indexValue}</big></b>
@@ -324,9 +318,10 @@ class CensusGroupedBarChart extends React.Component {
 
 
     static defaultProps = {
-        censusKey: [], //'B19013',,
-        geoid: [],
-        compareGeoid: []
+        censusKey: ['B23008'], //'B19013',,
+        geoid: ['36001'],
+        compareGeoid: ['36'],
+        colorRange: []
     }
 
 }
