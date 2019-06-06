@@ -5,7 +5,7 @@ import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
 import subMenus from 'pages/Report/GeoPage-submenu.js'
 import Overview from "./Overview";
 //import GraphLayout from 'pages/Analysis/GraphLayout'
-const GRAPH_CONFIG = require('pages/Report/graphConfig.js')
+const GRAPH_CONFIG = require('pages/Report/graphConfig')
 
 class ReportIndex extends React.Component{
     constructor(props) {
@@ -43,6 +43,40 @@ class ReportIndex extends React.Component{
         })
 
         return (
+            <div className='container'>
+                <div>
+                <h1 align='center'> Overview </h1>
+                <br/>
+                <GridLayout
+                    sideWidth={800}
+                    minifiedWidth={1}
+                    isOpen={1}
+                    title={''}
+                    viewing={false}
+                    section={'overview'}
+                    graphs={this.state.graphConfig.overview}
+                    onOpenOrClose={function noop() {}}
+                    onLayoutChange={ this.props.onLayoutChange }
+                    verticalCompact={false}
+                    />
+                    </div>
+                <div>
+                    <h1 align='center'> Social Welfare </h1>
+                    <br/>
+                    <GridLayout
+                    sideWidth={1000}
+                    minifiedWidth={1}
+                    isOpen={1}
+                    title={''}
+                    viewing={false}
+                    section={'socialWelfare'}
+                    graphs={this.state.graphConfig.socialWelfare}
+                    onOpenOrClose={function noop() {}}
+                    onLayoutChange={ this.props.onLayoutChange }
+                    verticalCompact={false}
+                    />
+                </div>
+            </div>
         <div>
         <div>
         <h1 align='center'> Overview </h1>
@@ -106,7 +140,7 @@ class ReportIndex extends React.Component{
         </div>
         </div>
 
-    )
+        )
     }
 
     static defaultProps = {
@@ -130,12 +164,13 @@ export default {
     path: '/report',
     mainNav:true,
     exact:true,
-    menuSettings: {
-        image: 'none',
-        scheme: 'color-scheme-dark',
-        position: 'menu-position-left',
-        layout: 'menu-layout-mini',
-        style: 'color-style-default'
+    menuSettings:{
+            image: 'none',
+            scheme: 'color-scheme-dark',
+            position: 'menu-position-left',
+            layout: 'menu-layout-mini',
+            style: 'color-style-default',
+            subemenustyle: 'sub-menu-style-over'
     },
     name: 'Report',
     auth:false,

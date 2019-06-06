@@ -7,13 +7,32 @@ export default ({ graph, ...rest }) => {
         Graph = CensusCharts[graphType] || CensusCharts['NA']
     return (
         <TrackVisibility offset={100}>
-        <GraphHider Graph={Graph} { ...rest } graph ={graph }/>
+        	<GraphHider Graph={Graph} { ...rest } graph ={graph }/>
         </TrackVisibility>
-)
+	)
 }
 
-const GraphHider = ({isVisible, Graph, graph, ...rest}) => {
-    return isVisible ?
-    <Graph {...rest} {...graph} /> :
-    <div>Loading...</div>
+
+
+class GraphHider extends React.Component{
+    constructor(props) {
+        super(props);
+        console.log(props.isVisible)
+        this.state={
+            show: props.isVisible ? true : false
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+    	if(this.props.isVisible && !this.state.show) {
+    		this.setState({show:true})
+    	}
+    }
+
+    render () {
+    	let {isVisible, Graph, graph, ...rest} = this.props
+    	return this.state.show ?
+		    <Graph {...rest} {...graph} /> :
+		    <div>Loading...</div>
+    }
 }

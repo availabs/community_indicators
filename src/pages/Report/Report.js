@@ -5,7 +5,7 @@ import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
 import subMenus from 'pages/Report/GeoPage-submenu.js'
 import Overview from "./Overview";
 //import GraphLayout from 'pages/Analysis/GraphLayout'
-const GRAPH_CONFIG = require('pages/Report/graphConfig.js')
+const GRAPH_CONFIG = require('pages/Report/graphConfig')
 
 class Report extends React.Component{
     constructor(props) {
