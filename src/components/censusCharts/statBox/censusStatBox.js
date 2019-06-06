@@ -129,7 +129,7 @@ class CensusStatBox extends React.Component{
                                 "valueColor":'#0099ff',
                                 "censusVarName": 'HS ED. & Above',
                                 "year": year,
-                                "value": ((data[value[1]] + data[value[2]] + data[value[3]] + data[[value[4]]] + data[value[5]] + data[value[6]] + data[value[7]] + data[value[8]] + data[value[9]])/ data[value[0]] * 100).toFixed(2) + '%'
+                                "value": ((data[value[16]] + data[value[17]] + data[value[18]] + data[[value[19]]] + data[value[20]] + data[value[21]] + data[value[22]] + data[value[23]] + data[value[24]])/ data[value[0]] * 100).toFixed(2) + '%'
                             })
                     })
                     resolve(statData)

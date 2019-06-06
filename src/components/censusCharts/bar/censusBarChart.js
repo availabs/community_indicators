@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
 import {ResponsiveBar} from '@nivo/bar'
+import ColorRanges from 'constants/color-ranges'
 var numeral = require('numeral')
 
 class CensusBarChart extends React.Component {
@@ -14,6 +15,7 @@ class CensusBarChart extends React.Component {
             temp:2014,
             graphData2: [],
             graphData10: [],
+            graphData11:[],
             height:0,
             width:0
         }
@@ -64,6 +66,12 @@ class CensusBarChart extends React.Component {
             })
         })
 
+        this.educationData().then(res =>{
+            this.setState({
+                graphData11:res
+            })
+        })
+
     }
 
     componentDidUpdate(oldProps,oldState){
@@ -77,6 +85,12 @@ class CensusBarChart extends React.Component {
             this.familyData().then(res =>{
                 this.setState({
                     graphData10: res
+                })
+            })
+
+            this.educationData().then(res =>{
+                this.setState({
+                    graphData11:res
                 })
             })
 
@@ -173,6 +187,40 @@ class CensusBarChart extends React.Component {
         })
     }
 
+    educationData(){
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response =>{
+                let response_educationData = response.json.acs[this.props.geoid][this.props.year];
+                let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                let educationData = [];
+                //let colors = ColorRanges[Object.keys(response_educationData).shift().length].filter(d => d.name === 'Set2')[0].colors;
+                let colors = ["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3",
+                              '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C',
+                    '#F7C9B9', '#F4F3AF', '#C2ECF3', '#F4AD4D', '#2AF70E', '#D8AFE7', '#88DE73', '#718CD1', '#EA6A7D','#1AA3CB'
+
+                ]
+                    censusConfig.forEach(function(config,j){
+                        if ( j !== 0){
+                            if (response_educationData[config.value] < 0){
+                                educationData.push({
+                                    "education":config.name,
+                                    "number":Math.abs(response_educationData[config.value])/1000,
+                                    "color": colors[j]
+                                })
+                            }
+                            else{
+                                educationData.push({
+                                    "education":config.name,
+                                    "number":response_educationData[config.value],
+                                    "color": colors[j]
+                                })
+                            }
+                        }
+                    })
+                resolve(educationData)
+            })
+        })
+    }
 
 
     render () {
@@ -181,7 +229,7 @@ class CensusBarChart extends React.Component {
             height:500
         };
 
-        if(this.props.familyIncome === false){
+        if(this.props.familyIncome === false && this.props.educationalAttainment === false){
             let colors = [];
             if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
                 colors = this.props.colorRange;
@@ -314,6 +362,73 @@ class CensusBarChart extends React.Component {
             </div>
         )
         }
+        if(this.props.educationalAttainment){
+            let colors = [];
+            if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+                colors = this.props.colorRange;
+            }else{
+                colors =  this.state.graphData11.map(d => d.color);
+            }
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData11}
+            indexBy="education"
+            keys = {["number"]}
+            margin={{
+                "top": 100,
+                    "right": 130,
+                    "bottom": 170,
+                    "left": 60
+            }}
+            minValue={5}
+            maxValue={50000}
+            padding={0.5}
+            colors = {colors}
+            colorBy = "index"
+            layout = "vertical"
+            borderColor="inherit:darker(1.6)"
+            enableGridX = {true}
+            enableGridY={true}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": -90,
+                    "legendPosition": "middle",
+                    "legendOffset": 36
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+                    "legend" : "Population 25 Years and Over",
+                    format: v => `${v}`
+            }}
+            labelSkipWidth={12}
+            labelSkipHeight={36}
+            enableLabel = {false}
+            labelTextColor="inherit:darker(1.6)"
+            labelFormat = "0"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{indexValue}</big></b>
+            <br/> <br/>
+            {['Education']} : {data.education}
+        <br/>
+            Number: {value}
+                </text>
+        )}
+            />
+            </div>
+        )
+        }
 
 
 
@@ -325,7 +440,7 @@ class CensusBarChart extends React.Component {
         censusKey: [],
         geoid: [],
         familyIncome: false,
-        isVisible:false,
+        educationalAttainment:false,
         colorRange:[]
     }
 

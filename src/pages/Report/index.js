@@ -34,12 +34,20 @@ class ReportIndex extends React.Component{
             config['geoid'] = ['36001']
         })
 
+        this.state.graphConfig.education.map(function(config){
+            config['geoid'] = ['36001']
+        })
+
+        this.state.graphConfig.housing.map(function(config){
+            config['geoid'] = ['36001']
+        })
+
         return (
-            <div>
-            <div>
-            <h1 align='center'> Overview </h1>
-            <br/>
-            <GridLayout
+        <div>
+        <div>
+        <h1 align='center'> Overview </h1>
+        <br/>
+        <GridLayout
         sideWidth={800}
         minifiedWidth={1}
         isOpen={1}
@@ -61,6 +69,36 @@ class ReportIndex extends React.Component{
         title={''}
         viewing={false}
         graphs={this.state.graphConfig.socialWelfare}
+        onOpenOrClose={function noop() {}}
+        onLayoutChange={ this.props.onLayoutChange }
+        verticalCompact={false}
+        />
+        </div>
+        <div>
+        <h1 align='center'> Education </h1>
+        <br/>
+        <GridLayout
+        sideWidth={1000}
+        minifiedWidth={1}
+        isOpen={1}
+        title={''}
+        viewing={false}
+        graphs={this.state.graphConfig.education}
+        onOpenOrClose={function noop() {}}
+        onLayoutChange={ this.props.onLayoutChange }
+        verticalCompact={false}
+        />
+        </div>
+        <div>
+        <h1 align='center'> Housing </h1>
+            <br/>
+            <GridLayout
+        sideWidth={1000}
+        minifiedWidth={1}
+        isOpen={1}
+        title={''}
+        viewing={false}
+        graphs={this.state.graphConfig.housing}
         onOpenOrClose={function noop() {}}
         onLayoutChange={ this.props.onLayoutChange }
         verticalCompact={false}

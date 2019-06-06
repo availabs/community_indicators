@@ -458,6 +458,276 @@ class CensusStackedBarChart extends React.Component {
                     resolve([axisData,stackData])
                 }
 
+
+                if(this.props.schoolEnrollmentAge){
+                    let year = parseFloat(this.state.value);
+                    let responseData_schoolAge = response.json.acs[this.props.geoid][year];
+                    let censusConfig = response.json.acs.config;
+                    let stackDataPrivate_m =[]
+                    let axisDataPrivate_m = []
+                    let stackDataPrivate_f = []
+                    let axisDataPrivate_f = []
+                    let stackDataPublic_m =[]
+                    let axisDataPublic_m = []
+                    let stackDataPublic_f = []
+                    let axisDataPublic_f = []
+                    let stackDataMale = []
+                    let axisDataMale = []
+                    let stackDataFemale = []
+                    let axisDataFemale = []
+                    let axisData = []
+                    let stackData =[];
+                    Object.keys(responseData_schoolAge).forEach(function (res, index) {
+                        if (index >=3){
+                            Object.keys(censusConfig).forEach(function (config) {
+                                if (res.slice(0, -5) === config) {
+                                    Object.values(censusConfig[config].variables).forEach(function (subvar,i) {
+                                        if (i>2 && i <11){
+                                                if (res === subvar.value) {
+                                                    axisDataPublic_m.push({
+                                                        "age": subvar.name,
+                                                        "MaleNumber": responseData_schoolAge[res],
+                                                        "MaleColorPublic": "#82BDCF"
+                                                    })
+                                                    stackDataPublic_m.push({
+                                                        "age": subvar.name,
+                                                        "MaleNumber": responseData_schoolAge[res],
+                                                        "MaleColorPublic": "#82BDCF"
+                                                    })
+                                                }
+                                        }
+                                        if (i>11 && i <20){
+                                            if (res === subvar.value) {
+                                                axisDataPrivate_m.push({
+                                                    "age": subvar.name,
+                                                    "MaleNumber": (responseData_schoolAge[res]),
+                                                    "MaleColorPrivate": "#2A738A"
+                                                })
+                                                stackDataPrivate_m.push({
+                                                    "age": subvar.name,
+                                                    "MaleNumber": (responseData_schoolAge[res]),
+                                                    "MaleColorPrivate": "#2A738A"
+                                                })
+                                            }
+                                        }
+                                        if(i>30 && i<39){
+                                            if (res === subvar.value) {
+                                                axisDataPublic_f.push({
+                                                    "age": subvar.name,
+                                                    "FemaleNumber": -(responseData_schoolAge[res]),
+                                                    "FemaleColorPublic": "#E295A0"
+                                                })
+                                                stackDataPublic_f.push({
+                                                    "age": subvar.name,
+                                                    "FemaleNumber": -(responseData_schoolAge[res]),
+                                                    "FemaleColorPublic": "#E295A0"
+                                                })
+                                            }
+                                        }
+                                        if(i>39 && i <48){
+                                            if (res === subvar.value) {
+                                                axisDataPrivate_f.push({
+                                                    "age": subvar.name,
+                                                    "FemaleNumber": -(responseData_schoolAge[res]),
+                                                    "FemaleColorPrivate": "#EF2642"
+                                                })
+                                                stackDataPrivate_f.push({
+                                                    "age": subvar.name,
+                                                    "FemaleNumber": -(responseData_schoolAge[res]),
+                                                    "FemaleColorPrivate": "#EF2642"
+                                                })
+                                            }
+                                        }
+
+                                    })
+                                }
+                            })
+                        }
+                    })
+
+                    axisDataPrivate_m.forEach(function (axis, i) {
+                        axisDataMale.push({
+                            'age': axis.age,
+                            'Males in Private school': parseFloat(axis.MaleNumber),
+                            'MaleColorPrivate': axis.MaleColorPrivate,
+                            'Males in Public school': parseFloat(axisDataPublic_m[i].MaleNumber),
+                            'MaleColorPublic': axisDataPublic_m[i].MaleColorPublic
+
+
+                        })
+                        stackDataMale.push({
+                            'age': axis.age,
+                            'MaleColorPrivate': axis.MaleColorPrivate,
+                            'Males in Private school': parseFloat(stackDataPrivate_m[i].MaleNumber),
+                            'Males in Public school': parseFloat(stackDataPublic_m[i].MaleNumber),
+                            'MaleColorPublic': stackDataPublic_m[i].MaleColorPublic
+                        })
+
+                    })
+
+                    axisDataPrivate_f.forEach(function (axis, i) {
+                        axisDataFemale.push({
+                            'age': axis.age,
+                            'Females in Private school': parseFloat(axis.FemaleNumber),
+                            'FemaleColorPrivate': axis.FemaleColorPrivate,
+                            'Females in Public school': parseFloat(axisDataPublic_f[i].FemaleNumber),
+                            'FemaleColorPublic': axisDataPublic_f[i].FemaleColorPublic
+
+
+                        })
+                        stackDataFemale.push({
+                            'age': axis.age,
+                            'FemaleColorPrivate': axis.FemaleColorPrivate,
+                            'Females in Private school': parseFloat(stackDataPrivate_f[i].FemaleNumber),
+                            'Females in Public school': parseFloat(stackDataPublic_f[i].FemaleNumber),
+                            'FemaleColorPublic': stackDataPublic_f[i].FemaleColorPublic
+                        })
+
+                    })
+
+                    Object.values(axisDataFemale).forEach(function (axis_f, i) {
+                        let obj = {...axisDataMale[i], ...axis_f}
+                        axisData.push(obj)
+                    })
+                    Object.values(stackDataFemale).forEach(function (stack_f, i) {
+                        let obj = {...stackDataMale[i], ...stack_f}
+                        stackData.push(obj)
+                    })
+
+                    resolve([axisData,stackData])
+                    
+                }
+
+                if(this.props.TenureHouseholdIncome){
+                    let year = parseFloat(this.state.value);
+                    let responseData = response.json.acs[this.props.geoid][year];
+                    let censusConfig = response.json.acs.config;
+                    let stackDataOwner =[]
+                    let axisDataOwner = []
+                    let stackDataRenter = []
+                    let axisDataRenter = []
+                    let axisData = []
+                    let stackData =[];
+                    Object.keys(responseData).forEach(function (res, index) {
+                        if (index >=2){
+                            Object.keys(censusConfig).forEach(function (config) {
+                                if (res.slice(0, -5) === config) {
+                                    Object.values(censusConfig[config].variables).forEach(function (subvar,i) {
+                                        if (i>1 && i <14){
+                                            if (res === subvar.value) {
+                                                axisDataOwner.push({
+                                                    "Tenure": subvar.name,
+                                                    "HouseholdIncomeOwner": responseData[res],
+                                                    "OwnerColor": "#82BDCF"
+                                                })
+                                                stackDataOwner.push({
+                                                    "Tenure": subvar.name,
+                                                    "HouseholdIncomeOwner": responseData[res],
+                                                    "OwnerColor": "#82BDCF"
+                                                })
+                                            }
+                                        }
+                                        if (i>13){
+                                            if (res === subvar.value) {
+                                                axisDataRenter.push({
+                                                    "Tenure": subvar.name,
+                                                    "HouseholdIncomeRenter": -(responseData[res]),
+                                                    "RenterColor": "#E295A0"
+                                                })
+                                                stackDataRenter.push({
+                                                    "Tenure": subvar.name,
+                                                    "HouseholdIncomeRenter": -(responseData[res]),
+                                                    "RenterColor": "#E295A0"
+                                                })
+                                            }
+                                        }
+
+                                    })
+                                }
+                            })
+                        }
+                    })
+
+
+                    Object.values(axisDataRenter).forEach(function (axis_r, i) {
+                        let obj = {...axisDataOwner[i], ...axis_r}
+                        axisData.push(obj)
+                    })
+                    Object.values(stackDataRenter).forEach(function (stack_r, i) {
+                        let obj = {...stackDataOwner[i], ...stack_r}
+                        stackData.push(obj)
+                    })
+
+                    resolve([axisData,stackData])
+
+                }
+                if(this.props.MortgageStatus){
+                    let year = parseFloat(this.state.value);
+                    let responseData = response.json.acs[this.props.geoid][year];
+                    let censusConfig = response.json.acs.config;
+                    let stackDataMortgage =[]
+                    let axisDataMortgage = []
+                    let stackDataNoMortgage = []
+                    let axisDataNoMortgage = []
+                    let axisData = []
+                    let stackData =[];
+                    Object.keys(responseData).forEach(function (res, index) {
+                        if (index >=2){
+                            Object.keys(censusConfig).forEach(function (config) {
+                                if (res.slice(0, -5) === config) {
+                                    Object.values(censusConfig[config].variables).forEach(function (subvar,i) {
+                                        if (i>1 && i <20){
+                                            if (res === subvar.value) {
+                                                axisDataMortgage.push({
+                                                    "Cost": subvar.name,
+                                                    "MortgageUnits": responseData[res],
+                                                    "MortgageColor": "#82BDCF"
+                                                })
+                                                stackDataMortgage.push({
+                                                    "Cost": subvar.name,
+                                                    "MortgageUnits": responseData[res],
+                                                    "MortgageColor": "#82BDCF"
+                                                })
+                                            }
+                                        }
+                                        if (i>19){
+                                            if (res === subvar.value) {
+                                                axisDataNoMortgage.push({
+                                                    "Cost": subvar.name,
+                                                    "NoMortgageUnits": -(responseData[res]),
+                                                    "NoMortgageColor": "#E295A0"
+                                                })
+                                                stackDataNoMortgage.push({
+                                                    "Cost": subvar.name,
+                                                    "NoMortgageUnits": -(responseData[res]),
+                                                    "NoMortgageColor": "#E295A0"
+                                                })
+                                            }
+                                        }
+
+                                    })
+                                }
+                            })
+                        }
+                    })
+
+
+                    Object.values(axisDataNoMortgage).forEach(function (axis_n, i) {
+                        let obj = {...axisDataMortgage[i], ...axis_n}
+                        axisData.push(obj)
+                    })
+                    Object.values(stackDataNoMortgage).forEach(function (stack_n, i) {
+                        let obj = {...stackDataMortgage[i], ...stack_n}
+                        stackData.push(obj)
+                    })
+
+                    resolve([axisData,stackData])
+
+                }
+
+
+
+
                 })
             })
 
@@ -786,6 +1056,323 @@ class CensusStackedBarChart extends React.Component {
 
             )
         }
+
+        if(this.props.schoolEnrollmentAge){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange;
+            }else{
+                this.state.graphData1.map(d => colors.push(d.MaleColorPrivate,d.MaleColorPublic,d.FemaleColorPrivate,d.FemaleColorPublic))
+            }
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData1}
+            margin={{
+                top: 60,
+                    right: 80,
+                    bottom: 60,
+                    left: 80
+            }}
+            indexBy="age"
+            keys={["Males in Private school","Males in Public school","Females in Private school","Females in Public school"]}
+            padding={0.8}
+            layout = "horizontal"
+            labelTextColor="inherit:darker(1.6)"
+            labelSkipWidth={16}
+            labelSkipHeight={16}
+            labelFormat= ".0s"
+            minValue={-10000}
+            maxValue={10000}
+            enableGridX = {true}
+            enableGridY={false}
+            axisTop={{tickSize: 0,
+                tickPadding: 12,
+                format: v => `${Math.abs(v)}`
+            }}
+            axisBottom={{
+                legendOffset: 50,
+                    tickSize: 0,
+                    tickPadding: 12,
+                    format: v => `${Math.abs(v)}`
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+
+            }}
+            markers={[
+                    {
+                        axis: 'x',
+                        value: 0,
+                        legend: 'FEMALES enrolled in school',
+                        legendPosition: 'bottom-left',
+                        legendOrientation: 'horizontal',
+                        legendOffsetY: 420,
+                    },
+            {
+                axis: 'x',
+                    value: 0,
+                legend: 'MALES enrolled in school',
+                legendPosition: 'bottom-right',
+                legendOrientation: 'horizontal',
+                legendOffsetY: 420,
+            },
+            {
+                axis: 'x',
+                    value: 0,
+                legend: 'Age',
+                legendPosition: 'bottom-right',
+                legendOrientation: 'horizontal',
+                legendOffsetX: 300,
+                legendOffsetY: -300
+            }
+        ]}
+            legends={[
+                    {
+                        "dataFrom": "keys",
+                        "anchor": "bottom",
+                        "direction": "row",
+                        "translateX": 30,
+                        "translateY": 65,
+                        "itemWidth": 100,
+                        "itemHeight": 20,
+                        "itemsSpacing": 40,
+                        "symbolSize": 10
+                    }
+                    ]}
+            tooltipFormat={value => `${Math.abs(value)}`
+        }
+            colors={colors}
+            />
+            <label><h4>{this.state.value}</h4>
+            <input
+            id="typeinp"
+            type="range"
+            min='2010'max='2016'
+            value={this.state.value}
+            onChange={this.handleChange}
+            step="1" />
+                </label>
+                </div>
+
+        )
+        }
+
+        if(this.props.TenureHouseholdIncome){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange;
+            }else{
+                this.state.graphData1.map(d => colors.push(d.RenterColor,d.OwnerColor))
+            }
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData1}
+            margin={{
+                top: 60,
+                    right: 80,
+                    bottom: 60,
+                    left: 80
+            }}
+            indexBy="Tenure"
+            keys={["HouseholdIncomeRenter","HouseholdIncomeOwner"]}
+            padding={0.8}
+            layout = "horizontal"
+            labelTextColor="inherit:darker(1.6)"
+            labelSkipWidth={16}
+            labelSkipHeight={16}
+            labelFormat= ".0s"
+            minValue={-20000}
+            maxValue={20000}
+            enableGridX = {true}
+            enableGridY={false}
+            axisTop={{tickSize: 0,
+                tickPadding: 12,
+                format: v => `${Math.abs(v)}`
+            }}
+            axisBottom={{
+                legendOffset: 50,
+                    tickSize: 0,
+                    tickPadding: 12,
+                    format: v => `${Math.abs(v)}`
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+
+            }}
+            markers={[
+                    {
+                        axis: 'x',
+                        value: 0,
+                        legend: 'Renter Occupied',
+                        legendPosition: 'bottom-left',
+                        legendOrientation: 'horizontal',
+                        legendOffsetY: 420,
+                    },
+            {
+                axis: 'x',
+                    value: 0,
+                legend: 'Owner Occupied',
+                legendPosition: 'bottom-right',
+                legendOrientation: 'horizontal',
+                legendOffsetY: 420,
+            },
+            {
+                axis: 'x',
+                    value: 0,
+                legend: 'Tenure',
+                legendPosition: 'bottom-right',
+                legendOrientation: 'horizontal',
+                legendOffsetX: 300,
+                legendOffsetY: -300
+            }
+        ]}
+            legends={[
+                    {
+                        "dataFrom": "keys",
+                        "anchor": "bottom",
+                        "direction": "row",
+                        "translateX": 30,
+                        "translateY": 65,
+                        "itemWidth": 100,
+                        "itemHeight": 20,
+                        "itemsSpacing": 40,
+                        "symbolSize": 10
+                    }
+                    ]}
+            tooltipFormat={value => `${Math.abs(value)}`
+        }
+            colors={colors}
+            />
+            <label><h4>{this.state.value}</h4>
+            <input
+            id="typeinp"
+            type="range"
+            min='2010'max='2016'
+            value={this.state.value}
+            onChange={this.handleChange}
+            step="1" />
+                </label>
+                </div>
+
+        )
+        }
+        if(this.props.MortgageStatus){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange;
+            }else{
+                this.state.graphData1.map(d => colors.push(d.NoMortgageColor,d.MortgageColor))
+            }
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData1}
+            margin={{
+                top: 60,
+                    right: 80,
+                    bottom: 60,
+                    left: 80
+            }}
+            indexBy="Cost"
+            keys={["NoMortgageUnits","MortgageUnits"]}
+            padding={0.8}
+            layout = "horizontal"
+            labelTextColor="inherit:darker(1.6)"
+            labelSkipWidth={16}
+            labelSkipHeight={16}
+            labelFormat= ".0s"
+            minValue={-15000}
+            maxValue={15000}
+            enableGridX = {true}
+            enableGridY={false}
+            axisTop={{tickSize: 0,
+                tickPadding: 12,
+                format: v => `${Math.abs(v)}`
+            }}
+            axisBottom={{
+                legendOffset: 50,
+                    tickSize: 0,
+                    tickPadding: 12,
+                    format: v => `${Math.abs(v)}`
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+
+            }}
+            markers={[
+                    {
+                        axis: 'x',
+                        value: 0,
+                        legend: 'No Mortgage Units',
+                        legendPosition: 'bottom-left',
+                        legendOrientation: 'horizontal',
+                        legendOffsetY: 420,
+                    },
+            {
+                axis: 'x',
+                    value: 0,
+                legend: 'Mortgage Units',
+                legendPosition: 'bottom-right',
+                legendOrientation: 'horizontal',
+                legendOffsetY: 420,
+            },
+            {
+                axis: 'x',
+                    value: 0,
+                legend: 'Tenure',
+                legendPosition: 'bottom-right',
+                legendOrientation: 'horizontal',
+                legendOffsetX: 300,
+                legendOffsetY: -300
+            }
+        ]}
+            legends={[
+                    {
+                        "dataFrom": "keys",
+                        "anchor": "bottom",
+                        "direction": "row",
+                        "translateX": 30,
+                        "translateY": 65,
+                        "itemWidth": 100,
+                        "itemHeight": 20,
+                        "itemsSpacing": 40,
+                        "symbolSize": 10
+                    }
+                    ]}
+            tooltipFormat={value => `${Math.abs(value)}`
+        }
+            colors={colors}
+            />
+            <label><h4>{this.state.value}</h4>
+            <input
+            id="typeinp"
+            type="range"
+            min='2010'max='2016'
+            value={this.state.value}
+            onChange={this.handleChange}
+            step="1" />
+                </label>
+                </div>
+
+        )
+        }
         }
 
 
@@ -796,6 +1383,10 @@ class CensusStackedBarChart extends React.Component {
         PopulationByAge: false,
         PovertyPopulationBySex: false,
         CivilianStatus: false,
+        MortgageStatusPercent:false,
+        MortgageStatus:false,
+        schoolEnrollmentAge:false,
+        TenureHouseholdIncome:false,
         colorRange:[]
 
     }

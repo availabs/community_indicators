@@ -64,39 +64,77 @@ class CensusMultiStackedLineChart extends React.Component{
     multiStackedLineData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
-                let censusConfig = response.json.acs.config[this.props.censusKey].variables;
-                let response_data = response.json.acs[this.props.geoid];
-                let years = Object.keys(response_data).filter(d => d !== '$__path');
-                let data = [];
-                let multiStackedLineData = [];
-                let colors = ColorRanges[Object.keys(response_data).length+4].filter(d => d.name === 'Set3')[0].colors;
-                for(var k =0; k<=censusConfig.length-1;k++){
-                    data.push([])
-                }
-                Object.keys(response_data).filter(d => d !== '$__path').forEach(function (item,i) {
-                    let testData = response_data[item]
-                    censusConfig.forEach(function(config,j){
-                        if(j > 0){
-                            data[j].push({
-                                "x":years[i],
-                                "y":parseInt(testData[config.value])
-                            })
-                        }
-                    })
-                });
-                censusConfig.forEach(function(census,l){
-                    if(l>0){
-                        multiStackedLineData.push(
-                            {
-                                "id":census.name,
-                                "colors":colors[l],
-                                "data":data[l]
-                            }
-                        )
+                if (this.props.education){
+                    let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                    let response_data = response.json.acs[this.props.geoid];
+                    let years = Object.keys(response_data).filter(d => d !== '$__path');
+                    let data = [];
+                    let multiStackedLineData = [];
+                    let colors = ColorRanges[Object.keys(response_data).length+4].filter(d => d.name === 'Set3')[0].colors;
+                    for(var k =0; k<=censusConfig.length-1;k++){
+                        data.push([])
                     }
+                    Object.keys(response_data).filter(d => d !== '$__path').forEach(function (item,i) {
+                        let testData = response_data[item]
+                        censusConfig.forEach(function(config,j){
+                            if(j > 15){
+                                data[j].push({
+                                    "x":years[i],
+                                    "y":parseInt(testData[config.value])
+                                })
+                            }
+                        })
+                    });
+                    censusConfig.forEach(function(census,l){
+                        if(l>15){
+                            multiStackedLineData.push(
+                                {
+                                    "id":census.name,
+                                    "colors":colors[l-15],
+                                    "data":data[l]
+                                }
+                            )
+                        }
 
-                });
-                resolve(multiStackedLineData)
+                    });
+                    resolve(multiStackedLineData)
+                }
+                if(this.props.VacantHousing){
+                    let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                    let response_data = response.json.acs[this.props.geoid];
+                    let years = Object.keys(response_data).filter(d => d !== '$__path');
+                    let data = [];
+                    let multiStackedLineData = [];
+                    let colors = ColorRanges[Object.keys(response_data).length+4].filter(d => d.name === 'Set3')[0].colors;
+                    for(var k =0; k<=censusConfig.length-1;k++){
+                        data.push([])
+                    }
+                    Object.keys(response_data).filter(d => d !== '$__path').forEach(function (item,i) {
+                        let testData = response_data[item]
+                        censusConfig.forEach(function(config,j){
+                            if(j > 0){
+                                data[j].push({
+                                    "x":years[i],
+                                    "y":parseInt(testData[config.value])
+                                })
+                            }
+                        })
+                    });
+                    censusConfig.forEach(function(census,l){
+                        if(l>0){
+                            multiStackedLineData.push(
+                                {
+                                    "id":census.name,
+                                    "colors":colors[l],
+                                    "data":data[l]
+                                }
+                            )
+                        }
+
+                    });
+                    resolve(multiStackedLineData)
+                }
+
             })
 
         })
@@ -106,98 +144,99 @@ class CensusMultiStackedLineChart extends React.Component{
         const style = {
             height:500
         };
-        let colors =[];
-        if(this.props.colorRange !== undefined && this.props.colorRange.length >0){
-            colors = this.props.colorRange
-        }else{
-            colors = this.state.graphData8.map( d => d.colors)
-        }
-        return(
-        <div style={style}>
-        <ResponsiveLine
-        data={this.state.graphData8}
-        margin={{
-            "top": 30,
-                "right": 150,
-                "bottom": 60,
-                "left": 140
-        }}
-        xScale={{
-            "type": "point"
-        }}
-        yScale={{
-            "type": 'linear',
-                "stacked": true,
-                "min": 'auto',
-                "max": 'auto'
-        }}
-        curve='linear'
-        colors={colors}
-        axisTop={null}
-        axisRight={null}
-        axisBottom={{
-            "orient": "bottom",
-                "tickSize": 5,
-                "tickPadding": 5,
-                "tickRotation": 0,
-                "legend": "Educational Attainment",
-                "legendOffset": 36,
-                "legendPosition": "center"
-        }}
-        axisLeft={{
-            "orient": "left",
-                "tickSize": 5,
-                "tickPadding": 5,
-                "tickRotation": 0,
-                "legend": "Number",
-                "legendOffset": -60,
-                "legendPosition": "center"
-        }}
-        dotSize={5}
-        dotColor="inherit:darker(0.3)"
-        dotBorderWidth={2}
-        dotBorderColor="#ffffff"
-        enableDotLabel={false}
-        dotLabel="y"
-        dotLabelYOffset={-12}
-        animate={true}
-        enableGridX={true}
-        enableGridY={true}
-        enableArea={false}
-        areaOpacity={0.35}
-        motionStiffness={90}
-        motionDamping={15}
-        legends={[
-                {
-                    "anchor": "bottom-right",
-                    "direction": "column",
-                    "justify": false,
-                    "translateX": 100,
-                    "translateY": 0,
-                    "itemsSpacing": 0,
-                    "itemDirection": "left-to-right",
-                    "itemWidth": 80,
-                    "itemHeight": 20,
-                    "itemOpacity": 0.75,
-                    "symbolSize": 12,
-                    "symbolShape": "circle",
-                    "symbolBorderColor": "rgba(0, 0, 0, .5)",
-                    "effects": [
-                        {
-                            "on": "hover",
-                            "style": {
-                                "itemBackground": "rgba(0, 0, 0, .03)",
-                                "itemOpacity": 1
+        if(this.props.education){
+            let colors =[];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length >0){
+                colors = this.props.colorRange
+            }else{
+                colors = this.state.graphData8.map( d => d.colors)
+            }
+            return(
+                <div style={style}>
+                <ResponsiveLine
+            data={this.state.graphData8}
+            margin={{
+                "top": 30,
+                    "right": 150,
+                    "bottom": 60,
+                    "left": 140
+            }}
+            xScale={{
+                "type": "point"
+            }}
+            yScale={{
+                "type": 'linear',
+                    "stacked": true,
+                    "min": 'auto',
+                    "max": 'auto'
+            }}
+            curve='linear'
+            colors={colors}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Educational Attainment",
+                    "legendOffset": 36,
+                    "legendPosition": "center"
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Number",
+                    "legendOffset": -60,
+                    "legendPosition": "center"
+            }}
+            dotSize={5}
+            dotColor="inherit:darker(0.3)"
+            dotBorderWidth={2}
+            dotBorderColor="#ffffff"
+            enableDotLabel={false}
+            dotLabel="y"
+            dotLabelYOffset={-12}
+            animate={true}
+            enableGridX={true}
+            enableGridY={true}
+            enableArea={false}
+            areaOpacity={0.35}
+            motionStiffness={90}
+            motionDamping={15}
+            legends={[
+                    {
+                        "anchor": "bottom-right",
+                        "direction": "column",
+                        "justify": false,
+                        "translateX": 100,
+                        "translateY": 0,
+                        "itemsSpacing": 0,
+                        "itemDirection": "left-to-right",
+                        "itemWidth": 80,
+                        "itemHeight": 20,
+                        "itemOpacity": 0.75,
+                        "symbolSize": 12,
+                        "symbolShape": "circle",
+                        "symbolBorderColor": "rgba(0, 0, 0, .5)",
+                        "effects": [
+                            {
+                                "on": "hover",
+                                "style": {
+                                    "itemBackground": "rgba(0, 0, 0, .03)",
+                                    "itemOpacity": 1
+                                }
                             }
-                        }
-                    ]
-                }
-                ]}
-        tooltip={({ id, indexValue, value, color,data }) => (
-        <text>
-        <b><big>{this.props.geoid}</big></b>
-        <br/> <br/>
-        Year : {id}
+                        ]
+                    }
+                    ]}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{this.props.geoid}</big></b>
+            <br/> <br/>
+            Year : {id}
         <br/>
             Regular High School diploma: {Object.values(data)[0]['data'].y}
         <br/>
@@ -218,15 +257,133 @@ class CensusMultiStackedLineChart extends React.Component{
             Doctorate degree: {Object.values(data)[8]['data'].y}
         </text>
         )}
-        />
-        </div>
+            />
+            </div>
 
-    )
+        )
+        }
+        if(this.props.VacantHousing){
+            let colors =[];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length >0){
+                colors = this.props.colorRange
+            }else{
+                colors = this.state.graphData8.map( d => d.colors)
+            }
+            return(
+                <div style={style}>
+                <ResponsiveLine
+            data={this.state.graphData8}
+            margin={{
+                "top": 30,
+                    "right": 150,
+                    "bottom": 60,
+                    "left": 140
+            }}
+            xScale={{
+                "type": "point"
+            }}
+            yScale={{
+                "type": 'linear',
+                    "stacked": true,
+                    "min": 'auto',
+                    "max": 'auto'
+            }}
+            curve='linear'
+            colors={colors}
+            axisTop={null}
+            axisRight={null}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Educational Attainment",
+                    "legendOffset": 36,
+                    "legendPosition": "center"
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": "Number",
+                    "legendOffset": -60,
+                    "legendPosition": "center"
+            }}
+            dotSize={5}
+            dotColor="inherit:darker(0.3)"
+            dotBorderWidth={2}
+            dotBorderColor="#ffffff"
+            enableDotLabel={false}
+            dotLabel="y"
+            dotLabelYOffset={-12}
+            animate={true}
+            enableGridX={true}
+            enableGridY={true}
+            enableArea={false}
+            areaOpacity={0.35}
+            motionStiffness={90}
+            motionDamping={15}
+            legends={[
+                    {
+                        "anchor": "bottom-right",
+                        "direction": "column",
+                        "justify": false,
+                        "translateX": 100,
+                        "translateY": 0,
+                        "itemsSpacing": 0,
+                        "itemDirection": "left-to-right",
+                        "itemWidth": 80,
+                        "itemHeight": 20,
+                        "itemOpacity": 0.75,
+                        "symbolSize": 12,
+                        "symbolShape": "circle",
+                        "symbolBorderColor": "rgba(0, 0, 0, .5)",
+                        "effects": [
+                            {
+                                "on": "hover",
+                                "style": {
+                                    "itemBackground": "rgba(0, 0, 0, .03)",
+                                    "itemOpacity": 1
+                                }
+                            }
+                        ]
+                    }
+                    ]}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{this.props.geoid}</big></b>
+            <br/> <br/>
+            Year : {id}
+        <br/>
+            For Rent: {Object.values(data)[0]['data'].y}
+        <br/>
+            Rented,not occupied: {Object.values(data)[1]['data'].y}
+        <br/>
+            For sale only: {Object.values(data)[2]['data'].y}
+        <br/>
+            Sold,not occupied :{Object.values(data)[3]['data'].y}
+        <br/>
+            For seasonal, recreational, or occasional use: {Object.values(data)[4]['data'].y}
+        <br/>
+            For migrant workers: {Object.values(data)[5]['data'].y}
+        <br/>
+            Other Vaccant: {Object.values(data)[6]['data'].y}
+        </text>
+        )}
+            />
+            </div>
+
+        )
+        }
+
     }
 
     static defaultProps = {
         censusKey: ['B15003'],
         geoid: ['36001'],
+        VacantHousing:false,
+        education:false,
         colorRange:[]
     }
 }
