@@ -6,6 +6,7 @@ import AvlMap from 'AvlMap'
 import TractsLayer from 'components/layers/TractsLayers.js'
 import CensusPieCompare from "components/censusCharts/pie/censusPieCompare"
 import CensusDomGraph from 'components/censusCharts/bar/censusDomGraph'
+
 class Home extends Component {
     constructor(props){
         super(props);
@@ -26,7 +27,7 @@ class Home extends Component {
             <Element>
             <div style={{height:5000}}>
     <h1>Racial Population</h1>
-        <CensusPieCompare geoid={['36001','36083','36093','36091','36039','36021','36115','36113']} censusKey={['B02001']}/>
+        <CensusPieCompare geoid={['36001','36083','36093','36091','36039','36021','36115','36113']} censusKey={['B02001']} colorRange={[]}/>
         <div style={{width: '90%', height: '100vh', display: 'flex', alignContent: 'stretch', alignItems:'stretch', marginLeft: 40}}>
     <div style={{height: '100vh', width: '50vw'}}>
     <div style={{padding: 20, position: 'relative'}}>

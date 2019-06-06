@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
 import {ResponsiveBar} from '@nivo/bar'
-import ColorRanges from 'constants/color-ranges'
 var numeral = require('numeral')
 
 class CensusBarChart extends React.Component {
@@ -47,6 +46,7 @@ class CensusBarChart extends React.Component {
     })
 
     }
+
 
 
     componentWillMount()
@@ -176,11 +176,20 @@ class CensusBarChart extends React.Component {
 
 
     render () {
+
         const style = {
             height:500
         };
+
         if(this.props.familyIncome === false){
+            let colors = [];
+            if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+                colors = this.props.colorRange;
+            }else{
+                colors =  this.state.graphData2.map(d => d.language_color);
+            }
         return(
+
             <div style={style}>
             <ResponsiveBar
             data={this.state.graphData2}
@@ -193,7 +202,7 @@ class CensusBarChart extends React.Component {
                     "left": 60
             }}
             padding={0.3}
-            colors = {this.state.graphData2.map(d => d.language_color)}
+            colors = {colors}
             colorBy = "index"
             layout = "vertical"
             borderColor="inherit:darker(1.6)"
@@ -239,6 +248,12 @@ class CensusBarChart extends React.Component {
         )
         }
         if(this.props.familyIncome === true){
+            let colors = [];
+            if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+                colors = this.props.colorRange;
+            }else{
+                colors =  this.state.graphData10.map(d => d.color);
+            }
             return(
                 <div style={style}>
                 <ResponsiveBar
@@ -254,7 +269,7 @@ class CensusBarChart extends React.Component {
             minValue={0}
             maxValue={200000}
             padding={0.5}
-            colors = {this.state.graphData10.map(d => d.color)}
+            colors = {colors}
             colorBy = "index"
             layout = "vertical"
             borderColor="inherit:darker(1.6)"
@@ -309,7 +324,9 @@ class CensusBarChart extends React.Component {
         year: ['2015'],
         censusKey: [],
         geoid: [],
-        familyIncome: false
+        familyIncome: false,
+        isVisible:false,
+        colorRange:[]
     }
 
 }

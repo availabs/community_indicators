@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
+import TrackVisibility from 'react-on-screen';
 
 class CensusStatBox extends React.Component{
     constructor(props) {
@@ -62,6 +63,10 @@ class CensusStatBox extends React.Component{
                             if (j === 0){
                                 statData.push({
                                     "title": 'Poverty',
+                                    "titleColor":'#000001',
+                                    "subTitleColor":'#000001',
+                                    "yearColor":'#504F4F',
+                                    "valueColor":'#0099ff',
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": (data[value[0]] / data[value[1]] * 100).toFixed(2) + '%'
@@ -79,6 +84,10 @@ class CensusStatBox extends React.Component{
                             if (j === 2){
                                 statData.push({
                                     "title":"Housing",
+                                    "titleColor":'#000001',
+                                    "subTitleColor":'#000001',
+                                    "yearColor":'#504F4F',
+                                    "valueColor":'#0099ff',
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": (data[value[2]] / data[value[0]] * 100).toFixed(2) + '%'
@@ -95,6 +104,10 @@ class CensusStatBox extends React.Component{
                             if (j===0){
                                 statData.push({
                                     "title": "Economy",
+                                    "titleColor":'#000001',
+                                    "subTitleColor":'#000001',
+                                    "yearColor":'#504F4F',
+                                    "valueColor":'#0099ff',
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": '$' + data[config.value].toLocaleString()
@@ -110,6 +123,10 @@ class CensusStatBox extends React.Component{
                         let value= Object.keys(data).filter(d => d!== '$__path');
                             statData.push({
                                 "title":"Education",
+                                "titleColor":'#000001',
+                                "subTitleColor":'#000001',
+                                "yearColor":'#504F4F',
+                                "valueColor":'#0099ff',
                                 "censusVarName": 'HS ED. & Above',
                                 "year": year,
                                 "value": ((data[value[1]] + data[value[2]] + data[value[3]] + data[[value[4]]] + data[value[5]] + data[value[6]] + data[value[7]] + data[value[8]] + data[value[9]])/ data[value[0]] * 100).toFixed(2) + '%'
@@ -124,6 +141,10 @@ class CensusStatBox extends React.Component{
                             if (j===0){
                                 statData.push({
                                     "title":"Demographics",
+                                    "titleColor":'#000001',
+                                    "subTitleColor":'#000001',
+                                    "yearColor":'#504F4F',
+                                    "valueColor":'#0099ff',
                                     "censusVarName": config.name,
                                     "year": year,
                                     "value": data[config.value].toLocaleString()
@@ -139,17 +160,23 @@ class CensusStatBox extends React.Component{
     }
 
     render(){
-            return(
-                <div>
-                <h4 style={{color:'rgba(0,0,0,.8)',fontWeight: '700'}}>
-                {this.state.graphData9.map(d => d.title)}</h4>
-                <div className="stats" style={{display:'block',letterSpacing: '1px',margin: '0 0 16px'}}>
-        <div className='pop-container'>
-                <div className='demo-col'>
-                <h5 style={{color:'rgba(0,0,0,.8)',display: 'block',fontSize: '12px',fontWeight: '400',letterSpacing: '1px',margin:'0 0 16px',textTransform: 'uppercase',width: '100%'}}> {this.state.graphData9.map(d => d.censusVarName)}
-        <span style={{color:'rgba(0,0,0,.4)',marginLeft: '6px',textDecoration:'underline',textDecorationStyle:'dashed'}}> {this.state.graphData9.map(d => d.year)} </span>
+        let colors = [];
+        if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+            colors = this.props.colorRange;
+        }else{
+            this.state.graphData9.map(d => colors.push(d.titleColor,d.subTitleColor,d.yearColor,d.valueColor));
+        }
+        return(
+            <div>
+            <h4 style={{color:colors[0],fontWeight: '700'}}>
+            {this.state.graphData9.map(d => d.title)}</h4>
+            <div className="stats" style={{display:'block',letterSpacing: '1px',margin: '0 0 16px'}}>
+            <div className='pop-container'>
+            <div className='demo-col'>
+            <h5 style={{color:colors[1],display: 'block',fontSize: '12px',fontWeight: '400',letterSpacing: '1px',margin:'0 0 16px',textTransform: 'uppercase',width: '100%'}}> {this.state.graphData9.map(d => d.censusVarName)}
+            <span style={{color:colors[2],marginLeft: '6px',textDecoration:'underline',textDecorationStyle:'dashed'}}> {this.state.graphData9.map(d => d.year)} </span>
             </h5>
-            <span className='stat' style={{clear: 'both',color:'#09f',display:'block',fontSize: '32px',fontWeight:'700',marginBottom: '0'}}>{this.state.graphData9.map(d => d.value)}</span>
+            <span className='stat' style={{clear: 'both',color:colors[3],display:'block',fontSize: '32px',fontWeight:'700',marginBottom: '0'}}>{this.state.graphData9.map(d => d.value)}</span>
             </div>
             </div>
             </div>
@@ -162,11 +189,13 @@ class CensusStatBox extends React.Component{
         geoid: ['36001'],
         compareGeoid: ['36'],
         year:['2016'],
+        isvisible:false,
         amount: false,
         poverty: false,
         housing: false,
         education: false,
-        demographics: false
+        demographics: false,
+        colorRange:[]
     }
 }
 

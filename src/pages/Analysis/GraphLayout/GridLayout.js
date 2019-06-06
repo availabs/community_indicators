@@ -2,8 +2,12 @@ import React from 'react'
 //import WidthProvider from 'pages/auth/NetworkView/components/utils/WidthProvider'
 import { WidthProvider, Responsive as ResponsiveGridLayout} from 'react-grid-layout'
 import GraphFactory from './GraphFactory'
-import _ from "lodash";
+import TrackVisibility from 'react-on-screen';
+//import _ from "lodash";
+
+var _ = require('lodash');
 const ReactGridLayout = WidthProvider(ResponsiveGridLayout);
+const originalLayouts = getFromLS("layouts") || {};
 
 const DEFAULT_LAYOUT = {
     h: 15,
@@ -23,20 +27,49 @@ class GridLayout extends React.Component {
     constructor(props){
         super(props);
 
-        const layout = this.generateLayout();
-        this.state = { layout };
+        //const layout = this.generateLayout();
+        this.state = { layouts: JSON.parse(JSON.stringify(originalLayouts)) };
+
+        this.onLayoutChange = this.onLayoutChange.bind(this)
     }
+
+    onLayoutChange(layout, layouts) {
+        if (layouts.xs !== undefined){
+            layouts.xs.forEach(function(layout){
+                delete layout.isDraggable;
+                delete layout.isResizable;
+                delete layout.moved;
+                delete layout.minH;
+                delete layout.minW;
+                delete layout.maxH;
+                delete layout.maxW;
+            })
+
+        }
+        this.props.graphs.map(function(graph,i){
+            if (layouts.xs !== undefined){
+                graph['layout'] = layouts.xs[i]
+            }
+
+        })
+        console.log('new layout:to be pasted in the graph config',JSON.stringify(this.props.graphs))
+        this.setState({ layouts : layouts });
+
+
+    }
+
+
     loadComps() {
         const {graphs,viewing, ...rest } = this.props;
         return graphs.map((graph, i) => {
             let layout = { ...getDefaultLayout(graph.id) };
-            console.log('layout',graph.layout)
             if (graph.layout) {
                 layout = {
                     ...layout,
                     ...graph.layout,
                     i: graph.id
                 };
+
             }
             if (viewing) {
                 layout.static = true;
@@ -51,7 +84,6 @@ class GridLayout extends React.Component {
                     border: '1px dashed rgba(0, 0, 0, 0.25)',
                     zIndex: 100
                 } }>
-
                 <GraphFactory
                     viewing={ viewing }
                     graph={ graph }
@@ -64,31 +96,17 @@ class GridLayout extends React.Component {
 
     }
 
-    generateLayout() {
-        const p = this.props;
-        return _.map(new Array(p.items), function(item, i) {
-            const w = Math.ceil(Math.random() * 4);
-            const y = Math.ceil(Math.random() * 4) + 1;
-            return {
-                x: (i * 2) % 12,
-                y: Math.floor(i / 6) * y,
-                w: w,
-                h: y,
-                i: i.toString()
-            };
-        });
-    }
-
-
 
     render() {
         return (
             <div className='container'>
-            <ReactGridLayout
+             <ReactGridLayout
                     rowHeight={ 30 }
-                    breakpoints={ { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 } }
-                    cols={ { lg: 12, md: 12, sm: 6, xs: 4, xxs: 2 } }
-                    onLayoutChange={this.onLayoutChange}
+                    cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                    layouts = {this.state.layouts}
+                    onLayoutChange={(layout, layouts) =>
+                    this.onLayoutChange(layout, layouts)
+                    }
                     >
                         {this.loadComps()}
             </ReactGridLayout>
@@ -101,18 +119,20 @@ class GridLayout extends React.Component {
         className: "layout",
         items: 20,
         rowHeight: 30,
-        onLayoutChange: function() {},
-        cols: 12
+        isVisible:true,
+        cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
     };
 }
 export default GridLayout
 
-/*
-layout={this.state.layout}
-        onLayoutChange={this.onLayoutChange}
-        {...this.props}
- */
-
-/*
-
- */
+function getFromLS(key) {
+    let ls = {};
+    if (global.localStorage) {
+        try {
+            ls = JSON.parse(global.localStorage.getItem("rgl-8")) || {};
+        } catch (e) {
+            /*Ignore*/
+        }
+    }
+    return ls[key];
+}
