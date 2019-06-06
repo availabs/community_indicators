@@ -17,7 +17,6 @@ export default ({ graph, ...rest }) => {
 class GraphHider extends React.Component{
     constructor(props) {
         super(props);
-        console.log(props.isVisible)
         this.state={
             show: props.isVisible ? true : false
         }

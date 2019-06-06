@@ -2,14 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="381afa48-1dff-4567-b0b7-4d2126fee405" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/education.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Report/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/Report.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Report/graphConfig.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Report/graphConfig/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/pages/Report/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/falcorGraph.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/falcorGraph.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,11 +25,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="396">
-              <caret line="1293" column="32" lean-forward="true" selection-start-line="1293" selection-start-column="32" selection-end-line="1293" selection-end-column="32" />
+            <state relative-caret-position="802">
+              <caret line="1296" column="24" selection-start-line="1296" selection-start-column="24" selection-end-line="1296" selection-end-column="24" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -36,10 +38,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig.js">
+        <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="441">
-              <caret line="272" column="19" lean-forward="true" selection-start-line="272" selection-start-column="19" selection-end-line="272" selection-end-column="19" />
+            <state relative-caret-position="478">
+              <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+              <folding>
+                <element signature="e#110#194#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/index.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="522">
+              <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="1299" selection-start-column="1292" selection-end-column="1299" />
             </state>
           </provider>
         </entry>
@@ -56,10 +79,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>PieRadialLabels</find>
-      <find>censusPieChart</find>
-      <find>componentWillMount</find>
-      <find>.json</find>
       <find>this.state</find>
       <find>state</find>
       <find>County</find>
@@ -86,6 +105,10 @@
       <find>Male</find>
       <find>MultiStacked</find>
       <find>&quot; &quot;</find>
+      <find>multi</find>
+      <find>CensusStackedBar</find>
+      <find>housing</find>
+      <find>B25087</find>
     </findStrings>
     <replaceStrings>
       <replace>edit</replace>
@@ -104,12 +127,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/pages/auth/Routes/analysis/components/GraphLayout/GraphFactory.js" />
-        <option value="$PROJECT_DIR$/src/pages/auth/Routes/analysis/components/GraphLayout/index.js" />
-        <option value="$PROJECT_DIR$/src/pages/GraphGrid/GraphFactory.js" />
-        <option value="$PROJECT_DIR$/src/pages/GraphGrid/GridLayout.js" />
-        <option value="$PROJECT_DIR$/src/pages/GraphGrid/index.js" />
-        <option value="$PROJECT_DIR$/src/pages/edit/index.js" />
         <option value="$PROJECT_DIR$/src/pages/GraphLayout/index.js" />
         <option value="$PROJECT_DIR$/src/pages/GraphLayout/GraphFactory.js" />
         <option value="$PROJECT_DIR$/src/pages/GraphLayout/GridLayout.js" />
@@ -132,7 +149,6 @@
         <option value="$PROJECT_DIR$/package-lock.json" />
         <option value="$PROJECT_DIR$/src/components/common/item-selector/keyevent.js" />
         <option value="$PROJECT_DIR$/src/App.js" />
-        <option value="$PROJECT_DIR$/src/store/falcorGraph.js" />
         <option value="$PROJECT_DIR$/src/pages/MapPage/index.js" />
         <option value="$PROJECT_DIR$/src/pages/Overview/index.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/ReportIndex.js" />
@@ -146,15 +162,22 @@
         <option value="$PROJECT_DIR$/src/components/censusCharts/pie/censusPieChart.js" />
         <option value="$PROJECT_DIR$/src/components/censusCharts/pie/censusPieCompare.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/Overview.js" />
-        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js" />
-        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" />
         <option value="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" />
         <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js" />
-        <option value="$PROJECT_DIR$/src/pages/Report/Report.js" />
-        <option value="$PROJECT_DIR$/src/pages/Report/index.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/graphConfig.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/overview3.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/overview4.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js" />
+        <option value="$PROJECT_DIR$/src/store/falcorGraph.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/Report.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/index.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js" />
         <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" />
+        <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js" />
       </list>
     </option>
   </component>
@@ -196,6 +219,45 @@
               <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
               <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="censusCharts" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="Analysis" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="pages" type="462c0819:PsiDirectoryNode" />
+              <item name="Analysis" type="462c0819:PsiDirectoryNode" />
+              <item name="GraphLayout" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -224,6 +286,7 @@
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
+    <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -295,21 +358,7 @@
       <workItem from="1559568541102" duration="4879000" />
       <workItem from="1559580624039" duration="4000" />
       <workItem from="1559583275546" duration="3217000" />
-      <workItem from="1559658135433" duration="23548000" />
-    </task>
-    <task id="LOCAL-00063" summary="updates">
-      <created>1558361202025</created>
-      <option name="number" value="00063" />
-      <option name="presentableId" value="LOCAL-00063" />
-      <option name="project" value="LOCAL" />
-      <updated>1558361202025</updated>
-    </task>
-    <task id="LOCAL-00064" summary="updates">
-      <created>1558361225227</created>
-      <option name="number" value="00064" />
-      <option name="presentableId" value="LOCAL-00064" />
-      <option name="project" value="LOCAL" />
-      <updated>1558361225227</updated>
+      <workItem from="1559658135433" duration="29406000" />
     </task>
     <task id="LOCAL-00065" summary="showing all graphs">
       <created>1558361245204</created>
@@ -640,11 +689,25 @@
       <option name="project" value="LOCAL" />
       <updated>1559572008855</updated>
     </task>
-    <option name="localTasksCounter" value="112" />
+    <task id="LOCAL-00112" summary="updates">
+      <created>1559839425014</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1559839425015</updated>
+    </task>
+    <task id="LOCAL-00113" summary="updates">
+      <created>1559839836455</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1559839836455</updated>
+    </task>
+    <option name="localTasksCounter" value="114" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="776757000" />
+    <option name="totallyTimeSpent" value="782615000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="77" y="32" width="1843" height="1048" extended-state="6" />
@@ -657,6 +720,7 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
+      <window_info anchor="bottom" id="TypeScript" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -667,7 +731,7 @@
       <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.31393397" weight="0.5862069" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.04226919" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.68606603" side_tool="true" visible="true" weight="0.04894327" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.68606603" side_tool="true" weight="0.04894327" />
       <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -682,7 +746,7 @@
       <window_info anchor="right" id="SciView" order="10" />
     </layout>
     <layout-to-restore>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49610677" visible="true" weight="0.2730834" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49610677" visible="true" weight="0.17067711" />
       <window_info id="Structure" order="1" sideWeight="0.5038932" side_tool="true" weight="0.2730834" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
@@ -690,18 +754,19 @@
       <window_info id="UI Designer" order="5" />
       <window_info id="Capture Tool" order="6" />
       <window_info id="Favorites" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.31393397" weight="0.5862069" />
-      <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" order="9" weight="0.04226919" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.68606603" side_tool="true" weight="0.04894327" />
-      <window_info anchor="bottom" id="Docker" order="11" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TypeScript" order="0" />
+      <window_info anchor="bottom" id="Message" order="1" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.32925472" />
+      <window_info anchor="bottom" id="Run" order="3" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
+      <window_info anchor="bottom" id="TODO" order="7" />
+      <window_info anchor="bottom" id="Version Control" order="8" sideWeight="0.31393397" weight="0.5862069" />
+      <window_info anchor="bottom" id="Database Changes" order="9" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="10" weight="0.04226919" />
+      <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.68606603" side_tool="true" weight="0.04894327" />
+      <window_info anchor="bottom" id="Docker" order="12" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -742,9 +807,9 @@
     <MESSAGE value="report of overview and social welfare with county/city change" />
     <MESSAGE value="landing page" />
     <MESSAGE value="output the changed layout" />
-    <MESSAGE value="updates" />
     <MESSAGE value="added colorRange as prop for each and every component &#10;added Lazy loading wrapper" />
-    <option name="LAST_COMMIT_MESSAGE" value="added colorRange as prop for each and every component &#10;added Lazy loading wrapper" />
+    <MESSAGE value="updates" />
+    <option name="LAST_COMMIT_MESSAGE" value="updates" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -758,104 +823,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/styles/_react_grid.scss">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1278">
-          <caret line="71" column="1" lean-forward="true" selection-start-line="71" selection-start-column="1" selection-end-line="71" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/light-admin/menu/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="540">
-          <caret line="30" column="22" selection-start-line="30" selection-start-column="22" selection-end-line="30" selection-end-column="22" />
-          <folding>
-            <element signature="e#3#43#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/light-admin/menu/MobileMenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1026" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Login.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1972">
-          <caret line="116" column="2" lean-forward="true" selection-start-line="116" selection-start-column="2" selection-end-line="116" selection-end-column="2" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/light-admin/menu/MainMenu.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="52" column="13" lean-forward="true" selection-start-line="52" selection-start-column="13" selection-end-line="52" selection-end-column="13" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Login.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/registerServiceWorker.js">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/messages/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/messages/SystemMessage.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#69#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AvlMap/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/AvlMap/MapLayer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-5264" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/SocialWelfare/GridLayout.js" />
     <entry file="file://$PROJECT_DIR$/src/pages/SocialWelfare/GraphFactory.js" />
     <entry file="file://$PROJECT_DIR$/package-lock.json">
@@ -869,13 +836,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
           <caret line="52" column="14" lean-forward="true" selection-start-line="52" selection-start-column="14" selection-end-line="52" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/falcorGraph.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="5" lean-forward="true" selection-start-line="5" selection-end-line="5" />
         </state>
       </provider>
     </entry>
@@ -921,16 +881,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Landing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
-          <folding>
-            <element signature="e#1#42#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Signup.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
@@ -952,16 +902,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/censusCharts/statBox/testOnScreen.js" />
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="676">
-          <caret line="55" column="8" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/censusCharts/line/censusLineChart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -1001,37 +941,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/store/config.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="24" selection-start-column="24" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Report/GeoPage-submenu.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="342">
           <caret line="19" column="64" selection-start-line="19" selection-start-column="64" selection-end-line="19" selection-end-column="64" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/Overview.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-252">
-          <caret line="29" column="136" selection-start-line="29" selection-start-column="136" selection-end-line="29" selection-end-column="136" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="1" selection-start-line="18" selection-start-column="1" selection-end-line="18" selection-end-column="1" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1075,43 +988,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="18" lean-forward="true" selection-start-line="18" selection-start-column="18" selection-end-line="18" selection-end-column="18" />
-          <folding>
-            <element signature="e#110#194#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/Report.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="234">
-          <caret line="40" column="38" selection-start-line="40" selection-start-column="38" selection-end-line="40" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#26#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="558">
-          <caret line="100" column="38" selection-start-line="100" selection-start-column="27" selection-end-line="100" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-198">
-          <caret line="110" column="21" selection-start-line="110" selection-start-column="21" selection-end-line="110" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3592">
@@ -1122,20 +998,199 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="396">
-          <caret line="1293" column="32" lean-forward="true" selection-start-line="1293" selection-start-column="32" selection-end-line="1293" selection-end-column="32" />
+        <state relative-caret-position="441">
+          <caret line="272" column="19" selection-start-line="272" selection-start-column="19" selection-end-line="272" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Landing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="558">
+          <caret line="31" column="19" lean-forward="true" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="19" />
+          <folding>
+            <element signature="e#1#42#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/404.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="990">
+          <caret line="55" column="8" selection-start-line="55" selection-start-column="8" selection-end-line="55" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/redux-falcor/components/FalcorProvider.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/utils/redux-falcor/components/reduxFalcor.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig.js">
+    <entry file="file://$PROJECT_DIR$/src/store/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="441">
-          <caret line="272" column="19" lean-forward="true" selection-start-line="272" selection-start-column="19" selection-end-line="272" selection-end-column="19" />
+        <state>
+          <folding>
+            <element signature="e#0#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/config.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="24" selection-start-column="24" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/node_modules/@types/node/globals.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-16630">
+          <caret line="161" column="12" selection-start-line="161" selection-start-column="12" selection-end-line="161" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/store/falcorGraph.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-466">
+          <caret line="11" column="1" selection-start-line="11" selection-start-column="1" selection-end-line="11" selection-end-column="1" />
+          <folding>
+            <element signature="e#39#69#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig_bak.js">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/Overview.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="29" column="136" selection-start-line="29" selection-start-column="136" selection-end-line="29" selection-end-column="136" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3420">
+          <caret line="190" column="1" selection-start-line="190" selection-start-column="1" selection-end-line="190" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1098">
+          <caret line="81" column="27" selection-start-line="81" selection-start-column="27" selection-end-line="81" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/Report.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="774">
+          <caret line="43" lean-forward="true" selection-start-line="43" selection-end-line="43" />
+          <folding>
+            <element signature="e#0#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/line/censusMultiStackedLineChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3590">
+          <caret line="141" selection-start-line="141" selection-end-line="141" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/education.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="12" selection-start-column="12" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="504">
+          <caret line="28" column="15" lean-forward="true" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="324">
+          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="802">
+          <caret line="1296" column="24" selection-start-line="1296" selection-start-column="24" selection-end-line="1296" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="478">
+          <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+          <folding>
+            <element signature="e#110#194#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/overview2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="152" lean-forward="true" selection-start-column="152" selection-end-column="152" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="1299" selection-start-column="1292" selection-end-column="1299" />
         </state>
       </provider>
     </entry>

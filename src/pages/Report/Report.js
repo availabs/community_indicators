@@ -42,6 +42,7 @@ class Report extends React.Component{
             config['geoid'] = [geoid]
         })
 
+
         return (
         <div>
         <div>
@@ -76,8 +77,8 @@ class Report extends React.Component{
         </div>
         <div>
         <h1 align='center'> Education </h1>
-        <br/>
-        <GridLayout
+            <br/>
+            <GridLayout
         sideWidth={1000}
         minifiedWidth={1}
         isOpen={1}
@@ -146,3 +147,7 @@ export default
     auth: false,
     component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Report))
 }
+
+/*
+
+ */
