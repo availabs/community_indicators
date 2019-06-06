@@ -34,8 +34,8 @@ class GridLayout extends React.Component {
     }
 
     onLayoutChange(layout, layouts) {
-        if (layouts.xs !== undefined){
-            layouts.xs.forEach(function(layout){
+        if (layouts.lg !== undefined){
+            layouts.lg.forEach(function(layout){
                 delete layout.isDraggable;
                 delete layout.isResizable;
                 delete layout.moved;
@@ -47,12 +47,13 @@ class GridLayout extends React.Component {
 
         }
         this.props.graphs.map(function(graph,i){
-            if (layouts.xs !== undefined){
-                graph['layout'] = layouts.xs[i]
+            //console.log('test 123',layout, layouts)
+            if (layouts.lg !== undefined){
+                graph['layout'] = layouts.lg[i]
             }
 
         })
-        console.log('new layout:to be pasted in the graph config',JSON.stringify(this.props.graphs))
+        console.log(this.props.section,JSON.stringify(this.props.graphs))
         this.setState({ layouts : layouts });
 
 
