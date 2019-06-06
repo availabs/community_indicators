@@ -78,37 +78,6 @@ class ReportIndex extends React.Component{
                 </div>
             </div>
         <div>
-        <div>
-        <h1 align='center'> Overview </h1>
-        <br/>
-        <GridLayout
-        sideWidth={800}
-        minifiedWidth={1}
-        isOpen={1}
-        title={''}
-        viewing={false}
-        graphs={this.state.graphConfig.overview}
-        onOpenOrClose={function noop() {}}
-        onLayoutChange={ this.props.onLayoutChange }
-        verticalCompact={false}
-        />
-        </div>
-        <div>
-        <h1 align='center'> Social Welfare </h1>
-        <br/>
-        <GridLayout
-        sideWidth={1000}
-        minifiedWidth={1}
-        isOpen={1}
-        title={''}
-        viewing={false}
-        graphs={this.state.graphConfig.socialWelfare}
-        onOpenOrClose={function noop() {}}
-        onLayoutChange={ this.props.onLayoutChange }
-        verticalCompact={false}
-        />
-        </div>
-        <div>
         <h1 align='center'> Education </h1>
         <br/>
         <GridLayout
