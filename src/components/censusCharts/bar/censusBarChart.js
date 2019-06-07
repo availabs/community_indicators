@@ -16,6 +16,8 @@ class CensusBarChart extends React.Component {
             graphData2: [],
             graphData10: [],
             graphData11:[],
+            graphData12:[],
+            graphData13:[],
             height:0,
             width:0
         }
@@ -72,6 +74,12 @@ class CensusBarChart extends React.Component {
             })
         })
 
+        this.housingData().then(res =>{
+            this.setState({
+                graphData12:res
+            })
+        })
+
     }
 
     componentDidUpdate(oldProps,oldState){
@@ -91,6 +99,12 @@ class CensusBarChart extends React.Component {
             this.educationData().then(res =>{
                 this.setState({
                     graphData11:res
+                })
+            })
+
+            this.housingData().then(res =>{
+                this.setState({
+                    graphData12:res
                 })
             })
 
@@ -221,6 +235,57 @@ class CensusBarChart extends React.Component {
             })
         })
     }
+    housingData(){
+        return new Promise((resolve,reject) => {
+            this.fetchFalcorDeps().then(response =>{
+            if(this.props.housingUnitsMortgageCosts){
+                let response_data = response.json.acs[this.props.geoid][this.props.year];
+                let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                let housingData = [];
+                let colors = ["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3",
+                    '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C',
+                    '#F7C9B9', '#F4F3AF', '#C2ECF3', '#F4AD4D', '#2AF70E', '#D8AFE7', '#88DE73', '#718CD1', '#EA6A7D','#1AA3CB'
+
+                ]
+                censusConfig.forEach(function(config,j){
+                    if (j > 1 && j <19){
+                        //if(response_data[config.value] >0){
+                            housingData.push({
+                                "housingStatus":config.name,
+                                "cost":response_data[config.value],
+                                "color": colors[j]
+                            })
+                        //}
+                    }
+                })
+                resolve(housingData)
+            }
+                if(this.props.housingUnitsNoMortgageCosts){
+                    let response_data = response.json.acs[this.props.geoid][this.props.year];
+                    let censusConfig = response.json.acs.config[this.props.censusKey].variables;
+                    let housingData = [];
+                    let colors = ["#66c2a5", "#fc8d62", "#8da0cb", "#e78ac3", "#a6d854", "#ffd92f", "#e5c494", "#b3b3b3",
+                        '#C01616','#091860','#E0E540','#C15E0A','#074F28','#564B8E','#287F2C',
+                        '#F7C9B9', '#F4F3AF', '#C2ECF3', '#F4AD4D', '#2AF70E', '#D8AFE7', '#88DE73', '#718CD1', '#EA6A7D','#1AA3CB'
+
+                    ]
+
+                    censusConfig.forEach(function(config,j){
+                        if (j > 19){
+                            //if(response_data[config.value] >0){
+                            housingData.push({
+                                "housingStatus":config.name,
+                                "cost":response_data[config.value],
+                                "color": colors[j-14]
+                            })
+                            //}
+                        }
+                    })
+                    resolve(housingData)
+                }
+        })
+    })
+    }
 
 
     render () {
@@ -229,7 +294,7 @@ class CensusBarChart extends React.Component {
             height:500
         };
 
-        if(this.props.familyIncome === false && this.props.educationalAttainment === false){
+        if(this.props.language){
             let colors = [];
             if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
                 colors = this.props.colorRange;
@@ -237,7 +302,6 @@ class CensusBarChart extends React.Component {
                 colors =  this.state.graphData2.map(d => d.language_color);
             }
         return(
-
             <div style={style}>
             <ResponsiveBar
             data={this.state.graphData2}
@@ -429,6 +493,141 @@ class CensusBarChart extends React.Component {
             </div>
         )
         }
+        if(this.props.housingUnitsMortgageCosts){
+            let colors = [];
+            if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+                colors = this.props.colorRange;
+            }else{
+                colors =  this.state.graphData12.map(d => d.color);
+            }
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData12}
+            indexBy="housingStatus"
+            keys = {["cost"]}
+            margin={{
+                "top": 100,
+                    "right": 130,
+                    "bottom": 170,
+                    "left": 60
+            }}
+            minValue={0}
+            maxValue={15000}
+            padding={0.5}
+            colors ={colors}
+            colorBy = "index"
+            layout = "vertical"
+            borderColor="inherit:darker(1.6)"
+            enableGridX = {true}
+            enableGridY={true}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": -90,
+                    "legendPosition": "middle",
+                    "legendOffset": 36
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+                    "legend" : "Number of Owner Occupied Housing units with Mortgage",
+                    format: v => `${v}`
+            }}
+            labelSkipWidth={12}
+            labelSkipHeight={36}
+            enableLabel = {false}
+            labelTextColor="inherit:darker(1.6)"
+            labelFormat = "0"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{indexValue}</big></b>
+            <br/> <br/>
+            {['Cost']} : {data.housingStatus}
+        <br/>
+            Number: {value}
+        </text>
+        )}
+            />
+            </div>
+            )
+        }
+
+        if(this.props.housingUnitsNoMortgageCosts){
+            let colors = [];
+            if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+                colors = this.props.colorRange;
+            }else{
+                colors =  this.state.graphData12.map(d => d.color);
+            }
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData12}
+            indexBy="housingStatus"
+            keys = {["cost"]}
+            margin={{
+                "top": 100,
+                    "right": 130,
+                    "bottom": 170,
+                    "left": 60
+            }}
+            minValue={0}
+            maxValue={7000}
+            padding={0.5}
+            colors ={colors}
+            colorBy = "index"
+            layout = "vertical"
+            borderColor="inherit:darker(1.6)"
+            enableGridX = {true}
+            enableGridY={true}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": -90,
+                    "legendPosition": "middle",
+                    "legendOffset": 36
+            }}
+            axisLeft={{
+                "orient": "left",
+                    "tickSize": 5,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+                    "legend" : "Number of Owner Occupied Housing units without Mortgage",
+                    format: v => `${v}`
+            }}
+            labelSkipWidth={12}
+            labelSkipHeight={36}
+            enableLabel = {false}
+            labelTextColor="inherit:darker(1.6)"
+            labelFormat = "0"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            tooltip={({ id, indexValue, value, color,data }) => (
+            <text>
+            <b><big>{indexValue}</big></b>
+            <br/> <br/>
+            {['Cost']} : {data.housingStatus}
+        <br/>
+            Number: {value}
+        </text>
+        )}
+            />
+            </div>
+        )
+        }
 
 
 
@@ -439,8 +638,11 @@ class CensusBarChart extends React.Component {
         year: ['2015'],
         censusKey: [],
         geoid: [],
+        language:false,
         familyIncome: false,
         educationalAttainment:false,
+        housingUnitsMortgageCosts:false,
+        housingUnitsNoMortgageCosts:false,
         colorRange:[]
     }
 

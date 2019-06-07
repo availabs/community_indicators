@@ -28,5 +28,33 @@ module.exports =[
             x:0,
             y:0
         }
+    },
+    {
+        id:'29',
+        type:'CensusBarChart',
+        censusKey:['B25087'],
+        housingUnitsMortgageCosts: true,
+        colorRange:[],
+        layout:{
+            static:true,
+            h:14,
+            w:10,
+            x:0,
+            y:0
+        }
+    },
+    {
+        id:'30',
+        type:'CensusBarChart',
+        censusKey:['B25087'],
+        housingUnitsNoMortgageCosts: true,
+        colorRange:[],
+        layout:{
+            static:true,
+            h:14,
+            w:10,
+            x:0,
+            y:0
+        }
     }
 ]

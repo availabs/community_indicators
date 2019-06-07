@@ -32,6 +32,7 @@ module.exports = [
         id: '15',
         type: 'CensusBarChart',
         censusKey: ['B16001'],
+        language:true,
         colorRange:[],
         layout: {
             static: false,
