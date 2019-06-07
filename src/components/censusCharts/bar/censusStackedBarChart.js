@@ -724,6 +724,68 @@ class CensusStackedBarChart extends React.Component {
                     resolve([axisData,stackData])
 
                 }
+                if(this.props.MortgageStatusPercent){
+                    let year = parseFloat(this.state.value);
+                    let responseData = response.json.acs[this.props.geoid][year];
+                    let censusConfig = response.json.acs.config;
+                    let stackDataMortgage =[]
+                    let axisDataMortgage = []
+                    let stackDataNoMortgage = []
+                    let axisDataNoMortgage = []
+                    let axisData = []
+                    let stackData =[];
+
+                    Object.keys(responseData).forEach(function (res, index) {
+                        if (index >=2){
+                            Object.keys(censusConfig).forEach(function (config) {
+                                if (res.slice(0, -5) === config) {
+                                    Object.values(censusConfig[config].variables).forEach(function (subvar,i) {
+                                        if (i>1 && i <11){
+                                            if (res === subvar.value) {
+                                                axisDataMortgage.push({
+                                                    "Percent": subvar.name,
+                                                    "MortgageUnits": responseData[res],
+                                                    "MortgageColor": "#82BDCF"
+                                                })
+                                                stackDataMortgage.push({
+                                                    "Percent": subvar.name,
+                                                    "MortgageUnits": responseData[res],
+                                                    "MortgageColor": "#82BDCF"
+                                                })
+                                            }
+                                        }
+                                        if (i>12 && i <21){
+                                            if (res === subvar.value) {
+                                                axisDataNoMortgage.push({
+                                                    "Percent": subvar.name,
+                                                    "NoMortgageUnits": responseData[res],
+                                                    "NoMortgageColor": "#E295A0"
+                                                })
+                                                stackDataNoMortgage.push({
+                                                    "Percent": subvar.name,
+                                                    "NoMortgageUnits": responseData[res],
+                                                    "NoMortgageColor": "#E295A0"
+                                                })
+                                            }
+                                        }
+
+                                    })
+                                }
+                            })
+                        }
+                    })
+                    Object.values(axisDataNoMortgage).forEach(function (axis_n, i) {
+                        let obj = {...axisDataMortgage[i], ...axis_n}
+                        axisData.push(obj)
+                    })
+                    Object.values(stackDataNoMortgage).forEach(function (stack_n, i) {
+                        let obj = {...stackDataMortgage[i], ...stack_n}
+                        stackData.push(obj)
+                    })
+
+                    resolve([axisData,stackData])
+
+                }
 
 
 
@@ -1373,6 +1435,84 @@ class CensusStackedBarChart extends React.Component {
 
         )
         }
+        if(this.props.MortgageStatusPercent){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange;
+            }else{
+                this.state.graphData1.map(d => colors.push(d.MortgageColor,d.NoMortgageColor))
+            }
+            return(
+                <div style={style}>
+                <ResponsiveBar
+            data={this.state.graphData1}
+            margin={{
+                top: 60,
+                    right: 80,
+                    bottom: 60,
+                    left: 80
+            }}
+            indexBy="Percent"
+            keys={["MortgageUnits","NoMortgageUnits"]}
+            padding={0.5}
+            layout = "vertical"
+            groupMode="grouped"
+            labelTextColor="inherit:darker(1.6)"
+            labelSkipWidth={16}
+            labelSkipHeight={16}
+            labelFormat= ".0s"
+            minValue={0}
+            maxValue={15000}
+            enableGridX = {true}
+            enableGridY={false}
+            enableLabel={false}
+            axisBottom={{
+                "orient": "bottom",
+                    "tickSize": 2,
+                    "tickPadding": 5,
+                    "tickRotation": -27,
+                    "legendPosition": "middle",
+                    "legendOffset": -50,
+
+            }}
+            axisLeft={{
+                "tickSize": 2,
+                    "tickPadding": 5,
+                    "tickRotation": 0,
+                    "legend": 'Housing Units by Selected Monthly Owner Costs as a Percent of Household Income',
+                    "legendPosition": 'middle',
+                    "legendOffset": -50
+            }}
+            legends={[
+                    {
+                        "dataFrom": "keys",
+                        "anchor": "right",
+                        "direction": "column",
+                        "translateX": 70,
+                        "translateY": 0,
+                        "itemWidth": 100,
+                        "itemHeight": 20,
+                        "itemsSpacing": 40,
+                        "symbolSize": 10
+                    }
+                    ]}
+            tooltipFormat={value => `${Math.abs(value)}`
+        }
+            colors={colors}
+            />
+            <label><h4>{this.state.value}</h4>
+            <input
+            id="typeinp"
+            type="range"
+            min='2010'max='2016'
+            value={this.state.value}
+            onChange={this.handleChange}
+            step="1" />
+                </label>
+                </div>
+
+        )
+        }
         }
 
 
@@ -1403,3 +1543,4 @@ const mapStateToProps = (state,ownProps) => {
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusStackedBarChart))
+

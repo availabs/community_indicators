@@ -134,6 +134,41 @@ class CensusStatBox extends React.Component{
                     })
                     resolve(statData)
                 }
+                else if(this.props.housingMortgagePercent){
+                    Object.keys(response_data).filter(d => d !== '$__path').forEach(function(item){
+                        let data = response_data[item];
+                        let value= Object.keys(data).filter(d => d!== '$__path');
+                        statData.push({
+                            "title":"Housing",
+                            "titleColor":'#000001',
+                            "subTitleColor":'#000001',
+                            "yearColor":'#504F4F',
+                            "valueColor":'#0099ff',
+                            "censusVarName": 'Mortgaged Housing units by Monthly Owner Costs as a Percent(>30%) of Household Income',
+                            "year": year,
+                            "value": ((data[value[7]] + data[value[8]] + data[value[9]] + data[[value[10]]]) / data[value[1]] * 100).toFixed(2) + '%'
+                        })
+                    })
+                    resolve(statData)
+                }
+                else if(this.props.housingNoMortgagePercent){
+                    Object.keys(response_data).filter(d => d !== '$__path').forEach(function(item){
+                        let data = response_data[item];
+                        let value= Object.keys(data).filter(d => d!== '$__path');
+                        statData.push({
+                            "title":"Housing",
+                            "titleColor":'#000001',
+                            "subTitleColor":'#000001',
+                            "yearColor":'#504F4F',
+                            "valueColor":'#0099ff',
+                            "censusVarName": 'Non Mortgaged Housing units by Monthly Owner Costs as a Percent(>30%) of Household Income',
+                            "year": year,
+                            "value": ((data[value[18]] + data[value[19]] + data[value[20]] + data[[value[21]]]) / data[value[12]] * 100).toFixed(2) + '%'
+                        })
+                    })
+                    resolve(statData)
+                }
+
                 else{
                     Object.keys(response_data).filter(d => d !== '$__path').forEach(function(item,i){
                         let data = response_data[item]
@@ -195,6 +230,8 @@ class CensusStatBox extends React.Component{
         housing: false,
         education: false,
         demographics: false,
+        housingMortgagePercent:false,
+        housingNoMortgagePercent:false,
         colorRange:[]
     }
 }

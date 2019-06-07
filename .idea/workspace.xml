@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="381afa48-1dff-4567-b0b7-4d2126fee405" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/education.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Report/Report.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/Report.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Report/graphConfig/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/Report/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/falcorGraph.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/falcorGraph.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -25,11 +19,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="802">
-              <caret line="1296" column="24" selection-start-line="1296" selection-start-column="24" selection-end-line="1296" selection-end-column="24" />
+            <state relative-caret-position="794">
+              <caret line="1515" column="9" lean-forward="true" selection-start-line="1515" selection-start-column="9" selection-end-line="1515" selection-end-column="9" />
               <folding>
                 <element signature="e#0#41#0" expanded="true" />
               </folding>
@@ -38,31 +32,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js">
+        <entry file="file://$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="478">
-              <caret line="55" column="38" selection-start-line="55" selection-start-column="38" selection-end-line="55" selection-end-column="38" />
+            <state relative-caret-position="532">
+              <caret line="165" column="127" selection-start-line="165" selection-start-column="127" selection-end-line="165" selection-end-column="127" />
               <folding>
-                <element signature="e#110#194#0" expanded="true" />
+                <element signature="e#0#41#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/index.js">
+        <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="522">
-              <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+            <state relative-caret-position="18">
+              <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js">
           <provider selected="true" editor-type-id="text-editor">
             <state>
-              <caret column="1299" selection-start-column="1292" selection-end-column="1299" />
+              <caret column="47" selection-start-column="47" selection-end-column="47" />
             </state>
           </provider>
         </entry>
@@ -127,7 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/pages/GraphLayout/index.js" />
         <option value="$PROJECT_DIR$/src/pages/GraphLayout/GraphFactory.js" />
         <option value="$PROJECT_DIR$/src/pages/GraphLayout/GridLayout.js" />
         <option value="$PROJECT_DIR$/src/pages/Analysis/SideBar/ActiveGraphComponents.js" />
@@ -162,8 +155,6 @@
         <option value="$PROJECT_DIR$/src/components/censusCharts/pie/censusPieChart.js" />
         <option value="$PROJECT_DIR$/src/components/censusCharts/pie/censusPieCompare.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/Overview.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/graphConfig.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/index.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/overview3.js" />
@@ -172,12 +163,15 @@
         <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js" />
         <option value="$PROJECT_DIR$/src/store/falcorGraph.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/Report.js" />
-        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js" />
         <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/index.js" />
-        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js" />
-        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" />
         <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js" />
         <option value="$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/education.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js" />
+        <option value="$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js" />
+        <option value="$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js" />
       </list>
     </option>
   </component>
@@ -241,6 +235,14 @@
               <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
               <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="components" type="462c0819:PsiDirectoryNode" />
+              <item name="censusCharts" type="462c0819:PsiDirectoryNode" />
+              <item name="bar" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
+              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -248,15 +250,7 @@
               <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="Analysis" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="community_indicators" type="b2602c69:ProjectViewProjectNode" />
-              <item name="community_indicators" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="pages" type="462c0819:PsiDirectoryNode" />
-              <item name="Analysis" type="462c0819:PsiDirectoryNode" />
-              <item name="GraphLayout" type="462c0819:PsiDirectoryNode" />
+              <item name="Report" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -289,15 +283,15 @@
     <property name="ts.external.directory.path" value="$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages/SocialWelfare" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/pages/Overview" />
       <recent name="$PROJECT_DIR$/src/pages/Analysis/GraphLayout" />
       <recent name="$PROJECT_DIR$/src/pages/Report" />
       <recent name="$PROJECT_DIR$/src/pages/Analysis" />
       <recent name="$PROJECT_DIR$/src/pages/edit" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/pages/SocialWelfare" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -358,21 +352,7 @@
       <workItem from="1559568541102" duration="4879000" />
       <workItem from="1559580624039" duration="4000" />
       <workItem from="1559583275546" duration="3217000" />
-      <workItem from="1559658135433" duration="29406000" />
-    </task>
-    <task id="LOCAL-00065" summary="showing all graphs">
-      <created>1558361245204</created>
-      <option name="number" value="00065" />
-      <option name="presentableId" value="LOCAL-00065" />
-      <option name="project" value="LOCAL" />
-      <updated>1558361245204</updated>
-    </task>
-    <task id="LOCAL-00066" summary="GraphFactory">
-      <created>1558361272347</created>
-      <option name="number" value="00066" />
-      <option name="presentableId" value="LOCAL-00066" />
-      <option name="project" value="LOCAL" />
-      <updated>1558361272347</updated>
+      <workItem from="1559658135433" duration="44029000" />
     </task>
     <task id="LOCAL-00067" summary="updates">
       <created>1558361294821</created>
@@ -703,17 +683,31 @@
       <option name="project" value="LOCAL" />
       <updated>1559839836455</updated>
     </task>
-    <option name="localTasksCounter" value="114" />
+    <task id="LOCAL-00114" summary="updates">
+      <created>1559845266486</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1559845266486</updated>
+    </task>
+    <task id="LOCAL-00115" summary="updates">
+      <created>1559918725596</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1559918725596</updated>
+    </task>
+    <option name="localTasksCounter" value="116" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="782615000" />
+    <option name="totallyTimeSpent" value="797238000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="77" y="32" width="1843" height="1048" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49610677" visible="true" weight="0.17067711" />
-      <window_info id="Structure" order="1" sideWeight="0.5038932" side_tool="true" weight="0.2730834" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49499443" visible="true" weight="0.17067711" />
+      <window_info id="Structure" order="1" sideWeight="0.50500554" side_tool="true" weight="0.17067711" />
       <window_info id="npm" order="2" side_tool="true" />
       <window_info id="Image Layers" order="3" />
       <window_info id="Designer" order="4" />
@@ -948,16 +942,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="121" column="55" selection-start-line="121" selection-start-column="55" selection-end-line="121" selection-end-column="55" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusGroupedBarChart.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4302">
@@ -982,16 +966,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1368">
           <caret line="139" column="26" selection-start-line="139" selection-start-column="26" selection-end-line="139" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3592">
-          <caret line="383" column="23" selection-start-line="383" selection-start-column="23" selection-end-line="383" selection-end-column="23" />
           <folding>
             <element signature="e#0#41#0" expanded="true" />
           </folding>
@@ -1095,13 +1069,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3420">
-          <caret line="190" column="1" selection-start-line="190" selection-start-column="1" selection-end-line="190" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Report/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1098">
@@ -1129,47 +1096,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/education.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="12" selection-start-column="12" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="28" column="15" lean-forward="true" selection-start-line="28" selection-start-column="15" selection-end-line="28" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="802">
-          <caret line="1296" column="24" selection-start-line="1296" selection-start-column="24" selection-end-line="1296" selection-end-column="24" />
-          <folding>
-            <element signature="e#0#41#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GridLayout.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="478">
@@ -1187,10 +1113,78 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="29" column="52" selection-start-line="29" selection-start-column="52" selection-end-line="29" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Analysis/GraphLayout/GraphFactory.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="522">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/education.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="540">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusBarChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-278">
+          <caret line="271" selection-start-line="271" selection-end-line="271" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/socialWelfare.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="34" column="22" selection-start-line="34" selection-start-column="22" selection-end-line="34" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/overview.js">
       <provider selected="true" editor-type-id="text-editor">
         <state>
-          <caret column="1299" selection-start-column="1292" selection-end-column="1299" />
+          <caret column="47" selection-start-column="47" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/pages/Report/graphConfig/housing.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18">
+          <caret line="1" column="30" selection-start-line="1" selection-start-column="30" selection-end-line="1" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/statBox/censusStatBox.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="532">
+          <caret line="165" column="127" selection-start-line="165" selection-start-column="127" selection-end-line="165" selection-end-column="127" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/components/censusCharts/bar/censusStackedBarChart.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="794">
+          <caret line="1515" column="9" lean-forward="true" selection-start-line="1515" selection-start-column="9" selection-end-line="1515" selection-end-column="9" />
+          <folding>
+            <element signature="e#0#41#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
