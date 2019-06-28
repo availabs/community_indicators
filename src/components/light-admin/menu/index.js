@@ -37,7 +37,8 @@ class Menu extends Component {
       : document.body.classList.remove('menu-position-side') 
 
     let dynamicStyle= {
-      marginBottom: currentPath.subMenus ? 50 : 0
+      marginBottom: currentPath.subMenus ? 50 : 0,
+      zIndex: 999
     }
     // console.log('menuProps', currentPath, dynamicStyle)
   	let userMenu = this.props.user && !!this.props.user.authed 

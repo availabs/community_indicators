@@ -188,9 +188,7 @@ $container-max-widths: (
   md: 720px,
   lg: 960px,
   xl: 1190px,
-  xxl: 1280px,
-  xxxl: 1280px,
-  xxxxl: 1280px
+  xxl: 1280px
 ) !default;
 
 @include _assert-ascending($container-max-widths, "$container-max-widths");

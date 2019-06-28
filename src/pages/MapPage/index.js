@@ -43,7 +43,7 @@ export default {
         style: 'color-style-default',
         subemenustyle: 'sub-menu-style-over'
     },
-    name: 'MapPage',
+    name: 'Maps',
 	auth: false,
 	component: MapPage
 }

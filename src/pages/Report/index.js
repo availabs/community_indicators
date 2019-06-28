@@ -129,7 +129,7 @@ const mapDispatchToProps = {};
 
 export default {
     icon: 'os-icon-home',
-    path: '/report',
+    path: '/profiles',
     mainNav:true,
     exact:true,
     menuSettings:{
@@ -140,7 +140,7 @@ export default {
             style: 'color-style-default',
             subemenustyle: 'sub-menu-style-over'
     },
-    name: 'Report',
+    name: 'Profiles',
     auth:false,
     subMenus: subMenus,
     component: ReportIndex
