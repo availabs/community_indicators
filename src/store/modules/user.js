@@ -131,7 +131,23 @@ const initialState = {
   groups: [],
   authLevel: 0,
   authed: false,
-  attempts: 0
+  attempts: 0,
+  years: {
+    latest: 2016,
+    earliest: 2012,
+    active: 2016
+  },
+  theme: {
+    axis: {
+      textColor: '#eee',
+      fontSize: '34px',
+      tickColor: '#eee',
+    },
+    grid: {
+      stroke: '#888',
+      strokeWidth: 1
+    },
+  }
 };
 
 // ------------------------------------

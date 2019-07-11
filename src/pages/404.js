@@ -23,5 +23,5 @@ export default
 {
   mainNav: false,
   component: NoMatch,
-  menuSettings: {image: 'none', 'scheme': 'color-scheme-light'}
+  menuSettings: {image: 'none', 'scheme': 'color-scheme-dark'}
 }

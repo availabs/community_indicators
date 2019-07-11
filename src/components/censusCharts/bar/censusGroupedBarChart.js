@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
-import BarChart from "components/charts/bar/simple"
 import { ResponsiveBar } from '@nivo/bar'
-import {Bar} from '@nivo/bar'
-import { Line } from '@nivo/line'
-import {ResponsiveLine} from '@nivo/line'
+
 var numeral = require('numeral')
 
 class CensusGroupedBarChart extends React.Component {
@@ -67,6 +64,16 @@ class CensusGroupedBarChart extends React.Component {
 
     }
 
+    componentDidUpdate(oldProps){
+        if(oldProps.geoid !== this.props.geoid){
+            this.compareData().then(res =>{
+                this.setState({
+                    graphData4: res
+                })
+            })
+        }
+    }
+
 
     compareData() {
         return new Promise((resolve,reject) => {
@@ -79,13 +86,14 @@ class CensusGroupedBarChart extends React.Component {
         let countyData =[];
         let censusConfig ={};
         let compareData = [];
+        let geoid = this.props.geoid;
         Object.values(response.json).forEach(function(value,i){
             censusConfig = value['config']
             if (value['36'] !== undefined){
                 response_stateData = value['36'][year]
             }
-            if(value['36001'] !== undefined){
-                response_countyData = value['36001'][year]
+            if(value[geoid] !== undefined){
+                response_countyData = value[geoid][year]
             }
         })
         Object.keys(response_stateData).forEach(function(stData,i){
@@ -190,29 +198,29 @@ class CensusGroupedBarChart extends React.Component {
             compareData.push({
                     "Category" : Object.keys(obj1)[1],
                     "Two Parents in Albany County" :  numeral(parseFloat(Object.values(obj1)[0])).format('0.00a'),
-                    "Albany county" : Object.values(obj1)[1],
-                    "countyColor" : '#DAF7A6',
+                    "county/cousub" : parseFloat(Object.values(obj1)[1]),
+                    "countyColor" : '#FF5733',
                     "Two Parents in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[0])).format('0.00a'),
-                    "New York state" : Object.values(obj2_percent[i])[1],
-                    "stateColor" : '#FFC300'
+                    "New York state" : parseFloat(Object.values(obj2_percent[i])[1]),
+                    "stateColor" : '#C70039'
                 },
                 {
                     "Category": Object.keys(obj1)[3],
                     "One Parent(father) in Albany County" : numeral(parseFloat(Object.values(obj1)[2])).format('0.0a'),
-                    "Albany county": Object.values(obj1)[3],
+                    "county/cousub": parseFloat(Object.values(obj1)[3]),
                     "countyColor": '#FF5733',
                     "One Parent(father) in New York State" : numeral(parseFloat(Object.values(obj2_percent[i])[2])).format('0.0a'),
-                    "New York state": Object.values(obj2_percent[i])[3],
+                    "New York state": parseFloat(Object.values(obj2_percent[i])[3]),
                     "stateColor" : '#C70039'
                 },
                 {
                     "Category": Object.keys(obj1)[5],
                     "One Parent(mother) in Albany County": numeral(parseFloat(Object.values(obj1)[4])).format('0.0a'),
-                    "Albany county": Object.values(obj1)[5],
-                    "countyColor": '#00A01B',
+                    "county/cousub": parseFloat(Object.values(obj1)[5]),
+                    "countyColor": '#FF5733',
                     "One Parent(mother) in New York State": numeral(parseFloat(Object.values(obj2_percent[i])[4])).format('0.0a'),
-                    "New York state": Object.values(obj2_percent[i])[5],
-                    "stateColor": '#0091A0'
+                    "New York state": parseFloat(Object.values(obj2_percent[i])[5]),
+                    "stateColor": '#C70039'
                 }
             )
         })
@@ -222,15 +230,22 @@ class CensusGroupedBarChart extends React.Component {
     }
 
     render () {
+        const style = {
+            height:500
+        };
+        let colors =[];
+        if (this.props.colorRange !== undefined && this.props.colorRange.length >0){
+            colors = this.props.colorRange
+        }else{
+            this.state.graphData4.map(d => colors.push(d.stateColor,d.countyColor))
+        }
         if(Object.values(this.props.censusKey).includes('B23008') && Object.values(this.props.compareGeoid).includes('36')){
             return(
-                <div>
-                <Bar
+                <div style={style}>
+                <ResponsiveBar
             data={this.state.graphData4}
-            width={900}
-            height={500}
             indexBy="Category"
-            keys = {["Albany county","New York state"]}
+            keys = {["county/cousub","New York state"]}
             margin={{
                 "top": 100,
                     "right": 130,
@@ -239,10 +254,7 @@ class CensusGroupedBarChart extends React.Component {
             }}
             padding={0.1}
             groupMode="grouped"
-            colors = {[
-                    '#4C24A2',
-                '#E59D4B',
-            ]}
+            colors = {colors}
             colorBy = "id"
             layout = "vertical"
             borderColor="inherit:darker(1.6)"
@@ -253,7 +265,7 @@ class CensusGroupedBarChart extends React.Component {
                     "tickSize": 5,
                     "tickPadding": 5,
                     "tickRotation": 0,
-                    "legendPosition": "center",
+                    "legendPosition": "middle",
                     "legendOffset": 36
             }}
             axisLeft={{
@@ -289,21 +301,12 @@ class CensusGroupedBarChart extends React.Component {
                     ]}
             markers={[
                     ]}
-            theme={{
-                "tooltip": {
-                    "container": {
-                        "fontSize": "13px"
-                    }
-                },
-                "labels": {
-                    "textColor": "#555"
-                }
-            }}
+
             tooltip={({ id, indexValue, value, color,data }) => (
             <text>
             <b><big>{indexValue}</big></b>
             <br/> <br/>
-            {id} :{(id.includes('Albany county')) ? Object.values(data)[4] : Object.values(data)[1]}, {value}%
+            {id} :{(id.includes('county/cousub')) ? Object.values(data)[4] : Object.values(data)[1]}, {value}%
         </text>
         )}
             />
@@ -315,9 +318,10 @@ class CensusGroupedBarChart extends React.Component {
 
 
     static defaultProps = {
-        censusKey: [], //'B19013',,
-        geoid: [],
-        compareGeoid: []
+        censusKey: ['B23008'], //'B19013',,
+        geoid: ['36001'],
+        compareGeoid: ['36'],
+        colorRange: []
     }
 
 }

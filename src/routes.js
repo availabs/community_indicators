@@ -2,24 +2,22 @@
 // -- Landing Routes
 //import Landing from './pages/Landing'
 
-// import PublicPlan from './pages/PublicPlan'
-import MapPage from "./pages/MapPage"
-import Report from "./pages/Report"
+import Maps from "./pages/Maps"
+import Profiles from "./pages/Profiles/"
+
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
-
-
-// -- Util Routes
-// import Login from './pages/Login'
-// import Logout from './pages/Logout'
+import Landing from './pages/Landing'
 import NoMatch from './pages/404.js'
 
 const routes = [
-  MapPage,
-  Report,
+  Landing,
+  ...Profiles,
+  Maps,
   Login,
   Signup,
   NoMatch
+
 ]
 
 export default routes

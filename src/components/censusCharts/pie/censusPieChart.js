@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
-import { PieCanvas } from '@nivo/pie'
+import { ResponsivePieCanvas } from '@nivo/pie'
 import ColorRanges from 'constants/color-ranges'
 
 
@@ -21,10 +21,6 @@ class CensusPieChart extends React.Component {
         let censusConfig ={};
         let census_subvars = [];
         let censusKey = this.props.censusKey;
-        /*
-        console.log('geoid',this.props.geoid)
-        let geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
-         */
         return this.props.falcor.get(['acs','config']).then(res => {
 
             Object.values(res.json.acs).forEach( (config, i) =>{
@@ -69,6 +65,18 @@ class CensusPieChart extends React.Component {
         })
     }
 
+    componentDidUpdate(oldProps)
+    {
+        if(oldProps.geoid !== this.props.geoid){
+            this.pieData().then(res =>{
+                this.setState({
+                    graphData5 : res
+                })
+            })
+        }
+
+    }
+
     pieData(){
         return new Promise((resolve,reject) => {
             this.fetchFalcorDeps().then(response =>{
@@ -97,64 +105,155 @@ class CensusPieChart extends React.Component {
     }
 
     render () {
-        return(
-        <div>
-        <PieCanvas
-        data={this.state.graphData5}
-        width={200}
-        height={200}
-        margin={{
-            "top": 0,
-                "right": 10,
-                "bottom": 0,
-                "left": 10
-        }}
-        pixelRatio={1.2999999523162842}
-        sortByValue={false}
-        innerRadius={0.5}
-        padAngle={0.7}
-        cornerRadius={3}
-        colors= {this.state.graphData5.map(d => d.color)}
-        borderColor="inherit:darker(0.6)"
-        radialLabel="value"
-        enableRadialLabels ={false}
-        radialLabelsSkipAngle={0}
-        radialLabelsTextXOffset={6}
-        radialLabelsTextColor="#333333"
-        radialLabelsLinkOffset={-14}
-        radialLabelsLinkDiagonalLength={36}
-        radialLabelsLinkHorizontalLength={30}
-        radialLabelsLinkStrokeWidth={1}
-        radialLabelsLinkColor="inherit"
-        slicesLabelsSkipAngle={10}
-        enableSlicesLabels={false}
-        slicesLabelsTextColor="#333333"
-        animate={true}
-        motionStiffness={90}
-        motionDamping={15}
-        defs={[
-                {
-                    "id": "dots",
-                    "type": "patternDots",
-                    "background": "inherit",
-                    "color": "rgba(255, 255, 255, 0.3)",
-                    "size": 4,
-                    "padding": 1,
-                    "stagger": true
-                },
-        {
-            "id": "lines",
-            "type": "patternLines",
-            "background": "inherit",
-            "color": "rgba(255, 255, 255, 0.3)",
-            "rotation": -45,
-            "lineWidth": 6,
-            "spacing": 10
-        }
-    ]}
-        />
-        </div>
+        if (this.props.single === true){
+            let colors = [];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange
+            }else{
+                colors = this.state.graphData5.map(d => d.color)
+            }
+            const style={
+                height:200,
+                display:'flex',
+                alignContent: 'center',
+                alignItems:'center',
+                justifyContent:'flex-start',
+            }
+
+            return(
+                <div style={style}>
+                <ResponsivePieCanvas
+            data={this.state.graphData5}
+            width={200}
+            height={200}
+            margin={{
+                "top": 0,
+                    "right": 10,
+                    "bottom": 0,
+                    "left": 10
+            }}
+            pixelRatio={1.2999999523162842}
+            sortByValue={false}
+            innerRadius={0.6}
+            padAngle={0.7}
+            cornerRadius={3}
+            colors= {colors}
+            borderColor="inherit:darker(0.6)"
+            radialLabel="value"
+            enableRadialLabels ={false}
+            radialLabelsSkipAngle={0}
+            radialLabelsTextXOffset={6}
+            radialLabelsTextColor="#333333"
+            radialLabelsLinkOffset={-14}
+            radialLabelsLinkDiagonalLength={36}
+            radialLabelsLinkHorizontalLength={30}
+            radialLabelsLinkStrokeWidth={1}
+            radialLabelsLinkColor="inherit"
+            slicesLabelsSkipAngle={10}
+            enableSlicesLabels={false}
+            slicesLabelsTextColor="#333333"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            defs={[
+                    {
+                        "id": "dots",
+                        "type": "patternDots",
+                        "background": "inherit",
+                        "color": "rgba(255, 255, 255, 0.3)",
+                        "size": 4,
+                        "padding": 1,
+                        "stagger": true
+                    },
+            {
+                "id": "lines",
+                "type": "patternLines",
+                "background": "inherit",
+                "color": "rgba(255, 255, 255, 0.3)",
+                "rotation": -45,
+                "lineWidth": 6,
+                "spacing": 10
+            }
+        ]}
+            />
+            <h5>Racial Population for the year 2017</h5>
+            </div>
         )
+        }
+        else{
+            const styles={
+                height:200
+            }
+            let colors=[];
+            if(this.props.colorRange !== undefined && this.props.colorRange.length > 0){
+                colors = this.props.colorRange
+                console.log('in',colors)
+
+            }else{
+                colors = this.state.graphData5.map(d => d.color)
+            }
+
+            return(
+                <div style={styles}>
+            <ResponsivePieCanvas
+            data={this.state.graphData5}
+            width={200}
+            height={200}
+            margin={{
+                "top": 0,
+                    "right": 10,
+                    "bottom": 0,
+                    "left": 10
+            }}
+            pixelRatio={1.2999999523162842}
+            sortByValue={false}
+            innerRadius={0.6}
+            padAngle={0.7}
+            cornerRadius={3}
+            colors= {colors}
+            borderColor="inherit:darker(0.6)"
+            radialLabel="value"
+            enableRadialLabels ={false}
+            radialLabelsSkipAngle={0}
+            radialLabelsTextXOffset={6}
+            radialLabelsTextColor="#333333"
+            radialLabelsLinkOffset={-14}
+            radialLabelsLinkDiagonalLength={36}
+            radialLabelsLinkHorizontalLength={30}
+            radialLabelsLinkStrokeWidth={1}
+            radialLabelsLinkColor="inherit"
+            slicesLabelsSkipAngle={10}
+            enableSlicesLabels={false}
+            slicesLabelsTextColor="#333333"
+            animate={true}
+            motionStiffness={90}
+            motionDamping={15}
+            defs={[
+                    {
+                        "id": "dots",
+                        "type": "patternDots",
+                        "background": "inherit",
+                        "color": "rgba(255, 255, 255, 0.3)",
+                        "size": 4,
+                        "padding": 1,
+                        "stagger": true
+                    },
+            {
+                "id": "lines",
+                "type": "patternLines",
+                "background": "inherit",
+                "color": "rgba(255, 255, 255, 0.3)",
+                "rotation": -45,
+                "lineWidth": 6,
+                "spacing": 10
+            }
+        ]}
+            />
+            </div>
+        )
+
+        }
+
 
 
 
@@ -166,7 +265,9 @@ class CensusPieChart extends React.Component {
         geoids: [],
         year: ['2016'],
         pieWidth: [],
-        pieHeight:[]
+        pieHeight:[],
+        single:false,
+        colorRange:[]
     }
 
 }
@@ -188,18 +289,3 @@ const mapStateToProps = (state,ownProps) => {
 export default  connect(mapStateToProps,mapDispatchToProps)(reduxFalcor(CensusPieChart))
 
 
-
-/*
-         legends={[
-                {
-                    "anchor": "right",
-                    "direction": "column",
-                    "translateX": -10,
-                    "itemWidth": 80,
-                    "itemHeight": 20,
-                    "itemsSpacing": 2,
-                    "symbolSize": 14,
-                    "symbolShape": "circle"
-                }
-                ]}
-         */

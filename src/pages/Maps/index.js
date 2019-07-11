@@ -10,8 +10,10 @@ import parcelLayer from "./layers/parcelLayer"
 import threedLayer from "./layers/3d-buildingsLayer"
 import censusLayer from "./layers/censusLayer.js"
 
+
 const SidebarHeader = ({}) =>
   <div style={ { paddingLeft: "50px" } }><Logo width={ 200 }/></div>
+
 
 const MapPage = ({}) =>
   <div style={ { height: "100vh" } }>
@@ -30,18 +32,18 @@ const MapPage = ({}) =>
 
 export default {
 	icon: 'os-icon-map',
-	path: '/',
+	path: '/map',
 	exact: true,
 	mainNav: true,
-  menuSettings: {
-    display: 'none',
-    image: 'none',
-    scheme: 'color-scheme-dark', 
-    position: 'menu-position-left',
-    layout: 'menu-layout-mini',
-    style: 'color-style-default'  
-  },
-  name: 'MapPage',
+    menuSettings: {
+        image: 'none',
+        scheme: 'color-scheme-dark',
+        position: 'menu-position-left',
+        layout: 'menu-layout-mini',
+        style: 'color-style-default',
+        subemenustyle: 'sub-menu-style-over'
+    },
+    name: 'Maps',
 	auth: false,
 	component: MapPage
 }
