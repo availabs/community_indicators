@@ -2,9 +2,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
+import { reduxFalcor } from 'utils/redux-falcor'
 import AvlMap from 'AvlMap'
-import LandingLayer from './LandingLayer'
+// import LandingLayer from './LandingLayer'
 import styled from 'styled-components'
+import StatBox from 'components/censusCharts/statBox'
 
 let flexStyle = {width: '100vw',
  height: '100vh',
@@ -30,35 +32,29 @@ let LandingHeader = styled.h1`
     text-align:center;
 `
 
-class Home extends Component {
+
+class ProfileHeader extends Component {
     render () {
         return (
             <div>
                 <div style={flexStyle}>
                     <div style={{height: 400}}>
                         <LandingHeader>
-                            CAPITAL DISTRICT<br />
-                            COMMUNITY INDICATORS
+                            {this.props.geoid}
                         </LandingHeader>
-                        <div className='container' style={{maxWidth: '869px', color: '#efefef', background: 'rgba(0,0,0,0.3)', borderRadius: 4}}>
-                            <div className='row'>
-                                 <div className='col-md-6' style={{ padding: 15}}> 
-                                    <p style={{fontSize: '1.1em'}}>
-                                    CDCI aggregates and monitors local information that tells the story of  New York's Capital District. 
-                                    By analyzing and then planning action from a common set of data, we can work together to measure our 
-                                    progress and transform our region for the better. 
-                                    </p>
-                                </div>
-                                <div className='col-md-6' style={{ padding: 15, textAlign: 'center'}}> 
-                                   <div style={{color: '#efefef', fontSize: '3em', lineHeight: 1, fontWeight: '100'}}>Population</div>
-                                   <div style={{color: '#efefef', fontSize: '4em', lineHeight: 1, fontWeight: '100'}}>1,032,180</div>
-                                   <div style={{color: '#efefef', fontSize: '2em', lineHeight: 1, fontWeight: '100'}}>&nbsp;89.25 person / km<sup>2</sup></div>
-                                </div>
-                            </div>
+                        <div className='container' style={{maxWidth: '869px', color: '#efefef', background: 'rgba(0,0,0,0.3)', borderRadius: 4, display:'flex'}}>
+                            <StatBox 
+                                title={'Population'}
+                                year={this.props.years.latest}
+                                compareYear={this.props.years.latest-1}
+                                censusKey={'B01003_001E'}
+                                geoids={[this.props.geoid]}
+                            />
                         </div>
                     </div>
                 </div> 
                 <div style={{width: '100vw', height: '100vh', backgroundColor: '#333', position: 'fixed', top: 0, left: 0}}>
+                    {/*
                     <AvlMap
                         sidebar={false}
                         scrollZoom={false}
@@ -77,21 +73,23 @@ class Home extends Component {
                         layers={[LandingLayer]}
                         mapControl={false}
                     />
+                    */}
                 </div>
+
             </div>
 
         )
     }
 }
 
-export default {
-    icon: 'icon-map',
-    path: '/',
-    exact: true,
-    mainNav: false,
-    title: 'Welcome to Community Indicators',
-    menuSettings: {image: 'none', 'scheme': 'color-scheme-dark'},
-    name: 'Home',
-    auth: false,
-    component: Home
-}
+const mapStateToProps = state => {
+    return {
+        geoGraph: state.graph.geo,
+        router: state.router,
+        years: state.user.years
+    };
+};
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(ProfileHeader))

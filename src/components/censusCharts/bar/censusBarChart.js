@@ -347,13 +347,13 @@ class CensusBarChart extends React.Component {
             motionStiffness={90}
             motionDamping={15}
             tooltip={({ id, indexValue, value, color,data }) => (
-            <text>
+            <div>
             <b><big>{indexValue}</big></b>
             <br/> <br/>
             {['Total Speakers']} : {data.Speakers}
         <br/>
             {id} Speaking English less than very well: {value}%
-        </text>
+        </div>
         )}
             />
             </div>
@@ -414,13 +414,13 @@ class CensusBarChart extends React.Component {
             motionStiffness={90}
             motionDamping={15}
             tooltip={({ id, indexValue, value, color,data }) => (
-            <text>
+            <div>
             <b><big>{indexValue}</big></b>
             <br/> <br/>
             {['Family Size']} : {data.family}
         <br/>
             Median Income by Family Size: ${value}
-        </text>
+        </div>
         )}
             />
             </div>
@@ -616,13 +616,13 @@ class CensusBarChart extends React.Component {
             motionStiffness={90}
             motionDamping={15}
             tooltip={({ id, indexValue, value, color,data }) => (
-            <text>
-            <b><big>{indexValue}</big></b>
-            <br/> <br/>
-            {['Cost']} : {data.housingStatus}
-        <br/>
-            Number: {value}
-        </text>
+            <div>
+                <b><big>{indexValue}</big></b>
+                <br/> <br/>
+                {['Cost']} : {data.housingStatus}
+            <br/>
+                Number: {value}
+            </div>
         )}
             />
             </div>

@@ -110,8 +110,9 @@ class CensusLineChart extends React.Component {
     }
     render () {
         const style = {
-            height:500
+            height:'100%'
         };
+       
         let title = this.state.graphData3.map(d => d.title)[0]
        if (this.props.PovertyPopulationBySex === false){
            let colors =[]
@@ -121,15 +122,18 @@ class CensusLineChart extends React.Component {
                colors = this.state.graphData3.map(d => d.color)
            }
            if(this.props)
+            console.log('test 123', this.props.theme)
             return(
             <div style={style}>
             <ResponsiveLine
+            theme={this.props.theme}
+            
             data={this.state.graphData3}
             margin={{
                 "top": 30,
                     "right": 150,
                     "bottom": 60,
-                    "left": 140
+                    "left": 60
             }}
             xScale={{
                 "type": "point"
@@ -142,27 +146,10 @@ class CensusLineChart extends React.Component {
             }}
             curve= 'linear'
             colors={colors}
+            theme={this.props.theme}
             lineWidth = {2.5}
             axisTop={null}
             axisRight={null}
-            axisBottom={{
-                "orient": "bottom",
-                    "tickSize": 5,
-                    "tickPadding": 5,
-                    "tickRotation": 0,
-                    "legend": "Median Household Income in the Past 12 Months",
-                    "legendOffset": 36,
-                    "legendPosition": "center"
-            }}
-            axisLeft={{
-                "orient": "left",
-                    "tickSize": 5,
-                    "tickPadding": 5,
-                    "tickRotation": 0,
-                    "legend": "Median Income",
-                    "legendOffset": -60,
-                    "legendPosition": "center"
-            }}
             dotSize={5}
             dotColor="inherit:darker(0.3)"
             dotBorderWidth={2}
@@ -204,14 +191,14 @@ class CensusLineChart extends React.Component {
                     }
                     ]}
             tooltip={({ id, indexValue, value, color, data }) => (
-            <text>
+            <div>
             <h6>{title}</h6>
             <b><big>{this.props.geoid}</big></b>
             <br/> <br/>
             Year : {id}
             <br/>
             Median Income: ${Object.values(data)[0]['data'].y}
-            </text>
+            </div>
         )}
 
             />
@@ -228,6 +215,8 @@ class CensusLineChart extends React.Component {
             return(
             <div style={style}>
             <ResponsiveLine
+                theme={this.props.theme}
+            
             data={this.state.graphData3}
             margin={{
                 "top": 30,
@@ -279,8 +268,11 @@ class CensusLineChart extends React.Component {
             enableGridY={true}
             enableArea={false}
             areaOpacity={0.35}
+            theme={this.props.theme}
+            
             motionStiffness={90}
             motionDamping={15}
+
             legends={[
                     {
                         "anchor": "bottom-right",
@@ -308,13 +300,13 @@ class CensusLineChart extends React.Component {
                     }
                     ]}
             tooltip={({ id, indexValue, value, color,data }) => (
-            <text>
+            <div>
             <b><big>{this.props.geoid}</big></b>
             <br/> <br/>
             Year : {id}
             <br/>
             Income : ${Object.values(data)[0]['data'].y}
-            </text>
+            </div>
         )}
 
             />
@@ -341,7 +333,8 @@ const mapDispatchToProps = { };
 const mapStateToProps = (state,ownProps) => {
     return {
         geoid:ownProps.geoid,
-        graph: state.graph // so componentWillReceiveProps will get called.
+        graph: state.graph, // so componentWillReceiveProps will get called.
+        theme: state.user.theme
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusLineChart))

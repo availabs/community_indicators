@@ -36,6 +36,7 @@ class TractLayer extends MapLayer{
             })
     }
     fetchData(){
+        if(!this.subvars) return Promise.resolve({})
         let censusSubvars = [];
         this.subvars.forEach(function(subvar,i){
             censusSubvars.push(subvar.value)
@@ -46,6 +47,8 @@ class TractLayer extends MapLayer{
             })
     }
     receiveData(map,data) {
+        if(!this.config) return;
+        
         let censusSubVar = this.filters.censvar.value;
         let censVars = this.config['B02001'].variables;
         let censusSubVarKey = '';

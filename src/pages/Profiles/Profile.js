@@ -2,10 +2,10 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor } from 'utils/redux-falcor'
 import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
-import subMenus from 'pages/Report/GeoPage-submenu.js'
-import Overview from "./Overview";
+import subMenus from './submenu.js'
+
 //import GraphLayout from 'pages/Analysis/GraphLayout'
-const GRAPH_CONFIG = require('pages/Report/graphConfig')
+const GRAPH_CONFIG = require('./graphConfig')
 
 class Report extends React.Component{
     constructor(props) {
@@ -128,21 +128,13 @@ const mapDispatchToProps = {};
 
 export default
 {
-    path: '/report/:geoid',
+    path: '/profile/:geoid',
     name: 'Report',
     mainNav: false,
     breadcrumbs: [
-        {param: 'geoid', path: '/report/'}
+        {param: 'geoid', path: '/profile/'}
     ],
-    menuSettings:
-        {
-            image: 'none',
-            scheme: 'color-scheme-dark',
-            position: 'menu-position-left',
-            layout: 'menu-layout-mini',
-            style: 'color-style-default',
-            subemenustyle: 'sub-menu-style-over'
-        },
+    menuSettings: {image: 'none', 'scheme': 'color-scheme-dark'},
     subMenus: subMenus,
     auth: false,
     component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Report))

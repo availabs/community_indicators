@@ -155,7 +155,24 @@ class TractLayer extends MapLayer{
                 return out;
             }, {});
        
-
+        let popSum = Object.keys(data.acs)
+            .filter(d => d !== 'config')
+            .reduce((out, curr) => {
+                if(data.acs[curr] && this.geom[curr]){
+                    out += data.acs[curr]['2016']['B01003_001E'];
+                } 
+                return out;
+            }, 0);
+        let areaSum = Object.keys(data.acs)
+            .filter(d => d !== 'config')
+            .reduce((out, curr) => {
+                if(data.acs[curr] && this.geom[curr]){
+                    out += (this.geom[curr])
+                } 
+                return out;
+            }, 0);
+        console.log('pop: ', popSum)
+        console.log('area: ', areaSum)
         let values = Object.values(keyDomain).sort((a,b) => a - b )
         
         let min = Math.min(...values)

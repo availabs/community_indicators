@@ -114,11 +114,11 @@ export default
         breadcrumbs: [
             {param: 'geoid', path: '/report/'}
         ],
+        
         menuSettings:
             {
                 image: 'none',
                 scheme: 'color-scheme-dark',
-                position: 'menu-position-left',
                 layout: 'menu-layout-mini',
                 style: 'color-style-default',
                 subemenustyle: 'sub-menu-style-over'

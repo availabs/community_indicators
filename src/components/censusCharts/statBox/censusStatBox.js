@@ -22,6 +22,7 @@ class CensusStatBox extends React.Component{
                 })
                 return falcorGraph.get(['acs',[...this.props.geoid],this.props.year,[...census_subvars]],['acs','config'])
                     .then(response =>{
+                        console.log('got data', response)
                         return response
                     })
             })
@@ -102,6 +103,7 @@ class CensusStatBox extends React.Component{
                         let data = response_data[item];
                         census_config.forEach(function(config,j){
                             if (j===0){
+                                console.log(data[config.value], data, config.value)
                                 statData.push({
                                     "title": "Economy",
                                     "titleColor":'#000001',
@@ -110,7 +112,7 @@ class CensusStatBox extends React.Component{
                                     "valueColor":'#0099ff',
                                     "censusVarName": config.name,
                                     "year": year,
-                                    "value": '$' + data[config.value].toLocaleString()
+                                    "value": '$' + (data[config.value].toLocaleString())
                                 })
                             }
                         })
@@ -173,6 +175,8 @@ class CensusStatBox extends React.Component{
                     Object.keys(response_data).filter(d => d !== '$__path').forEach(function(item,i){
                         let data = response_data[item]
                         census_config.forEach(function(config,j){
+                            console.log( data,config.value, data[config.value] )
+                                
                             if (j===0){
                                 statData.push({
                                     "title":"Demographics",
@@ -203,18 +207,17 @@ class CensusStatBox extends React.Component{
         }
         return(
             <div>
-            <h4 style={{color:colors[0],fontWeight: '700'}}>
-            {this.state.graphData9.map(d => d.title)}</h4>
-            <div className="stats" style={{display:'block',letterSpacing: '1px',margin: '0 0 16px'}}>
-            <div className='pop-container'>
-            <div className='demo-col'>
-            <h5 style={{color:colors[1],display: 'block',fontSize: '12px',fontWeight: '400',letterSpacing: '1px',margin:'0 0 16px',textTransform: 'uppercase',width: '100%'}}> {this.state.graphData9.map(d => d.censusVarName)}
-            <span style={{color:colors[2],marginLeft: '6px',textDecoration:'underline',textDecorationStyle:'dashed'}}> {this.state.graphData9.map(d => d.year)} </span>
-            </h5>
-            <span className='stat' style={{clear: 'both',color:colors[3],display:'block',fontSize: '32px',fontWeight:'700',marginBottom: '0'}}>{this.state.graphData9.map(d => d.value)}</span>
-            </div>
-            </div>
-            </div>
+               
+                <div>
+                    <span className='title' style={{fontSize: '1.2em'}}> 
+                        {this.state.graphData9.map(d => d.censusVarName)}
+                    </span>
+                    
+                </div>
+                <div className='value' >{this.state.graphData9.map(d => d.value)}</div>
+                <span className='trending'> 
+                        {this.state.graphData9.map(d => d.year)} 
+                    </span>
             </div>
         )
 

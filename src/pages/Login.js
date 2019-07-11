@@ -51,7 +51,7 @@ class Login extends Component {
     return (
       <div className="auth-box-w">
   		  <div className="logo-w">
-  		    <Logo width="300"/>
+  		   
   		  </div>
   		  <h4 className="auth-header">Login</h4>
   		  <form onSubmit={this.handleSubmit}>

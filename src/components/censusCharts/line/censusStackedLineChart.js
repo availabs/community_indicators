@@ -140,24 +140,8 @@ class CensusStackedLineChart extends React.Component{
             colors={colors}
             axisTop={null}
             axisRight={null}
-            axisBottom={{
-                "orient": "bottom",
-                    "tickSize": 5,
-                    "tickPadding": 5,
-                    "tickRotation": 0,
-                    "legend": "Occupancy of Housing Units",
-                    "legendOffset": 36,
-                    "legendPosition": "center"
-            }}
-            axisLeft={{
-                "orient": "left",
-                    "tickSize": 5,
-                    "tickPadding": 5,
-                    "tickRotation": 0,
-                    "legend": "Units",
-                    "legendOffset": -60,
-                    "legendPosition": "center"
-            }}
+            
+            
             dotSize={5}
             dotColor="inherit:darker(0.3)"
             dotBorderWidth={2}
@@ -172,6 +156,7 @@ class CensusStackedLineChart extends React.Component{
             areaOpacity={0.35}
             motionStiffness={90}
             motionDamping={15}
+            theme={this.props.theme}
             legends={[
                     {
                         "anchor": "bottom-right",
@@ -227,7 +212,8 @@ const mapDispatchToProps = { };
 const mapStateToProps = (state,ownProps) => {
     return {
         geoid:ownProps.geoid,
-        graph: state.graph // so componentWillReceiveProps will get called.
+        graph: state.graph,
+        theme: state.user.theme
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusStackedLineChart))

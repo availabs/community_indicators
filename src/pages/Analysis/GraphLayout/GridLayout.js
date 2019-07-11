@@ -53,7 +53,7 @@ class GridLayout extends React.Component {
             }
 
         })
-        console.log(this.props.section,JSON.stringify(this.props.graphs))
+        //console.log(this.props.section,JSON.stringify(this.props.graphs))
         this.setState({ layouts : layouts });
 
 
@@ -80,10 +80,12 @@ class GridLayout extends React.Component {
             return (
                 <div key={ graph.id }
                 data-grid={layout}
+                className='element-box el-tablo'
                 style={ {
                     backgroundColor: 'none',
                     border: '1px dashed rgba(0, 0, 0, 0.25)',
-                    zIndex: 100
+                    zIndex: 100,
+                    height: '100%'
                 } }>
                 <GraphFactory
                     viewing={ viewing }
