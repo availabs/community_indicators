@@ -38,7 +38,10 @@ class Menu extends Component {
 
     let dynamicStyle= {
       marginBottom: currentPath.subMenus ? 50 : 0,
-      zIndex: 999
+      zIndex: 999,
+      position: 'fixed',
+      top: 0,
+      width: '99vw'
     }
     // console.log('menuProps', currentPath, dynamicStyle)
   	let userMenu = this.props.user && !!this.props.user.authed 

@@ -36,14 +36,18 @@ class CensusStatBox extends React.Component{
         } 
 
         let change = 0
+        console.log('compareYear', this.props.compareYear)
 
         if(this.props.compareYear) {
             let compareValue = this.props.geoids
                 .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.compareYear}.${this.props.censusKey}`, 0))
                 .reduce((a,b) => a + b )
 
-            change = (((value - compareValue) / compareValue) * 100).toFixed(2)
-            change = isNaN(change) ? 0 : ''
+
+            change = (((value - compareValue) / compareValue) * 100)
+            // console.log('comparevalue', this.props.compareYear)
+
+            change = isNaN(change) ? '' : change.toFixed(2)
         }
 
         return {
@@ -55,18 +59,20 @@ class CensusStatBox extends React.Component{
     render(){
         let displayData = this.calculateValues()
         return(
-            <div>
-                <div>
-                    <span className='title' style={{fontSize: '1.2em'}}> 
-                        {this.props.title}
-                    </span>
+            <div className='el-tablo' style={{padding: 10}}>
+                
+                <div className='title' style={{fontSize: '1.2em', textAlign: 'center'}}> 
+                    {this.props.title}
                 </div>
-                <div className='value' >
-                    {displayData.value.toLocaleString()}
+                
+                <div className='value' style={{ textAlign: 'center', display: 'block'}}>
+                    {this.props.valuePrefix}{displayData.value.toLocaleString()}
                 </div>
-                <span className='trending'> 
-                    {displayData.change} 
-                </span>
+                {this.props.compareYear &&
+                    <div className='' style={{ textAlign: 'center'}}> 
+                        {displayData.change}% Growth 
+                    </div>
+                 }
             </div>
         )
 

@@ -8,7 +8,7 @@ import CensusMultiStackedLineChart from "./line/censusMultiStackedLineChart.js"
 import CensusStackedLineChart from "./line/censusStackedLineChart.js"
 import CensusPieChart from "./pie/censusPieChart.js"
 import CensusPieCompare from "./pie/censusPieCompare.js"
-import CensusStatBox from "./statBox/censusStatBox.js"
+import CensusStatBox from "./statBox/index.js"
 import TractLayer from "../layers/TractsLayers.js"
 
 const NA = ({ type, state, routes }) =>

@@ -4,10 +4,10 @@ import HttpDataSource from 'falcor-http-datasource'
 
 
 //export let host = 
-let host = 'https://mitigateny.availabs.org/api/'
+let host = 'https://graph.availabs.org/'
 // host = 'https://mitigateny.availabs.org/api/'
 if (process.env.NODE_ENV === 'production') {
-  host = 'https://mitigateny.availabs.org/api/'
+  host = 'https://graph.availabs.org/'
 }
 
 //export host
