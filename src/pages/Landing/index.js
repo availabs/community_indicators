@@ -37,8 +37,7 @@ class Home extends Component {
                 <div style={flexStyle}>
                     <div style={{height: 400}}>
                         <LandingHeader>
-                            CAPITAL DISTRICT<br />
-                            COMMUNITY INDICATORS
+                            CAPITAL DISTRICT CITIES
                         </LandingHeader>
                         <div className='container' style={{maxWidth: '869px', color: '#efefef', background: 'rgba(0,0,0,0.3)', borderRadius: 4}}>
                             <div className='row'>
