@@ -52,8 +52,6 @@ class Report extends React.Component{
 
         })
 
-
-
         return (
             <div>
                 <ProfileHeader geoids={[this.props.geoid]} />
