@@ -18,11 +18,9 @@ class CensusStatBox extends React.Component{
             years.push(this.props.compareYear)
         }
 
-        console.log('get Key', ['acs', this.props.geoids, years, this.props.censusKey])
         return falcorGraph
             .get(['acs',this.props.geoids,years, this.props.censusKey])
             .then(response =>{
-                console.log('statBox', response)
                 return response
             })
     }
@@ -42,7 +40,7 @@ class CensusStatBox extends React.Component{
         } 
 
         let change = 0
-        console.log('compareYear', this.props.compareYear)
+        // console.log('compareYear', this.props.compareYear)
 
         if(this.props.compareYear) {
             let compareValue = this.props.geoids
