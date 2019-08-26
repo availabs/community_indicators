@@ -48,21 +48,6 @@ let StatContainer = styled.div`
     justify-content: center;
 `
 
-// let LandingHeader = styled.h1`
-//     color: #efefef;
-//     font-size: 5em;
-//     font-weight: 500;
-//     font-family: "Proxima Nova W01";
-//     line-height: 0.9;
-//     text-shadow:-1px -1px 0 #446,
-//         1px -1px 0 #446,
-//        -1px 1px 0 #446,
-//        1px 1px 0 #446;
-//     text-align:center
-//     background: none;
-// `
-
-
 class ProfileHeader extends Component {
     
     render () {
