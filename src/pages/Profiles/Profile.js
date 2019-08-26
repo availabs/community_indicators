@@ -13,117 +13,75 @@ class Report extends React.Component{
         this.state={
             graphConfig:[]
         }
+        this.renderCategory = this.renderCategory.bind(this)
     }
 
-    componentWillMount(){
-        this.setState({
-            graphConfig: GRAPH_CONFIG
-        })
+    renderCategory(name, configData) {
+        return (
+            <div className='content-box'>
+                <div className='element-wrapper'>
+                    <h4 className='element-header'> {name.toUpperCase()} </h4>
+                    <div classname='element-content'>
+                        <GridLayout
+                            sideWidth={800}
+                            minifiedWidth={1}
+                            isOpen={1}
+                            title={''}
+                            viewing={false}
+                            graphs={configData}
+                            onOpenOrClose={function noop() {}}
+                            onLayoutChange={ this.props.onLayoutChange }
+                            verticalCompact={false}
+                        />
+                    </div>
+                </div>
+            </div>
+
+        )
     }
 
     render(){
-        let geoid = this.props.match.params.geoid ?
-            this.props.match.params.geoid
-            :36001;
+       
 
-        this.state.graphConfig.overview.map(function(config){
-            config['geoid'] = [geoid]
+        let categories = Object.keys(GRAPH_CONFIG).map(category => {
+            GRAPH_CONFIG[category].forEach(config => {
+                config['geoid'] = [this.props.geoid]
+            })
+
+            return this.renderCategory(category, GRAPH_CONFIG[category])
+
         })
 
-        this.state.graphConfig.socialWelfare.map(function(config){
-            config['geoid'] = [geoid]
-        })
-
-        this.state.graphConfig.education.map(function(config){
-            config['geoid'] = [geoid]
-        })
-
-        this.state.graphConfig.housing.map(function(config){
-            config['geoid'] = [geoid]
-        })
 
 
         return (
-        <div>
-        <ProfileHeader geoid={'36001'} />
-        <div style={{ width: '100%', backgroundColor: '#293145', marginTop: '90vh', position: 'relative', zIndex: 4}}>
-                <div className='container'>
-                    <h1 align='center'> Overview </h1>
-                    <br/>
-                    <GridLayout
-                    sideWidth={800}
-                    minifiedWidth={1}
-                    isOpen={1}
-                    title={''}
-                    viewing={false}
-                    graphs={this.state.graphConfig.overview}
-                    onOpenOrClose={function noop() {}}
-                    onLayoutChange={ this.props.onLayoutChange }
-                    verticalCompact={false}
-                    />
+            <div>
+                <ProfileHeader geoids={[this.props.geoid]} />
+                <div style={{ width: '100%', backgroundColor: '#293145', marginTop: '90vh', position: 'relative', zIndex: 4}}>
+                    <div className='container'>
+                        {categories}
                     </div>
-                    <div>
-                    <h1 align='center'> Social Welfare </h1>
-                    <br/>
-                    <GridLayout
-                    sideWidth={1000}
-                    minifiedWidth={1}
-                    isOpen={1}
-                    title={''}
-                    viewing={false}
-                    graphs={this.state.graphConfig.socialWelfare}
-                    onOpenOrClose={function noop() {}}
-                    onLayoutChange={ this.props.onLayoutChange }
-                    verticalCompact={false}
-                    />
-                    </div>
-                    <div>
-                    <h1 align='center'> Education </h1>
-                        <br/>
-                        <GridLayout
-                    sideWidth={1000}
-                    minifiedWidth={1}
-                    isOpen={1}
-                    title={''}
-                    viewing={false}
-                    graphs={this.state.graphConfig.education}
-                    onOpenOrClose={function noop() {}}
-                    onLayoutChange={ this.props.onLayoutChange }
-                    verticalCompact={false}
-                    />
-                    </div>
-                    <div>
-                    <h1 align='center'> Housing </h1>
-                        <br/>
-                        <GridLayout
-                    sideWidth={1000}
-                    minifiedWidth={1}
-                    isOpen={1}
-                    title={''}
-                    viewing={false}
-                    graphs={this.state.graphConfig.housing}
-                    onOpenOrClose={function noop() {}}
-                    onLayoutChange={ this.props.onLayoutChange }
-                    verticalCompact={false}
-                    />
                 </div>
             </div>
-        </div>
 
     )
     }
 
     static defaultProps = {
         width:[],
-        height:[]
+        height:[],
+        geoid: '36001'
     }
 
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state, ownProps) => {
     return {
         geoGraph: state.graph.geo,
-        router: state.router
+        router: state.router,
+        geoid: ownProps.match.params.geoid
+            ? ownProps.match.params.geoid
+            : 36001
     };
 };
 

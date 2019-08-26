@@ -4,8 +4,10 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { reduxFalcor } from 'utils/redux-falcor'
 import AvlMap from 'AvlMap'
- import HeaderLayer from './HeaderLayer'
+import HeaderLayer from './HeaderLayer'
 import styled from 'styled-components'
+
+import GeoName from 'components/censusCharts/geoname'
 import StatBox from 'components/censusCharts/statBox'
 
 let HeaderContainer = styled.div` 
@@ -32,10 +34,12 @@ let LandingHeader = styled.h1`
        -1px 1px 0 #446,
        1px 1px 0 #446;
     text-align:center;
+    max-width: 800px;
 `
 
 let StatContainer = styled.div`
     max-width: 520px;
+    margin: 0 auto;
     color: #efefef;
     background: rgba(0,0,0,0.3);
     borderRadius: 4;
@@ -60,28 +64,18 @@ let StatContainer = styled.div`
 
 
 class ProfileHeader extends Component {
-    // fetchFalcorDeps() {
-    //     let censusConfig ={};
-    //     let census_subvars = [];
-    //     let years = [this.props.year]
-    //     if(this.props.compareYear) {
-    //         years.push(this.props.compareYear)
-    //     }
-    //     return this.props.falcor
-    //         .get(['acs',this.props.geoids,years, this.props.censusKey])
-    //         .then(response =>{
-    //             console.log('got data', response)
-    //             return response
-    //         })
-    // }
-
+    
     render () {
         return (
                 <div>
                     <HeaderContainer >
                         <div style={{height: 400}}>
                             <LandingHeader>
-                                {this.props.geoid}
+                                {
+                                    this.props.title
+                                    ? this.props.title 
+                                    : <GeoName geoids={this.props.geoids} />
+                                }
                             </LandingHeader>
                             <div className='container'>
                                 <StatContainer>
@@ -90,13 +84,15 @@ class ProfileHeader extends Component {
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
                                         censusKey={'B01003_001E'}
-                                        geoids={[this.props.geoid]}
+                                        geoids={this.props.geoids}
                                     />
                                     <StatBox 
                                         title={'Median Age'}
                                         year={this.props.years.latest}
                                         censusKey={'B01002_001E'}
-                                        geoids={[this.props.geoid]}
+                                        geoids={this.props.geoids}
+                                        sumType='avg'
+                                        maximumFractionDigits={1}
                                     />
                                     <StatBox 
                                         title={'Median Household Income'}
@@ -104,22 +100,17 @@ class ProfileHeader extends Component {
                                         compareYear={this.props.years.latest-1}
                                         valuePrefix={'$'}
                                         censusKey={'B19013_001E'}
-                                        geoids={[this.props.geoid]}
-                                    />
+                                        geoids={this.props.geoids}
+                                        sumType='avg'
+                                                                            />
                                     <StatBox 
                                         title={'Poverty Rate'}
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
                                         censusKey={'B17001_002E'}
-                                        geoids={[this.props.geoid]}
+                                        geoids={this.props.geoids}
                                     />
-                                    <StatBox 
-                                        title={'Poverty Rate'}
-                                        year={this.props.years.latest}
-                                        compareYear={this.props.years.latest-1}
-                                        censusKey={'B17001_002E'}
-                                        geoids={[this.props.geoid]}
-                                    />
+                                    
                                 </StatContainer>
                             </div>
                         </div>
@@ -147,6 +138,9 @@ class ProfileHeader extends Component {
                 </div> 
 
         )
+    }
+    static defaultProps = {
+        geoids: ['36001']
     }
 }
 

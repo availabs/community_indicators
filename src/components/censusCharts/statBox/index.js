@@ -17,10 +17,12 @@ class CensusStatBox extends React.Component{
         if(this.props.compareYear) {
             years.push(this.props.compareYear)
         }
+
+        console.log('get Key', ['acs', this.props.geoids, years, this.props.censusKey])
         return falcorGraph
             .get(['acs',this.props.geoids,years, this.props.censusKey])
             .then(response =>{
-                console.log('got data', response)
+                console.log('statBox', response)
                 return response
             })
     }
@@ -30,6 +32,10 @@ class CensusStatBox extends React.Component{
         let value = this.props.geoids
             .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.censusKey}`, 0))
             .reduce((a,b) => a + b )
+
+        if(this.props.sumType === 'avg') {
+            value /= this.props.geoids.length
+        }
 
         if(!value) {
             return {value: '', change: ''}  
@@ -66,7 +72,7 @@ class CensusStatBox extends React.Component{
                 </div>
                 
                 <div className='value' style={{ textAlign: 'center', display: 'block'}}>
-                    {this.props.valuePrefix}{displayData.value.toLocaleString()}
+                    {this.props.valuePrefix}{displayData.value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits})}
                 </div>
                 {this.props.compareYear &&
                     <div className='' style={{ textAlign: 'center'}}> 
@@ -82,7 +88,8 @@ class CensusStatBox extends React.Component{
         censusKey: 'B01003_001E', //'B19013',,
         geoids: ['36001'],
         year:'2016',
-        colorRange:[]
+        colorRange:[],
+        maximumFractionDigits: 0
     }
 }
 

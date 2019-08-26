@@ -2,16 +2,10 @@ module.exports = [
    {
       "id":"1",
       "type":"CensusStatBox",
-      "censusKey":[
-         "B01003"
-      ],
-      "year":[
-         "2017"
-      ],
-      "demographics":true,
-      "colorRange":[
-
-      ],
+      "censusKey":"B01003_001E",
+      "year":"2017",
+      compareYear: 2016,
+      "title": "Population",
       "layout":{
          "w":2,
          "h":5,
@@ -20,7 +14,7 @@ module.exports = [
          "i":"1",
          "static":false
       },
-      "geoid":[
+      "geoids":[
          "36001"
       ]
    },
