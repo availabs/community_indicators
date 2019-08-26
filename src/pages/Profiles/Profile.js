@@ -14,6 +14,12 @@ class Report extends React.Component{
             graphConfig:[]
         }
         this.renderCategory = this.renderCategory.bind(this)
+        this.layoutChange = this.layoutChange.bind(this)
+    }
+    layoutChange(a,b) {
+        console.log('----layout change -------------')
+        console.log(a,b)
+        console.log('------------------------------')
     }
 
     renderCategory(name, configData) {
@@ -30,7 +36,7 @@ class Report extends React.Component{
                             viewing={false}
                             graphs={configData}
                             onOpenOrClose={function noop() {}}
-                            onLayoutChange={ this.props.onLayoutChange }
+                            onLayoutChange={ this.layoutChange }
                             verticalCompact={false}
                         />
                     </div>
@@ -62,7 +68,7 @@ class Report extends React.Component{
                 </div>
             </div>
 
-    )
+        )
     }
 
     static defaultProps = {
