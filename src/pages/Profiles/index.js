@@ -15,13 +15,13 @@ class ReportIndex extends React.Component{
         }
     }
 
-    componentWillMount(){
+    componentWillMount() {
         this.setState({
             graphConfig: GRAPH_CONFIG
         })
     }
 
-    render(){
+    render() {
         return(
             <div >
                 <ProfileHeader 
@@ -33,8 +33,8 @@ class ReportIndex extends React.Component{
     }
 
     static defaultProps = {
-        width:[],
-        height:[]
+        width: [],
+        height: []
     }
 
 }
@@ -52,15 +52,13 @@ export default [
     {
         icon: 'os-icon-home',
         path: '/profiles',
-        mainNav:true,
-        exact:true,
-        menuSettings:
-                {
-                    image: 'none',
-                    scheme: 'color-scheme-dark',
-                    style: 'color-style-default',
-                    
-                },
+        mainNav: true,
+        exact: true,
+        menuSettings:{
+            image: 'none',
+            scheme: 'color-scheme-dark',
+            style: 'color-style-default'
+        },
         name: 'Profiles',
         auth:false,
         subMenus: subMenus,

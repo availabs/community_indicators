@@ -1,3 +1,4 @@
+
 module.exports = [
    {
       "id":"1",
@@ -21,16 +22,10 @@ module.exports = [
    {
       "id":"2",
       "type":"CensusStatBox",
-      "censusKey":[
-         "B01002"
-      ],
-      "year":[
-         "2017"
-      ],
+      "title": "Median Age",
+      "censusKey":"B01002_001E",
+      "year":"2017",
       "demographics":true,
-      "colorRange":[
-
-      ],
       "layout":{
          "w":2,
          "h":5,
@@ -44,24 +39,17 @@ module.exports = [
       ]
    },
    {
-      "id":"3",
-      "type":"CensusPieChart",
-      "censusKey":[
-         "B02001"
-      ],
-      "year":[
-         "2017"
-      ],
-      "single":true,
-      "colorRange":[
-
-      ],
+      "id":"5",
+      "type":"CensusStatBox",
+      "title": "Median Household Income",
+      "censusKey":"B19013_001E",
+      "amount":true,
       "layout":{
-         "w":4,
-         "h":5,
-         "x":4,
-         "y":0,
-         "i":"3",
+         "w":2,
+         "h":13,
+         "x":0,
+         "y":5,
+         "i":"5",
          "static":false
       },
       "geoid":[
@@ -71,11 +59,9 @@ module.exports = [
    {
       "id":"4",
       "type":"CensusLineChart",
+      title: "Median Household Income",
       "censusKey":[
-         "B19013"
-      ],
-      "colorRange":[
-
+         "B19013_001E"
       ],
       "layout":{
          "w":10,
@@ -89,28 +75,8 @@ module.exports = [
          "36001"
       ]
    },
-   {
-      "id":"5",
-      "type":"CensusStatBox",
-      "censusKey":[
-         "B19013"
-      ],
-      "amount":true,
-      "colorRange":[
-
-      ],
-      "layout":{
-         "w":2,
-         "h":13,
-         "x":0,
-         "y":5,
-         "i":"5",
-         "static":false
-      },
-      "geoid":[
-         "36001"
-      ]
-   },
+   /*
+   
    {
       "id":"6",
       "type":"CensusStatBox",
@@ -265,5 +231,5 @@ module.exports = [
       "geoid":[
          "36001"
       ]
-   }
+   }*/
 ]
