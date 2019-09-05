@@ -9,7 +9,7 @@ module.exports = [
       "title": "Population",
       "layout":{
          "w":2,
-         "h":5,
+         "h":3,
          "x":0,
          "y":0,
          "i":"1",
@@ -28,7 +28,7 @@ module.exports = [
       "demographics":true,
       "layout":{
          "w":2,
-         "h":5,
+         "h":3,
          "x":2,
          "y":0,
          "i":"2",
@@ -48,7 +48,7 @@ module.exports = [
          "w":2,
          "h":13,
          "x":0,
-         "y":5,
+         "y":3,
          "i":"5",
          "static":false
       },
@@ -60,14 +60,14 @@ module.exports = [
       "id":"4",
       "type":"CensusLineChart",
       title: "Median Household Income",
-      "censusKey":[
+      "censusKeys":[
          "B19013_001E"
       ],
       "layout":{
          "w":10,
          "h":13,
          "x":2,
-         "y":5,
+         "y":3,
          "i":"4",
          "static":false
       },
@@ -75,18 +75,14 @@ module.exports = [
          "36001"
       ]
    },
-   /*
-   
    {
       "id":"6",
       "type":"CensusStatBox",
       "censusKey":[
-         "B17001"
+         "B17001_001E"
       ],
-      "poverty":true,
-      "colorRange":[
-
-      ],
+     
+     
       "layout":{
          "w":2,
          "h":13,
@@ -102,12 +98,8 @@ module.exports = [
    {
       "id":"7",
       "type":"CensusLineChart",
-      "censusKey":[
-         "B17001"
-      ],
-      "PovertyPopulationBySex":true,
-      "colorRange":[
-
+      "censusKeys":[
+         "B17001_001E"
       ],
       "layout":{
          "w":10,
@@ -121,7 +113,7 @@ module.exports = [
          "36001"
       ]
    },
-   {
+   /*{
       "id":"8",
       "type":"CensusStatBox",
       "censusKey":[

@@ -5,7 +5,6 @@ import {falcorGraph} from "store/falcorGraph";
 import { ResponsiveLine } from '@nivo/line'
 import GeoName from 'components/censusCharts/geoname'
 import get from 'lodash.get'
-var numeral = require('numeral')
 
 
 
@@ -14,11 +13,10 @@ class Options extends React.Component {
     return (
 
      <div className="os-tabs-controls" style={{position: 'absolute', top: 0, right: 0, zIndex: 999}}>
-       <ul className="nav nav-pills smaller d-none d-md-flex">
-          <li className="nav-item"><a className="nav-link"  href="#">View Data</a></li>
-          <li className="nav-item"><a className="nav-link"  href="#">Save Image</a></li>
-          <li className="nav-item"><a className="nav-link"  href="#">Share Embed</a></li>
-          
+       <ul className="nav nav-tabs smaller">
+          <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#tab_overview">View Data</a></li>
+          <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#tab_sales">Save Image</a></li>
+          <li className="nav-item"><a className="nav-link" data-toggle="tab" href="#tab_sales">Share Embed</a></li>
        </ul>
     </div>
     );
@@ -56,12 +54,13 @@ class CensusLineChart extends React.Component {
         console.log('test 123', this.props.theme, graphData, this.props.colorRange)
         return(
             <div style={{height: '100%'}}>
+                <h6>{this.props.title}</h6>
                 <Options />
                 <ResponsiveLine
                     data={graphData}
                     margin={{
                             "top": 30,
-                            "right": 60,
+                            "right": 20,
                             "bottom": 60,
                             "left": 60
                     }}
@@ -99,7 +98,7 @@ class CensusLineChart extends React.Component {
                         <h6><GeoName geoid={this.props.geoid} /></h6>
                          Year : {id}
                         <br/>
-                        Median Income: ${Object.values(data)[0]['data'].y.toLocaleString()}
+                        Value: {Object.values(data)[0]['data'].y.toLocaleString()}
                     </div>
                     )}
 

@@ -22,11 +22,14 @@ module.exports = {
     //-------------------------------------------Overview--------------------------------------
     Overview: overview,
     //---------------------------------------Social Welfare------------------------------------
-    //'Social Welfare': socialWelfare,
+    'Social Welfare': socialWelfare,
     // //---------------------------------------Education-----------------------------------------
-    // 'Education': education,
+    'Education': education,
     // //---------------------------------------Housing-----------------------------------------
-    // 'Housing': housing
+    'Housing': housing,
+    'Poverty': [],
+    'Education': [],
+    'Health': []
 
 }
 
