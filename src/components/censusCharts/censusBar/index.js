@@ -5,6 +5,8 @@ import { reduxFalcor} from "utils/redux-falcor";
 import {ResponsiveBar} from '@nivo/bar'
 import Options from '../Options'
 import GeoName from 'components/censusCharts/geoname'
+import get from 'lodash.get'
+
 var numeral = require('numeral')
 
 class CensusBarChart extends React.Component {
@@ -46,13 +48,13 @@ class CensusBarChart extends React.Component {
     render () {
         let title = this.props.title
         let graphData = this.lineData()
-        console.log('test 123', this.props.theme, graphData, this.props.colorRange)
+        // console.log('test 123', this.props.theme, graphData, this.props.colorRange)
         return(
             <div style={{height: '100%'}}>
                 <h6 style={{position: 'absolute', top: 0, left: 0, padding: '8px 12px'}}>{this.props.title}</h6>
                 <Options />
                 <ResponsiveBar
-                    data={this.state.graphData2}
+                    data={graphData}
                     indexBy="language"
                     keys = {["Percent"]}
                     margin={{

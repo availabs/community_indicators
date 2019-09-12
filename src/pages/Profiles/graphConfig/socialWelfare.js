@@ -7,8 +7,9 @@ module.exports = [
         familyIncome:true,
         layout: {
             static: false,
-            h: 14,
-            w: 8,
+            i: '13',
+            h: 12,
+            w: 12,
             x: 0,
             y: 0
         }
@@ -21,10 +22,11 @@ module.exports = [
         colorRange:[],
         layout:{
             static: true,
-            h:16,
-            w:10,
+            i: '14',
+            h:12,
+            w:12,
             x:0,
-            y:0
+            y:12
         }
     },
     {
@@ -35,10 +37,11 @@ module.exports = [
         colorRange:[],
         layout: {
             static: false,
-            h: 14,
-            w: 10,
+            i: '15',
+            h: 12,
+            w: 12,
             x: 0,
-            y: 0,
+            y: 24,
         }
     },
     {
@@ -54,7 +57,7 @@ module.exports = [
             y: 0
         }
     },
-    {
+    /*{
         id: '17',
         type: 'CensusLineChart',
         censusKey: ['B19013B'],
@@ -186,6 +189,6 @@ module.exports = [
             y:0
         }
     },
-
+*/
 
 ]
