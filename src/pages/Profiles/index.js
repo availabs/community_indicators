@@ -25,7 +25,7 @@ class ReportIndex extends React.Component{
         return(
             <div >
                 <ProfileHeader 
-                    title={`Capital District\n Development Region`} 
+                    title={`Greater Capital Region`} 
                     geoids={['36001','36083','36093','36091','36039','36021','36115','36113']} 
                 />
             </div>

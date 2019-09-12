@@ -12,12 +12,8 @@ module.exports = [
          "h":3,
          "x":0,
          "y":0,
-         "i":"1",
-         "static":false
-      },
-      "geoids":[
-         "36001"
-      ]
+         "i":"1"
+      }
    },
    {
       "id":"2",
@@ -31,12 +27,8 @@ module.exports = [
          "h":3,
          "x":2,
          "y":0,
-         "i":"2",
-         "static":false
-      },
-      "geoid":[
-         "36001"
-      ]
+         "i":"2"
+      }
    },
    {
       "id":"5",
@@ -49,12 +41,8 @@ module.exports = [
          "h":13,
          "x":0,
          "y":3,
-         "i":"5",
-         "static":false
-      },
-      "geoid":[
-         "36001"
-      ]
+         "i":"5"
+      }
    },
    {
       "id":"4",
@@ -68,137 +56,101 @@ module.exports = [
          "h":13,
          "x":2,
          "y":3,
-         "i":"4",
-         "static":false
-      },
-      "geoid":[
-         "36001"
-      ]
+         "i":"4"
+      }
    },
    {
-      "id":"6",
-      "type":"CensusStatBox",
-      "censusKey":[
-         "B17001_001E"
-      ],
-     
-     
+      id:"6",
+      type:"CensusStatBox",
+      title:'Poverty Rate',
+      sumType: 'pct',
+      censusKey:"B17001_002E",
+      divisorKey: "B17001_001E",     
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
       "layout":{
          "w":2,
          "h":13,
          "x":0,
          "y":18,
-         "i":"6",
-         "static":false
-      },
-      "geoid":[
-         "36001"
-      ]
+         "i":"6"
+      }
    },
    {
       "id":"7",
-      "type":"CensusLineChart",
-      "censusKeys":[
-         "B17001_001E"
-      ],
+      type:"CensusLineChart",
+      title: "% of Population with income in the past 12 months below poverty level",
+      censusKeys:["B17001_002E"],
+      divisorKeys: ["B17001_001E"],
+      sumType: 'pct',
       "layout":{
          "w":10,
          "h":13,
          "x":2,
          "y":18,
-         "i":"7",
-         "static":false
+         "i":"7"
       },
-      "geoid":[
-         "36001"
-      ]
    },
-   /*{
-      "id":"8",
-      "type":"CensusStatBox",
-      "censusKey":[
-         "B25002"
-      ],
-      "housing":true,
-      "colorRange":[
-
-      ],
+   {
+      id:"8",
+      title: "Percent Vacant Housing Units",
+      type:"CensusStatBox",
+      sumType: 'pct',
+      censusKey:"B25002_003E",
+      divisorKey: 'B25002_001E',
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
       "layout":{
          "w":2,
-         "h":13,
+         "h":4,
          "x":0,
          "y":31,
-         "i":"8",
-         "static":false
+         "i":"8"
       },
       "geoid":[
          "36001"
       ]
    },
    {
-      "id":"9",
-      "type":"CensusStackedLineChart",
-      "censusKey":[
-         "B25002"
-      ],
-      "colorRange":[
-
-      ],
-      "layout":{
-         "w":10,
-         "h":13,
-         "x":2,
-         "y":31,
-         "i":"9",
-         "static":false
-      },
-      "geoid":[
-         "36001"
-      ]
-   },
-   {
-      "id":"10",
-      "type":"CensusStatBox",
-      "censusKey":[
-         "B15003"
-      ],
-      "education":true,
-      "colorRange":[
-
-      ],
+      id:"9",
+      title: "Vacant Housing Units",
+      type:"CensusStatBox",
+      censusKey:"B25002_003E",
       "layout":{
          "w":2,
-         "h":13,
+         "h":4,
          "x":0,
-         "y":44,
-         "i":"10",
-         "static":false
+         "y":35,
+         "i":"9"
       },
-      "geoid":[
-         "36001"
-      ]
    },
    {
-      "id":"11",
-      "type":"CensusMultiStackedLineChart",
-      "censusKey":[
-         "B15003"
-      ],
-      "colorRange":[
-
-      ],
-      "education":true,
+      id:"39",
+      title: "Occupied Housing Units",
+      type:"CensusStatBox",
+      censusKey:"B25002_002E",
+      "layout":{
+         "w":2,
+         "h":4,
+         "x":0,
+         "y":39,
+         "i":"39"
+      },
+   },
+   {
+      "id":"100",
+      "type":"CensusLineChart",
+      title: "Percent Vacant Housing Units",
+      sumType: 'pct',
+      censusKeys:["B25002_003E"],
+      divisorKeys:["B25002_001E"],
       "layout":{
          "w":10,
-         "h":13,
+         "h":12,
          "x":2,
-         "y":44,
-         "i":"11",
-         "static":false
-      },
-      "geoid":[
-         "36001"
-      ]
+         "y":31,
+         "i":"100"
+      }
    },
    {
       "id":"12",
@@ -217,11 +169,10 @@ module.exports = [
          "h":13,
          "x":0,
          "y":57,
-         "i":"12",
-         "static":false
+         "i":"12"
       },
       "geoid":[
          "36001"
       ]
-   }*/
+   }
 ]

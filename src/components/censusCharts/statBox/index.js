@@ -17,9 +17,13 @@ class CensusStatBox extends React.Component{
         if(this.props.compareYear) {
             years.push(this.props.compareYear)
         }
+        let censusKeys = [this.props.censusKey]
+        if(this.props.divisorKey) {
+            censusKeys.push(this.props.divisorKey)
+        }
 
         return falcorGraph
-            .get(['acs',this.props.geoids,years, this.props.censusKey])
+            .get(['acs',this.props.geoids,years, censusKeys])
             .then(response =>{
                 return response
             })
@@ -31,10 +35,21 @@ class CensusStatBox extends React.Component{
             .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.censusKey}`, 0))
             .reduce((a,b) => a + b )
 
+
+
         if(this.props.sumType === 'avg') {
             value /= this.props.geoids.length
+        } else if (this.props.sumType === 'pct') {
+            let divisorValue = this.props.geoids
+            .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
+            .reduce((a,b) => a + b )
+
+            console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
+            value /= divisorValue
+            value *= 100
         }
 
+        console.log('got the value', value)
         if(!value) {
             return {value: '', change: ''}  
         } 
@@ -46,6 +61,17 @@ class CensusStatBox extends React.Component{
             let compareValue = this.props.geoids
                 .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.compareYear}.${this.props.censusKey}`, 0))
                 .reduce((a,b) => a + b )
+
+            if (this.props.sumType === 'pct') {
+                let divisorValue = this.props.geoids
+                .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
+                .reduce((a,b) => a + b )
+
+                console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
+                compareValue /= divisorValue
+                compareValue *= 100
+            }
+
 
 
             change = (((value - compareValue) / compareValue) * 100)
@@ -70,11 +96,13 @@ class CensusStatBox extends React.Component{
                 </div>
                 
                 <div className='value' style={{ textAlign: 'center', display: 'block'}}>
-                    {this.props.valuePrefix}{displayData.value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits})}
+                    {this.props.valuePrefix}
+                    {displayData.value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits})}
+                    {this.props.valueSuffix}
                 </div>
                 {this.props.compareYear &&
                     <div className='' style={{ textAlign: 'center'}}> 
-                        {displayData.change}% Growth 
+                        {Math.abs(displayData.change)}% {displayData.change >= 0 ? 'Growth' : 'Decline'} 
                     </div>
                  }
             </div>

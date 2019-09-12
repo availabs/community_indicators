@@ -112,7 +112,7 @@ class GridLayout extends React.Component {
                         this.onLayoutChange(layout, layouts)
                     }
                 >
-                        {this.loadComps()}
+                    {this.loadComps()}
             </ReactGridLayout>
             </div>
     )

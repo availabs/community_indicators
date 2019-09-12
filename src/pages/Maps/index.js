@@ -16,7 +16,7 @@ const SidebarHeader = ({}) =>
 
 
 const MapPage = ({}) =>
-  <div style={ { height: "100vh" } }>
+  <div style={ { height: 'calc(100vh - 45px)', marginTop:45 } }>
     <AvlMap layers={ [
         buildingsLayer,
         parcelLayer,
@@ -35,13 +35,10 @@ export default {
 	path: '/map',
 	exact: true,
 	mainNav: true,
-    menuSettings: {
-        image: 'none',
-        scheme: 'color-scheme-dark',
-        position: 'menu-position-left',
-        layout: 'menu-layout-mini',
-        style: 'color-style-default',
-        subemenustyle: 'sub-menu-style-over'
+   menuSettings: {
+        image: 'none', 
+        'scheme': 'color-scheme-dark', 
+        style: 'color-style-default'
     },
     name: 'Maps',
 	auth: false,

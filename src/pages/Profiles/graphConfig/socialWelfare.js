@@ -5,7 +5,6 @@ module.exports = [
         censusKey:['B19119'],
         year: ['2017'],
         familyIncome:true,
-        colorRange: [],
         layout: {
             static: false,
             h: 14,

@@ -2,7 +2,8 @@ let overview = require('./overview')
 let education = require('./education')
 let housing = require('./housing')
 let socialWelfare = require('./socialWelfare')
-module.exports = {
+
+const graph_config = {
 
     /*
     NOTES :
@@ -29,7 +30,9 @@ module.exports = {
     'Housing': housing,
     'Poverty': [],
     'Education': [],
-    'Health': []
+    'Health': [],
+    'Transportation': []
 
 }
 
+export default graph_config
