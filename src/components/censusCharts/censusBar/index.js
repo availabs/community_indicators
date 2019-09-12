@@ -5,10 +5,12 @@ import { reduxFalcor} from "utils/redux-falcor";
 import {ResponsiveBar} from '@nivo/bar'
 import Options from '../Options'
 import GeoName from 'components/censusCharts/geoname'
-var numeral = require('numeral')
+// var numeral = require('numeral')
+
+import get from "lodash.get"
 
 class CensusBarChart extends React.Component {
-   
+
    fetchFalcorDeps () {
         return this.props.falcor.get(
             ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]]
@@ -26,9 +28,9 @@ class CensusBarChart extends React.Component {
                 "title": this.props.title,
                 "data" : this.props.years.map(year => {
                     let value = get(this.props, `acs[${this.props.geoids[0]}][${year}][${censusKey}]`, 0)
-                    
+
                     if(this.props.sumType === 'pct') {
-                        let divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1) 
+                        let divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1)
                         value /= divisor
                         value *= 100
                     }
@@ -38,7 +40,7 @@ class CensusBarChart extends React.Component {
                         y: value
                     }
                 })
-            }    
+            }
         })
     }
 
@@ -117,7 +119,7 @@ class CensusBarChart extends React.Component {
         title: '',
         stacked: false
     }
-    
+
 
 }
 
