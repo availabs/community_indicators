@@ -55,6 +55,19 @@ const BASE_CONFIG = [
   //     "w":2,"h":5,"x":0,"y":67,"i":"33","static":false
   //   }
   // }
+
+ {
+      type: "ProfileFooter",
+      data: [
+        [
+          { type: "header", value: "US Census Building Permits Survey" },
+          { type: "subheader", value: "Data Downloads" },
+          { type: "body", value: "This page provides data on the number of new housing units authorized by building permits. Data are available monthly, year- to- date, and annually at the national, state, selected metropolitan area, county and place levels. The data are from the Building Permits Survey." },
+          { type: "link", value: "https://www.census.gov/construction/bps/" }
+        ]
+      ]
+    }
+
 ]
 
 export default configLoader(BASE_CONFIG);
