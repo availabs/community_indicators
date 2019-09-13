@@ -32,13 +32,16 @@ export const configLoader = BASE_CONFIG => {
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
 
-    x += layout.x;
-    if ((layout.w + x) > 12) {
+    if (layout.x) {
       x = layout.x;
+    }
+    if ((layout.w + x) > 12) {
       y += h;
       h = 0;
+      x = layout.x;
     }
     h = Math.max(h, layout.h)
+console.log("X", x)
     config.layout = {
       ...layout,
       i: config.id,
