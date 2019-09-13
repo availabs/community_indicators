@@ -66,7 +66,7 @@ class CensusBarChart extends React.Component {
                     padding={0.3}
                     colors = {this.props.colorRange}
                     colorBy = "index"
-                    layout = "vertical"
+                    layout = {this.props.layout}
                     borderColor="inherit:darker(1.6)"
                     enableGridX = {true}
                     enableGridY={true}
@@ -117,7 +117,8 @@ class CensusBarChart extends React.Component {
         colorRange:['#047bf8','#6610f2','#6f42c1','#e83e8c','#e65252','#fd7e14','#fbe4a0','#24b314','#20c997','#5bc0de'],
         years: [2010,2011,2012,2013,2014,2015,2016],
         title: '',
-        stacked: false
+        stacked: false,
+        layout: 'vertical'
     }
 
 

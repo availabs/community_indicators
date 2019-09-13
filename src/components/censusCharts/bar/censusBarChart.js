@@ -44,6 +44,10 @@ class CensusBarChart extends React.Component {
       .domain(this.props.geoids)
       .range(DEFAULT_COLORS);
     const fmt = format(this.props.yFormat);
+    console.log('data', this.props.barData)
+    if(this.props.sorted) {
+      this.props.barData.sort((a,b) => a[this.props.geoids[0]] - b[this.props.geoids[0]])
+    }
 
     return (
       <div style={ { width: "100%", height: "100%" } }>
@@ -56,12 +60,15 @@ class CensusBarChart extends React.Component {
           <ResponsiveBar indexBy={ "id" }
             keys={ this.props.geoids }
             data={ this.props.barData }
-            margin={ { top: 20, right: 20, bottom: this.props.axisBottom ? 30 : 20, left: this.props.marginLeft } }
+            margin={ { top: 20, right: 20, 
+              bottom: this.props.axisBottom ? 30 : 20, 
+              left: this.props.marginLeft } }
             colors={ d => colors(d.id) }
             labelSkipWidth={ 100 }
             labelFormat={ fmt }
             groupMode="grouped"
-            tooltip={ ({ color, indexValue, value, id, ...rest }) => (console.log("REST:", rest),
+            layout={this.props.orientation}
+            tooltip={ ({ color, indexValue, value, id, ...rest }) => (//console.log("REST:", rest),
                 <Tooltip geoid={ id }
                   value={ fmt(value) }
                   color={ color }
@@ -69,12 +76,17 @@ class CensusBarChart extends React.Component {
               )
             }
             axisLeft={ {
-              format: fmt
+              format: this.props.layout === 'horizontal' 
+              ? fmt
+              : !this.props.axisBottom ? null :
+               this.props.getKeyName 
             } }
-            axisBottom={
-              !this.props.axisBottom ? null :
-              { format: this.props.getKeyName }
-            }/>
+            axisBottom={ {
+              format: this.props.layout === 'vertical' 
+              ? fmt
+              : !this.props.axisBottom ? null :
+                this.props.getKeyName 
+            }}/>
         </div>
       </div>
     );
@@ -102,7 +114,8 @@ ConnectedCensusBarChart.defaultProps = {
   years: [2015],
   yFormat: ",d",
   axisBottom: true,
-  marginLeft: 75
+  marginLeft: 75,
+  orientation: 'vertical'
 }
 
 export default ConnectedCensusBarChart
