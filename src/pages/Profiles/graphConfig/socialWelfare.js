@@ -162,7 +162,7 @@ const BASE_CONFIG = [
           { type: "link", value: "https://www.unitedforalice.org/new-york" }
         ],
         [
-          { type: "header", value: "Division of Criminal Justice Services" },
+          { type: "header", value: "New York State Division of Criminal Justice Services" },
           { type: "subheader", value: "Data Downloads and Report Publications" },
           { type: "body", value: "Criminal justice data by county from New York State Division of Criminal Justice Services including Violent Crimes, Domestic Violence Victims, Arrests, Dispositions, Youth Justice Data, and more" },
           { type: "link", value: "https://www.criminaljustice.ny.gov/crimnet/ojsa/stats.htm" }
