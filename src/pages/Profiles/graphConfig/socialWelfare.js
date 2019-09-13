@@ -150,6 +150,24 @@ const BASE_CONFIG = [
           '75 years and over, veteran',
           '75 years and over, non-veteran',
         ]
+    },
+
+    {
+      type: "ProfileFooter",
+      data: [
+        [
+          { type: "header", value: "TEST HEADER" },
+          { type: "subheader", value: "SUBHEADER" },
+          { type: "body", value: "SOME TEXT HERE!!!" },
+          { type: "link", value: "A LINK" }
+        ],
+        [
+          { type: "header", value: "TEST HEADER" },
+          { type: "subheader", value: "SUBHEADER" },
+          { type: "body", value: "SOME TEXT HERE!!!" },
+          { type: "link", value: "A LINK" }
+        ]
+      ]
     }
 
 ]

@@ -1,7 +1,7 @@
 import socialWelfare from './socialWelfare'
 import education from './education'
+import overview from './overview'
 
-let overview = require('./overview')
 let housing = require('./housing')
 
 console.log("socialWelfare",socialWelfare)
