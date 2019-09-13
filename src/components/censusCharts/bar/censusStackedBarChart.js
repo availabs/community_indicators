@@ -15,6 +15,24 @@ import GeoName from 'components/censusCharts/geoname'
 
 const DEFAULT_COLORS = getColorRange(3, "Set3")
 
+const TooltipContainer = styled.div`
+  display: flex;
+  > div {
+    margin-right: 5px;
+  }
+  > div:last-child {
+    margin-right: 0px;
+  }
+`
+
+const Tooltip = ({ color, value, label, geoid }) =>
+  <TooltipContainer>
+    <div style={ { width: "15px", height: "15px", background: color, marginRight: "5px" } }/>
+    <div><GeoName geoid={ geoid }/></div>
+    <div style={ { marginRight: "5px", fontWeight: "bold" } }>{ label }</div>
+    <div>{ value }</div>
+  </TooltipContainer>
+
 class HorizontalBarChart extends React.Component {
   state = {
     year: 2015
@@ -25,8 +43,8 @@ class HorizontalBarChart extends React.Component {
     )
   }
   getBarData() {
-    const leftVars = this.props.censusKeys.slice(...this.props.left.slice),
-      rightVars = this.props.censusKeys.slice(...this.props.right.slice);
+    const leftVars = this.props.left.keys,
+      rightVars = this.props.right.keys;
     return this.props.labels.map((label, i) => ({
       label,
       left: get(this.props.acsGraph, [this.props.geoids[0], this.state.year, leftVars[i]], 0) * -1,
@@ -42,8 +60,8 @@ class HorizontalBarChart extends React.Component {
           <div style={ { lineHeight: "30px", fontSize: "20px", width: "20%", paddingLeft: "20px", whiteSpace: "nowrap" } }>{ this.props.name }</div>
           <div style={ { width: "60%", fontSize: "15px", display: "flex", justifyContent: "center", alignItems: "center" } }>
             { this.props.left.key }
-            <div style={ { width: "20px", height: "20px", margin: "0px 5px", background: colors({ id: "left" }) } }/>
-            <div style={ { width: "20px", height: "20px", margin: "0px 5px", background: colors({ id: "right" }) } }/>
+            <div style={ { width: "20px", height: "20px", margin: "0px 2.5px 0px 5px", background: colors({ id: "left" }) } }/>
+            <div style={ { width: "20px", height: "20px", margin: "0px 5px 0px 2.5px", background: colors({ id: "right" }) } }/>
             { this.props.right.key }
           </div>
           <div style={ { width: "20%", fontSize: "15px", paddingRight: "20px", display: "flex", alignItems: "center", justifyContent: "end" } }>
@@ -66,7 +84,14 @@ class HorizontalBarChart extends React.Component {
             enableLabel={ false }
             axisBottom={ {
               format: d => fmt(Math.abs(d))
-            } }/>
+            } }
+            tooltip={ ({ color, indexValue, value, id, ...rest }) => (console.log("REST:", rest),
+                <Tooltip geoid={ this.props.geoids[0] }
+                  value={ fmt(value) }
+                  color={ color }
+                  label={ `${ this.props[id].key }, ${ indexValue }` }/>
+              )
+            }/>
         </div>
       </div>
     )

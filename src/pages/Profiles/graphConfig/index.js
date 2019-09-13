@@ -1,7 +1,7 @@
 import socialWelfare from './socialWelfare'
+import education from './education'
 
 let overview = require('./overview')
-let education = require('./education')
 let housing = require('./housing')
 
 console.log("socialWelfare",socialWelfare)
@@ -28,7 +28,7 @@ const graph_config = {
     //---------------------------------------Social Welfare------------------------------------
     'Social Welfare': socialWelfare,
     // //---------------------------------------Education-----------------------------------------
-    // 'Education': education,
+    'Education': education,
     // //---------------------------------------Housing-----------------------------------------
     // 'Housing': housing,
     // 'Poverty': [],
