@@ -85,7 +85,8 @@ class GridLayout extends React.Component {
                     className=''
                     style={ {
                         backgroundColor: 'none',
-                        border: '1px dashed rgba(0, 0, 0, 0.25)',
+                        boxShadow: '-1px -1px 2px 0 rgba(0, 0, 0, 0.1), 2px 2px 4px 0 rgba(0, 0, 0, 0.2)',
+                        borderRadius: "4px",
                         zIndex: 100,
                         height: '100%'
                     }}>

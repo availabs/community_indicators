@@ -1,10 +1,7 @@
-import socialWelfare from './socialWelfare'
-import education from './education'
-import overview from './overview'
-
-let housing = require('./housing')
-
-console.log("socialWelfare",socialWelfare)
+import SocialWelfare from './socialWelfare'
+import Education from './education'
+import Overview from './overview'
+import Housing from './housing'
 
 const graph_config = {
 
@@ -24,13 +21,13 @@ const graph_config = {
      */
 
     //-------------------------------------------Overview--------------------------------------
-    Overview: overview,
+    Overview,
     //---------------------------------------Social Welfare------------------------------------
-    'Social Welfare': socialWelfare,
+    'Social Welfare': SocialWelfare,
     // //---------------------------------------Education-----------------------------------------
-    'Education': education,
+    Education,
     // //---------------------------------------Housing-----------------------------------------
-    // 'Housing': housing,
+    Housing,
     // 'Poverty': [],
     // 'Education': [],
     // 'Health': [],
