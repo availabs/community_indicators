@@ -44,34 +44,38 @@ class CensusBarChart extends React.Component {
       .domain(this.props.geoids)
       .range(DEFAULT_COLORS);
     const fmt = format(this.props.yFormat);
-console.log("AXIS BOTTOM:", this.props.axisBottom)
+
     return (
       <div style={ { width: "100%", height: "100%" } }>
-        <ResponsiveBar indexBy={ "id" }
-          keys={ this.props.geoids }
-          data={ this.props.barData }
-          margin={ { top: 20, right: 20, bottom: this.props.axisBottom ? 30 : 20, left: 100 } }
-          colors={ d => colors(d.id) }
-          labelSkipWidth={ 100 }
-          labelFormat={ fmt }
-          groupMode="grouped"
-          tooltip={ ({ color, indexValue, value, id, ...rest }) => (console.log("REST:", rest),
-              <Tooltip geoid={ id }
-                value={ fmt(value) }
-                color={ color }
-                label={ this.props.getKeyName(indexValue) }/>
-            )
-          }
-          axisLeft={ {
-            legend: this.props.name,
-            legendOffset: -85,
-            legendPosition: "middle",
-            format: fmt
-          } }
-          axisBottom={
-            !this.props.axisBottom ? null :
-            { format: this.props.getKeyName }
-          }/>
+        <div style={ { height: "30px", display: "flex" } }>
+          <div style={ { lineHeight: "30px", fontSize: "20px", paddingLeft: "20px", whiteSpace: "nowrap" } }>
+            { this.props.name }
+          </div>
+        </div>
+        <div style={ { height: "calc(100% - 30px)"} }>
+          <ResponsiveBar indexBy={ "id" }
+            keys={ this.props.geoids }
+            data={ this.props.barData }
+            margin={ { top: 20, right: 20, bottom: this.props.axisBottom ? 30 : 20, left: this.props.marginLeft } }
+            colors={ d => colors(d.id) }
+            labelSkipWidth={ 100 }
+            labelFormat={ fmt }
+            groupMode="grouped"
+            tooltip={ ({ color, indexValue, value, id, ...rest }) => (console.log("REST:", rest),
+                <Tooltip geoid={ id }
+                  value={ fmt(value) }
+                  color={ color }
+                  label={ this.props.getKeyName(indexValue) }/>
+              )
+            }
+            axisLeft={ {
+              format: fmt
+            } }
+            axisBottom={
+              !this.props.axisBottom ? null :
+              { format: this.props.getKeyName }
+            }/>
+        </div>
       </div>
     );
   }
@@ -97,7 +101,8 @@ const ConnectedCensusBarChart = connect(mapStateToProps, null)(reduxFalcor(Censu
 ConnectedCensusBarChart.defaultProps = {
   years: [2015],
   yFormat: ",d",
-  axisBottom: true
+  axisBottom: true,
+  marginLeft: 75
 }
 
 export default ConnectedCensusBarChart
