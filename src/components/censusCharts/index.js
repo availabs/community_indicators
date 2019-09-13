@@ -1,5 +1,6 @@
 import React from 'react'
 import CensusBarChart from "./bar/censusBarChart.js"
+import CensusBar from './censusBar'
 import CensusDomGraph from "./bar/censusDomGraph.js"
 import CensusGroupedBarChart from "./bar/censusGroupedBarChart.js"
 import CensusStackedBarChart from "./bar/censusStackedBarChart.js"
@@ -21,6 +22,7 @@ const NE = ((props) => (<div>{props.type} Doesn't Exist</div>))
 
 export default {
     CensusBarChart,
+    CensusBar,
     CensusDomGraph,
     CensusGroupedBarChart,
     CensusStackedBarChart,

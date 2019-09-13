@@ -595,7 +595,7 @@ class CensusStackedBarChart extends React.Component {
                     })
 
                     resolve([axisData,stackData])
-                    
+
                 }
 
                 if(this.props.TenureHouseholdIncome){
@@ -800,7 +800,7 @@ class CensusStackedBarChart extends React.Component {
 
     render () {
         const style={
-            height: 500
+            height: "100%"
         }
 
         if (this.props.PopulationByAge === true) {
@@ -1543,4 +1543,3 @@ const mapStateToProps = (state,ownProps) => {
     };
 };
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusStackedBarChart))
-

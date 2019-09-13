@@ -3,50 +3,45 @@ import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
 import { ResponsiveLine } from '@nivo/line'
+import Options from '../Options'
 import GeoName from 'components/censusCharts/geoname'
 import get from 'lodash.get'
-var numeral = require('numeral')
 
 
-
-class Options extends React.Component {
-  render () {
-    return (
-
-     <div className="os-tabs-controls" style={{position: 'absolute', top: 0, right: 0, zIndex: 999}}>
-       <ul className="nav nav-pills smaller d-none d-md-flex">
-          <li className="nav-item"><a className="nav-link"  href="#">View Data</a></li>
-          <li className="nav-item"><a className="nav-link"  href="#">Save Image</a></li>
-          <li className="nav-item"><a className="nav-link"  href="#">Share Embed</a></li>
-          
-       </ul>
-    </div>
-    );
-  }
-}
 
 class CensusLineChart extends React.Component {
     
     fetchFalcorDeps () {
         return falcorGraph.get(
-            ['acs',this.props.geoid,this.props.years,this.props.censusKeys],
-            ['acs','config']
-        )
+            ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]]
+        ).then(data =>{
+            console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
+        })
     }
 
     lineData () {
-        console.log('in line Data', this.props.colorRange)
-        return [{
-            "id": 'years',
-            "color": this.props.colorRange[0],
-            "title": this.props.title,
-            "data" : this.props.years.map(year => {
-                return {
-                    x: +year,
-                    y: get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.censusKeys[0]}]`, 0)
-                }
-            })    
-        }]    
+        console.log('line data', this.props.acs)
+        return this.props.censusKeys.map((censusKey,index) => {
+            return {
+                "id": censusKey,
+                "color": this.props.colorRange[index % this.props.colorRange.length],
+                "title": this.props.title,
+                "data" : this.props.years.map(year => {
+                    let value = get(this.props, `acs[${this.props.geoids[0]}][${year}][${censusKey}]`, 0)
+                    
+                    if(this.props.sumType === 'pct') {
+                        let divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1) 
+                        value /= divisor
+                        value *= 100
+                    }
+
+                    return {
+                        x: +year,
+                        y: value
+                    }
+                })
+            }    
+        })
     }
 
     render () {
@@ -56,12 +51,13 @@ class CensusLineChart extends React.Component {
         console.log('test 123', this.props.theme, graphData, this.props.colorRange)
         return(
             <div style={{height: '100%'}}>
+                <h6 style={{position: 'absolute', top: 0, left: 0, padding: '8px 12px'}}>{this.props.title}</h6>
                 <Options />
                 <ResponsiveLine
                     data={graphData}
                     margin={{
                             "top": 30,
-                            "right": 60,
+                            "right": 20,
                             "bottom": 60,
                             "left": 60
                     }}
@@ -75,7 +71,6 @@ class CensusLineChart extends React.Component {
                             "max": 'auto'
                     }}
                     curve={this.props.curve}
-                    
                     theme={this.props.theme}
                     lineWidth = {2.5}
                     dotSize={5}
@@ -99,7 +94,7 @@ class CensusLineChart extends React.Component {
                         <h6><GeoName geoid={this.props.geoid} /></h6>
                          Year : {id}
                         <br/>
-                        Median Income: ${Object.values(data)[0]['data'].y.toLocaleString()}
+                        Value: {Object.values(data)[0]['data'].y.toLocaleString()}
                     </div>
                     )}
 
@@ -110,9 +105,10 @@ class CensusLineChart extends React.Component {
 
     static defaultProps = {
         censusKeys: ['B19013_001E'], //'B19013',,
+        divisorKeys: [],
         geoids: ['36001'],
         PovertyPopulationBySex: false,
-        colorRange:['#047bf8'],
+        colorRange:['#047bf8','#6610f2','#6f42c1','#e83e8c','#e65252','#fd7e14','#fbe4a0','#24b314','#20c997','#5bc0de'],
         years: [2010,2011,2012,2013,2014,2015,2016],
         curve: 'cardinal',
         title: '',

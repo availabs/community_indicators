@@ -42,5 +42,47 @@ module.exports =[
             y:31
         }
     },
+    {
+      "id":"10",
+      "type":"CensusStatBox",
+      "censusKey":[
+         "B15003"
+      ],
+      "education":true,
+      "colorRange":[
+
+      ],
+      "layout":{
+         "w":2,
+         "h":13,
+         "x":0,
+         "y":44,
+         "i":"10"
+      },
+      "geoid":[
+         "36001"
+      ]
+   },
+   {
+      "id":"11",
+      "type":"CensusMultiStackedLineChart",
+      "censusKey":[
+         "B15003"
+      ],
+      "colorRange":[
+
+      ],
+      "education":true,
+      "layout":{
+         "w":10,
+         "h":13,
+         "x":2,
+         "y":44,
+         "i":"11"
+      },
+      "geoid":[
+         "36001"
+      ]
+   },
 
 ]

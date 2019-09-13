@@ -7,7 +7,7 @@ import ProfileHeader from './components/ProfileHeader'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
-const GRAPH_CONFIG = require('./graphConfig')
+import GRAPH_CONFIG from './graphConfig'
 
 
 class Report extends React.Component{
@@ -27,7 +27,7 @@ class Report extends React.Component{
     }
 
     renderCategory(name, configData) {
-        console.log('testing', configData)
+        // console.log('testing', configData)
         return (
             <Element name={name} >
                 <div className='content-box'>
@@ -55,10 +55,15 @@ class Report extends React.Component{
 
     render(){
 
-        let categories = Object.keys(GRAPH_CONFIG).map(category => {
+        let currentYear = this.props.years.latest
+        let compareYear = this.props.years.latest -1
+        let categories = Object.keys(GRAPH_CONFIG).map((category,i) => {
             GRAPH_CONFIG[category].forEach(config => {
                 config['geoid'] = [this.props.geoid]
                 config['geoids'] = [this.props.geoid]
+                //config['year'] = currentYear
+                config['compareYear'] = compareYear
+                //config.id = (i+1).toString()
             })
 
             return this.renderCategory(category, GRAPH_CONFIG[category])
@@ -105,6 +110,7 @@ const mapStateToProps = (state, ownProps) => {
     return {
         geoGraph: state.graph.geo,
         router: state.router,
+        years: state.user.years,
         geoid: ownProps.match.params.geoid
             ? ownProps.match.params.geoid
             : 36001

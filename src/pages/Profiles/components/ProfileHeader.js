@@ -93,6 +93,10 @@ class ProfileHeader extends Component {
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
                                         censusKey={'B17001_002E'}
+                                        valueSuffix={'%'}
+                                        maximumFractionDigits={1}
+                                        sumType='pct'
+                                        divisorKey={'B17001_001E'}
                                         geoids={this.props.geoids}
                                     />
                                     
