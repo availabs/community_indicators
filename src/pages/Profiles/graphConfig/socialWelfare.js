@@ -1,4 +1,8 @@
-import CENSUS_CONFIG from "./censusConfig"
+import {
+  configLoader,
+  maleColor,
+  femaleColor
+} from "./utils"
 
 const BASE_CONFIG = [
     {
@@ -10,8 +14,8 @@ const BASE_CONFIG = [
     {
         type: 'CensusStackedBarChart',
         broadCensusKey: 'B01001',
-        left: { key: "Male", slice: [2, 25], color: '#5588ee' },
-        right: { key: "Female", slice: [26, 49], color: '#e68fac' },
+        left: { key: "Male", slice: [2, 25], color: maleColor },
+        right: { key: "Female", slice: [26, 49], color: femaleColor },
         labels: [
           'Under Age 5',
           'Ages 5-9',
@@ -95,42 +99,42 @@ const BASE_CONFIG = [
         right: { key: "Above Poverty Level", slice: [26, 52] },
         marginLeft: 150,
         labels: [
-          'Male Under 5',
-          'Male 5 years',
-          'Male 6-11 years',
-          'Male 12-14 years',
-          'Male 15 years',
-          'Male 16-17 years',
-          'Male 18-24 years',
-          'Male 25-34 years',
-          'Male 35-44 years',
-          'Male 45-54 years',
-          'Male 55-64 years',
-          'Male 65-74 years',
-          'Male 75 years and over',
-          'Female Under 5',
-          'Female 5 years',
-          'Female 6-11 years',
-          'Female 12-14 years',
-          'Female 15 years',
-          'Female 16-17 years',
-          'Female 18-24 years',
-          'Female 25-34 years',
-          'Female 35-44 years',
-          'Female 45-54 years',
-          'Female 55-64 years',
-          'Female 65-74 years',
-          'Female 75 years and over',
+          'Male Under age 5',
+          'Male age 5',
+          'Male ages 6-11',
+          'Male ages 12-14',
+          'Male ages 15',
+          'Male ages 16-17',
+          'Male ages 18-24',
+          'Male ages 25-34',
+          'Male ages 35-44',
+          'Male ages 45-54',
+          'Male ages 55-64',
+          'Male ages 65-74',
+          'Male ages 75 and over',
+          'Female Under age 5',
+          'Female age 5',
+          'Female ages 6-11',
+          'Female ages 12-14',
+          'Female ages 15',
+          'Female ages 16-17',
+          'Female ages 18-24',
+          'Female ages 25-34',
+          'Female ages 35-44',
+          'Female ages 45-54',
+          'Female ages 55-64',
+          'Female ages 65-74',
+          'Female ages 75 and over',
         ]
     },
     {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B21001',
-        left: { key: "Male", slice: [5, 20], color: '#5588ee' },
-        right: { key: "Female", slice: [23, 38], color: '#e68fac' },
+        left: { key: "Male ages", slice: [5, 20], color: maleColor },
+        right: { key: "Female", slice: [23, 38], color: femaleColor },
         marginLeft: 200,
         labels: [
-          'Total 18-34 years',
+          'Total 18-34',
           '18-34 years, veteran',
           '18-34 years, non-veteran',
           'Total 35-54 years',
@@ -150,42 +154,4 @@ const BASE_CONFIG = [
 
 ]
 
-let x = 0, y = 0, h = 0;
-const DEFAULT_LAYOUT = {
-  w: 12,
-  h: 12,
-  static: true
-}
-
-export default (
-  () => BASE_CONFIG.map((config, i) => {
-    if (config["broadCensusKey"]) {
-      const bk = CENSUS_CONFIG[config["broadCensusKey"]];
-      config.censusKeys = bk.variables.map(v => v.value);
-      config.getKeyName = key => bk.variables.reduce((a, c) => c.value === key ? c.name : a, key)
-      config.name = bk.name;
-    }
-    else {
-      config.getKeyName = config.getKeyName || (key => key);
-    }
-    config.id = i.toString();
-
-    const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
-
-    if ((layout.w + x) > 12) {
-      x = 0;
-      y += h;
-      h = 0;
-    }
-    h = Math.max(h, layout.h)
-    config.layout = {
-      ...layout,
-      i: config.id,
-      x,
-      y
-    }
-    x += config.layout.w;
-
-    return config;
-  })
-)()
+export default configLoader(BASE_CONFIG);
