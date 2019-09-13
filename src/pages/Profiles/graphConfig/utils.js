@@ -31,6 +31,7 @@ export const configLoader = BASE_CONFIG => {
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
 
+    // x += layout.x;
     if ((layout.w + x) > 12) {
       x = 0;
       y += h;
