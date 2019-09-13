@@ -87,7 +87,6 @@ class TractLayer extends MapLayer{
                 fetch('/data/bg_area.json')
                 .then(response => response.json())
                 .then(bg_area => {
-                    console.log('data', data)
                     this.geom = bg_area
                     this.fetchData().then(data => this.receiveData(map, data))
 
@@ -107,7 +106,7 @@ class TractLayer extends MapLayer{
         this.subvars.forEach(function(subvar,i){
             censusSubvars.push(subvar.value)
         })
-        console.time('falcor get census')
+        // console.time('falcor get census')
 
         let requests = []
         let chunkSize = 500
@@ -124,7 +123,7 @@ class TractLayer extends MapLayer{
     }
     receiveData(map,data) {
         data = falcorGraph.getCache()
-        console.timeEnd('falcor get census')
+        // console.timeEnd('falcor get census')
         let censusSubVar = this.filters.censvar.value;
         let censVars = this.config['B01003'].variables;
         let censusSubVarKey = '';
@@ -171,8 +170,6 @@ class TractLayer extends MapLayer{
                 } 
                 return out;
             }, 0);
-        console.log('pop: ', popSum)
-        console.log('area: ', areaSum)
         let values = Object.values(keyDomain).sort((a,b) => a - b )
         
         let min = Math.min(...values)

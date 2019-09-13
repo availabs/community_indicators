@@ -9,7 +9,7 @@ module.exports =[
             layout:{
                 static:true,
                 h:14,
-                w:10,
+                w:12,
                 x:0,
                 y:0
             }
@@ -23,9 +23,23 @@ module.exports =[
         layout:{
             static: true,
             h:17,
-            w:11,
+            w:12,
             x:0,
-            y:0
+            y:14
+        }
+    },
+    {
+        id:'27',
+        type:'CensusStackedBarChart',
+        censusKey:['B14003'],
+        schoolEnrollmentAge:true,
+        colorRange:[],
+        layout:{
+            static: true,
+            h:17,
+            w:9,
+            x:0,
+            y:31
         }
     },
 

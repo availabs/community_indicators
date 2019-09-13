@@ -5,7 +5,10 @@ import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
 import subMenus from './submenu.js'
 import ProfileHeader from './components/ProfileHeader'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
+import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+
 const GRAPH_CONFIG = require('./graphConfig')
+
 
 class Report extends React.Component{
     constructor(props) {
@@ -16,6 +19,7 @@ class Report extends React.Component{
         this.renderCategory = this.renderCategory.bind(this)
         this.layoutChange = this.layoutChange.bind(this)
     }
+
     layoutChange(a,b) {
         console.log('----layout change -------------')
         console.log(a,b)
@@ -23,45 +27,63 @@ class Report extends React.Component{
     }
 
     renderCategory(name, configData) {
+        console.log('testing', configData)
         return (
-            <div className='content-box'>
-                <div className='element-wrapper'>
-                    <h4 className='element-header'> {name.toUpperCase()} </h4>
-                    <div classname='element-content'>
-                        <GridLayout
-                            sideWidth={800}
-                            minifiedWidth={1}
-                            isOpen={1}
-                            title={''}
-                            viewing={false}
-                            graphs={configData}
-                            onOpenOrClose={function noop() {}}
-                            onLayoutChange={ this.layoutChange }
-                            verticalCompact={false}
-                        />
+            <Element name={name} >
+                <div className='content-box'>
+                    <div className='element-wrapper'>
+                        <h4 className='element-header'> {name.toUpperCase()} </h4>
+                        <div classname='element-content'>
+                            <GridLayout
+                                sideWidth={800}
+                                minifiedWidth={1}
+                                isOpen={1}
+                                title={''}
+                                viewing={false}
+                                graphs={configData}
+                                onOpenOrClose={function noop() {}}
+                                onLayoutChange={ this.layoutChange }
+                                verticalCompact={false}
+                            />
+                        </div>
                     </div>
                 </div>
-            </div>
+            </Element>
 
         )
     }
 
     render(){
-       
 
         let categories = Object.keys(GRAPH_CONFIG).map(category => {
             GRAPH_CONFIG[category].forEach(config => {
                 config['geoid'] = [this.props.geoid]
+                config['geoids'] = [this.props.geoid]
             })
 
             return this.renderCategory(category, GRAPH_CONFIG[category])
-
         })
 
         return (
             <div>
                 <ProfileHeader geoids={[this.props.geoid]} />
-                <div style={{ width: '100%', backgroundColor: '#293145', marginTop: '90vh', position: 'relative', zIndex: 4}}>
+                <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
+                    <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
+                        <ul className="nav nav-tabs upper" style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
+                            {
+                                Object.keys(GRAPH_CONFIG).map(category => {
+                                    return (
+                                        <li className="nav-item" style={{flex: '1 1'}}>
+                                            <Link style={{textAlign: 'center'}} activeClass="active" spy={true} offset={-90} className="nav-link" to={category}> 
+                                                {category.toUpperCase()}
+                                            </Link>
+                                        </li>
+                            
+                                    )
+                                })
+                            }
+                        </ul>
+                    </div>
                     <div className='container'>
                         {categories}
                     </div>
@@ -96,7 +118,11 @@ export default
     path: '/profile/:geoid',
     name: 'Report',
     mainNav: false,
-    menuSettings: {image: 'none', 'scheme': 'color-scheme-dark'},
+    menuSettings: {
+        image: 'none', 
+        'scheme': 'color-scheme-dark', 
+        style: 'color-style-default'
+    },
     subMenus: subMenus,
     auth: false,
     component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Report))

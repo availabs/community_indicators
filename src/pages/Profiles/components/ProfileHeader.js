@@ -97,29 +97,30 @@ class ProfileHeader extends Component {
                                     />
                                     
                                 </StatContainer>
+                                
                             </div>
                         </div>
                     </HeaderContainer>
                     <div style={{width: '100vw', height: '100vh', backgroundColor: '#333', position: 'fixed', top: 0, left: 0}}>
-                    <AvlMap
-                        sidebar={false}
-                        scrollZoom={false}
-                        zoom={10}
-                        style={'mapbox://styles/am3081/cjfxdhwbu06jo2rqn1w0l9x9t'}
-                        fitBounds={[
-                            [
-                                -75.84467427717281,
-                                38.538851525354666
-                            ],
-                            [
-                                -70.7626953125,
-                            45.042478050891546
-                            ]   
-                        ]}
-                        layers={[HeaderLayer]}
-                        mapControl={false}
-                    />
-                </div>
+                        <AvlMap
+                            sidebar={false}
+                            scrollZoom={false}
+                            zoom={10}
+                            style={'mapbox://styles/am3081/cjfxdhwbu06jo2rqn1w0l9x9t'}
+                            fitBounds={[
+                                [
+                                    -75.84467427717281,
+                                    38.538851525354666
+                                ],
+                                [
+                                    -70.7626953125,
+                                45.042478050891546
+                                ]   
+                            ]}
+                            layers={[HeaderLayer]}
+                            mapControl={false}
+                        />
+                    </div>
                 </div> 
 
         )

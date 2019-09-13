@@ -7,14 +7,16 @@ import TrackVisibility from 'react-on-screen';
 
 var _ = require('lodash');
 const ReactGridLayout = WidthProvider(ResponsiveGridLayout);
-const originalLayouts = getFromLS("layouts") || {};
+const originalLayouts = {} //getFromLS("layouts") || {};
+
+console.log('originalLayouts', originalLayouts)
 
 const DEFAULT_LAYOUT = {
     h: 15,
     w: 10,
     maxH: 20,
     maxW: 12,
-    minH: 5,
+    minH: 2,
     minW: 2,
     static: false,
     x: 0,
@@ -79,38 +81,37 @@ class GridLayout extends React.Component {
             }
             return (
                 <div key={ graph.id }
-                data-grid={layout}
-                className='element-box el-tablo'
-                style={ {
-                    backgroundColor: 'none',
-                    border: '1px dashed rgba(0, 0, 0, 0.25)',
-                    zIndex: 100,
-                    height: '100%'
-                } }>
-                <GraphFactory
-                    viewing={ viewing }
-                    graph={ graph }
-                    index={ i }
-                    { ...rest }
-                    />
+                    data-grid={layout}
+                    className=''
+                    style={ {
+                        backgroundColor: 'none',
+                        border: '1px dashed rgba(0, 0, 0, 0.25)',
+                        zIndex: 100,
+                        height: '100%'
+                    }}>
+                        <GraphFactory
+                            viewing={ viewing }
+                            graph={ graph }
+                            index={ i }
+                            { ...rest }
+                            />
                 </div>
-        )
+            )
         })
-
     }
 
 
     render() {
         return (
             <div className='container'>
-             <ReactGridLayout
+                <ReactGridLayout
                     rowHeight={ 30 }
-                    cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
+                    cols={{ lg: 12, md: 12, sm: 6, xs: 6, xxs: 6 }}
                     layouts = {this.state.layouts}
                     onLayoutChange={(layout, layouts) =>
-                    this.onLayoutChange(layout, layouts)
+                        this.onLayoutChange(layout, layouts)
                     }
-                    >
+                >
                         {this.loadComps()}
             </ReactGridLayout>
             </div>
@@ -123,7 +124,7 @@ class GridLayout extends React.Component {
         items: 20,
         rowHeight: 30,
         isVisible:true,
-        cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }
+        cols: { lg: 12, md: 12, sm: 6, xs: 6, xxs: 6 }
     };
 }
 export default GridLayout
