@@ -1,7 +1,10 @@
+import socialWelfare from './socialWelfare'
+
 let overview = require('./overview')
 let education = require('./education')
 let housing = require('./housing')
-let socialWelfare = require('./socialWelfare')
+
+console.log("socialWelfare",socialWelfare)
 
 const graph_config = {
 
@@ -21,18 +24,18 @@ const graph_config = {
      */
 
     //-------------------------------------------Overview--------------------------------------
-    Overview: overview,
+    // Overview: overview,
     //---------------------------------------Social Welfare------------------------------------
     'Social Welfare': socialWelfare,
     // //---------------------------------------Education-----------------------------------------
-    'Education': education,
+    // 'Education': education,
     // //---------------------------------------Housing-----------------------------------------
-    'Housing': housing,
-    'Poverty': [],
-    'Education': [],
-    'Health': [],
-    'Transportation': []
+    // 'Housing': housing,
+    // 'Poverty': [],
+    // 'Education': [],
+    // 'Health': [],
+    // 'Transportation': []
 
 }
-
+console.log("GRAPH CONFIG:", graph_config)
 export default graph_config
