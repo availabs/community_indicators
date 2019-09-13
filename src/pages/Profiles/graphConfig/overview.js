@@ -1,5 +1,5 @@
 
-module.exports = [
+export default [
    {
       "id":"1",
       "type":"CensusStatBox",
@@ -65,7 +65,7 @@ module.exports = [
       title:'Poverty Rate',
       sumType: 'pct',
       censusKey:"B17001_002E",
-      divisorKey: "B17001_001E",     
+      divisorKey: "B17001_001E",
       valueSuffix: '%',
       maximumFractionDigits: 1,
       "layout":{
