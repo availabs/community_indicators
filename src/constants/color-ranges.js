@@ -21,7 +21,7 @@ for (const type in colorbrewer.schemeGroups) {
 }
 
 export default COLOR_RANGES
-
+console.log("COLOR_RANGES", COLOR_RANGES)
 export const getColorRange = (size, name) =>
 	get(COLOR_RANGES, [size], [])
 		.reduce((a, c) => c.name === name ? c.colors : a, []).slice()
