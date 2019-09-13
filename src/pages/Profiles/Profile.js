@@ -39,7 +39,7 @@ const GetFooter = ({ type, value }) =>
   type === "header" ? <Header>{ value }</Header> :
   type === "subheader" ? <SubHeader>{ value }</SubHeader> :
   type === "body" ? <Body>{ value }</Body> :
-  type === "link" ? <Href className="btn btn-sm btn-success" href={ value }>Link</Href> :
+  type === "link" ? <Href target="_blank" className="btn btn-sm btn-success" href={ value }>Link</Href> :
   null
 
 const ProfileFooter = ({ data }) =>

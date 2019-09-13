@@ -37,13 +37,13 @@ class Home extends Component {
                 <div style={flexStyle}>
                     <div style={{height: 400}}>
                         <LandingHeader>
-                            CAPITAL DISTRICT CITIES
+                            CAPITAL REGION INDICATORS
                         </LandingHeader>
                         <div className='container' style={{maxWidth: '869px', color: '#efefef', background: 'rgba(0,0,0,0.3)', borderRadius: 4}}>
                             <div className='row'>
                                  <div className='col-md-6' style={{ padding: 15}}> 
                                     <p style={{fontSize: '1.1em'}}>
-                                    CDCI aggregates and monitors local information that tells the story of  New York's Capital District. 
+                                    The Capital Region Indicators website aggregates and monitors local information that tells the story of New York State's Greater Capital Region. 
                                     By analyzing and then planning action from a common set of data, we can work together to measure our 
                                     progress and transform our region for the better. 
                                     </p>

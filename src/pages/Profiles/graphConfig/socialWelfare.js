@@ -156,16 +156,16 @@ const BASE_CONFIG = [
       type: "ProfileFooter",
       data: [
         [
-          { type: "header", value: "TEST HEADER" },
-          { type: "subheader", value: "SUBHEADER" },
-          { type: "body", value: "SOME TEXT HERE!!!" },
-          { type: "link", value: "A LINK" }
+          { type: "header", value: "ALICE from United Way" },
+          { type: "subheader", value: "Reports, Visualizations, and Data Downloads" },
+          { type: "body", value: "The ALICE (Asset Limited, Income Constrained, Employed) Project was initiated by United Way of Northern New Jersey several years ago to bring focus to the families and individuals who work but whose salaries do not provide sufficient resources to meet basic needs. The ALICE Project developed a methodology using publicly available census, employment, wage, cost of living and other data to help to understand the extent of ALICE in our communities, those who are above the federal poverty level, but below a sustainable wage." },
+          { type: "link", value: "https://www.unitedforalice.org/new-york" }
         ],
         [
-          { type: "header", value: "TEST HEADER" },
-          { type: "subheader", value: "SUBHEADER" },
-          { type: "body", value: "SOME TEXT HERE!!!" },
-          { type: "link", value: "A LINK" }
+          { type: "header", value: "Division of Criminal Justice Services" },
+          { type: "subheader", value: "Data Downloads and Report Publications" },
+          { type: "body", value: "Criminal justice data by county from New York State Division of Criminal Justice Services including Violent Crimes, Domestic Violence Victims, Arrests, Dispositions, Youth Justice Data, and more" },
+          { type: "link", value: "https://www.criminaljustice.ny.gov/crimnet/ojsa/stats.htm" }
         ]
       ]
     }
