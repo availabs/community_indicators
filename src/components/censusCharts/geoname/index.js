@@ -13,7 +13,7 @@ class GeoName extends React.Component{
     render(){
         // console.log('teest 123', this.props.geo, this.props.geoids[0], get(this.props `geo[${this.props.geoids[0]}].name`, ''), this.props.geo[this.props.geoids[0]]name)
         return(
-            <span>{this.props.geoids.map(geoid => get(this.props, `geo[${geoid}].name`, '').toUpperCase()).join(' ')}</span>
+            <React.Fragment>{this.props.geoids.map(geoid => get(this.props, `geo[${geoid}].name`, '').toUpperCase()).join(' ')}</React.Fragment>
         )
 
     }

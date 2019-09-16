@@ -8,8 +8,8 @@ export default {
     'Social Welfare': SocialWelfare,
     Education,
     Housing,
-    // 'Poverty': [],
-    // 'Education': [],
-    // 'Health': [],
-    // 'Transportation': []
+    'Poverty': [],
+    'Education': [],
+    'Health': [],
+    'Transportation': []
 }

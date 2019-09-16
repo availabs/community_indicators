@@ -45,8 +45,11 @@ const BASE_CONFIG = [
     {
         type: 'CensusBarChart',
         broadCensusKey: 'B16001',
-        axisBottom: false,
-        marginLeft: 50
+        orientation: 'horizontal',
+        marginLeft: 260,
+        sorted: true,
+        //axisBottom: false,
+        layout: { h:24 }
     },
     {
         type: 'CensusLineChart',

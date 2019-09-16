@@ -51,8 +51,7 @@ class Menu extends Component {
     return (
   		
 	  		<div className={displayOptions} style={dynamicStyle}>
-	            <Logo />
-	            {userMenu}
+	            <Logo />	            
 	            <h1 className="menu-page-header">{this.props.title}</h1>
 	            <MainMenu {...this.props} />
 	     </div>

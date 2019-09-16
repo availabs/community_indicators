@@ -44,12 +44,12 @@ class CensusStatBox extends React.Component{
             .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
             .reduce((a,b) => a + b )
 
-            console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
+            // console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
             value /= divisorValue
             value *= 100
         }
 
-        console.log('got the value', value)
+        // console.log('got the value', value)
         if(!value) {
             return {value: '', change: ''}  
         } 

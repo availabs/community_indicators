@@ -35,6 +35,13 @@ class App extends Component {
   }
 
   render() {
+    let activeGeoid = null
+    let location = this.props.router.location.pathname.split('/')
+    if (location[1] === 'profile') {
+      activeGeoid = location[2]
+    }
+    console.log('app render props',this.props, activeGeoid, location)
+    
     return (
       <ThemeProvider theme={theme}>
         <div className="all-wrapper solid-bg-all">
@@ -43,6 +50,7 @@ class App extends Component {
           	Routes.map((route,i) => {
               return (
     	    			<Layout
+                  activeGeoid = {activeGeoid}
                   key = {i}
                   { ...route }
                   isAuthenticating = { this.state.isAuthenticating }
