@@ -12,7 +12,6 @@ const CONFIG = {
   Education,
   Housing,
   Poverty: [],
-  Education: [],
   Health: [],
   Transportation: []
 }
