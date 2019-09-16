@@ -47,15 +47,15 @@ const GetFooter = ({ type, value }) =>
 const ProfileFooter = ({ data }) =>
   <div>
     {
-      data.map(d =>
-        <Footer>
+      data.map((d, i) =>
+        <Footer key={ i }>
           { d.map((d, i) => <GetFooter key={ i } { ...d }/>) }
         </Footer>
       )
     }
   </div>
 
-class Report extends React.Component{
+class Profile extends React.Component{
     constructor(props) {
         super(props);
         this.state={
@@ -75,7 +75,7 @@ class Report extends React.Component{
         // console.log('testing', configData)
         const profileFooter = configData.find(({ type }) => type === "ProfileFooter");
         return (
-            <Element name={name} >
+            <Element name={name} key={ name }>
                 <div className='content-box'>
                     <div className='element-wrapper'>
                         <h4 className='element-header'> {name.toUpperCase()} </h4>
@@ -112,7 +112,7 @@ class Report extends React.Component{
     }
 
     render(){
-        console.log('render profile', this.props)
+        // console.log('render profile', this.props)
         let currentYear = this.props.years.latest
         let compareYear = this.props.years.latest -1
         let categories = Object.keys(GRAPH_CONFIG).map((category,i) => {
@@ -136,7 +136,7 @@ class Report extends React.Component{
                             {
                                 Object.keys(GRAPH_CONFIG).map(category => {
                                     return (
-                                        <li className="nav-item" style={{flex: '1 1'}}>
+                                        <li className="nav-item" style={{flex: '1 1'}} key={ category }>
                                             <Link style={{textAlign: 'center'}} activeClass="active" spy={true} offset={-90} className="nav-link" to={category}>
                                                 {category.toUpperCase()}
                                             </Link>
@@ -180,7 +180,7 @@ const mapDispatchToProps = {};
 export default
 {
     path: '/profile/:geoid',
-    name: 'Report',
+    name: 'Profile',
     mainNav: false,
     menuSettings: {
         image: 'none',
@@ -189,7 +189,7 @@ export default
     },
     subMenus: subMenus,
     auth: false,
-    component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Report))
+    component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Profile))
 }
 
 /*

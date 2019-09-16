@@ -18,6 +18,7 @@ export const configLoader = BASE_CONFIG => {
       config.censusKeys = bk.variables.map(v => v.value);
       config.getKeyName = key => bk.variables.reduce((a, c) => c.value === key ? c.name : a, key)
       config.name = bk.name;
+      config.title = bk.name;
     }
     else {
       config.getKeyName = config.getKeyName || (key => key);
@@ -41,7 +42,6 @@ export const configLoader = BASE_CONFIG => {
       x = layout.x;
     }
     h = Math.max(h, layout.h)
-console.log("X", x)
     config.layout = {
       ...layout,
       i: config.id,

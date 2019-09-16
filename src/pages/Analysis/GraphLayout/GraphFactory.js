@@ -6,7 +6,7 @@ export default ({ graph, ...rest }) => {
     const graphType = graph.type.split(' ').join(''),
         Graph = CensusCharts[graphType] || CensusCharts['NA']
     return (
-        <TrackVisibility offset={100} style={{height: '100%'}}>
+        <TrackVisibility partialVisibility style={ { height: '100%' } }>
         	<GraphHider Graph={Graph} { ...rest } graph ={graph }/>
         </TrackVisibility>
 	)

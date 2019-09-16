@@ -22,21 +22,34 @@ const BASE_CONFIG = [
   { "type": "CensusBarChart",
     "broadCensusKey": "B25087",
     orientation: 'horizontal',
-    marginLeft: 160,
+    marginLeft: 180,
     //axisBottom: false,
     "layout": {
-      "w": 6,
-      
+      "w": 12,
+      "h": 18
     }
   },
-  { "type":"CensusBarChart",
-    "broadCensusKey": "B25087",
+  { "type":"CensusStackedBarChart",
+    "broadCensusKey": "B25091",
     orientation: 'horizontal',
-            marginLeft: 160,
+    marginLeft: 150,
     // axisBottom: false,
     "layout": {
-      "w":6,
+      "w":12,
     },
+    left: { key: "With Mortgage", slice: [0, 9] },
+    right: { key: "Without Mortgage", slice: [10, 19] },
+    labels: [
+      'Less than 10.0 percent',
+      '10.0 to 14.9 percent',
+      '15.0 to 19.9 percent',
+      '20.0 to 24.9 percent',
+      '25.0 to 29.9 percent',
+      '30.0 to 34.9 percent',
+      '35.0 to 39.9 percent',
+      '40.0 to 49.9 percent',
+      '50.0 percent or more',
+    ]
   },
   // { "type":"CensusStackedBarChart",
   //   "censusKey":["B25091"],
