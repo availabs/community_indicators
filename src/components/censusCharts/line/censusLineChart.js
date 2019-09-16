@@ -14,13 +14,14 @@ class CensusLineChart extends React.Component {
     fetchFalcorDeps () {
         return falcorGraph.get(
             ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]]
-        ).then(data =>{
-            console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
-        })
+        )
+        // .then(data =>{
+        //     console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
+        // })
     }
 
     lineData () {
-        console.log('line data', this.props.acs)
+        //console.log('line data', this.props.acs)
         return this.props.censusKeys.map((censusKey,index) => {
             return {
                 "id": censusKey,
@@ -48,7 +49,7 @@ class CensusLineChart extends React.Component {
        
         let title = this.props.title
         let graphData = this.lineData()
-        console.log('test 123', this.props.theme, graphData, this.props.colorRange)
+        // console.log('test 123', this.props.theme, graphData, this.props.colorRange)
         return(
             <div style={{height: '100%'}}>
                 <h6 style={{position: 'absolute', top: 0, left: 0, padding: '8px 12px'}}>{this.props.title}</h6>

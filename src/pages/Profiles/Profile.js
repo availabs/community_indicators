@@ -93,7 +93,7 @@ class Report extends React.Component{
                     </div>
                     {
                       !profileFooter ? null :
-                      <>
+                      <React.Fragment>
                         <div className='element-wrapper'>
                           <div classname='element-content'>
                             <div className="container" style={ { marginTop: "-2rem" } }>
@@ -101,7 +101,7 @@ class Report extends React.Component{
                             </div>
                           </div>
                         </div>
-                      </>
+                      </React.Fragment>
                     }
                 </div>
             </Element>
@@ -110,7 +110,7 @@ class Report extends React.Component{
     }
 
     render(){
-
+        console.log('render profile', this.props)
         let currentYear = this.props.years.latest
         let compareYear = this.props.years.latest -1
         let categories = Object.keys(GRAPH_CONFIG).map((category,i) => {

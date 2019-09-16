@@ -21,18 +21,21 @@ const BASE_CONFIG = [
   // },
   { "type": "CensusBarChart",
     "broadCensusKey": "B25087",
-    axisBottom: false,
+    orientation: 'horizontal',
+    marginLeft: 160,
+    //axisBottom: false,
     "layout": {
-      "w": 10,
-      x: 2
+      "w": 6,
+      
     }
   },
   { "type":"CensusBarChart",
     "broadCensusKey": "B25087",
-    axisBottom: false,
+    orientation: 'horizontal',
+            marginLeft: 160,
+    // axisBottom: false,
     "layout": {
-      "w":10,
-      x: 2
+      "w":6,
     },
   },
   // { "type":"CensusStackedBarChart",

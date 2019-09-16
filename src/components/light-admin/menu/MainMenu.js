@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
+import GeoName from 'components/censusCharts/geoname'
 
 class MainMenu extends Component {
 
@@ -27,58 +28,56 @@ class MainMenu extends Component {
           : ''
         if (!menu.subMenus) {
             return (
-                < li
-            key = {'menuItem_' +index}
-            id = {'menuItem_' +index}
-            className = {`top-menu-tab ${isActive}`
-            }
-            name = {menu.path}
-            onMouseOver = {this.menuMouseOver}
-            onMouseOut = {this.menuMouseOut}
-                >
-                < Link
-            to = {menu.path} >
-                < div
-            className = "icon-w" >
-                < i
-            className = {
-            (menu.class ? menu.class : 'os-icon') + ' ' + menu.icon
-        }
-            />
-            < /div>
-            < span > {menu.name} < /span>
-            < /Link>
-            < /li>
+              <li
+                key = {'menuItem_' +index}
+                id = {'menuItem_' +index}
+                className = {`top-menu-tab ${isActive}`}
+                name = {menu.path}
+                onMouseOver = {this.menuMouseOver}
+                onMouseOut = {this.menuMouseOut}
+              >
+                <Link to = {menu.path} >
+                    <div className = "icon-w" >
+                      <i className = { (menu.class ? menu.class : 'os-icon') + ' ' + menu.icon}/>
+                    </div>
+                    <span > {menu.name} {menu.name === 'Profiles' && this.props.activeGeoid ? <GeoName geoid={this.props.activeGeoid} /> : ''}</span>
+                </Link>
+              </li>
         )
             ;
         }
       if(menu.subMenus){
           return (
               <li
-          key={'menuItem_' + index}
-          className={`top-menu-tab has-sub-menu ${isActive}`}
-          id={'menuItem_' + index}
-          onMouseOver={this.menuMouseOver}
-          onMouseOut={this.menuMouseOut}
+                key={'menuItem_' + index}
+                className={`top-menu-tab has-sub-menu ${isActive}`}
+                id={'menuItem_' + index}
+                onMouseOver={this.menuMouseOver}
+                onMouseOut={this.menuMouseOut}
               >
-              <Link to={menu.path}>
-              <div className="icon-w">
-              <div className="os-icon os-icon-layers"></div>
-              </div>
-              <span>{menu.name}</span>
-              </Link>
-              <div className="sub-menu-w">
-              <div className="sub-menu-header">{menu.name}</div>
-              <div className="sub-menu-icon">
-              <i className="os-icon os-icon-window-content"/>
-              </div>
-              <div className="sub-menu-i"
+                <Link to={menu.path}>
+                  <div className="icon-w">
+                    <div className="os-icon os-icon-layers"></div>
+                  </div>
+                  <span>
+                    {menu.name} 
+                    {menu.name === 'Profiles' && this.props.activeGeoid ? (': ') : ''} 
+                    {menu.name === 'Profiles' && this.props.activeGeoid ? (<GeoName style={{display:'inline'}} geoids={[this.props.activeGeoid]} />) : ''}
+                  </span>
+                </Link>
+                <div className="sub-menu-w">
+                  <div className="sub-menu-header">{menu.name}</div>
+                    <div className="sub-menu-icon">
+                      <i className="os-icon os-icon-window-content"/>
+                    </div>
+                  <div className="sub-menu-i"
                     onMouseOver={this.menuMouseOver}
                     onMouseOut={this.menuMouseOut}>
               {menu.subMenus.map((subMenu, sindex) => {
                       return (
                           <ul
                       className="sub-menu"
+                      style={{alignItems:'flex-start'}}
                       key={'subMenu_' + sindex}
                       id={'subMenu_' + index}
                           >

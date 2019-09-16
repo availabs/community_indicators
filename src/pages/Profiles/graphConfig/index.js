@@ -28,10 +28,10 @@ const graph_config = {
     Education,
     // //---------------------------------------Housing-----------------------------------------
     Housing,
-    // 'Poverty': [],
-    // 'Education': [],
-    // 'Health': [],
-    // 'Transportation': []
+    'Poverty': [],
+    'Education': [],
+    'Health': [],
+    'Transportation': []
 
 }
 console.log("GRAPH CONFIG:", graph_config)

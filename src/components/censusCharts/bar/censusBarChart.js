@@ -37,14 +37,17 @@ class CensusBarChart extends React.Component {
   fetchFalcorDeps() {
     return this.props.falcor.get(
         ['acs', this.props.geoids, this.props.years, this.props.censusKeys]
-    )
+    ).then(data => {
+      console.log('testing censusBarchart data', data)
+      return data
+    })
   }
   render() {
     const colors = scaleOrdinal()
       .domain(this.props.geoids)
       .range(DEFAULT_COLORS);
     const fmt = format(this.props.yFormat);
-    console.log('data', this.props.barData)
+    // console.log('data', this.props.barData)
     if(this.props.sorted) {
       this.props.barData.sort((a,b) => a[this.props.geoids[0]] - b[this.props.geoids[0]])
     }

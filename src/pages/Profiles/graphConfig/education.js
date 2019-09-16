@@ -7,8 +7,35 @@ import {
 const BASE_CONFIG = [
         {
             type: 'CensusBarChart',
-            broadCensusKey: 'B15003',
-            axisBottom: false
+            //broadCensusKey: 'B15003',
+            censusKeys: [
+              'B15003_016E',
+              'B15003_017E',
+              'B15003_018E',
+              'B15003_019E',
+              'B15003_020E',
+              'B15003_021E',
+              'B15003_022E',
+              'B15003_023E',
+              'B15003_024E',
+              'B15003_025E',
+            ],
+            orientation: 'horizontal',
+            marginLeft: 160,
+            labels: [
+              '12th grade or no diploma',
+              'Regular High School diploma',
+              'GED or alternative credential',
+              'Some college less than 1 year',
+              'Some college,1 or more years,no degree',
+              'Associate`s degree',
+              'Bachelor`s degree',
+              'Master`s degree',
+              'Professional School degree',
+              'Doctorate degree'
+            ],
+            title: 'Educational Attainment',
+            // axisBottom: false
         },
         {
           type: 'CensusStackedBarChart',
