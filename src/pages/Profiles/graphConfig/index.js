@@ -7,6 +7,7 @@ let ID = 0;
 const getId = () => `id-${ ++ID }`;
 
 const CONFIG = {
+<<<<<<< HEAD
    Overview,
     'Economy': [],
     'Transportation': [],
@@ -14,6 +15,15 @@ const CONFIG = {
     Education,
     'Health': [],
     'Social Welfare': SocialWelfare
+=======
+  Overview,
+  'Social Welfare': SocialWelfare,
+  Education,
+  Housing,
+  Poverty: [],
+  Health: [],
+  Transportation: []
+>>>>>>> ae1c620427d660ef35ce1c10f652575418bc0f0c
 }
 
 export default (
