@@ -46,54 +46,54 @@ const BASE_CONFIG = [
         type: 'CensusBarChart',
         broadCensusKey: 'B16001',
         orientation: 'horizontal',
-        marginLeft: 260,
+        marginLeft: 350,
         sorted: true,
-        //axisBottom: false,
-        layout: { h:24 }
+        layout: { h: 18 }
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013A'
+        broadCensusKey: 'B19013A',
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013B',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013C',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013D',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013E',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013F',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013G',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013H',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type: 'CensusLineChart',
         broadCensusKey: 'B19013I',
-        layout: { w: 6 }
+        layout: { h: 8 }
     },
     {
         type:'CensusStackedBarChart',
@@ -133,7 +133,7 @@ const BASE_CONFIG = [
     {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B21001',
-        left: { key: "Male ages", slice: [5, 20], color: maleColor },
+        left: { key: "Male", slice: [5, 20], color: maleColor },
         right: { key: "Female", slice: [23, 38], color: femaleColor },
         marginLeft: 200,
         labels: [

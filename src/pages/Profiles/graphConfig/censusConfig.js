@@ -317,58 +317,58 @@ module.exports = {
         ]
     },
     B19013A:{
-        name: 'Median household income ',
+        name: 'Median household income, White',
         variables :[
-            {name: ' White Alone ', value:'B19013A_001E'}
+            {name: ' White ', value:'B19013A_001E'}
         ]
     },
     B19013B:{
-        name: 'Median household income ',
+        name: 'Median household income, Black or African American',
         variables :[
-            {name: ' Black or African American alone ', value:'B19013B_001E'}
+            {name: 'Black or African American', value:'B19013B_001E'}
         ]
 
     },
     B19013C: {
-        name: 'Median household income ',
+        name: 'Median household income, American Indian or Alaska Native',
         variables :[
-            {name: ' American Indian or Alaska Native alone ', value:'B19013C_001E'}
+            {name: 'American Indian or Alaska Native', value:'B19013C_001E'}
         ]
     },
     B19013D: {
-        name: 'Median household income ',
+        name: 'Median household income, Asian',
         variables : [
-            {name: ' Asian alone ', value:'B19013D_001E'}
+            {name: 'Asian', value:'B19013D_001E'}
         ]
     },
     B19013E: {
-        name: 'Median household income ',
+        name: 'Median household income, Native Hawaiian and Other Pacific Islander',
         variables :[
-            {name:' Native Hawaiian and Other Pacific Islander Alone ',value:'B19013E_001E'}
+            {name:'Native Hawaiian and Other Pacific Islander',value:'B19013E_001E'}
         ]
     },
     B19013F: {
-        name: 'Median household income ',
+        name: 'Median household income, Some Other Race',
         variables :[
-            {name:' Some Other Race Alone ',value:'B19013F_001E'}
+            {name:'Some Other Race',value:'B19013F_001E'}
         ]
     },
     B19013G: {
-        name: 'Median household income ',
+        name: 'Median household income, Two or more races',
         variables : [
-            {name:' Two or more races ',value:'B19013G_001E'}
+            {name:'Two or more races',value:'B19013G_001E'}
         ]
     },
     B19013H: {
-        name: 'Median household income ',
+        name: 'Median household income, White, Not Hispanic or Latino',
         variables :[
-            {name:' White Alone, Not Hispanic or Latino ',value:'B19013H_001E'}
+            {name:'White, Not Hispanic or Latino',value:'B19013H_001E'}
         ]
     },
     B19013I: {
-        name: 'Median household income ',
+        name: 'Median household income, Hispanic or Latino',
         variables :[
-            {name:' Hispanic or Latino ',value:'B19013I_001E'}
+            {name:'Hispanic or Latino',value:'B19013I_001E'}
         ]
     },
     B21001 : {
@@ -462,7 +462,7 @@ module.exports = {
     B25087:{
         name :'Owner-Occupied Housing Units',
         variables:[
-            {name:'Total',value:'B25087_001E'},
+            // {name:'Total',value:'B25087_001E'},
             {name:'Housing units with a mortgage',value:'B25087_002E'},
             {name:'Less than $200',value:'B25087_003E'},
             {name:'$200-$299',value:'B25087_004E'},
@@ -473,7 +473,7 @@ module.exports = {
             {name:'$700-$799',value:'B25087_009E'},
             {name:'$800-$899',value:'B25087_010E'},
             {name:'$900-$999',value:'B25087_011E'},
-            {name:'$1,000-$1,249',value:'B25087_022E'},
+            {name:'$1,000-$1,249',value:'B25087_012E'},
             {name:'$1,250-$1,499',value:'B25087_013E'},
             {name:'$1,500-$1,999',value:'B25087_014E'},
             {name:'$2,000-$2,499',value:'B25087_015E'},
@@ -570,8 +570,8 @@ module.exports = {
     B25091:{
         name:'Mortgage Status by Selected Monthly Owner Costs as a Percentage of Household Income',
         variables:[
-            {name:'Total',value:'B25091_001E'},
-            {name:'Housing units with a mortgage',value:'B25091_002E'},
+            // {name:'Total',value:'B25091_001E'},
+            // {name:'Total',value:'B25091_002E'},
             {name:'Less than 10.0 percent',value:'B25091_003E'},
             {name:'10.0 to 14.9 percent',value:'B25091_004E'},
             {name:'15.0 to 19.9 percent',value:'B25091_005E'},
@@ -581,8 +581,8 @@ module.exports = {
             {name:'35.0 to 39.9 percent',value:'B25091_009E'},
             {name:'40.0 to 49.9 percent',value:'B25091_010E'},
             {name:'50.0 percent or more',value:'B25091_011E'},
-            {name:'not computed',value:'B25091_012E'},
-            {name:'Housing units without a mortgage',value:'B25091_013E'},
+            // {name:'not computed',value:'B25091_012E'},
+            // {name:'Housing units without a mortgage',value:'B25091_013E'},
             {name:'Less than 10.0 percent',value:'B25091_014E'},
             {name:'10.0 to 14.9 percent',value:'B25091_015E'},
             {name:'15.0 to 19.9 percent',value:'B25091_016E'},
@@ -592,7 +592,7 @@ module.exports = {
             {name:'35.0 to 39.9 percent',value:'B25091_020E'},
             {name:'40.0 to 49.9 percent',value:'B25091_021E'},
             {name:'50.0 percent or more',value:'B25091_022E'},
-            {name:'not computed',value:'B25091_023E'}
+            // {name:'not computed',value:'B25091_023E'}
         ]
     }
 

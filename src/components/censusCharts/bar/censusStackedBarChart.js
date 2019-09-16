@@ -5,6 +5,9 @@ import { reduxFalcor} from "utils/redux-falcor";
 import { ResponsiveBar } from '@nivo/bar'
 import { getColorRange } from 'constants/color-ranges'
 
+import Options from '../Options'
+import Title from "../ComponentTitle"
+
 import { scaleOrdinal } from "d3-scale"
 import { format } from "d3-format"
 
@@ -56,15 +59,38 @@ class HorizontalBarChart extends React.Component {
     const colors = ({ id }) => get(this.props, [id, "color"], false) || DEFAULT_COLORS[id === "left" ? 0 : 2]
     return (
       <div style={ { width: "100%", height: "100%" } }>
+        <div style={ { height: "30px" } }>
+          <Title title={ this.props.name }/>
+          <Options />
+        </div>
+        <div style={ { height: "calc(100% - 60px)" } }>
+          <ResponsiveBar data={ this.getBarData() }
+            indexBy="label"
+            keys={ ["left", "right"] }
+            colors={ colors }
+            margin={ { top: 10, right: 20, bottom: 30, left: this.props.marginLeft } }
+            layout = "horizontal"
+            enableLabel={ false }
+            animation={false}
+            axisBottom={ {
+              format: d => fmt(Math.abs(d))
+            } }
+            tooltip={ ({ color, indexValue, value, id, ...rest }) => (
+                <Tooltip geoid={ this.props.geoids[0] }
+                  value={ fmt(value) }
+                  color={ color }
+                  label={ `${ this.props[id].key }, ${ indexValue }` }/>
+              )
+            }/>
+        </div>
         <div style={ { height: "30px", display: "flex" } }>
-          <div style={ { lineHeight: "30px", fontSize: "20px", width: "20%", paddingLeft: "20px", whiteSpace: "nowrap" } }>{ this.props.name }</div>
           <div style={ { width: "60%", fontSize: "15px", display: "flex", justifyContent: "center", alignItems: "center" } }>
             { this.props.left.key }
             <div style={ { width: "20px", height: "20px", margin: "0px 2.5px 0px 5px", background: colors({ id: "left" }) } }/>
             <div style={ { width: "20px", height: "20px", margin: "0px 5px 0px 2.5px", background: colors({ id: "right" }) } }/>
             { this.props.right.key }
           </div>
-          <div style={ { width: "20%", fontSize: "15px", paddingRight: "20px", display: "flex", alignItems: "center", justifyContent: "end" } }>
+          <div style={ { width: "40%", fontSize: "15px", paddingRight: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end" } }>
             <span style={ { marginRight: "10px" } }>Year: { this.state.year }</span>
             <input type="range"
               min={ this.props.years[0] }
@@ -73,26 +99,6 @@ class HorizontalBarChart extends React.Component {
               onChange={ e => this.setState({ year: e.target.value }) }
               step="1"/>
           </div>
-        </div>
-        <div style={ { height: "calc(100% - 30px)" } }>
-          <ResponsiveBar data={ this.getBarData() }
-            indexBy="label"
-            keys={ ["left", "right"] }
-            colors={ colors }
-            margin={ { top: 0, right: 20, bottom: 30, left: this.props.marginLeft } }
-            layout = "horizontal"
-            enableLabel={ false }
-            animation={false}
-            axisBottom={ {
-              format: d => fmt(Math.abs(d))
-            } }
-            tooltip={ ({ color, indexValue, value, id, ...rest }) => (console.log("REST:", rest),
-                <Tooltip geoid={ this.props.geoids[0] }
-                  value={ fmt(value) }
-                  color={ color }
-                  label={ `${ this.props[id].key }, ${ indexValue }` }/>
-              )
-            }/>
         </div>
       </div>
     )

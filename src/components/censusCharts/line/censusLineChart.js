@@ -4,13 +4,14 @@ import { reduxFalcor} from "utils/redux-falcor";
 import {falcorGraph} from "store/falcorGraph";
 import { ResponsiveLine } from '@nivo/line'
 import Options from '../Options'
+import Title from "../ComponentTitle"
 import GeoName from 'components/censusCharts/geoname'
 import get from 'lodash.get'
 
 
 
 class CensusLineChart extends React.Component {
-    
+
     fetchFalcorDeps () {
         return falcorGraph.get(
             ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]]
@@ -29,11 +30,13 @@ class CensusLineChart extends React.Component {
                 "title": this.props.title,
                 "data" : this.props.years.map(year => {
                     let value = get(this.props, `acs[${this.props.geoids[0]}][${year}][${censusKey}]`, 0)
-                    
+
                     if(this.props.sumType === 'pct') {
-                        let divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1) 
-                        value /= divisor
-                        value *= 100
+                        const divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1);
+                        if ((divisor !== null) && !isNaN(divisor)) {
+                          value /= divisor
+                          value *= 100
+                        }
                     }
 
                     return {
@@ -41,25 +44,25 @@ class CensusLineChart extends React.Component {
                         y: value
                     }
                 })
-            }    
+            }
         })
     }
 
     render () {
-       
-        let title = this.props.title
-        let graphData = this.lineData()
-        // console.log('test 123', this.props.theme, graphData, this.props.colorRange)
+        const title = this.props.title;
         return(
             <div style={{height: '100%'}}>
-                <h6 style={{position: 'absolute', top: 0, left: 0, padding: '8px 12px'}}>{this.props.title}</h6>
+              <div style={ { height: "30px" } }>
+                <Title title={ title }/>
                 <Options />
+              </div>
+              <div style={ { height: "calc(100% - 30px)" } }>
                 <ResponsiveLine
-                    data={graphData}
+                    data={this.lineData()}
                     margin={{
                             "top": 30,
                             "right": 20,
-                            "bottom": 60,
+                            "bottom": 30,
                             "left": 60
                     }}
                     xScale={{
@@ -97,9 +100,8 @@ class CensusLineChart extends React.Component {
                         <br/>
                         Value: {Object.values(data)[0]['data'].y.toLocaleString()}
                     </div>
-                    )}
-
-                />
+                    )}/>
+                </div>
            </div>
         )
     }
@@ -123,7 +125,7 @@ const mapDispatchToProps = { };
 
 const mapStateToProps = (state,ownProps) => {
     return {
-        acs: get(state, `graph.acs`, {}), 
+        acs: get(state, `graph.acs`, {}),
         theme: state.user.theme
     };
 };

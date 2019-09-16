@@ -5,6 +5,9 @@ import { reduxFalcor} from "utils/redux-falcor";
 import { ResponsiveBar } from '@nivo/bar'
 import { getColorRange } from 'constants/color-ranges'
 
+import Options from '../Options'
+import Title from "../ComponentTitle"
+
 import { scaleOrdinal } from "d3-scale"
 import { format } from "d3-format"
 
@@ -37,10 +40,7 @@ class CensusBarChart extends React.Component {
   fetchFalcorDeps() {
     return this.props.falcor.get(
         ['acs', this.props.geoids, this.props.years, this.props.censusKeys]
-    ).then(data => {
-      console.log('testing censusBarchart data', data)
-      return data
-    })
+    )
   }
   render() {
     const colors = scaleOrdinal()
@@ -54,17 +54,16 @@ class CensusBarChart extends React.Component {
 
     return (
       <div style={ { width: "100%", height: "100%" } }>
-        <div style={ { height: "30px", display: "flex" } }>
-          <div style={ { lineHeight: "30px", fontSize: "20px", paddingLeft: "20px", whiteSpace: "nowrap" } }>
-            { this.props.name }
-          </div>
+        <div style={ { height: "30px" } }>
+          <Title title={ this.props.name }/>
+          <Options />
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
           <ResponsiveBar indexBy={ "id" }
             keys={ this.props.geoids }
             data={ this.props.barData }
-            margin={ { top: 20, right: 20, 
-              bottom: this.props.axisBottom ? 30 : 20, 
+            margin={ { top: 10, right: 20,
+              bottom: this.props.axisBottom ? 30 : 20,
               left: this.props.marginLeft } }
             colors={ d => colors(d.id) }
             labelSkipWidth={ 100 }
@@ -80,16 +79,16 @@ class CensusBarChart extends React.Component {
               )
             }
             axisLeft={ {
-              format: this.props.layout === 'horizontal' 
+              format: this.props.layout === 'horizontal'
               ? fmt
               : !this.props.axisBottom ? null :
-               this.props.getKeyName 
+               this.props.getKeyName
             } }
             axisBottom={ {
               format: this.props.layout === 'vertical' && fmt 
               ? fmt
               : !this.props.axisBottom ? null :
-                this.props.getKeyName 
+                this.props.getKeyName
             }}/>
         </div>
       </div>

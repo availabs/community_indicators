@@ -51,8 +51,8 @@ class CensusStatBox extends React.Component{
 
         // console.log('got the value', value)
         if(!value) {
-            return {value: '', change: ''}  
-        } 
+            return {value: '', change: ''}
+        }
 
         let change = 0
         // console.log('compareYear', this.props.compareYear)
@@ -67,7 +67,7 @@ class CensusStatBox extends React.Component{
                 .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
                 .reduce((a,b) => a + b )
 
-                console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
+                // console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
                 compareValue /= divisorValue
                 compareValue *= 100
             }
@@ -90,19 +90,19 @@ class CensusStatBox extends React.Component{
         let displayData = this.calculateValues()
         return(
             <div className='el-tablo' style={{padding: 10}}>
-                
-                <div className='title' style={{fontSize: '1.2em', textAlign: 'center'}}> 
+
+                <div className='title' style={{fontSize: '1.2em', textAlign: 'center'}}>
                     {this.props.title}
                 </div>
-                
+
                 <div className='value' style={{ textAlign: 'center', display: 'block'}}>
                     {this.props.valuePrefix}
                     {displayData.value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits})}
                     {this.props.valueSuffix}
                 </div>
                 {this.props.compareYear &&
-                    <div className='' style={{ textAlign: 'center'}}> 
-                        {Math.abs(displayData.change)}% {displayData.change >= 0 ? 'Growth' : 'Decline'} 
+                    <div className='' style={{ textAlign: 'center'}}>
+                        {Math.abs(displayData.change)}% {displayData.change >= 0 ? 'Growth' : 'Decline'}
                     </div>
                  }
             </div>

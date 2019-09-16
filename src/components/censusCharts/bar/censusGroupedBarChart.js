@@ -303,11 +303,11 @@ class CensusGroupedBarChart extends React.Component {
                     ]}
 
             tooltip={({ id, indexValue, value, color,data }) => (
-            <text>
+            <div>
             <b><big>{indexValue}</big></b>
             <br/> <br/>
             {id} :{(id.includes('county/cousub')) ? Object.values(data)[4] : Object.values(data)[1]}, {value}%
-        </text>
+        </div>
         )}
             />
             </div>
