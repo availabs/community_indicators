@@ -24,6 +24,8 @@ const Header = styled.div`
 `
 const SubHeader = styled.div`
   font-size: 0.75rem;
+  margin-top: -7px;
+  margin-bottom: 5px;
 `
 const Body = styled.div`
   font-size: 1rem;
