@@ -2,6 +2,7 @@ import SocialWelfare from './socialWelfare'
 import Education from './education'
 import Overview from './overview'
 import Housing from './housing'
+import Poverty from "./poverty"
 
 let ID = 0;
 const getId = () => `id-${ ++ID }`;
@@ -11,7 +12,7 @@ const CONFIG = {
   'Social Welfare': SocialWelfare,
   Education,
   Housing,
-  Poverty: [],
+  Poverty,
   Health: [],
   Transportation: []
 }
