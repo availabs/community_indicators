@@ -5,11 +5,11 @@ import Housing from './housing'
 
 export default {
     Overview,
-    'Social Welfare': SocialWelfare,
-    Education,
+    'Economy': [],
+    'Transportation': [],
     Housing,
-    'Poverty': [],
-    'Education': [],
+    Education,
     'Health': [],
-    'Transportation': []
+    'Social Welfare': SocialWelfare,
+
 }

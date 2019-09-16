@@ -70,6 +70,7 @@ class CensusBarChart extends React.Component {
             labelSkipWidth={ 100 }
             labelFormat={ fmt }
             groupMode="grouped"
+            animation={this.props.animation}
             layout={this.props.orientation}
             tooltip={ ({ color, indexValue, value, id, ...rest }) => (//console.log("REST:", rest),
                 <Tooltip geoid={ id }
@@ -85,7 +86,7 @@ class CensusBarChart extends React.Component {
                this.props.getKeyName 
             } }
             axisBottom={ {
-              format: this.props.layout === 'vertical' 
+              format: this.props.layout === 'vertical' && fmt 
               ? fmt
               : !this.props.axisBottom ? null :
                 this.props.getKeyName 
@@ -118,7 +119,8 @@ ConnectedCensusBarChart.defaultProps = {
   yFormat: ",d",
   axisBottom: true,
   marginLeft: 75,
-  orientation: 'vertical'
+  orientation: 'vertical',
+  animation: false
 }
 
 export default ConnectedCensusBarChart

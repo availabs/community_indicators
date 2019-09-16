@@ -82,6 +82,7 @@ class HorizontalBarChart extends React.Component {
             margin={ { top: 0, right: 20, bottom: 30, left: this.props.marginLeft } }
             layout = "horizontal"
             enableLabel={ false }
+            animation={false}
             axisBottom={ {
               format: d => fmt(Math.abs(d))
             } }
