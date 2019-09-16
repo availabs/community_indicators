@@ -1,6 +1,7 @@
 import CENSUS_CONFIG from "./censusConfig"
 
 const DEFAULT_LAYOUT = {
+  x: 0,
   w: 12,
   h: 12,
   static: true
@@ -31,20 +32,23 @@ export const configLoader = BASE_CONFIG => {
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
 
-    // x += layout.x;
+    if (layout.x) {
+      x = layout.x;
+    }
     if ((layout.w + x) > 12) {
-      x = 0;
       y += h;
       h = 0;
+      x = layout.x;
     }
     h = Math.max(h, layout.h)
+console.log("X", x)
     config.layout = {
       ...layout,
       i: config.id,
       x,
       y
     }
-    x += config.layout.w;
+    x += layout.w;
 
     return config;
   })
