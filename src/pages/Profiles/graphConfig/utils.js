@@ -11,11 +11,11 @@ export const femaleColor = '#e68fac';
 
 export const configLoader = BASE_CONFIG => {
 
-  let x = 0;
+  let x = 0, y = 0;
 
   const rects = []
 
-  return BASE_CONFIG.map((config, i) => {
+  return BASE_CONFIG.map(config => {
     if (config["broadCensusKey"]) {
       const bk = CENSUS_CONFIG[config["broadCensusKey"]];
       config.censusKeys = bk.variables.map(v => v.value);
@@ -32,7 +32,6 @@ export const configLoader = BASE_CONFIG => {
     if (config["right"] && config["right"].slice) {
       config["right"].keys = config.censusKeys.slice(...config["right"].slice);
     }
-    config.id = i.toString();
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
 
@@ -46,7 +45,8 @@ export const configLoader = BASE_CONFIG => {
       x = 0;
     }
 
-    const rect = new Rect(x, 0, layout.w, layout.h);
+    const rect = new Rect(x, y, layout.w, layout.h);
+
     while (isIntersecting(rect, rects)) {
       rect.translateY(1);
     }
@@ -56,6 +56,7 @@ export const configLoader = BASE_CONFIG => {
 
     config.layout = rect.getLayout();
     x += layout.w;
+    y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
 
     return config;
   })
@@ -74,9 +75,11 @@ const applyGravity = rects => {
     const others = rects.filter((r, ii) => i !== ii);
 
     while (!isIntersecting(rect, others)) {
-      rects[i].translateY(-1);
+      if (rect.top() === -1) break;
+
+      rect.translateY(-1);
     }
-    rects[i].translateY(1);
+    rect.translateY(1);
   }
 }
 

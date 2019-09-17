@@ -11,6 +11,8 @@ import GRAPH_CONFIG from './graphConfig'
 
 import styled from "styled-components"
 
+console.log("PROFILE>GRAPH_CONFIG", GRAPH_CONFIG)
+
 const Footer = styled.div`
   position: relative;
   box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2),

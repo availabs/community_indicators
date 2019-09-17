@@ -170,6 +170,5 @@ const BASE_CONFIG = [
       ]
     }
 ]
-const CONFIG = configLoader(BASE_CONFIG);
-CONFIG.forEach(({ layout, title }) => console.log(title, layout))
-export default CONFIG
+
+export default configLoader(BASE_CONFIG)
