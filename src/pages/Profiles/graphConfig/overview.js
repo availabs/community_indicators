@@ -1,18 +1,21 @@
+import {
+  configLoader,
+  maleColor,
+  femaleColor
+} from "./utils"
 
-export default [
+const year = 2017;
+
+const BASE_CONFIG = [
    {
-      "id":"1",
       "type":"CensusStatBox",
       "censusKey":"B01003_001E",
-      "year":"2017",
+      year,
       compareYear: 2016,
       "title": "Population",
       "layout":{
          "w":2,
-         "h":3,
-         "x":0,
-         "y":0,
-         "i":"1"
+         "h":3
       }
    },
    {
@@ -20,32 +23,28 @@ export default [
       "type":"CensusStatBox",
       "title": "Median Age",
       "censusKey":"B01002_001E",
-      "year":"2017",
+      maximumFractionDigits: 1,
+      year,
       "demographics":true,
       "layout":{
          "w":2,
-         "h":3,
-         "x":2,
-         "y":0,
-         "i":"2"
+         "h":3
       }
    },
    {
-      "id":"5",
       "type":"CensusStatBox",
       "title": "Median Household Income",
+      valuePrefix:'$',
       "censusKey":"B19013_001E",
       "amount":true,
+      year,
       "layout":{
          "w":2,
-         "h":13,
-         "x":0,
-         "y":3,
-         "i":"5"
+         "h":9,
+         "x":0
       }
    },
    {
-      "id":"4",
       "type":"CensusLineChart",
       title: "Median Household Income",
       "censusKeys":[
@@ -53,12 +52,10 @@ export default [
       ],
       "layout":{
          "w":10,
-         "h":13,
-         "x":2,
-         "y":3,
-         "i":"4"
+         "h":9
       }
    },
+
    {
       id:"6",
       type:"CensusStatBox",
@@ -66,14 +63,13 @@ export default [
       sumType: 'pct',
       censusKey:"B17001_002E",
       divisorKey: "B17001_001E",
+      year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       "layout":{
          "w":2,
-         "h":13,
-         "x":0,
-         "y":16,
-         "i":"6"
+         "h":9,
+         x: 0
       }
    },
    {
@@ -85,60 +81,48 @@ export default [
       sumType: 'pct',
       "layout":{
          "w":10,
-         "h":13,
-         "x":2,
-         "y":16,
-         "i":"7"
+         "h":9
       },
    },
+
    {
-      id:"8",
       title: "Percent Vacant Housing Units",
       type:"CensusStatBox",
       sumType: 'pct',
       censusKey:"B25002_003E",
       divisorKey: 'B25002_001E',
+      year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       "layout":{
          "w":2,
-         "h":4,
-         "x":0,
-         "y":29,
-         "i":"8"
-      },
-      "geoid":[
-         "36001"
-      ]
+         "h":3,
+         "x":0
+      }
    },
    {
-      id:"9",
       title: "Vacant Housing Units",
+      year,
       type:"CensusStatBox",
       censusKey:"B25002_003E",
       "layout":{
          "w":2,
-         "h":4,
-         "x":0,
-         "y":33,
-         "i":"9"
+         "h":3,
+         "x":0
       },
    },
    {
-      id:"39",
       title: "Occupied Housing Units",
+      year,
       type:"CensusStatBox",
       censusKey:"B25002_002E",
       "layout":{
          "w":2,
-         "h":4,
-         "x":0,
-         "y":37,
-         "i":"39"
+         "h":3,
+         "x":0
       },
    },
    {
-      "id":"100",
       "type":"CensusLineChart",
       title: "Percent Vacant Housing Units",
       sumType: 'pct',
@@ -146,35 +130,34 @@ export default [
       divisorKeys:["B25002_001E"],
       "layout":{
          "w":10,
-         "h":12,
-         "x":2,
-         "y":29,
-         "i":"100"
+         "h":9,
+         "x":2
       }
    },
-   {
-      "id":"12",
-      "type":"CensusGroupedBarChart",
-      "censusKey":[
-         "B23008"
-      ],
-      "compareGeoid":[
-         "36"
-      ],
-      "colorRange":[
 
-      ],
-      "layout":{
-         "w":12,
-         "h":13,
-         "x":0,
-         "y":41,
-         "i":"12"
-      },
-      "geoid":[
-         "36001"
-      ]
-   },
+   // {
+   //    "id":"12",
+   //    "type":"CensusGroupedBarChart",
+   //    "censusKey":[
+   //       "B23008"
+   //    ],
+   //    "compareGeoid":[
+   //       "36"
+   //    ],
+   //    "colorRange":[
+   //
+   //    ],
+   //    "layout":{
+   //       "w":12,
+   //       "h":13,
+   //       "x":0,
+   //       "y":41,
+   //       "i":"12"
+   //    },
+   //    "geoid":[
+   //       "36001"
+   //    ]
+   // },
     {
       type: "ProfileFooter",
       data: [
@@ -187,3 +170,6 @@ export default [
       ]
     }
 ]
+const CONFIG = configLoader(BASE_CONFIG);
+CONFIG.forEach(({ layout, title }) => console.log(title, layout))
+export default CONFIG

@@ -133,9 +133,9 @@ const initialState = {
   authed: false,
   attempts: 0,
   years: {
-    latest: 2016,
+    latest: 2017,
     earliest: 2012,
-    active: 2016
+    active: 2017
   },
   theme: {
     axis: {

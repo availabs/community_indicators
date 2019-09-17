@@ -1,9 +1,8 @@
 import CENSUS_CONFIG from "./censusConfig"
 
 const DEFAULT_LAYOUT = {
-  x: 0,
   w: 12,
-  h: 12,
+  h: 9,
   static: true
 }
 
@@ -11,7 +10,11 @@ export const maleColor = '#5588ee';
 export const femaleColor = '#e68fac';
 
 export const configLoader = BASE_CONFIG => {
-  let x = 0, y = 0, h = 0;
+
+  let x = 0;
+
+  const rects = []
+
   return BASE_CONFIG.map((config, i) => {
     if (config["broadCensusKey"]) {
       const bk = CENSUS_CONFIG[config["broadCensusKey"]];
@@ -33,23 +36,92 @@ export const configLoader = BASE_CONFIG => {
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
 
-    if (layout.x) {
+    // ensure max width of 12
+    layout.w = Math.min(12, layout.w);
+
+    if (layout.x !== undefined) {
       x = layout.x;
     }
-    if ((layout.w + x) > 12) {
-      y += h;
-      h = 0;
-      x = layout.x;
+    else if ((x + layout.w) > 12) {
+      x = 0;
     }
-    h = Math.max(h, layout.h)
-    config.layout = {
-      ...layout,
-      i: config.id,
-      x,
-      y
+
+    const rect = new Rect(x, 0, layout.w, layout.h);
+    while (isIntersecting(rect, rects)) {
+      rect.translateY(1);
     }
+    rects.push(rect);
+
+    applyGravity(rects);
+
+    config.layout = rect.getLayout();
     x += layout.w;
 
     return config;
   })
+}
+
+const isIntersecting = (rect, rects) =>
+  rects.reduce((a, c) => a || c.intersects(rect), false)
+
+const applyGravity = rects => {
+  for (let i = 0; i < rects.length; ++i) {
+    const rect = rects[i];
+
+    if (rect.top() === 0) continue;
+
+    rect.translateY(-1);
+    const others = rects.filter((r, ii) => i !== ii);
+
+    while (!isIntersecting(rect, others)) {
+      rects[i].translateY(-1);
+    }
+    rects[i].translateY(1);
+  }
+}
+
+export class Rect {
+  constructor(x, y, w, h) {
+    this.x = x;
+    this.y = y;
+    this.w = w;
+    this.h = h;
+  }
+  getLayout() {
+    return {
+      x: this.x,
+      y: this.y,
+      w: this.w,
+      h: this.h
+    }
+  }
+  top() {
+    return this.y;
+  }
+  bottom() {
+    return this.y + this.h;
+  }
+  left() {
+    return this.x;
+  }
+  right() {
+    return this.x + this.w;
+  }
+  translate(x, y) {
+    this.x += x;
+    this.y += y;
+  }
+  translateX(x) {
+    this.translate(x, 0);
+  }
+  translateY(y) {
+    this.translate(0, y);
+  }
+  intersects(other) {
+    if (this.right() <= other.left()) return false;
+    if (this.left() >= other.right()) return false;
+    if (this.bottom() <= other.top()) return false;
+    if (this.top() >= other.bottom()) return false;
+    return true;
+  }
 }

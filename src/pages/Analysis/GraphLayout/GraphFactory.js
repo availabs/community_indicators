@@ -7,7 +7,7 @@ export default ({ graph, ...rest }) => {
         Graph = CensusCharts[graphType] || CensusCharts['NA']
     return (
         <TrackVisibility partialVisibility style={ { height: '100%' } }>
-        	<GraphHider Graph={Graph} { ...rest } graph ={graph }/>
+        	<GraphHider Graph={Graph} { ...rest } graph={ graph }/>
         </TrackVisibility>
 	)
 }

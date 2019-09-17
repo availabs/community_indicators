@@ -7,7 +7,7 @@ const ReactGridLayout = WidthProvider(Responsive);
 
 class GridLayout extends React.Component {
     loadComps() {
-      const { graphs, ...rest } = this.props;
+      const { graphs, geoid, ...rest } = this.props;
       return graphs.map(({ layout, id, ...rest }, i) => {
         const newLayout = {
           x: layout.x,
@@ -31,7 +31,8 @@ class GridLayout extends React.Component {
                         graph={ rest }
                         layout={ newLayout }
                         { ...rest }
-                        />
+                        geoid={ [geoid] }
+                        geoids={ [geoid] }/>
             </div>
         )
       })

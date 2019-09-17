@@ -16,6 +16,7 @@ const BASE_CONFIG = [
         broadCensusKey: 'B01001',
         left: { key: "Male", slice: [2, 25], color: maleColor },
         right: { key: "Female", slice: [26, 49], color: femaleColor },
+        layout: { h: 12 },
         labels: [
           'Under Age 5',
           'Ages 5-9',
@@ -52,48 +53,39 @@ const BASE_CONFIG = [
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013A',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013A'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013B',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013B'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013C',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013C'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013D',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013D'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013E',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013E'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013F',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013F'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013G',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013G'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013H',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013H'
     },
     {
         type: 'CensusLineChart',
-        broadCensusKey: 'B19013I',
-        layout: { h: 8 }
+        broadCensusKey: 'B19013I'
     },
     {
         type:'CensusStackedBarChart',
@@ -101,6 +93,7 @@ const BASE_CONFIG = [
         left: { key: "Below Poverty Level", slice: [0, 26] },
         right: { key: "Above Poverty Level", slice: [26, 52] },
         marginLeft: 150,
+        layout: { h: 12 },
         labels: [
           'Male Under age 5',
           'Male age 5',

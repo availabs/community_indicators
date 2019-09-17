@@ -38,7 +38,7 @@ export const getGeo = (map, filter, source, sourceLayer) => {
     };
     map.on('render', listener);
     map.setPitch(65)
-                
+
   })
 }
 
@@ -47,9 +47,10 @@ class TractLayer extends MapLayer{
 
     onAdd(map){
         let tracts = []
-        
+
         let counties = this.filters.geo.value
         return falcorGraph.get(['geo',[...counties],['tracts','blockgroup']],['acs','config'])
+          .then(res => (console.log("RES:", res), res))
             .then(data =>{
                 let tracts = []
                 let bg = []
@@ -63,24 +64,24 @@ class TractLayer extends MapLayer{
                 this.tracts = tracts;
                 this.blockgroups = bg
                 this.config = data.json.acs.config
-                
-                
+
+
                 let filter = ['all', ['in', 'GEOID', ...this.blockgroups]]
                 map.setFilter('bg-layer', filter);
-                
+
                 let bounds = [-74.53742980957031, 42.02277326296911, -73.24155807495117, 43.80851750264139]
                 // getGeo(map, filter, 'bg', "tl_2017_36_bg")
                 // .then(features => {
-                    
+
                 //     this.geom = features.reduce((out,feat) => {
                 //             out[feat.properties.GEOID] = feat.properties.ALAND / 1000
-                //         return out 
+                //         return out
                 //     },{})
 
                 //     console.log('', this.geom)
-                    
-                //     
-                    
+
+                //
+
                 //     console.log('bounds', bounds)
 
                 // })
@@ -91,12 +92,12 @@ class TractLayer extends MapLayer{
                     this.fetchData().then(data => this.receiveData(map, data))
 
                 })
-                
-                map.setPitch(65)
-                
 
-                
-                
+                map.setPitch(65)
+
+
+
+
                 //rotateCamera(0,map);
 
             })
@@ -114,12 +115,12 @@ class TractLayer extends MapLayer{
           requests.push(this.blockgroups.slice(i, i + chunkSize))
         }
 
-    
+
     return requests
       .reduce((a, c) => a.then(() => falcorGraph.get(
-        ['acs',c,['2016'],[...censusSubvars]])), 
+        ['acs',c,['2016'],[...censusSubvars]])),
       Promise.resolve())
-        
+
     }
     receiveData(map,data) {
         data = falcorGraph.getCache()
@@ -136,7 +137,7 @@ class TractLayer extends MapLayer{
             // Request the next frame of the animation.
             requestAnimationFrame(rotateCamera);
         }
-        
+
         censVars.forEach(function(subvars,i){
             if (subvars.name === censusSubVar){
                 censusSubVarKey = subvars.value
@@ -144,22 +145,22 @@ class TractLayer extends MapLayer{
             }
         });
 
-        
+
         let keyDomain = Object.keys(data.acs)
             .filter(d => d !== 'config')
             .reduce((out, curr) => {
                 if(data.acs[curr] && this.geom[curr]){
                     out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
-                } 
+                }
                 return out;
             }, {});
-       
+
         let popSum = Object.keys(data.acs)
             .filter(d => d !== 'config')
             .reduce((out, curr) => {
                 if(data.acs[curr] && this.geom[curr]){
                     out += data.acs[curr]['2016']['B01003_001E'];
-                } 
+                }
                 return out;
             }, 0);
         let areaSum = Object.keys(data.acs)
@@ -167,11 +168,11 @@ class TractLayer extends MapLayer{
             .reduce((out, curr) => {
                 if(data.acs[curr] && this.geom[curr]){
                     out += (this.geom[curr])
-                } 
+                }
                 return out;
             }, 0);
         let values = Object.values(keyDomain).sort((a,b) => a - b )
-        
+
         let min = Math.min(...values)
         let max = Math.max(...values)
 
@@ -183,7 +184,7 @@ class TractLayer extends MapLayer{
                 ['linear'],
                 ["get", ["to-string", ["get", "GEOID"]], ["literal", keyDomain]],
                 min,'#160e23',
-                max*0.02,'#00617f', 
+                max*0.02,'#00617f',
                 max*0.8,'#55e9ff'
             ]
         );
@@ -198,7 +199,7 @@ class TractLayer extends MapLayer{
                 min, 0,
                 max, 10000
             ]
-            
+
         )
 
         map.setPaintProperty(
@@ -208,7 +209,7 @@ class TractLayer extends MapLayer{
         );
 
         /*let renderGeo = map.queryRenderedFeatures({ layers: ['bg-layer'] })
-        
+
         let tractsGeo = map.querySourceFeatures("bg",
             {
                 sourceLayer:"tl_2017_36_bg",
@@ -218,7 +219,7 @@ class TractLayer extends MapLayer{
         let geojson = {type:'FeatureCollection', features: tractsGeo}
                 console.log('tracts Geo',tractsGeo, renderGeo)
         let bounds =  geojsonExtent(geojson)*/
-        
+
         rotateCamera(0)
     }
 }
@@ -234,17 +235,17 @@ const tractLayer = new TractLayer("Tracts Layer", {
             source:{
                 "type": "vector",
                 "url": "mapbox://mapbox.mapbox-streets-v7"
-                
+
             }
         },
-        { 
+        {
             id: "bg",
             source: {
                 'type': "vector",
                 'url': 'mapbox://am3081.02eswc9t'
             }
         },
-        
+
     ],
     layers: [
         { 'id': 'bg-layer',
@@ -259,8 +260,8 @@ const tractLayer = new TractLayer("Tracts Layer", {
             },
             beneath: 'place-neighbourhood'
         },
-       
-        
+
+
         // { 'id': 'counties-layer',
         //     'source': 'counties',
         //     'source-layer': 'counties',
@@ -270,7 +271,7 @@ const tractLayer = new TractLayer("Tracts Layer", {
         //         'line-width': 1
         //     }
         // }
-        
+
     ],
     filters:{
         censvar:{

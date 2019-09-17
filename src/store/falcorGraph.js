@@ -3,15 +3,32 @@ import { Model } from 'falcor'
 import HttpDataSource from 'falcor-http-datasource'
 
 
-//export let host = 
-let host = 'https://graph.availabs.org/'
-// host = 'https://mitigateny.availabs.org/api/'
-if (process.env.NODE_ENV === 'production') {
+//export let host =
+// let host = 'https://graph.availabs.org/'
+let host = 'https://graph.availabs.org/';
+try {
+// To run the API from localhost just add a new file named "useLocalHost.js",
+// with the following single line: export const useLocalHost = 'http://localhost:4444/';
+// You can supply a different port number if required.
+
+// You can easily switch back to using the production API without deleting the "useLocalHost.js" file
+// by changing the file to: export const useLocalHost = false;
+
+// the file "useLocalHost.js" has been added to .gitignore.
+  const { useLocalHost } = require("./useLocalHost");
+  if (useLocalHost) {
+    host = useLocalHost;
+  }
+}
+catch {
   host = 'https://graph.availabs.org/'
 }
 
-//export host
+console.log("API HOST:", host)
 
+if (process.env.NODE_ENV === 'production') {
+  host = 'https://graph.availabs.org/'
+}
 
 class CustomSource extends HttpDataSource {
   onBeforeRequest (config) {
@@ -37,36 +54,35 @@ class CustomSource extends HttpDataSource {
   }
 }
 
-// function graphFromCache () {
-//   let restoreGraph = {}
-//   if (localStorage && localStorage.getItem('falcorCache')) {
-//     let token = localStorage.getItem('token')
-//     let user = localStorage.getItem('currentUser')
-//     if (token && user) {
-//       restoreGraph = JSON.parse(localStorage.getItem('falcorCache'))
-//     }
-//   }
-//   return restoreGraph // {}
-// }
+function cacheFromStorage () {
+  let falcorCache = {}
+  // if (localStorage && localStorage.getItem('falcorCache')) {
+  //   let token = localStorage.getItem('token')
+  //   let user = localStorage.getItem('currentUser')
+  //   if (token && user) {
+  //     falcorCache = JSON.parse(localStorage.getItem('falcorCache'))
+  //   }
+  // }
+  return falcorCache;
+}
 
-export const falcorGraph = (function () {
-  var storedGraph = {} // graphFromCache() // {};//JSON.parse(localStorage.getItem('falcorCache'))
-  let model = new Model({
+export const falcorGraph = (() =>
+  new Model({
     source: new CustomSource(host + 'graph', {
       crossDomain: true,
-      withCredentials: false
+      withCredentials: false,
+      timeout: 120000
     }),
-    errorSelector: function (path, error) {
-      console.log('errorSelector', path, error)
-      return error
+    errorSelector: (path, error) => {
+      console.log('errorSelector', path, error);
+      return error;
     },
-    cache: storedGraph || {}
+    cache: cacheFromStorage()
   }).batch()
-  return model
-})()
+)()
 
 window.addEventListener('beforeunload', function (e) {
-  var getCache = falcorGraph.getCache()
-  console.log('windowUnload', getCache)
-  localStorage.setItem('falcorCache', JSON.stringify(getCache))
+  // var falcorCache = falcorGraph.getCache();
+  // console.log('windowUnload', falcorCache);
+  // localStorage.setItem('falcorCache', JSON.stringify(falcorCache));
 })

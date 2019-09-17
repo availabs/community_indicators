@@ -10,7 +10,7 @@ import styled from 'styled-components'
 import GeoName from 'components/censusCharts/geoname'
 import StatBox from 'components/censusCharts/statBox'
 
-let HeaderContainer = styled.div` 
+let HeaderContainer = styled.div`
  width: 100vw;
  height: 100vh;
  position: fixed;
@@ -49,7 +49,7 @@ let StatContainer = styled.div`
 `
 
 class ProfileHeader extends Component {
-    
+
     render () {
         return (
                 <div>
@@ -58,20 +58,20 @@ class ProfileHeader extends Component {
                             <LandingHeader>
                                 {
                                     this.props.title
-                                    ? this.props.title 
+                                    ? this.props.title
                                     : <GeoName geoids={this.props.geoids} />
                                 }
                             </LandingHeader>
                             <div className='container'>
                                 <StatContainer>
-                                    <StatBox 
+                                    <StatBox
                                         title={'Population'}
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
                                         censusKey={'B01003_001E'}
                                         geoids={this.props.geoids}
                                     />
-                                    <StatBox 
+                                    <StatBox
                                         title={'Median Age'}
                                         year={this.props.years.latest}
                                         censusKey={'B01002_001E'}
@@ -79,7 +79,7 @@ class ProfileHeader extends Component {
                                         sumType='avg'
                                         maximumFractionDigits={1}
                                     />
-                                    <StatBox 
+                                    <StatBox
                                         title={'Median Household Income'}
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
@@ -88,7 +88,7 @@ class ProfileHeader extends Component {
                                         geoids={this.props.geoids}
                                         sumType='avg'
                                                                             />
-                                    <StatBox 
+                                    <StatBox
                                         title={'Poverty Rate'}
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
@@ -99,9 +99,9 @@ class ProfileHeader extends Component {
                                         divisorKey={'B17001_001E'}
                                         geoids={this.props.geoids}
                                     />
-                                    
+
                                 </StatContainer>
-                                
+
                             </div>
                         </div>
                     </HeaderContainer>
@@ -119,13 +119,13 @@ class ProfileHeader extends Component {
                                 [
                                     -70.7626953125,
                                 45.042478050891546
-                                ]   
+                                ]
                             ]}
                             layers={[HeaderLayer]}
                             mapControl={false}
                         />
                     </div>
-                </div> 
+                </div>
 
         )
     }

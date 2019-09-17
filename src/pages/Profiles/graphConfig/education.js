@@ -43,6 +43,7 @@ const BASE_CONFIG = [
           left: { key: "Male", slice: [0, 24], color: maleColor },
           right: { key: "Female", slice: [24, 48], color: femaleColor },
           marginLeft: 225,
+          layout: { h: 12 },
           labels: [
             'ages 3 and 4, enrolled in school',
             'ages 5 to 9, enrolled in school',

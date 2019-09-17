@@ -73,37 +73,48 @@ class Profile extends React.Component{
 
     renderCategory(name, configData) {
         // console.log('testing', configData)
-        const profileFooter = configData.find(({ type }) => type === "ProfileFooter");
+        const profileHeader = configData.find(({ type }) => type === "ProfileHeader"),
+          profileFooter = configData.find(({ type }) => type === "ProfileFooter");
         return (
             <Element name={name} key={ name }>
                 <div className='content-box'>
+                  {
+                    !profileHeader ? null :
+                    <div className='element-wrapper'>
+                      <div classname='element-content'>
+                        <div className="container" style={ { marginTop: "-2rem" } }>
+                          <ProfileFooter { ...profileHeader }/>
+                        </div>
+                      </div>
+                    </div>
+                  }
                     <div className='element-wrapper'>
                         <h4 className='element-header'> {name.toUpperCase()} </h4>
                         <div classname='element-content'>
                             <GridLayout
-                                sideWidth={800}
-                                minifiedWidth={1}
-                                isOpen={1}
-                                title={''}
-                                viewing={false}
-                                graphs={configData.filter(d => d.type !== "ProfileFooter")}
-                                onOpenOrClose={function noop() {}}
-                                onLayoutChange={ this.layoutChange }
-                                verticalCompact={false}
+                              sideWidth={800}
+                              minifiedWidth={1}
+                              isOpen={1}
+                              title={''}
+                              graphs={
+                                configData.filter(d =>
+                                  (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
+                                )
+                              }
+                              geoid={ this.props.geoid }
+                              verticalCompact={false}
                             />
                         </div>
                     </div>
                     {
                       !profileFooter ? null :
-                      <React.Fragment>
-                        <div className='element-wrapper'>
-                          <div classname='element-content'>
-                            <div className="container" style={ { marginTop: "-2rem" } }>
-                              <ProfileFooter { ...profileFooter }/>
-                            </div>
+                      <div className='element-wrapper'>
+                        <div classname='element-content'>
+                          <div className="container" style={ { marginTop: "-2rem" } }>
+                            <ProfileFooter { ...profileFooter }/>
                           </div>
                         </div>
-                      </React.Fragment>
+                      </div>
                     }
                 </div>
             </Element>
@@ -113,19 +124,18 @@ class Profile extends React.Component{
 
     render(){
         // console.log('render profile', this.props)
-        let currentYear = this.props.years.latest
-        let compareYear = this.props.years.latest -1
-        let categories = Object.keys(GRAPH_CONFIG).map((category,i) => {
-            GRAPH_CONFIG[category].forEach(config => {
-                config['geoid'] = [this.props.geoid]
-                config['geoids'] = [this.props.geoid]
-                //config['year'] = currentYear
-                config['compareYear'] = compareYear
-                //config.id = (i+1).toString()
-            })
-
-            return this.renderCategory(category, GRAPH_CONFIG[category])
-        })
+        // let currentYear = this.props.years.latest
+        // let compareYear = this.props.years.latest -1
+        const categories = Object.keys(GRAPH_CONFIG).map(category =>
+            // GRAPH_CONFIG[category].forEach(config => {
+            //     config['geoid'] = [this.props.geoid]
+            //     config['geoids'] = [this.props.geoid]
+            //     config['year'] = currentYear
+            //     config['compareYear'] = compareYear
+            //     config.id = (i+1).toString()
+            // })
+            this.renderCategory(category, GRAPH_CONFIG[category])
+        )
 
         return (
             <div>
