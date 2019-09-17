@@ -13,7 +13,7 @@ export const configLoader = BASE_CONFIG => {
 
   let x = 0, y = 0;
 
-  const rects = []
+  const rects = [new Rect(0, -1, 12, 1)] // <-- this is the "ground" rect
 
   return BASE_CONFIG.map(config => {
     if (config["broadCensusKey"]) {
@@ -66,17 +66,13 @@ const isIntersecting = (rect, rects) =>
   rects.reduce((a, c) => a || c.intersects(rect), false)
 
 const applyGravity = rects => {
-  for (let i = 0; i < rects.length; ++i) {
-    const rect = rects[i];
-
-    if (rect.top() === 0) continue;
+  for (let i = 1; i < rects.length; ++i) {
+    const rect = rects[i],
+      others = rects.filter((r, ii) => i !== ii);
 
     rect.translateY(-1);
-    const others = rects.filter((r, ii) => i !== ii);
 
     while (!isIntersecting(rect, others)) {
-      if (rect.top() === -1) break;
-
       rect.translateY(-1);
     }
     rect.translateY(1);
