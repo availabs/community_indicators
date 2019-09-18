@@ -22,21 +22,16 @@ const BASE_CONFIG = [
   { "type": "CensusBarChart",
     "broadCensusKey": "B25087",
     orientation: 'horizontal',
-    marginLeft: 180,
+    marginLeft: 195,
     //axisBottom: false,
     "layout": {
-      "w": 12,
       "h": 18
     }
   },
   { "type":"CensusStackedBarChart",
     "broadCensusKey": "B25091",
     orientation: 'horizontal',
-    marginLeft: 150,
-    // axisBottom: false,
-    "layout": {
-      "w":12,
-    },
+    marginLeft: 140,
     left: { key: "With Mortgage", slice: [0, 9] },
     right: { key: "Without Mortgage", slice: [10, 19] },
     labels: [
