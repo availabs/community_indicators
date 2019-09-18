@@ -96,10 +96,7 @@ class CensusLineChart extends React.Component {
                       <table>
                         <thead>
                           <tr>
-                            <th colSpan="3"><GeoName geoid={ this.props.geoid }/></th>
-                          </tr>
-                          <tr>
-                            <th colSpan="3">Year: { id }</th>
+                            <th colSpan="3" style={ { fontSize: "1rem" } }>Year: { id }</th>
                           </tr>
                         </thead>
                         <tbody>

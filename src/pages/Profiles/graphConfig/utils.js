@@ -6,8 +6,8 @@ const DEFAULT_LAYOUT = {
   static: true
 }
 
-export const maleColor = '#88bbff';
-export const femaleColor = '#e98fac';
+export const maleColor = '#99ccff';
+export const femaleColor = '#faafbc';
 
 export const configLoader = BASE_CONFIG => {
 

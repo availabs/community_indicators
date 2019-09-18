@@ -7,6 +7,7 @@ import {
 const BASE_CONFIG = [
     {
         type: 'CensusBarChart',
+        title: "Median Family Income by Family Size",
         censusKeys: [
           'B19119_001E',
           'B19119_002E',
@@ -63,6 +64,7 @@ const BASE_CONFIG = [
     },
     {
         type: 'CensusBarChart',
+        title: "Language Spoken at Home by Ability to Speak English",
         censusKeys: [
           'B16001_004E',
           'B16001_005E',

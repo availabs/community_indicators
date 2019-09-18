@@ -51,7 +51,6 @@ class CensusBarChart extends React.Component {
     if(this.props.sorted) {
       this.props.barData.sort((a,b) => a[this.props.geoids[0]] - b[this.props.geoids[0]])
     }
-console.log("MARGIN LEFT:", this.props.title, this.props.marginLeft)
     return (
       <div style={ { width: "100%", height: "100%" } }>
         <div style={ { height: "30px" } }>
@@ -79,17 +78,13 @@ console.log("MARGIN LEFT:", this.props.title, this.props.marginLeft)
               )
             }
             axisLeft={ {
-              format: this.props.layout === 'horizontal'
-              ? fmt
-              : !this.props.axisBottom ? null :
-               this.props.getKeyName
+              format: this.props.orientation === 'horizontal' ? this.props.getKeyName : fmt
             } }
-            axisBottom={ {
-              format: this.props.layout === 'vertical' && fmt
-              ? fmt
-              : !this.props.axisBottom ? null :
-                this.props.getKeyName
-            }}/>
+            axisBottom={
+              !this.props.axisBottom ? null : {
+                format: this.props.orientation === "horizontal" ? fmt : this.props.getKeyName
+              }
+            }/>
         </div>
       </div>
     );
