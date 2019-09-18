@@ -22,7 +22,7 @@ const BASE_CONFIG = [
   { "type": "CensusBarChart",
     "broadCensusKey": "B25087",
     orientation: 'horizontal',
-    marginLeft: 195,
+    marginLeft: 300,
     //axisBottom: false,
     "layout": {
       "h": 18
@@ -33,7 +33,7 @@ const BASE_CONFIG = [
     orientation: 'horizontal',
     marginLeft: 140,
     left: { key: "With Mortgage", slice: [0, 9] },
-    right: { key: "Without Mortgage", slice: [10, 19] },
+    right: { key: "Without Mortgage", slice: [9, 18] },
     labels: [
       'Less than 10.0 percent',
       '10.0 to 14.9 percent',

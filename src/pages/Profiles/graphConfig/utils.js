@@ -15,19 +15,19 @@ export const configLoader = BASE_CONFIG => {
 
   const rects = [new Rect(0, -1, 12, 1)] // <-- this is the "ground" rect
 
-  return BASE_CONFIG.map(config => {
+  return BASE_CONFIG.map((config, index) => {
     if (config["broadCensusKey"]) {
       const bk = CENSUS_CONFIG[config["broadCensusKey"]];
       config.censusKeys = bk.variables.map(v => v.value);
-      config.getKeyName = key => bk.variables.reduce((a, c) => c.value === key ? c.name : a, key)
+      // config.getKeyName = key => bk.variables.reduce((a, c) => c.value === key ? c.name : a, key)
       config.name = bk.name;
       config.title = bk.name;
     }
     else if (config["censusKeyNames"]) {
-      config.getKeyName = key => config["censusKeyNames"][key]
+      // config.getKeyName = key => config["censusKeyNames"][key]
     }
     else {
-      config.getKeyName = config.getKeyName || (key => key);
+      // config.getKeyName = config.getKeyName || (key => key);
     }
     if (config["left"] && config["left"].slice) {
       config["left"].keys = config.censusKeys.slice(...config["left"].slice);
@@ -53,12 +53,12 @@ export const configLoader = BASE_CONFIG => {
     while (isIntersecting(rect, rects)) {
       rect.translateY(1);
     }
+
+    applyGravity(rect, rects);
     rects.push(rect);
 
-    applyGravity(rects);
-
     config.layout = rect.getLayout();
-    x += layout.w;
+    x += rect.w;
     y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
 
     return config;
@@ -68,18 +68,13 @@ export const configLoader = BASE_CONFIG => {
 const isIntersecting = (rect, rects) =>
   rects.reduce((a, c) => a || c.intersects(rect), false)
 
-const applyGravity = rects => {
-  for (let i = 1; i < rects.length; ++i) {
-    const rect = rects[i],
-      others = rects.filter((r, ii) => i !== ii);
-
+const applyGravity = (rect, others) => {
+  rect.translateY(-1);
+  
+  while (!isIntersecting(rect, others)) {
     rect.translateY(-1);
-
-    while (!isIntersecting(rect, others)) {
-      rect.translateY(-1);
-    }
-    rect.translateY(1);
   }
+  rect.translateY(1);
 }
 
 export class Rect {

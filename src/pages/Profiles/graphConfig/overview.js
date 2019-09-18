@@ -66,7 +66,7 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       "layout":{
-         "w":3,
+         "w":2,
          "h":9
       }
    },
@@ -77,7 +77,7 @@ const BASE_CONFIG = [
       divisorKeys: ["B17001_001E"],
       sumType: 'pct',
       "layout":{
-         "w":9,
+         "w":10,
          "h":9
       },
    },

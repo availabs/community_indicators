@@ -15,6 +15,7 @@ import get from "lodash.get"
 import styled from "styled-components"
 
 import GeoName from 'components/censusCharts/geoname'
+import CensusName from 'components/censusCharts/CensusName'
 
 const DEFAULT_COLORS = getColorRange(12, "Set3")
 
@@ -32,7 +33,7 @@ const Tooltip = ({ color, value, label, geoid }) =>
   <TooltipContainer>
     <div style={ { width: "15px", height: "15px", background: color, marginRight: "5px" } }/>
     <div><GeoName geoid={ geoid }/></div>
-    <div style={ { marginRight: "5px", fontWeight: "bold" } }>{ label }</div>
+    <div style={ { marginRight: "5px", fontWeight: "bold" } }><CensusName key={ label } censusKeys={ [label] }/></div>
     <div>{ value }</div>
   </TooltipContainer>
 
@@ -51,10 +52,11 @@ class CensusBarChart extends React.Component {
     if(this.props.sorted) {
       this.props.barData.sort((a,b) => a[this.props.geoids[0]] - b[this.props.geoids[0]])
     }
+    const getKeyName = key => get(this.props.acsGraph, ["meta", key, "label"], key);
     return (
       <div style={ { width: "100%", height: "100%" } }>
         <div style={ { height: "30px" } }>
-          <Title title={ this.props.title }/>
+          <div style={ { maxWidth: "calc(100% - 285px)" } }><Title title={ this.props.title }/></div>
           <Options />
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
@@ -74,15 +76,15 @@ class CensusBarChart extends React.Component {
                 <Tooltip geoid={ id }
                   value={ fmt(value) }
                   color={ color }
-                  label={ this.props.getKeyName(indexValue) }/>
+                  label={ indexValue }/>
               )
             }
             axisLeft={ {
-              format: this.props.orientation === 'horizontal' ? this.props.getKeyName : fmt
+              format: this.props.orientation === 'horizontal' ? getKeyName : fmt
             } }
             axisBottom={
               !this.props.axisBottom ? null : {
-                format: this.props.orientation === "horizontal" ? fmt : this.props.getKeyName
+                format: this.props.orientation === "horizontal" ? fmt : getKeyName
               }
             }/>
         </div>
@@ -92,7 +94,8 @@ class CensusBarChart extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  barData: getBarData(state, props)
+  barData: getBarData(state, props),
+  acsGraph: get(state, ["graph", "acs"], {})
 })
 
 const getBarData = (state, props) =>

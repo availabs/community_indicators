@@ -50,9 +50,10 @@ class CensusLineChart extends React.Component {
 
     render () {
         const title = this.props.title;
+        const getKeyName = key => (console.log("KEY:", key), get(this.props, ["acs", "meta", key, "label"], key));
         return(
             <div style={{height: '100%'}}>
-              <div style={ { height: "30px" } }>
+              <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
                 <Title title={ title }/>
                 <Options />
               </div>
@@ -104,7 +105,7 @@ class CensusLineChart extends React.Component {
                             data.map(({ data, serie: { id, color } }) =>
                               <tr key={ id }>
                                 <td style={ { paddingRight: "5px" } }><div style={ { width: "15px", height: "15px", background: color } }/></td>
-                                <td style={ { paddingRight: "5px" } }>{ id }</td>
+                                <td style={ { paddingRight: "5px" } }>{ getKeyName(id) }</td>
                                 <td style={ { textAlign: "right" } }>{ data.y }</td>
                               </tr>
                             )
@@ -134,10 +135,8 @@ class CensusLineChart extends React.Component {
 
 const mapDispatchToProps = { };
 
-const mapStateToProps = (state,ownProps) => {
-    return {
-        acs: get(state, `graph.acs`, {}),
-        theme: state.user.theme
-    };
-};
+const mapStateToProps = (state, ownProps) => ({
+  acs: get(state, `graph.acs`, {}),
+  theme: state.user.theme
+})
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusLineChart))
