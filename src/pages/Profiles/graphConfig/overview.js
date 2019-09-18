@@ -14,7 +14,7 @@ const BASE_CONFIG = [
       compareYear: 2016,
       "title": "Population",
       "layout":{
-         "w":2,
+         "w":3,
          "h":3
       }
    },
@@ -27,7 +27,7 @@ const BASE_CONFIG = [
       year,
       "demographics":true,
       "layout":{
-         "w":2,
+         "w":3,
          "h":3
       }
    },
@@ -39,7 +39,7 @@ const BASE_CONFIG = [
       "amount":true,
       year,
       "layout":{
-         "w":2,
+         "w":3,
          "h":9,
          "x":0
       }
@@ -51,7 +51,7 @@ const BASE_CONFIG = [
          "B19013_001E"
       ],
       "layout":{
-         "w":10,
+         "w":9,
          "h":9
       }
    },
@@ -66,9 +66,8 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       "layout":{
-         "w":2,
-         "h":9,
-         x: 0
+         "w":3,
+         "h":9
       }
    },
    {
@@ -78,7 +77,7 @@ const BASE_CONFIG = [
       divisorKeys: ["B17001_001E"],
       sumType: 'pct',
       "layout":{
-         "w":10,
+         "w":9,
          "h":9
       },
    },
@@ -93,7 +92,7 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       "layout":{
-         "w":2,
+         "w":3,
          "h":3,
          "x":0
       }
@@ -104,7 +103,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       censusKey:"B25002_003E",
       "layout":{
-         "w":2,
+         "w":3,
          "h":3,
          "x":0
       },
@@ -115,7 +114,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       censusKey:"B25002_002E",
       "layout":{
-         "w":2,
+         "w":3,
          "h":3,
          "x":0
       },
@@ -127,7 +126,7 @@ const BASE_CONFIG = [
       censusKeys:["B25002_003E"],
       divisorKeys:["B25002_001E"],
       "layout":{
-         "w":10,
+         "w":9,
          "h":9
       }
    },

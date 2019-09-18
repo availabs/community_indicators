@@ -6,8 +6,8 @@ const DEFAULT_LAYOUT = {
   static: true
 }
 
-export const maleColor = '#5588ee';
-export const femaleColor = '#e68fac';
+export const maleColor = '#88bbff';
+export const femaleColor = '#e98fac';
 
 export const configLoader = BASE_CONFIG => {
 
@@ -22,6 +22,9 @@ export const configLoader = BASE_CONFIG => {
       config.getKeyName = key => bk.variables.reduce((a, c) => c.value === key ? c.name : a, key)
       config.name = bk.name;
       config.title = bk.name;
+    }
+    else if (config["censusKeyNames"]) {
+      config.getKeyName = key => config["censusKeyNames"][key]
     }
     else {
       config.getKeyName = config.getKeyName || (key => key);

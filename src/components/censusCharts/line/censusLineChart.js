@@ -43,7 +43,7 @@ class CensusLineChart extends React.Component {
                         x: +year,
                         y: value
                     }
-                })
+                }).filter(({ y }) => y !== -666666666)
             }
         })
     }
@@ -58,12 +58,12 @@ class CensusLineChart extends React.Component {
               </div>
               <div style={ { height: "calc(100% - 30px)" } }>
                 <ResponsiveLine
-                    data={this.lineData()}
+                    data={ this.lineData() }
                     margin={{
                             "top": 30,
                             "right": 20,
                             "bottom": 30,
-                            "left": 60
+                            "left": 100
                     }}
                     xScale={{
                         "type": "point"
@@ -93,13 +93,27 @@ class CensusLineChart extends React.Component {
                     motionStiffness={90}
                     motionDamping={15}
                     tooltip={({ id, indexValue, value, color, data }) => (
-                    <div>
-                        <h6>{title}</h6>
-                        <h6><GeoName geoid={this.props.geoid} /></h6>
-                         Year : {id}
-                        <br/>
-                        Value: {Object.values(data)[0]['data'].y.toLocaleString()}
-                    </div>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th colSpan="3"><GeoName geoid={ this.props.geoid }/></th>
+                          </tr>
+                          <tr>
+                            <th colSpan="3">Year: { id }</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {
+                            data.map(({ data, serie: { id, color } }) =>
+                              <tr key={ id }>
+                                <td style={ { paddingRight: "5px" } }><div style={ { width: "15px", height: "15px", background: color } }/></td>
+                                <td style={ { paddingRight: "5px" } }>{ id }</td>
+                                <td style={ { textAlign: "right" } }>{ data.y }</td>
+                              </tr>
+                            )
+                          }
+                        </tbody>
+                      </table>
                     )}/>
                 </div>
            </div>
