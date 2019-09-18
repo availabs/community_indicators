@@ -80,18 +80,16 @@ class Profile extends React.Component{
         return (
             <Element name={name} key={ name }>
                 <div className='content-box'>
-                  {
-                    !profileHeader ? null :
                     <div className='element-wrapper'>
-                      <div classname='element-content'>
-                        <div className="container" style={ { marginTop: "-2rem" } }>
-                          <ProfileFooter { ...profileHeader }/>
-                        </div>
-                      </div>
-                    </div>
-                  }
-                    <div className='element-wrapper'>
-                        <h4 className='element-header'> {name.toUpperCase()} </h4>
+                        <h4 className='element-header'>{ name.toUpperCase() }</h4>
+                          {
+                            !profileHeader ? null :
+                            <div classname='element-content' style={ { marginTop: "-0.9rem" } }>
+                              <div className="container">
+                                <ProfileFooter { ...profileHeader }/>
+                              </div>
+                            </div>
+                          }
                         <div classname='element-content'>
                             <GridLayout
                               sideWidth={800}

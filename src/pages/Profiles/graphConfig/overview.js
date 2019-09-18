@@ -57,7 +57,6 @@ const BASE_CONFIG = [
    },
 
    {
-      id:"6",
       type:"CensusStatBox",
       title:'Poverty Rate',
       sumType: 'pct',
@@ -73,7 +72,6 @@ const BASE_CONFIG = [
       }
    },
    {
-      "id":"7",
       type:"CensusLineChart",
       title: "% of Population with income in the past 12 months below poverty level",
       censusKeys:["B17001_002E"],
@@ -130,8 +128,7 @@ const BASE_CONFIG = [
       divisorKeys:["B25002_001E"],
       "layout":{
          "w":10,
-         "h":9,
-         "x":2
+         "h":9
       }
    },
 
