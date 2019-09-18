@@ -108,7 +108,7 @@ const BASE_CONFIG = [
           'B16001_077E',
         ],
         orientation: 'horizontal',
-        marginLeft: 350,
+        marginLeft: 500,
         sorted: true,
         layout: { h: 18 }
     },

@@ -7,7 +7,7 @@ const DEFAULT_LAYOUT = {
 }
 
 export const maleColor = '#99ccff';
-export const femaleColor = '#faafbc';
+export const femaleColor = '#ffafcc';
 
 export const configLoader = BASE_CONFIG => {
 
@@ -70,7 +70,7 @@ const isIntersecting = (rect, rects) =>
 
 const applyGravity = (rect, others) => {
   rect.translateY(-1);
-  
+
   while (!isIntersecting(rect, others)) {
     rect.translateY(-1);
   }
