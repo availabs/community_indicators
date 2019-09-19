@@ -80,13 +80,18 @@ export const configLoader = BASE_CONFIG => {
       x = 0;
     }
 
+    if (layout.y !== undefined) {
+      y = layout.y;
+    }
     const rect = new Rect(x, y, layout.w, layout.h);
 
     while (isIntersecting(rect, rects)) {
       rect.translateY(1);
     }
 
-    applyGravity(rect, rects);
+    if (layout.y === undefined) {
+      applyGravity(rect, rects);
+    }
     rects.push(rect);
 
     config.layout = rect.getLayout();

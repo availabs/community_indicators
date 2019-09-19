@@ -74,6 +74,7 @@ const BASE_CONFIG = [
   },
   { type: "CensusStackedBarChart",
     title: "Tenure by Household Icome in the Past 12 Months",
+    marginLeft: 140,
     left: { key: "Owner Occupied",
       keys: [
         "B25118_003E",
