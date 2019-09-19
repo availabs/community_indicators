@@ -5,7 +5,8 @@ import get from 'lodash.get'
 
 class CensusName extends React.Component {
   static defaultProps = {
-    censusKeys: []
+    censusKeys: [],
+    removeLeading: 0
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
@@ -15,10 +16,30 @@ class CensusName extends React.Component {
   render() {
     return (
       <>
-        { this.props.censusNames.join(", ") }
+        { this.props.censusNames
+            .map(name => {
+              let split = name.split("!!");
+              if (split.length > this.props.removeLeading) {
+                split = split.slice(this.props.removeLeading);
+              }
+              return split.join(", ")
+            })
+            .join(", ")
+        }
       </>
     )
   }
+}
+
+export const getCensusKeyName = (key, removeLeading, acsGraph) => {
+  const name = get(acsGraph, ["meta", key, "label"], key);
+  if (typeof name !== "string") return key;
+
+  let split = name.split("!!");
+  if (split.length > removeLeading) {
+    split = split.slice(removeLeading);
+  }
+  return split.join(", ")
 }
 
 const mapStateToProps = (state, props) => ({

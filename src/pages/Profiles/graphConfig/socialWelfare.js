@@ -116,7 +116,7 @@ const BASE_CONFIG = [
         orientation: 'horizontal',
         marginLeft: 500,
         sorted: true,
-        layout: { h: 21 }
+        layout: { h: 18 }
     },
     {
       title: "Median Household Income by Race",
