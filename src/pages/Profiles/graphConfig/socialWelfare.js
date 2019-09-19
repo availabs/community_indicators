@@ -7,27 +7,25 @@ import {
 const BASE_CONFIG = [
     {
         type: 'CensusBarChart',
-        censusKeys: [
-          'B19119_001E',
-          'B19119_002E',
-          'B19119_003E',
-          'B19119_004E',
-          'B19119_005E',
-          'B19119_006E',
-          'B19119_007E'
-
-        ],
-        censusKeyNames: {
-          'B19119_001E': 'Total',
-          'B19119_002E': '2-person families',
-          'B19119_003E': '3-person families',
-          'B19119_004E': '4-person families',
-          'B19119_005E': '5-person families',
-          'B19119_006E': '6-person families',
-          'B19119_007E': '7-person families'
-        },
+        title: "Median Family Income by Family Size",
+        censusKeys: ['B19119_001E...B19119_007E'],
         years: ['2017'],
         yFormat: "$,d"
+    },
+    {
+      type: "CensusLineChart",
+      title: "Per Capita Income",
+      censusKeys: [
+        "B19301A_001E",
+        "B19301B_001E",
+        "B19301C_001E",
+        "B19301D_001E",
+        "B19301E_001E",
+        "B19301F_001E",
+        "B19301G_001E",
+        "B19301H_001E",
+        "B19301I_001E"
+      ]
     },
     {
         type: 'CensusStackedBarChart',
@@ -35,6 +33,7 @@ const BASE_CONFIG = [
         left: { key: "Male", slice: [2, 25], color: maleColor },
         right: { key: "Female", slice: [26, 49], color: femaleColor },
         layout: { h: 12 },
+        marginLeft: 115,
         labels: [
           'Under Age 5',
           'Ages 5-9',
@@ -63,6 +62,7 @@ const BASE_CONFIG = [
     },
     {
         type: 'CensusBarChart',
+        title: "Language Spoken at Home by Ability to Speak English",
         censusKeys: [
           'B16001_004E',
           'B16001_005E',
@@ -113,60 +113,10 @@ const BASE_CONFIG = [
           'B16001_076E',
           'B16001_077E',
         ],
-        censusKeyNames: {
-          'B16001_004E': 'Spanish or Spanish Creole Speak English very well',
-          'B16001_005E': 'Spanish or Spanish Creole Speak English Less than very well',
-          'B16001_007E': 'French (incl. Patois,Cajun) Speak English very well',
-          'B16001_008E': 'French (incl. Patois,Cajun) Speak English Less than very well',
-          'B16001_010E': 'French Creole Speak English very well',
-          'B16001_011E': 'French Creole Speak English Less than very well',
-          'B16001_013E': 'Italian Speak English very well',
-          'B16001_014E': 'Italian Speak English Less than very well',
-          'B16001_016E': 'Portuguese or Portuguese Creole Speak English very well',
-          'B16001_017E': 'Portuguese or Portuguese Creole Speak English Less than very well',
-          'B16001_019E': 'German Speak English very well',
-          'B16001_020E': 'German Speak English Less than very well',
-          'B16001_022E': 'Yiddish Speak English very well',
-          'B16001_023E': 'Yiddish Speak English Less than very well',
-          'B16001_094E': 'Tagalog Speak English very well ',
-          'B16001_095E': 'Tagalog Speak English Less than very well ',
-          'B16001_030E': 'Greek Speak English very well',
-          'B16001_031E': 'Greek Speak English Less than very well',
-          'B16001_034E': 'Russian Speak English very well',
-          'B16001_035E': 'Russian Speak English Less than very well',
-          'B16001_037E': 'Polish Speak English very well',
-          'B16001_038E': 'Polish Speak English Less than very well',
-          'B16001_040E': 'Serbo-Croatian Speak English very well',
-          'B16001_041E': 'Serbo-Croatian Speak English Less than very well',
-          'B16001_043E': 'Other Salvic Languages Speak English very well',
-          'B16001_044E': 'Other Salvic Languages Speak English Less than very well',
-          'B16001_091E': 'Other Asian Languages Speak English very well ',
-          'B16001_092E': 'Other Asian Languages Speak English Less than very well ',
-          'B16001_049E': 'Persian Speak English very well',
-          'B16001_050E': 'Persian Speak English Less than very well',
-          'B16001_052E': 'Gujarati Speak English very well',
-          'B16001_053E': 'Gujarati Speak English Less than very well',
-          'B16001_055E': 'Hindi Speak English very well',
-          'B16001_056E': 'Hindi Speak English Less than very well',
-          'B16001_058E': 'Urdu Speak English very well',
-          'B16001_059E': 'Urdu Speak English Less than very well',
-          'B16001_061E': 'Other Indic languages Speak English very well',
-          'B16001_062E': 'Other Indic languages Speak English Less than very well',
-          'B16001_064E': 'Other Indo-European languages Speak English very well',
-          'B16001_065E': 'Other Indo-European languages Speak English Less than very well',
-          'B16001_067E': 'Chinese Speak English very well',
-          'B16001_068E': 'Chinese Speak English Less than very well',
-          'B16001_070E': 'Japanese Speak English very well',
-          'B16001_071E': 'Japanese Speak English Less than very well',
-          'B16001_073E': 'Korean Speak English very well',
-          'B16001_074E': 'Korean Speak English Less than very well',
-          'B16001_076E': 'Mon-Khmer Cambodian Speak English very well',
-          'B16001_077E': 'Mon-Khmer Cambodian Speak English Less than very well',
-        },
         orientation: 'horizontal',
-        marginLeft: 350,
+        marginLeft: 500,
         sorted: true,
-        layout: { h: 18 }
+        layout: { h: 21 }
     },
     {
       title: "Median Household Income by Race",
@@ -224,7 +174,7 @@ const BASE_CONFIG = [
         broadCensusKey: 'B21001',
         left: { key: "Male", slice: [5, 20], color: maleColor },
         right: { key: "Female", slice: [23, 38], color: femaleColor },
-        marginLeft: 200,
+        marginLeft: 175,
         labels: [
           'Total 18-34',
           '18-34 years, veteran',

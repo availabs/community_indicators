@@ -6,12 +6,16 @@ import subMenus from './submenu.js'
 import ProfileHeader from './components/ProfileHeader'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
+import { falcorChunkerNice } from "store/falcorGraph"
 
 import GRAPH_CONFIG from './graphConfig'
 
 import styled from "styled-components"
 
-console.log("PROFILE>GRAPH_CONFIG", GRAPH_CONFIG)
+const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
+  .reduce((a, c) =>
+    [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]
+  , [])
 
 const Footer = styled.div`
   position: relative;
@@ -58,21 +62,9 @@ const ProfileFooter = ({ data }) =>
   </div>
 
 class Profile extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state={
-            graphConfig:[]
-        }
-        this.renderCategory = this.renderCategory.bind(this)
-        this.layoutChange = this.layoutChange.bind(this)
-    }
-
-    layoutChange(a,b) {
-        console.log('----layout change -------------')
-        console.log(a,b)
-        console.log('------------------------------')
-    }
-
+  fetchFalcorDeps() {
+    return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"]);
+  }
     renderCategory(name, configData) {
         // console.log('testing', configData)
         const profileHeader = configData.find(({ type }) => type === "ProfileHeader"),
