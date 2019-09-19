@@ -36,6 +36,8 @@ export const configLoader = BASE_CONFIG => {
   const rects = [new Rect(0, -1, 12, 1)] // <-- this is the "ground" rect
 
   return BASE_CONFIG.map((config, index) => {
+    if (config.type === "ProfileFooter" || config.type === "ProfileHeader") return config;
+
     if (config["broadCensusKey"]) {
       const bk = CENSUS_CONFIG[config["broadCensusKey"]];
       config.censusKeys = bk.variables.map(v => v.value);
