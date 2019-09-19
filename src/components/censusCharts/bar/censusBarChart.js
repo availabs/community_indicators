@@ -63,7 +63,8 @@ class CensusBarChart extends React.Component {
           <ResponsiveBar indexBy={ "id" }
             keys={ this.props.geoids }
             data={ this.props.barData }
-            margin={ { top: 10, right: 20,
+            margin={ { right: 20,
+              top: this.props.orientation === "horizontal" ? 0 : 10, 
               bottom: this.props.axisBottom ? 30 : 20,
               left: this.props.marginLeft } }
             colors={ d => colors(d.id) }

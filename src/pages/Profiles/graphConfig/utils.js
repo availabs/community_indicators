@@ -9,6 +9,26 @@ const DEFAULT_LAYOUT = {
 export const maleColor = '#99ccff';
 export const femaleColor = '#ffafcc';
 
+const keyRegex = /\w{6}\w?_(\d{3})\w/
+
+
+const expandKeys = keys =>
+  keys.reduce((a, c) => [...a, ...expandKeyRange(c)], [])
+const expandKeyRange = key => {
+  const split = key.split("...");
+  if (split.length === 1) return split;
+  const [start, end] = split,
+    matchStart = keyRegex.exec(start),
+    matchEnd = keyRegex.exec(end),
+    s = +matchStart[1],
+    e = +matchEnd[1],
+    keys = [];
+  for (let i = s; i <= e; ++i) {
+    keys.push(start.replace(`_${ matchStart[1] }`, `_${ (`000${ i }`).slice(-3) }`));
+  }
+  return keys;
+}
+
 export const configLoader = BASE_CONFIG => {
 
   let x = 0, y = 0;
@@ -29,11 +49,21 @@ export const configLoader = BASE_CONFIG => {
     else {
       // config.getKeyName = config.getKeyName || (key => key);
     }
-    if (config["left"] && config["left"].slice) {
+    if (config["left"] && config["left"].keys &&
+        config["right"] && config["right"].keys) {
+      config["left"].keys =  expandKeys(config["left"].keys);
+      config["right"].keys =  expandKeys(config["right"].keys);
+      config["censusKeys"] = [...config["left"].keys, ...config["right"].keys];
+    }
+    if (config["left"] && config["left"].slice && config.censusKeys) {
       config["left"].keys = config.censusKeys.slice(...config["left"].slice);
     }
-    if (config["right"] && config["right"].slice) {
+    if (config["right"] && config["right"].slice && config.censusKeys) {
       config["right"].keys = config.censusKeys.slice(...config["right"].slice);
+    }
+
+    if (config.censusKeys) {
+      config.censusKeys = expandKeys(config.censusKeys);
     }
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
@@ -65,8 +95,8 @@ export const configLoader = BASE_CONFIG => {
   })
 }
 
-const isIntersecting = (rect, rects) =>
-  rects.reduce((a, c) => a || c.intersects(rect), false)
+const isIntersecting = (rect, others) =>
+  others.reduce((a, c) => a || c.intersects(rect), false)
 
 const applyGravity = (rect, others) => {
   rect.translateY(-1);
@@ -77,7 +107,7 @@ const applyGravity = (rect, others) => {
   rect.translateY(1);
 }
 
-export class Rect {
+class Rect {
   constructor(x, y, w, h) {
     this.x = x;
     this.y = y;

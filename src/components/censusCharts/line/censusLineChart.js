@@ -34,8 +34,7 @@ class CensusLineChart extends React.Component {
                     if(this.props.sumType === 'pct') {
                         const divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1);
                         if ((divisor !== null) && !isNaN(divisor)) {
-                          value /= divisor
-                          value *= 100
+                          value = value / divisor * 100;
                         }
                     }
 
@@ -50,7 +49,9 @@ class CensusLineChart extends React.Component {
 
     render () {
         const title = this.props.title;
-        const getKeyName = key => (console.log("KEY:", key), get(this.props, ["acs", "meta", key, "label"], key));
+        const getKeyName = key =>
+          this.props.divisorKeys.length ? "Value" :
+          get(this.props, ["acs", "meta", key, "label"], key);
         return(
             <div style={{height: '100%'}}>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
@@ -122,7 +123,6 @@ class CensusLineChart extends React.Component {
         censusKeys: ['B19013_001E'], //'B19013',,
         divisorKeys: [],
         geoids: ['36001'],
-        PovertyPopulationBySex: false,
         colorRange:['#047bf8','#6610f2','#6f42c1','#e83e8c','#e65252','#fd7e14','#fbe4a0','#24b314','#20c997','#5bc0de'],
         years: [2010,2011,2012,2013,2014,2015,2016],
         curve: 'cardinal',

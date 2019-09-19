@@ -8,18 +8,24 @@ const BASE_CONFIG = [
     {
         type: 'CensusBarChart',
         title: "Median Family Income by Family Size",
-        censusKeys: [
-          'B19119_001E',
-          'B19119_002E',
-          'B19119_003E',
-          'B19119_004E',
-          'B19119_005E',
-          'B19119_006E',
-          'B19119_007E'
-
-        ],
+        censusKeys: ['B19119_001E...B19119_007E'],
         years: ['2017'],
         yFormat: "$,d"
+    },
+    {
+      type: "CensusLineChart",
+      title: "Per Capita Income",
+      censusKeys: [
+        "B19301A_001E",
+        "B19301B_001E",
+        "B19301C_001E",
+        "B19301D_001E",
+        "B19301E_001E",
+        "B19301F_001E",
+        "B19301G_001E",
+        "B19301H_001E",
+        "B19301I_001E"
+      ]
     },
     {
         type: 'CensusStackedBarChart',
@@ -110,7 +116,7 @@ const BASE_CONFIG = [
         orientation: 'horizontal',
         marginLeft: 500,
         sorted: true,
-        layout: { h: 18 }
+        layout: { h: 21 }
     },
     {
       title: "Median Household Income by Race",
@@ -168,7 +174,7 @@ const BASE_CONFIG = [
         broadCensusKey: 'B21001',
         left: { key: "Male", slice: [5, 20], color: maleColor },
         right: { key: "Female", slice: [23, 38], color: femaleColor },
-        marginLeft: 200,
+        marginLeft: 175,
         labels: [
           'Total 18-34',
           '18-34 years, veteran',

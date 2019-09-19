@@ -11,7 +11,7 @@ const BASE_CONFIG = [
       "type":"CensusStatBox",
       "censusKey":"B01003_001E",
       year,
-      compareYear: 2016,
+      compareYear: year - 1,
       "title": "Population",
       "layout":{
          "w":3,
@@ -62,6 +62,7 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKey:"B17001_002E",
       divisorKey: "B17001_001E",
+      compareYear: year - 1,
       year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
