@@ -6,29 +6,15 @@ import {
 
 const BASE_CONFIG = [
     {
-        type: 'CensusBarChart',
-        title: "Median Family Income by Family Size",
-        censusKeys: ['B19119_001E...B19119_007E'],
-        years: ['2017'],
-        yFormat: "$,d"
-    },
-    {
-      type: "CensusLineChart",
-      title: "Per Capita Income",
-      marginLeft: 75,
-      yFormat: "$,d",
-      censusKeys: [
-        "B19301A_001E",
-        "B19301B_001E",
-        "B19301C_001E",
-        "B19301D_001E",
-        "B19301E_001E",
-        "B19301F_001E",
-        "B19301G_001E",
-        "B19301H_001E",
-        "B19301I_001E"
-      ]
-    },
+          type: "TextBox",
+          header: "SOCIAL WELFARE",
+          body: "This section covers issues related to fabric of our community",
+          layout: { 
+            h: 3,
+            w: 12
+             }
+        },
+
     {
         type: 'CensusStackedBarChart',
         broadCensusKey: 'B01001',
@@ -60,6 +46,42 @@ const BASE_CONFIG = [
           'Ages 75-79',
           'Ages 80-84',
           'Ages 85 and over'
+        ]
+    },
+        {
+        type:'CensusStackedBarChart',
+        broadCensusKey: 'B17001',
+        left: { key: "Below Poverty Level", slice: [0, 26] },
+        right: { key: "Above Poverty Level", slice: [26, 52] },
+        marginLeft: 150,
+        layout: { h: 12 },
+        labels: [
+          'Male Under age 5',
+          'Male age 5',
+          'Male ages 6-11',
+          'Male ages 12-14',
+          'Male ages 15',
+          'Male ages 16-17',
+          'Male ages 18-24',
+          'Male ages 25-34',
+          'Male ages 35-44',
+          'Male ages 45-54',
+          'Male ages 55-64',
+          'Male ages 65-74',
+          'Male ages 75 and over',
+          'Female Under age 5',
+          'Female age 5',
+          'Female ages 6-11',
+          'Female ages 12-14',
+          'Female ages 15',
+          'Female ages 16-17',
+          'Female ages 18-24',
+          'Female ages 25-34',
+          'Female ages 35-44',
+          'Female ages 45-54',
+          'Female ages 55-64',
+          'Female ages 65-74',
+          'Female ages 75 and over',
         ]
     },
     {
@@ -120,59 +142,7 @@ const BASE_CONFIG = [
         sorted: true,
         layout: { h: 18 }
     },
-    {
-      title: "Median Household Income by Race",
-      type: 'CensusLineChart',
-      marginLeft: 75,
-      yFormat: "$,d",
-      censusKeys: [
-        'B19013A_001E',
-        'B19013B_001E',
-        'B19013C_001E',
-        'B19013D_001E',
-        'B19013E_001E',
-        'B19013F_001E',
-        'B19013G_001E',
-        'B19013H_001E',
-        'B19013I_001E'
-      ]
-    },
-    {
-        type:'CensusStackedBarChart',
-        broadCensusKey: 'B17001',
-        left: { key: "Below Poverty Level", slice: [0, 26] },
-        right: { key: "Above Poverty Level", slice: [26, 52] },
-        marginLeft: 150,
-        layout: { h: 12 },
-        labels: [
-          'Male Under age 5',
-          'Male age 5',
-          'Male ages 6-11',
-          'Male ages 12-14',
-          'Male ages 15',
-          'Male ages 16-17',
-          'Male ages 18-24',
-          'Male ages 25-34',
-          'Male ages 35-44',
-          'Male ages 45-54',
-          'Male ages 55-64',
-          'Male ages 65-74',
-          'Male ages 75 and over',
-          'Female Under age 5',
-          'Female age 5',
-          'Female ages 6-11',
-          'Female ages 12-14',
-          'Female ages 15',
-          'Female ages 16-17',
-          'Female ages 18-24',
-          'Female ages 25-34',
-          'Female ages 35-44',
-          'Female ages 45-54',
-          'Female ages 55-64',
-          'Female ages 65-74',
-          'Female ages 75 and over',
-        ]
-    },
+
     {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B21001',
@@ -201,12 +171,6 @@ const BASE_CONFIG = [
     {
       type: "ProfileFooter",
       data: [
-        [
-          { type: "header", value: "ALICE from United Way" },
-          { type: "subheader", value: "Reports, Visualizations, and Data Downloads" },
-          { type: "body", value: "The ALICE (Asset Limited, Income Constrained, Employed) Project was initiated by United Way of Northern New Jersey several years ago to bring focus to the families and individuals who work but whose salaries do not provide sufficient resources to meet basic needs. The ALICE Project developed a methodology using publicly available census, employment, wage, cost of living and other data to help to understand the extent of ALICE in our communities, those who are above the federal poverty level, but below a sustainable wage." },
-          { type: "link", value: "https://www.unitedforalice.org/new-york" }
-        ],
         [
           { type: "header", value: "New York State Division of Criminal Justice Services" },
           { type: "subheader", value: "Data Downloads and Report Publications" },

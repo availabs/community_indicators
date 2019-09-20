@@ -7,16 +7,6 @@ import {
 const year = 2017;
 
 const BASE_CONFIG = [
-   {
-      type: "ProfileHeader",
-      data: [
-        [
-          { type: "header", value: "Center for Economic Growth (CEG) - Economic Scorecard" },
-          { type: "subheader", value: "Reports and Visualizations" },
-          { type: "body", value: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation." },
-        ]
-      ]
-    },
 
    {
       "type":"CensusStatBox",
@@ -147,6 +137,24 @@ const BASE_CONFIG = [
       }
    },
 
+       {
+      type: "CensusLineChart",
+      title: "Per Capita Income",
+      marginLeft: 75,
+      yFormat: "$,d",
+      censusKeys: [
+        "B19301A_001E",
+        "B19301B_001E",
+        "B19301C_001E",
+        "B19301D_001E",
+        "B19301E_001E",
+        "B19301F_001E",
+        "B19301G_001E",
+        "B19301H_001E",
+        "B19301I_001E"
+      ]
+    },
+
    // {
    //    "id":"12",
    //    "type":"CensusGroupedBarChart",
@@ -174,13 +182,13 @@ const BASE_CONFIG = [
       type: "ProfileFooter",
       data: [
         [
-          { type: "header", value: "Center for Economic Growth (CEG) - Economic Scorecard" },
-          { type: "subheader", value: "Reports and Visualizations" },
-          { type: "body", value: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation." },
-          { type: "link", value: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6" }
+          { type: "header", value: "ALICE from United Way" },
+          { type: "subheader", value: "Reports, Visualizations, and Data Downloads" },
+          { type: "body", value: "The ALICE (Asset Limited, Income Constrained, Employed) Project was initiated by United Way of Northern New Jersey several years ago to bring focus to the families and individuals who work but whose salaries do not provide sufficient resources to meet basic needs. The ALICE Project developed a methodology using publicly available census, employment, wage, cost of living and other data to help to understand the extent of ALICE in our communities, those who are above the federal poverty level, but below a sustainable wage." },
+          { type: "link", value: "https://www.unitedforalice.org/new-york" }
         ]
       ]
-    }
+     }
 ]
 
 export default configLoader(BASE_CONFIG)

@@ -6,6 +6,16 @@ import {
 
 const BASE_CONFIG = [
   {
+          type: "TextBox",
+          header: "ECONOMY",
+          body: "The economic security of individuals and families is essential to achieving the values of American society. For complex reasons, this financial security is beyond the means of many in our community.",
+          layout: { 
+            h: 3,
+            w: 12
+             }
+        },
+
+  {
     type: "CensusStackedBarChart",
     title: "Labor Force Participation",
     orientation: "horizontal",
@@ -67,7 +77,27 @@ const BASE_CONFIG = [
     censusKeys: ["B19019_001E...B19019_008E"],
     marginLeft: 75,
     yFormat: "$,d"
-  }
+  },
+
+      {
+        type: 'CensusBarChart',
+        title: "Median Family Income by Family Size",
+        censusKeys: ['B19119_001E...B19119_007E'],
+        years: ['2017'],
+        yFormat: "$,d"
+    },
+
+    {
+      type: "ProfileFooter",
+      data: [
+        [
+          { type: "header", value: "Center for Economic Growth (CEG) - Economic Scorecard" },
+          { type: "subheader", value: "Reports and Visualizations" },
+          { type: "body", value: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation." },
+          { type: "link", value: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6" }
+        ]
+      ]
+    }
 ]
 
 export default configLoader(BASE_CONFIG);

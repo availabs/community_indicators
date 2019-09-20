@@ -6,6 +6,16 @@ import {
 
 const BASE_CONFIG = [
   {
+          type: "TextBox",
+          header: "TRANSPORTATION",
+          body: "This section provides indicators on how the labor force in our region commutes to work and on car ownership.",
+          layout: { 
+            h: 3,
+            w: 12
+             }
+        },
+
+  {
     type: "CensusBarChart",
     title: "Means of Transportation to Work",
     censusKeys: ["B08006_002E...B08006_017E"],
