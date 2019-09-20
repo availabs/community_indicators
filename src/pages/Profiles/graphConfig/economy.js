@@ -53,6 +53,20 @@ const BASE_CONFIG = [
     yFormat: "$,d",
     censusKeys: ["B24031_001E...B24031_027E"],
     removeLeading: 1
+  },
+  {
+    type: "CensusLineChart",
+    title: "Median Household Income by Race",
+    censusKeys: ["B19013A_001E...B19013I_001E"],
+    marginLeft: 75,
+    yFormat: "$,d"
+  },
+  {
+    type: "CensusLineChart",
+    title: "Median Household Income by Household Size",
+    censusKeys: ["B19019_001E...B19019_008E"],
+    marginLeft: 75,
+    yFormat: "$,d"
   }
 ]
 

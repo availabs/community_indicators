@@ -6,9 +6,10 @@ import { ResponsiveLine } from '@nivo/line'
 import Options from '../Options'
 import Title from "../ComponentTitle"
 import GeoName from 'components/censusCharts/geoname'
+import CensusName, { getCensusKeyName } from 'components/censusCharts/CensusName'
 import get from 'lodash.get'
 
-
+import { format } from "d3-format"
 
 class CensusLineChart extends React.Component {
 
@@ -34,7 +35,7 @@ class CensusLineChart extends React.Component {
                     if(this.props.sumType === 'pct') {
                         const divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1);
                         if ((divisor !== null) && !isNaN(divisor)) {
-                          value = value / divisor * 100;
+                          value = value / divisor;
                         }
                     }
 
@@ -48,10 +49,11 @@ class CensusLineChart extends React.Component {
     }
 
     render () {
-        const title = this.props.title;
-        const getKeyName = key =>
-          this.props.divisorKeys.length ? "Value" :
-          get(this.props, ["acs", "meta", key, "label"], key);
+        const title = this.props.title,
+          yFormat = format(this.props.yFormat),
+          getKeyName = key =>
+            this.props.divisorKeys.length ? "Value" :
+            getCensusKeyName(key, this.props.acs, this.props.removeLeading);
         return(
             <div style={{height: '100%'}}>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
@@ -65,7 +67,7 @@ class CensusLineChart extends React.Component {
                             "top": 30,
                             "right": 20,
                             "bottom": 30,
-                            "left": 100
+                            "left": this.props.marginLeft
                     }}
                     xScale={{
                         "type": "point"
@@ -94,6 +96,9 @@ class CensusLineChart extends React.Component {
                     areaOpacity={0.35}
                     motionStiffness={90}
                     motionDamping={15}
+                    axisLeft={ {
+                      format: yFormat
+                    } }
                     tooltip={({ id, indexValue, value, color, data }) => (
                       <table>
                         <thead>
@@ -107,7 +112,7 @@ class CensusLineChart extends React.Component {
                               <tr key={ id }>
                                 <td style={ { paddingRight: "5px" } }><div style={ { width: "15px", height: "15px", background: color } }/></td>
                                 <td style={ { paddingRight: "5px" } }>{ getKeyName(id) }</td>
-                                <td style={ { textAlign: "right" } }>{ data.y }</td>
+                                <td style={ { textAlign: "right" } }>{ yFormat(data.y) }</td>
                               </tr>
                             )
                           }
@@ -127,7 +132,9 @@ class CensusLineChart extends React.Component {
         years: [2010,2011,2012,2013,2014,2015,2016],
         curve: 'cardinal',
         title: '',
-        stacked: false
+        stacked: false,
+        yFormat: ',d',
+        marginLeft: 50
     }
 
 }
