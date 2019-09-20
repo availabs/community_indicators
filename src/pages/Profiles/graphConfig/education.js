@@ -5,6 +5,20 @@ import {
 } from "./utils"
 
 const BASE_CONFIG = [
+        
+      {
+          type: "TextBox",
+          header: "TEST HEADER",
+          subheader: "TEST SUBHEADER",
+          body: "TEST BODY",
+          link: "TEST LINK",
+          layout: { 
+            h: 6,
+            w: 3
+             }
+        },
+
+
         {
             type: 'CensusBarChart',
             title: 'Educational Attainment',
