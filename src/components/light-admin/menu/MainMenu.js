@@ -2,6 +2,18 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import GeoName from 'components/censusCharts/geoname'
 
+class TopSearch extends Component {
+  render () {
+    return (
+      <div className="element-search autosuggest-search-activator">
+        <input placeholder="Start typing to search..." type="text" />
+      </div>
+    )
+  }
+}
+
+
+
 class MainMenu extends Component {
 
   constructor(props) {
@@ -43,8 +55,8 @@ class MainMenu extends Component {
                     <span > {menu.name} {menu.name === 'Profiles' && this.props.activeGeoid ? <GeoName geoid={this.props.activeGeoid} /> : ''}</span>
                 </Link>
               </li>
-        )
-            ;
+            )
+        
         }
       if(menu.subMenus){
           return (
@@ -133,7 +145,26 @@ class MainMenu extends Component {
   render () {
     return (
       <ul className="main-menu">
-        {this.renderMenus(this.props.menus)}      
+        {this.renderMenus(this.props.menus)} 
+        <li
+          key = {'menuItem_search'}
+          id = {'menuItem_search'}
+          className = {`top-menu-tab`}        
+        >
+          <a href='#' style={{display: 'inline'}}>
+            <span style={{display: 'inline'}} >Compare</span> 
+          </a> 
+         
+        </li>
+        <li
+          key = {'menuItem_search'}
+          id = {'menuItem_search'}
+          className = {`top-menu-tab`}        
+        >
+          <TopSearch /> 
+         
+        </li>
+         
       </ul>
     )
   }

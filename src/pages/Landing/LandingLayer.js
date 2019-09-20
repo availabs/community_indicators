@@ -85,11 +85,11 @@ class TractLayer extends MapLayer{
 
                 // })
                 fetch('/data/bg_area.json')
-                .then(response => response.json())
-                .then(bg_area => {
-                    console.log('data', data)
-                    this.geom = bg_area
-                    this.fetchData().then(data => this.receiveData(map, data))
+                    .then(response => response.json())
+                    .then(bg_area => {
+                        console.log('data', data)
+                        this.geom = bg_area
+                        this.fetchData().then(data => this.receiveData(map, data))
 
                 })
                 
