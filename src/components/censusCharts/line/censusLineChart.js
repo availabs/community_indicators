@@ -34,8 +34,7 @@ class CensusLineChart extends React.Component {
                     if(this.props.sumType === 'pct') {
                         const divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1);
                         if ((divisor !== null) && !isNaN(divisor)) {
-                          value /= divisor
-                          value *= 100
+                          value = value / divisor * 100;
                         }
                     }
 
@@ -50,9 +49,12 @@ class CensusLineChart extends React.Component {
 
     render () {
         const title = this.props.title;
+        const getKeyName = key =>
+          this.props.divisorKeys.length ? "Value" :
+          get(this.props, ["acs", "meta", key, "label"], key);
         return(
             <div style={{height: '100%'}}>
-              <div style={ { height: "30px" } }>
+              <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
                 <Title title={ title }/>
                 <Options />
               </div>
@@ -104,7 +106,7 @@ class CensusLineChart extends React.Component {
                             data.map(({ data, serie: { id, color } }) =>
                               <tr key={ id }>
                                 <td style={ { paddingRight: "5px" } }><div style={ { width: "15px", height: "15px", background: color } }/></td>
-                                <td style={ { paddingRight: "5px" } }>{ id }</td>
+                                <td style={ { paddingRight: "5px" } }>{ getKeyName(id) }</td>
                                 <td style={ { textAlign: "right" } }>{ data.y }</td>
                               </tr>
                             )
@@ -121,7 +123,6 @@ class CensusLineChart extends React.Component {
         censusKeys: ['B19013_001E'], //'B19013',,
         divisorKeys: [],
         geoids: ['36001'],
-        PovertyPopulationBySex: false,
         colorRange:['#047bf8','#6610f2','#6f42c1','#e83e8c','#e65252','#fd7e14','#fbe4a0','#24b314','#20c997','#5bc0de'],
         years: [2010,2011,2012,2013,2014,2015,2016],
         curve: 'cardinal',
@@ -134,10 +135,8 @@ class CensusLineChart extends React.Component {
 
 const mapDispatchToProps = { };
 
-const mapStateToProps = (state,ownProps) => {
-    return {
-        acs: get(state, `graph.acs`, {}),
-        theme: state.user.theme
-    };
-};
+const mapStateToProps = (state, ownProps) => ({
+  acs: get(state, `graph.acs`, {}),
+  theme: state.user.theme
+})
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusLineChart))

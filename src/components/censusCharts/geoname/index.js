@@ -19,7 +19,7 @@ class GeoName extends React.Component{
     }
 
     static defaultProps = {
-        geoids: ['36001']
+        geoids: []
     }
 }
 

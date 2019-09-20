@@ -11,6 +11,7 @@ import CensusPieChart from "./pie/censusPieChart.js"
 import CensusPieCompare from "./pie/censusPieCompare.js"
 import CensusStatBox from "./statBox/index.js"
 import TractLayer from "../layers/TractsLayers.js"
+import TextBox from "./TextBox"
 
 const NA = ({ type, state, routes }) =>
 <div>
@@ -33,6 +34,7 @@ export default {
     CensusPieCompare,
     CensusStatBox,
     TractLayer,
+    TextBox,
     NE,
     NA
 }

@@ -60,7 +60,7 @@ class HorizontalBarChart extends React.Component {
     return (
       <div style={ { width: "100%", height: "100%" } }>
         <div style={ { height: "30px" } }>
-          <Title title={ this.props.name }/>
+          <div style={ { maxWidth: "calc(100% - 285px)" } }><Title title={ this.props.title }/></div>
           <Options />
         </div>
         <div style={ { height: "calc(100% - 60px)" } }>
@@ -73,7 +73,6 @@ class HorizontalBarChart extends React.Component {
             enableLabel={ true }
             labelFormat={ d => fmt(Math.abs(d)) }
             labelSkipWidth={ 100 }
-            animation={false}
             axisBottom={ {
               format: d => fmt(Math.abs(d))
             } }

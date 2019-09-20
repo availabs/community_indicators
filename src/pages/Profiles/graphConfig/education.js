@@ -5,64 +5,61 @@ import {
 } from "./utils"
 
 const BASE_CONFIG = [
+      {
+          type: "TextBox",
+          header: "TEST HEADER",
+          subheader: "TEST SUBHEADER",
+          body: "TEST BODY",
+          link: "TEST LINK",
+          layout: { h: 3 }
+        },
+
         {
             type: 'CensusBarChart',
             title: 'Educational Attainment',
             orientation: 'horizontal',
-            layout: { h: 12 },
             marginLeft: 225,
             censusKeys: [
-              // 'B15003_002E',
-              // 'B15003_003E',
-              // 'B15003_004E',
-              // 'B15003_005E',
-              // 'B15003_006E',
-              // 'B15003_007E',
-              // 'B15003_008E',
-              // 'B15003_009E',
-              // 'B15003_010E',
-              // 'B15003_011E',
-              // 'B15003_012E',
-              // 'B15003_013E',
-              // 'B15003_014E',
-              // 'B15003_015E',
-              'B15003_016E',
-              'B15003_017E',
-              'B15003_018E',
-              'B15003_019E',
-              'B15003_020E',
-              'B15003_021E',
-              'B15003_022E',
-              'B15003_023E',
-              'B15003_024E',
-              'B15003_025E'
+              'B15003_016E...B15003_025E'
+              // 'B15003_002E...B15003_025E',
             ],
-            censusKeyNames: {
-              'B15003_002E': 'No schooling completed',
-              'B15003_003E': 'Nursery School',
-              'B15003_004E': 'Kindergarten',
-              'B15003_005E': '1st grade',
-              'B15003_006E': '2nd grade',
-              'B15003_007E': '3rd grade',
-              'B15003_008E': '4th grade',
-              'B15003_009E': '5th grade',
-              'B15003_010E': '6th grade',
-              'B15003_011E': '7th grade',
-              'B15003_012E': '8th grade',
-              'B15003_013E': '9th grade',
-              'B15003_014E': '10th grade',
-              'B15003_015E': '11th grade',
-              'B15003_016E': '12th grade or no diploma',
-              'B15003_017E': 'Regular High School diploma',
-              'B15003_018E': 'GED or alternative credential',
-              'B15003_019E': 'Some college less than 1 year',
-              'B15003_020E': 'Some college,1 or more years,no degree',
-              'B15003_021E': 'Associate`s degree',
-              'B15003_022E': 'Bachelor`s degree',
-              'B15003_023E': 'Master`s degree',
-              'B15003_024E': 'Professional School degree',
-              'B15003_025E': 'Doctorate degree'
-            },
+        },
+        {
+          title: "Sex by School Enrollment by Level of School by Type of School",
+          type: "CensusStackedBarChart",
+          marginLeft: 310,
+          layout: { h: 12 },
+          left: {
+            key: "Male", color: maleColor,
+            keys: ["B14002_004E...B14002_025E"]
+          },
+          right: {
+            key: "Female", color: femaleColor,
+            keys: ["B14002_028E...B14002_049E"]
+          },
+          labels: [
+            "Enrolled in nursery school preschool",
+            "Enrolled in nursery school preschool, Public school",
+            "Enrolled in nursery school preschool, Private school",
+            "Enrolled in kindergarten",
+            "Enrolled in kindergarten, Public School",
+            "Enrolled in kindergarten, Private School",
+            "Enrolled in grade 1 to grade 4",
+            "Enrolled in grade 1 to grade 4, Public School",
+            "Enrolled in grade 1 to grade 4, Private School",
+            "Enrolled in grade 5 to grade 8",
+            "Enrolled in grade 5 to grade 8, Public School",
+            "Enrolled in grade 5 to grade 8, Private School",
+            "Enrolled in grade 9 to grade 12",
+            "Enrolled in grade 9 to grade 12, Public School",
+            "Enrolled in grade 9 to grade 12, Private School",
+            "Enrolled in college undergraduate years",
+            "Enrolled in college undergraduate years, Public School",
+            "Enrolled in college undergraduate years, Private School",
+            "Enrolled in graduate or professional school",
+            "Enrolled in graduate or professional school, Public School",
+            "Enrolled in graduate or professional school, Private School"
+          ]
         },
         {
           type: 'CensusStackedBarChart',
