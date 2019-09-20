@@ -11,6 +11,7 @@ import { falcorChunkerNice } from "store/falcorGraph"
 import GRAPH_CONFIG from './graphConfig'
 
 import styled from "styled-components"
+import get from "lodash.get"
 
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>
@@ -66,7 +67,6 @@ class Profile extends React.Component{
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"]);
   }
     renderCategory(name, configData) {
-        // console.log('testing', configData)
         const profileHeader = configData.find(({ type }) => type === "ProfileHeader"),
           profileFooter = configData.find(({ type }) => type === "ProfileFooter");
         return (
@@ -94,6 +94,7 @@ class Profile extends React.Component{
                                 )
                               }
                               geoid={ this.props.geoid }
+                              compareGeoid={ this.props.compareGeoid }
                               verticalCompact={false}
                             />
                         </div>
@@ -110,25 +111,13 @@ class Profile extends React.Component{
                     }
                 </div>
             </Element>
-
         )
     }
 
     render(){
-        // console.log('render profile', this.props)
-        // let currentYear = this.props.years.latest
-        // let compareYear = this.props.years.latest -1
         const categories = Object.keys(GRAPH_CONFIG).map(category =>
-            // GRAPH_CONFIG[category].forEach(config => {
-            //     config['geoid'] = [this.props.geoid]
-            //     config['geoids'] = [this.props.geoid]
-            //     config['year'] = currentYear
-            //     config['compareYear'] = compareYear
-            //     config.id = (i+1).toString()
-            // })
             this.renderCategory(category, GRAPH_CONFIG[category])
         )
-
         return (
             <div>
                 <ProfileHeader geoids={[this.props.geoid]} />
@@ -157,43 +146,47 @@ class Profile extends React.Component{
 
         )
     }
-
-    static defaultProps = {
-        width:[],
-        height:[],
-        geoid: '36001'
-    }
-
 }
 
-const mapStateToProps = (state, ownProps) => {
-    return {
-        geoGraph: state.graph.geo,
-        router: state.router,
-        years: state.user.years,
-        geoid: ownProps.match.params.geoid
-            ? ownProps.match.params.geoid
-            : 36001
-    };
-};
+const mapStateToProps = (state, ownProps) => ({
+  geoGraph: state.graph.geo,
+  router: state.router,
+  years: state.user.years,
+  geoid: get(ownProps, ["match", "params", "geoid"], "36"),
+  compareGeoid: get(ownProps, ["match", "params", "compare"], null)
+})
 
 const mapDispatchToProps = {};
 
-export default
-{
-    path: '/profile/:geoid',
-    name: 'Profile',
-    mainNav: false,
-    menuSettings: {
-        image: 'none',
-        'scheme': 'color-scheme-dark',
-        style: 'color-style-default'
-    },
-    subMenus: subMenus,
-    auth: false,
-    component: connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Profile))
-}
+const component = connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Profile));
 
-/*
-
- */
+export default [
+  {
+      path: '/profile/:geoid',
+      exact: true,
+      name: 'Profile',
+      mainNav: false,
+      menuSettings: {
+          image: 'none',
+          'scheme': 'color-scheme-dark',
+          style: 'color-style-default'
+      },
+      subMenus,
+      auth: false,
+      component
+  },
+  {
+      path: '/profile/:geoid/compare/:compare',
+      exact: true,
+      name: 'Profile',
+      mainNav: false,
+      menuSettings: {
+          image: 'none',
+          'scheme': 'color-scheme-dark',
+          style: 'color-style-default'
+      },
+      subMenus,
+      auth: false,
+      component
+  }
+]

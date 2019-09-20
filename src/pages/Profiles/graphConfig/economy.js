@@ -69,14 +69,16 @@ const BASE_CONFIG = [
     title: "Median Household Income by Race",
     censusKeys: ["B19013A_001E...B19013I_001E"],
     marginLeft: 75,
-    yFormat: "$,d"
+    yFormat: "$,d",
+    showCompare: false
   },
   {
     type: "CensusLineChart",
     title: "Median Household Income by Household Size",
     censusKeys: ["B19019_001E...B19019_008E"],
     marginLeft: 75,
-    yFormat: "$,d"
+    yFormat: "$,d",
+    showCompare: false
   },
 
       {
@@ -98,6 +100,7 @@ const BASE_CONFIG = [
         ]
       ]
     }
+
 ]
 
 export default configLoader(BASE_CONFIG);

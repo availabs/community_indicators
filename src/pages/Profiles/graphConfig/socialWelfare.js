@@ -15,6 +15,7 @@ const BASE_CONFIG = [
              }
         },
 
+
     {
         type: 'CensusStackedBarChart',
         broadCensusKey: 'B01001',
@@ -143,6 +144,7 @@ const BASE_CONFIG = [
         layout: { h: 18 }
     },
 
+   
     {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B21001',

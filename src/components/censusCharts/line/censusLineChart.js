@@ -11,41 +11,55 @@ import get from 'lodash.get'
 
 import { format } from "d3-format"
 
+import { getColorRange } from "constants/color-ranges"
+
 class CensusLineChart extends React.Component {
 
     fetchFalcorDeps () {
         return falcorGraph.get(
-            ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]]
+            ['acs', [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)),
+              this.props.years,
+              [...this.props.divisorKeys, ...this.props.censusKeys]
+            ]
         )
         // .then(data =>{
         //     console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
         // })
     }
 
+    processGeoid(geoid) {
+      return this.props.censusKeys.map((censusKey,index) => {
+          return {
+              "id": `${ geoid }-${ censusKey }`,
+              geoid,
+              censusKey,
+              "title": this.props.title,
+              "data" : this.props.years.map(year => {
+                  let value = get(this.props, `acs[${ geoid }][${ year }][${ censusKey }]`, 0)
+
+                  if(this.props.sumType === 'pct') {
+                      const divisor = get(this.props, `acs[${ geoid }][${year}][${this.props.divisorKeys[index]}]`, 1);
+                      if ((divisor !== null) && !isNaN(divisor)) {
+                        value = value / divisor;
+                      }
+                  }
+
+                  return {
+                      x: +year,
+                      y: value
+                  }
+              }).filter(({ y }) => y !== -666666666)
+          }
+      })
+    }
+
     lineData () {
-        //console.log('line data', this.props.acs)
-        return this.props.censusKeys.map((censusKey,index) => {
-            return {
-                "id": censusKey,
-                "color": this.props.colorRange[index % this.props.colorRange.length],
-                "title": this.props.title,
-                "data" : this.props.years.map(year => {
-                    let value = get(this.props, `acs[${this.props.geoids[0]}][${year}][${censusKey}]`, 0)
+        const data = this.processGeoid(this.props.geoids[0]);
 
-                    if(this.props.sumType === 'pct') {
-                        const divisor = get(this.props, `acs[${this.props.geoids[0]}][${year}][${this.props.divisorKeys[index]}]`, 1);
-                        if ((divisor !== null) && !isNaN(divisor)) {
-                          value = value / divisor;
-                        }
-                    }
-
-                    return {
-                        x: +year,
-                        y: value
-                    }
-                }).filter(({ y }) => y !== -666666666)
-            }
-        })
+        if (this.props.compareGeoid && this.props.showCompare) {
+          data.push(...this.processGeoid(this.props.compareGeoid));
+        }
+        return data;
     }
 
     render () {
@@ -78,6 +92,7 @@ class CensusLineChart extends React.Component {
                             "min": 'auto',
                             "max": 'auto'
                     }}
+                    colors={ getColorRange(8, "Set2") }
                     curve={this.props.curve}
                     theme={this.props.theme}
                     lineWidth = {2.5}
@@ -87,7 +102,6 @@ class CensusLineChart extends React.Component {
                     dotBorderColor="#ffffff"
                     enableDotLabel={false}
                     dotLabel="y"
-                    colorBy={d => d.color}
                     dotLabelYOffset={-12}
                     animate={false}
                     enableGridX={true}
@@ -103,15 +117,16 @@ class CensusLineChart extends React.Component {
                       <table>
                         <thead>
                           <tr>
-                            <th colSpan="3" style={ { fontSize: "1rem" } }>Year: { id }</th>
+                            <th colSpan="4" style={ { fontSize: "1rem" } }>Year: { id }</th>
                           </tr>
                         </thead>
                         <tbody>
                           {
-                            data.map(({ data, serie: { id, color } }) =>
+                            data.map(({ data, serie: { id, censusKey, geoid, color } }) =>
                               <tr key={ id }>
                                 <td style={ { paddingRight: "5px" } }><div style={ { width: "15px", height: "15px", background: color } }/></td>
-                                <td style={ { paddingRight: "5px" } }>{ getKeyName(id) }</td>
+                                <td style={ { paddingRight: "5px" } }><GeoName geoids={ [geoid] }/></td>
+                                <td style={ { paddingRight: "5px" } }>{ getKeyName(censusKey) }</td>
                                 <td style={ { textAlign: "right" } }>{ yFormat(data.y) }</td>
                               </tr>
                             )
@@ -134,7 +149,9 @@ class CensusLineChart extends React.Component {
         title: '',
         stacked: false,
         yFormat: ',d',
-        marginLeft: 50
+        marginLeft: 50,
+        showCompare: true,
+        compareGeoid: null
     }
 
 }
