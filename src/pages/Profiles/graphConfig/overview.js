@@ -61,6 +61,8 @@ const BASE_CONFIG = [
       "censusKeys":[
          "B19013_001E"
       ],
+      marginLeft: 75,
+      yFormat: "$,d",
       "layout":{
          "w":9,
          "h":9
@@ -88,6 +90,7 @@ const BASE_CONFIG = [
       censusKeys:["B17001_002E"],
       divisorKeys: ["B17001_001E"],
       sumType: 'pct',
+      yFormat: ",.1%",
       "layout":{
          "w":10,
          "h":9
@@ -135,6 +138,7 @@ const BASE_CONFIG = [
       "type":"CensusLineChart",
       title: "Percent Vacant Housing Units",
       sumType: 'pct',
+      yFormat: ",.1%",
       censusKeys:["B25002_003E"],
       divisorKeys:["B25002_001E"],
       "layout":{

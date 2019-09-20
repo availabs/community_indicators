@@ -31,7 +31,7 @@ class CensusName extends React.Component {
   }
 }
 
-export const getCensusKeyName = (key, removeLeading, acsGraph) => {
+export const getCensusKeyName = (key, acsGraph, removeLeading = 0) => {
   const name = get(acsGraph, ["meta", key, "label"], key);
   if (typeof name !== "string") return key;
 
