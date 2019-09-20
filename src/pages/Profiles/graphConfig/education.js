@@ -7,10 +7,10 @@ import {
 const BASE_CONFIG = [
       {
           type: "TextBox",
-          header: "TEST HEADER",
-          subheader: "TEST SUBHEADER",
-          body: "TEST BODY",
-          link: "TEST LINK",
+          header: "TEST TEXT BOX",
+          subheader: "SUBHEADER",
+          body: "BODY",
+          link: "#",
           layout: { h: 3 }
         },
 

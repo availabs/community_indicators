@@ -15,6 +15,7 @@ const BASE_CONFIG = [
     {
       type: "CensusLineChart",
       title: "Per Capita Income",
+      showCompare: false,
       marginLeft: 75,
       yFormat: "$,d",
       censusKeys: [
@@ -124,6 +125,7 @@ const BASE_CONFIG = [
       title: "Median Household Income by Race",
       type: 'CensusLineChart',
       marginLeft: 75,
+      showCompare: false,
       yFormat: "$,d",
       censusKeys: [
         'B19013A_001E',

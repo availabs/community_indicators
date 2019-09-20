@@ -17,7 +17,7 @@ import styled from "styled-components"
 import GeoName from 'components/censusCharts/geoname'
 import CensusName, { getCensusKeyName } from 'components/censusCharts/CensusName'
 
-const DEFAULT_COLORS = getColorRange(12, "Set3")
+const DEFAULT_COLORS = getColorRange(8, "Set2")
 
 const TooltipContainer = styled.div`
   display: flex;
@@ -32,7 +32,7 @@ const TooltipContainer = styled.div`
 const Tooltip = ({ color, value, label, geoid, removeLeading }) =>
   <TooltipContainer>
     <div style={ { width: "15px", height: "15px", background: color, marginRight: "5px" } }/>
-    <div><GeoName geoid={ geoid }/></div>
+    <div><GeoName geoids={ [geoid] }/></div>
     <div style={ { marginRight: "5px", fontWeight: "bold" } }>
       <CensusName key={ label } censusKeys={ [label] } removeLeading={ removeLeading }/>
     </div>
@@ -51,7 +51,10 @@ class CensusBarChart extends React.Component {
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
-        ['acs', this.props.geoids, this.props.years, this.props.censusKeys]
+        ['acs',
+          [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)),
+          this.props.years, this.props.censusKeys
+        ]
     )
   }
   render() {
@@ -73,7 +76,7 @@ class CensusBarChart extends React.Component {
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
           <ResponsiveBar indexBy={ "id" }
-            keys={ this.props.geoids }
+            keys={ [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)) }
             data={ this.props.barData }
             margin={ {
               right: this.props.marginRight,
@@ -82,6 +85,7 @@ class CensusBarChart extends React.Component {
               left: this.props.marginLeft } }
             colors={ d => colors(d.id) }
             labelSkipWidth={ 100 }
+            labelSkipHeight={ 12 }
             labelFormat={ fmt }
             groupMode="grouped"
             layout={this.props.orientation}
@@ -115,15 +119,16 @@ const mapStateToProps = (state, props) => ({
 const getBarData = (state, props) =>
   props.censusKeys.reduce((a, c) => {
     a.push(
-      props.geoids.reduce((aa, cc, ii) => {
-        const year = get(props, "years[0]", 2015),
-          value = +get(state, ["graph", "acs", cc, year, c], 0);
-        if (value !== -666666666) {
-          aa[cc] = value;
-          ++aa.num;
-        }
-        return aa;
-      }, { id: c, num: 0 })
+      [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
+        .reduce((aa, cc, ii) => {
+          const year = get(props, "years[0]", 2015),
+            value = +get(state, ["graph", "acs", cc, year, c], 0);
+          if (value !== -666666666) {
+            aa[cc] = value;
+            ++aa.num;
+          }
+          return aa;
+        }, { id: c, num: 0 })
     );
     return a;
   }, [])

@@ -119,6 +119,7 @@ const BASE_CONFIG = [
   },
   { type: "CensusLineChart",
     title: "Vacancy Status",
+    showCompare: false,
     censusKeys: [
       "B25004_001E",
       "B25004_002E",

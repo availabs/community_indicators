@@ -36,5 +36,5 @@ export default [
         subMenus: subMenus,
         component: ReportIndex
     },
-    Profiles
+    ...Profiles
 ]
