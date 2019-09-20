@@ -42,16 +42,15 @@ class HorizontalBarChart extends React.Component {
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
-        ['acs', [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)), this.props.years, this.props.censusKeys]
+        ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys]
     )
   }
   getBarData() {
-    const geoids = [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)),
-      leftVars = this.props.left.keys,
+    const leftVars = this.props.left.keys,
       rightVars = this.props.right.keys;
     return this.props.labels.map((label, i) => {
       const bar = { label };
-      geoids.forEach(geoid => {
+      this.props.allGeoids.forEach(geoid => {
         bar[`left-${ geoid }`] = get(this.props.acsGraph, [geoid, this.state.year, leftVars[i]], 0) * -1
         bar[`right-${ geoid }`] = get(this.props.acsGraph, [geoid, this.state.year, rightVars[i]], 0)
       })
@@ -69,9 +68,6 @@ class HorizontalBarChart extends React.Component {
   }
   render() {
     const fmt = format(",d");
-      // colors = ({ id }) => get(this.props, [id, "color"], false) || DEFAULT_COLORS[id === "left" ? 0 : 1];
-
-    const geoids = [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid));
 
     const left = get(this.props, ["left", "color"], DEFAULT_COLORS[0]),
       right = get(this.props, ["right", "color"], DEFAULT_COLORS[1]);
@@ -83,7 +79,7 @@ class HorizontalBarChart extends React.Component {
       return "#" + (r - 32 * i).toString(16) + (g - 32 * i).toString(16) + (b - 32 * i).toString(16)
     }
 
-    const colors = geoids.reduce((a, c, i) => {
+    const colors = this.props.allGeoids.reduce((a, c, i) => {
       a[`left-${ c }`] = darken(left, i);
       a[`right-${ c }`] = darken(right, i);
       return a;
@@ -91,7 +87,7 @@ class HorizontalBarChart extends React.Component {
 
     const getColors = id => colors[id];
 
-    const keys = geoids.reduce((a, c) => [...a, `left-${ c }`, `right-${ c }`], [])
+    const keys = this.props.allGeoids.reduce((a, c) => [...a, `left-${ c }`, `right-${ c }`], [])
       .sort((a, b) => a.includes("left") ? -1 : 1);
 
     return (
@@ -107,7 +103,7 @@ class HorizontalBarChart extends React.Component {
             keys={ keys }
             margin={ { top: 10, right: 20, bottom: 30, left: this.props.marginLeft } }
             layout="horizontal"
-            groupMode={ geoids.length > 1 ? "grouped" : "stacked" }
+            groupMode={ this.props.allGeoids.length > 1 ? "grouped" : "stacked" }
             enableLabel={ true }
             labelFormat={ d => fmt(Math.abs(d)) }
             labelSkipWidth={ 100 }
@@ -147,7 +143,8 @@ class HorizontalBarChart extends React.Component {
 }
 
 const mapStateToProps = (state, props) => ({
-  acsGraph: get(state, ["graph", "acs"], {})
+  acsGraph: get(state, ["graph", "acs"], {}),
+  allGeoids: [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
 })
 
 const ConnectedHorizontalBarChart = connect(mapStateToProps, null)(reduxFalcor(HorizontalBarChart));

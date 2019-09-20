@@ -51,10 +51,7 @@ class CensusBarChart extends React.Component {
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
-        ['acs',
-          [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)),
-          this.props.years, this.props.censusKeys
-        ]
+        ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys]
     )
   }
   render() {
@@ -76,7 +73,7 @@ class CensusBarChart extends React.Component {
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
           <ResponsiveBar indexBy={ "id" }
-            keys={ [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)) }
+            keys={ this.props.allGeoids }
             data={ this.props.barData }
             margin={ {
               right: this.props.marginRight,
@@ -113,7 +110,8 @@ class CensusBarChart extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   barData: getBarData(state, props),
-  acsGraph: get(state, ["graph", "acs"], {})
+  acsGraph: get(state, ["graph", "acs"], {}),
+  allGeoids: [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
 })
 
 const getBarData = (state, props) =>
