@@ -45,6 +45,7 @@ class CensusBarChart extends React.Component {
     yFormat: ",d",
     axisBottom: true,
     marginLeft: 75,
+    marginRight: 20,
     orientation: 'vertical',
     animation: false
   }
@@ -62,7 +63,7 @@ class CensusBarChart extends React.Component {
     if (this.props.sorted) {
       this.props.barData.sort((a ,b) => a[this.props.geoids[0]] - b[this.props.geoids[0]]);
     }
-    const getKeyName = key => getCensusKeyName(key, this.props.removeLeading, this.props.acsGraph);
+    const getKeyName = key => getCensusKeyName(key, this.props.acsGraph, this.props.removeLeading);
 
     return (
       <div style={ { width: "100%", height: "100%" } }>
@@ -74,7 +75,8 @@ class CensusBarChart extends React.Component {
           <ResponsiveBar indexBy={ "id" }
             keys={ this.props.geoids }
             data={ this.props.barData }
-            margin={ { right: 20,
+            margin={ {
+              right: this.props.marginRight,
               top: 10,
               bottom: this.props.axisBottom ? 30 : 20,
               left: this.props.marginLeft } }
