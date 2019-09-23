@@ -4,6 +4,8 @@ import {
   femaleColor
 } from "./utils"
 
+const year = 2017;
+
 const BASE_CONFIG = [
   {
           type: "TextBox",
@@ -15,6 +17,7 @@ const BASE_CONFIG = [
              }
         },
 
+   
   {
     type: "CensusBarChart",
     title: "Means of Transportation to Work",
@@ -23,6 +26,60 @@ const BASE_CONFIG = [
     marginLeft: 490,
     marginRight: 30
   },
+   {
+      type:"CensusStatBox",
+      title:'Total Bike/Ped ',
+      censusKeys:["B08006_014E", "B08006_015E"],
+      amount:true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
+  {
+      type:"CensusStatBox",
+      title:'Percent Bike/Ped ',
+      sumType: 'pct',
+      censusKeys:["B08006_014E", "B08006_015E"],
+      divisorKey: "B23025_001E",
+      compareYear: year - 1,
+      year,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
+
+  {
+      type:"CensusStatBox",
+      title:'Total Public Transportation ',
+      censusKeys:["B08006_008E"],
+      amount:true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
+
+  {
+      type:"CensusStatBox",
+      title:'Percent Public Transportation',
+      sumType: 'pct',
+      censusKeys:["B08006_008E"],
+      divisorKey: "B23025_001E",
+      compareYear: year - 1,
+      year,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
   {
     title: "Means of Transportation to Work by Sex",
     type: "CensusStackedBarChart",

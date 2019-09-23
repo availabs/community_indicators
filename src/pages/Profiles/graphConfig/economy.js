@@ -4,6 +4,8 @@ import {
   femaleColor
 } from "./utils"
 
+const year = 2017;
+
 const BASE_CONFIG = [
   {
           type: "TextBox",
@@ -14,6 +16,38 @@ const BASE_CONFIG = [
             w: 12
              }
         },
+
+{
+      type:"CensusStatBox",
+      title:'Percent of Labor Force Unemployed',
+      sumType: 'pct',
+      censusKeys:["B23025_005E"],
+      divisorKey: "B23025_001E",
+      compareYear: year - 1,
+      year,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:6,
+         h:3
+      }
+   },
+
+  {
+      type:"CensusStatBox",
+      title:'Percent of Populaion Over 16 Years-old, Not in Labor Force',
+      sumType: 'pct',
+      censusKeys:["B23025_007E"],
+      divisorKey: "B23025_001E",
+      compareYear: year - 1,
+      year,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:6,
+         h:3
+      }
+   },
 
   {
     type: "CensusStackedBarChart",
@@ -64,6 +98,65 @@ const BASE_CONFIG = [
     censusKeys: ["B24031_001E...B24031_027E"],
     removeLeading: 1
   },
+  {
+      type:"CensusStatBox",
+      title: "Median Household Income, White",
+      valuePrefix:'$',
+      censusKeys:["B19013A_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Black",
+      valuePrefix:'$',
+      censusKeys:["B19013B_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Hispanic or Latino",
+      valuePrefix:'$',
+      censusKeys:["B19013I_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Asian",
+      valuePrefix:'$',
+      censusKeys:["B19013D_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
   {
     type: "CensusLineChart",
     title: "Median Household Income by Race",
