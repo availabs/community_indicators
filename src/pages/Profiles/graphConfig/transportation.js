@@ -31,6 +31,8 @@ const BASE_CONFIG = [
       title:'Total Bike/Ped ',
       censusKeys:["B08006_014E", "B08006_015E"],
       amount:true,
+      compareYear: year - 1,
+      year,
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -39,12 +41,10 @@ const BASE_CONFIG = [
    },
   {
       type:"CensusStatBox",
-      title:'Percent Bike/Ped ',
+      title:'Bike/Ped as a Percent of Total Commuters',
       sumType: 'pct',
       censusKeys:["B08006_014E", "B08006_015E"],
       divisorKey: "B23025_001E",
-      compareYear: year - 1,
-      year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
@@ -57,6 +57,8 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Total Public Transportation ',
       censusKeys:["B08006_008E"],
+      compareYear: year - 1,
+      year,      
       amount:true,
       maximumFractionDigits: 1,
       layout:{
@@ -67,12 +69,10 @@ const BASE_CONFIG = [
 
   {
       type:"CensusStatBox",
-      title:'Percent Public Transportation',
+      title:'Public Transportation as a Percent of Total Commuters',
       sumType: 'pct',
       censusKeys:["B08006_008E"],
       divisorKey: "B23025_001E",
-      compareYear: year - 1,
-      year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
