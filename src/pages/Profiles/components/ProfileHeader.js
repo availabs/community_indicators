@@ -68,13 +68,13 @@ class ProfileHeader extends Component {
                                         title={'Population'}
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
-                                        censusKey={'B01003_001E'}
+                                        censusKeys={['B01003_001E']}
                                         geoids={this.props.geoids}
                                     />
                                     <StatBox
                                         title={'Median Age'}
                                         year={this.props.years.latest}
-                                        censusKey={'B01002_001E'}
+                                        censusKeys={['B01002_001E']}
                                         geoids={this.props.geoids}
                                         sumType='avg'
                                         maximumFractionDigits={1}
@@ -84,7 +84,7 @@ class ProfileHeader extends Component {
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
                                         valuePrefix={'$'}
-                                        censusKey={'B19013_001E'}
+                                        censusKeys={['B19013_001E']}
                                         geoids={this.props.geoids}
                                         sumType='avg'
                                                                             />
@@ -92,7 +92,7 @@ class ProfileHeader extends Component {
                                         title={'Poverty Rate'}
                                         year={this.props.years.latest}
                                         compareYear={this.props.years.latest-1}
-                                        censusKey={'B17001_002E'}
+                                        censusKeys={['B17001_002E']}
                                         valueSuffix={'%'}
                                         maximumFractionDigits={1}
                                         sumType='pct'
