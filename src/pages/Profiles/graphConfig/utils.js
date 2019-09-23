@@ -67,12 +67,7 @@ export const configLoader = BASE_CONFIG => {
       config.name = bk.name;
       config.title = bk.name;
     }
-    else if (config["censusKeyNames"]) {
-      // config.getKeyName = key => config["censusKeyNames"][key]
-    }
-    else {
-      // config.getKeyName = config.getKeyName || (key => key);
-    }
+
     if (config["left"] && config["left"].keys &&
         config["right"] && config["right"].keys) {
       config["left"].keys =  expandKeys(config["left"].keys);
@@ -84,6 +79,10 @@ export const configLoader = BASE_CONFIG => {
     }
     if (config["right"] && config["right"].slice && config.censusKeys) {
       config["right"].keys = config.censusKeys.slice(...config["right"].slice);
+    }
+
+    if (config["censusKey"]) {
+      config.censusKeys = [config.censusKey];
     }
 
     if (config.censusKeys) {

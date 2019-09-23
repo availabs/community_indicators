@@ -11,31 +11,29 @@ class CensusStatBox extends React.Component{
         this.calculateValues = this.calculateValues.bind(this)
     }
     fetchFalcorDeps(){
-        let censusConfig ={};
-        let census_subvars = [];
-        let years = [this.props.year]
-        if(this.props.compareYear) {
+        const years = [this.props.year]
+        if (this.props.compareYear) {
             years.push(this.props.compareYear)
         }
-        let censusKeys = [this.props.censusKey]
-        if(this.props.divisorKey) {
+        const censusKeys = [...this.props.censusKeys];
+        if (this.props.divisorKey) {
             censusKeys.push(this.props.divisorKey)
         }
-
-        return falcorGraph
-            .get(['acs',this.props.geoids,years, censusKeys])
-            .then(response =>{
-                return response
-            })
+        return falcorGraph.get(
+          ['acs', this.props.geoids, years, censusKeys]
+        )
     }
 
     calculateValues(){
+      let value = this.props.geoids.reduce((a, c) =>
+        a + this.props.censusKeys.reduce((aa, cc) =>
+          aa + get(this.props.graph, ["acs", c, this.props.year, cc], 0)
+        , 0)
+      , 0)
 
-        let value = this.props.geoids
-            .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.censusKey}`, 0))
-            .reduce((a,b) => a + b )
-
-
+        // let value = this.props.geoids
+        //     .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.censusKey}`, 0))
+        //     .reduce((a,b) => a + b )
 
         if(this.props.sumType === 'avg') {
             value /= this.props.geoids.length
@@ -58,14 +56,19 @@ class CensusStatBox extends React.Component{
         // console.log('compareYear', this.props.compareYear)
 
         if(this.props.compareYear) {
-            let compareValue = this.props.geoids
-                .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.compareYear}.${this.props.censusKey}`, 0))
-                .reduce((a,b) => a + b )
+          let compareValue = this.props.geoids.reduce((a, c) =>
+            a + this.props.censusKeys.reduce((aa, cc) =>
+              aa + get(this.props.graph, ["acs", c, this.props.compareYear, cc], 0)
+            , 0)
+          , 0)
+            // let compareValue = this.props.geoids
+            //     .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.compareYear}.${this.props.censusKey}`, 0))
+            //     .reduce((a,b) => a + b )
 
             if (this.props.sumType === 'pct') {
                 let divisorValue = this.props.geoids
-                .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
-                .reduce((a,b) => a + b )
+                  .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
+                  .reduce((a,b) => a + b )
 
                 // console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
                 compareValue /= divisorValue
@@ -111,10 +114,9 @@ class CensusStatBox extends React.Component{
     }
 
     static defaultProps = {
-        censusKey: 'B01003_001E', //'B19013',,
-        geoids: ['36001'],
+        censusKeys: [],
+        geoids: [],
         year:'2016',
-        colorRange:[],
         maximumFractionDigits: 0
     }
 }

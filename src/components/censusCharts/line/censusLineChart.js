@@ -144,7 +144,7 @@ class CensusLineChart extends React.Component {
         divisorKeys: [],
         geoids: ['36001'],
         colorRange:['#047bf8','#6610f2','#6f42c1','#e83e8c','#e65252','#fd7e14','#fbe4a0','#24b314','#20c997','#5bc0de'],
-        years: [2010,2011,2012,2013,2014,2015,2016],
+        years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
         curve: 'cardinal',
         title: '',
         stacked: false,

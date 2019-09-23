@@ -107,7 +107,7 @@ class HorizontalBarChart extends React.Component {
             enableLabel={ true }
             labelFormat={ d => fmt(Math.abs(d)) }
             labelSkipWidth={ 100 }
-            labelSkipHeight={ 10 }
+            labelSkipHeight={ 12 }
             axisBottom={ {
               format: d => fmt(Math.abs(d))
             } }

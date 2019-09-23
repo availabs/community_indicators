@@ -9,53 +9,53 @@ const year = 2017;
 const BASE_CONFIG = [
 
    {
-      "type":"CensusStatBox",
-      "censusKey":"B01003_001E",
+      type:"CensusStatBox",
+      censusKeys:["B01003_001E"],
       year,
       compareYear: year - 1,
-      "title": "Population",
-      "layout":{
-         "w":3,
-         "h":3
+      title: "Population",
+      layout:{
+         w:3,
+         h:3
       }
    },
    {
-      "id":"2",
-      "type":"CensusStatBox",
-      "title": "Median Age",
-      "censusKey":"B01002_001E",
+      id:"2",
+      type:"CensusStatBox",
+      title: "Median Age",
+      censusKeys:["B01002_001E"],
       maximumFractionDigits: 1,
       year,
-      "demographics":true,
-      "layout":{
-         "w":3,
-         "h":3
+      demographics:true,
+      layout:{
+         w:3,
+         h:3
       }
    },
    {
-      "type":"CensusStatBox",
-      "title": "Median Household Income",
-      valuePrefix:'$',
-      "censusKey":"B19013_001E",
-      "amount":true,
-      year,
-      "layout":{
-         "w":3,
-         "h":9,
-         "x":0
-      }
-   },
-   {
-      "type":"CensusLineChart",
+      type:"CensusStatBox",
       title: "Median Household Income",
-      "censusKeys":[
+      valuePrefix:'$',
+      censusKeys:["B19013_001E"],
+      amount:true,
+      year,
+      layout:{
+         w:3,
+         h:9,
+         x:0
+      }
+   },
+   {
+      type:"CensusLineChart",
+      title: "Median Household Income",
+      censusKeys:[
          "B19013_001E"
       ],
       marginLeft: 75,
       yFormat: "$,d",
-      "layout":{
-         "w":9,
-         "h":9
+      layout:{
+         w:9,
+         h:9
       }
    },
 
@@ -63,15 +63,15 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Poverty Rate',
       sumType: 'pct',
-      censusKey:"B17001_002E",
+      censusKeys:["B17001_002E"],
       divisorKey: "B17001_001E",
       compareYear: year - 1,
       year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
-      "layout":{
-         "w":2,
-         "h":9
+      layout:{
+         w:2,
+         h:9
       }
    },
    {
@@ -81,9 +81,9 @@ const BASE_CONFIG = [
       divisorKeys: ["B17001_001E"],
       sumType: 'pct',
       yFormat: ",.1%",
-      "layout":{
-         "w":10,
-         "h":9
+      layout:{
+         w:10,
+         h:9
       },
    },
 
@@ -91,49 +91,49 @@ const BASE_CONFIG = [
       title: "Percent Vacant Housing Units",
       type:"CensusStatBox",
       sumType: 'pct',
-      censusKey:"B25002_003E",
+      censusKeys:["B25002_003E"],
       divisorKey: 'B25002_001E',
       year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
-      "layout":{
-         "w":3,
-         "h":3,
-         "x":0
+      layout:{
+         w:3,
+         h:3,
+         x:0
       }
    },
    {
       title: "Vacant Housing Units",
       year,
       type:"CensusStatBox",
-      censusKey:"B25002_003E",
-      "layout":{
-         "w":3,
-         "h":3,
-         "x":0
+      censusKeys:["B25002_003E"],
+      layout:{
+         w:3,
+         h:3,
+         x:0
       },
    },
    {
       title: "Occupied Housing Units",
       year,
       type:"CensusStatBox",
-      censusKey:"B25002_002E",
-      "layout":{
-         "w":3,
-         "h":3,
-         "x":0
+      censusKeys:["B25002_002E"],
+      layout:{
+         w:3,
+         h:3,
+         x:0
       },
    },
    {
-      "type":"CensusLineChart",
+      type:"CensusLineChart",
       title: "Percent Vacant Housing Units",
       sumType: 'pct',
       yFormat: ",.1%",
       censusKeys:["B25002_003E"],
       divisorKeys:["B25002_001E"],
-      "layout":{
-         "w":9,
-         "h":9
+      layout:{
+         w:9,
+         h:9
       }
    },
 
