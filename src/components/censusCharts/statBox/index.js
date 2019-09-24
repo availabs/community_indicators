@@ -15,10 +15,8 @@ class CensusStatBox extends React.Component{
         if (this.props.compareYear) {
             years.push(this.props.compareYear)
         }
-        const censusKeys = [...this.props.censusKeys];
-        if (this.props.divisorKey) {
-            censusKeys.push(this.props.divisorKey)
-        }
+        const censusKeys = [...this.props.censusKeys, ...this.props.divisorKeys];
+
         return falcorGraph.get(
           ['acs', this.props.geoids, years, censusKeys]
         )
@@ -38,9 +36,14 @@ class CensusStatBox extends React.Component{
         if(this.props.sumType === 'avg') {
             value /= this.props.geoids.length
         } else if (this.props.sumType === 'pct') {
-            let divisorValue = this.props.geoids
-            .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
-            .reduce((a,b) => a + b )
+            // let divisorValue = this.props.geoids
+            // .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
+            // .reduce((a,b) => a + b )
+              let divisorValue = this.props.geoids.reduce((a, c) =>
+                a + this.props.divisorKeys.reduce((aa, cc) =>
+                  aa + get(this.props.graph, ["acs", c, this.props.year, cc], 0)
+                , 0)
+              , 0)
 
             // console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
             value /= divisorValue
@@ -66,9 +69,14 @@ class CensusStatBox extends React.Component{
             //     .reduce((a,b) => a + b )
 
             if (this.props.sumType === 'pct') {
-                let divisorValue = this.props.geoids
-                  .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
-                  .reduce((a,b) => a + b )
+                // let divisorValue = this.props.geoids
+                //   .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.divisorKey}`, 0))
+                //   .reduce((a,b) => a + b )
+                  let divisorValue = this.props.geoids.reduce((a, c) =>
+                    a + this.props.divisorKeys.reduce((aa, cc) =>
+                      aa + get(this.props.graph, ["acs", c, this.props.year, cc], 0)
+                    , 0)
+                  , 0)
 
                 // console.log('calculateValues', value, divisorValue, value / divisorValue * 100)
                 compareValue /= divisorValue
@@ -117,7 +125,8 @@ class CensusStatBox extends React.Component{
         censusKeys: [],
         geoids: [],
         year:'2016',
-        maximumFractionDigits: 0
+        maximumFractionDigits: 0,
+        divisorKeys: []
     }
 }
 
