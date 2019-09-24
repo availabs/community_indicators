@@ -27,16 +27,16 @@ class TractLayer extends MapLayer{
 
       let timer = 0;
       const rotateCamera = timestamp => {
-        const args = {
-          bearing: (timestamp * 0.001) % 360,
-          pitch: 65,
-          duration: 1000
-        }
-        if (this.centroid) {
-          args.center = [...this.centroid];
-        }
         timer += timestamp;
         if (timer >= 1000) {
+          const args = {
+            bearing: (timestamp * 0.001) % 360,
+            pitch: 65,
+            duration: 1000
+          }
+          if (this.centroid) {
+            args.center = [...this.centroid];
+          }
           timer -= 1000;
           map.easeTo({ ...args });
         }
@@ -59,7 +59,7 @@ class TractLayer extends MapLayer{
             a.push(...get(res, ["json", "geo", c, "blockgroup"], []))
             return a;
           }, [])
-          return falcorChunkerNice(["acs", this.blockgroups, 2016, this.censusKeys])
+          return falcorChunkerNice(["acs", this.blockgroups, this.year, this.censusKey])
             .then(() => falcorGraph.call(["geo", "blockgroup", "centroid"], this.blockgroups))
               .then(res => {
                 this.centroid = get(res, ["json", "geo", "blockgroup", "centroid", "coordinates"], null)
@@ -73,7 +73,7 @@ class TractLayer extends MapLayer{
         const cache = falcorGraph.getCache();
 
         const keyDomain = this.blockgroups.reduce((a, c) => {
-          a[c] = get(cache, ["acs", c, 2016, 'B01003_001E'], 0) / get(this.geom, [c], 1);
+          a[c] = get(cache, ["acs", c, this.year, this.censusKey], 0) / get(this.geom, [c], 1);
           return a;
         }, {})
 
@@ -139,18 +139,6 @@ class TractLayer extends MapLayer{
             1
         );
 
-        /*let renderGeo = map.queryRenderedFeatures({ layers: ['bg-layer'] })
-
-        let tractsGeo = map.querySourceFeatures("bg",
-            {
-                sourceLayer:"tl_2017_36_bg",
-                // filter: ['all', ['in', 'GEOID', ...this.blockgroups]]
-            }
-        )
-        let geojson = {type:'FeatureCollection', features: tractsGeo}
-                console.log('tracts Geo',tractsGeo, renderGeo)
-        let bounds =  geojsonExtent(geojson)*/
-
     }
 }
 
@@ -159,9 +147,10 @@ const tractLayer = new TractLayer("Tracts Layer", {
     active: true,
 
     geoids: ['36001', '36083', '36093', '36091', '36039', '36021', '36115', '36113'],
-    censusKeys: ["B01003_001E"],
+    censusKey: "B01003_001E",
     blockgroups: [],
     centroid: null,
+    year: 2017,
 
     sources: [
         {
@@ -207,26 +196,26 @@ const tractLayer = new TractLayer("Tracts Layer", {
         // }
 
     ],
-    filters:{
-        censvar:{
-            name: "censvar",
-            type: "hidden",
-            domain: ["B01003_001E"],
-            value: "B01003_001E"
-        },
-        year:{
-            name: 'year',
-            type: 'hidden',
-            domain: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
-            value: 2017
-        },
-        geo: {
-            name: 'geographies',
-            type: 'hidden',
-            domain: [],
-            value: ['36001','36083','36093','36091','36039','36021','36115','36113']
-        }
-    }
+    // filters:{
+    //     censvar:{
+    //         name: "censvar",
+    //         type: "hidden",
+    //         domain: ["B01003_001E"],
+    //         value: "B01003_001E"
+    //     },
+    //     year:{
+    //         name: 'year',
+    //         type: 'hidden',
+    //         domain: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+    //         value: 2017
+    //     },
+    //     geo: {
+    //         name: 'geographies',
+    //         type: 'hidden',
+    //         domain: [],
+    //         value: ['36001','36083','36093','36091','36039','36021','36115','36113']
+    //     }
+    // }
 
 
 });
