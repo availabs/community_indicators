@@ -18,6 +18,38 @@ const BASE_CONFIG = [
              }
         },
 
+ {
+      type:"CensusStatBox",
+      title: "Total With No High School Diploma or Equivalent",
+      censusKeys:['B15003_002E...B15003_016E'],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:6,
+         h:4,
+      }
+   },
+
+   {
+      type:"CensusStatBox",
+      title: "Percent of Population with No High School Diploma or Equivalent",
+      sumType: 'pct',
+      divisorKey: "B23025_001E",
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      censusKeys:['B15003_002E...B15003_016E'],
+      divisorKeys:['B01003_001E'],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      layout:{
+         w:6,
+         h:4,
+      }
+   },
+
 
         {
             type: 'CensusBarChart',
@@ -91,7 +123,6 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
        compareYear: year - 1,
       year,
-
       layout:{
          w:6,
          h:3,

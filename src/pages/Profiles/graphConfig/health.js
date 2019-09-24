@@ -4,6 +4,8 @@ import {
   femaleColor
 } from "./utils"
 
+const year = 2017;
+
 const BASE_CONFIG = [
   {
           type: "TextBox",
@@ -14,6 +16,34 @@ const BASE_CONFIG = [
             w: 12
              }
         },
+
+       {
+      type:"CensusStatBox",
+      title:'Covered by Health Insurance',
+      censusKeys:["B18135_001E"],
+      compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:6,
+         h:3
+      }
+   },
+  {
+      type:"CensusStatBox",
+      title:'Percent Health Coverage',
+      sumType: 'pct',
+      censusKeys:["B18135_001E"],
+      divisorKey: "B01003_001E",
+      compareYear: year - 1,
+      year,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:6,
+         h:3
+      }
+   },      
   {
     type: "CensusBarChart",
     title: "Age by Disability Status by Health Insurance Coverage Status",
