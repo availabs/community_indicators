@@ -25,20 +25,25 @@ class TractLayer extends MapLayer{
     onAdd(map){
       super.onAdd();
 
+      let timer = 0;
       const rotateCamera = timestamp => {
         const args = {
           bearing: (timestamp * 0.001) % 360,
           pitch: 65,
-          duration: 0
+          duration: 1000
         }
         if (this.centroid) {
           args.center = [...this.centroid];
         }
-        map.easeTo({ ...args });
+        timer += timestamp;
+        if (timer >= 1000) {
+          timer -= 1000;
+          map.easeTo({ ...args });
+        }
         // map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
         this.animation = requestAnimationFrame(rotateCamera);
       }
-      rotateCamera(0);
+      rotateCamera(1000);
 
       return fetch('/data/bg_area.json')
         .then(response => response.json())
@@ -97,7 +102,6 @@ class TractLayer extends MapLayer{
         //         }
         //         return out;
         //     }, 0);
-
 
         let values = Object.values(keyDomain).sort((a,b) => a - b )
         let min = values[0];

@@ -47,7 +47,6 @@ const SearchContainer = styled.div`
 
 class SearchCompareComponent extends React.Component {
 
-   
 	constructor(props) {
         super(props);
     	this.selectOption = this.selectOption.bind(this);
@@ -67,8 +66,8 @@ class SearchCompareComponent extends React.Component {
       return (
         <SearchContainer className="" compare={this.props.compare}>
         	{this.props.compare ? <span style={{fontSize:'0.5em', lineHeight:'0.5em', color: '#047bf8'}}>COMPARISON</span> : ''}
-          	<Tokenizer 
-	          	placeholder="Compare to ..." 
+          	<Tokenizer
+	          	placeholder="Compare to ..."
 	          	customClasses={{
 		          input: this.props.compare ? 'hideSearch ' : 'searchCompareInput',
 		          typeahead: 'typeContainer',
@@ -84,7 +83,7 @@ class SearchCompareComponent extends React.Component {
    }
 
    static defaultProps = {
-   	onChange: () => {} 
+   	onChange: () => {}
    }
 }
 
