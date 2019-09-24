@@ -69,16 +69,32 @@ const BASE_CONFIG = [
 
     {
       type:"CensusStatBox",
-      title: "Median Household Income, Hispanic or Latino",
-      valuePrefix:'$',
-      censusKeys:["B14003_014E, B14003_015E, B14003_015E, B14003_016E, B14003_023E, B14003_024E, B14003_025E, B14003_026E"],
+      title: "Total Ages 5-19 Not Enrolled in School",
+      censusKeys:["B14003_023E", "B14003_024E", "B14003_025E", "B14003_026E", "B14003_051E", "B14003_052E", "B14003_053E","B14003_054E"],
       amount:true,
        compareYear: year - 1,
       year,
       maximumFractionDigits: 1,
       layout:{
-         w:3,
-         h:4,
+         w:6,
+         h:3,
+      }
+   },
+
+   {
+      type:"CensusStatBox",
+      title: "Percent Ages 3-4 Enrolled in School",
+      censusKeys:['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
+      sumType: 'pct',
+      divisorKeys:['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ],
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+       compareYear: year - 1,
+      year,
+
+      layout:{
+         w:6,
+         h:3,
       }
    },
 

@@ -170,6 +170,37 @@ const BASE_CONFIG = [
         ]
     },
 
+        {
+        
+      type: "CensusLineChart",
+      title: "Receipt of Food Stamps/SNAP by Race",
+      marginLeft: 75,
+      censusKeys: [
+        "B22005A_001E",
+        "B22005B_001E",
+        "B22005C_001E",
+        "B22005D_001E",
+        "B22005E_001E",
+        "B22005F_001E",
+        "B22005G_001E",
+        "B22005H_001E",
+        "B22005I_001E"
+      ],
+      censusKeyLabels: {
+        "B22005A_001E": "White",
+        "B22005B_001E": "Black or African American Alone",
+        "B22005C_001E": "American Indian and Alaska Native",
+        "B22005D_001E": "Asian",
+        "B22005E_001E": "Native Hawaiian and Other Pacific Islander",
+        "B22005F_001E": "Some Other Race Alone",
+        "B22005G_001E": "Two or More Races",
+        "B22005H_001E": "White Alone, Not Hispanic or Latino",
+       "B22005I_001E": "Hispanic or Latino"
+      }
+    },
+
+    
+
       {
       type: "TextBox",
       header: "Food Access Research Atlas by the United States Department of Agriculture",

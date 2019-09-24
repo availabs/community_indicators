@@ -33,7 +33,9 @@ const BASE_CONFIG = [
           { type: "link", value: "https://www.health.ny.gov/statistics/chac/indicators/" }
         ]
       ]
-    }
+    },
+
+    
 ]
 
 export default configLoader(BASE_CONFIG);
