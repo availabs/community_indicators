@@ -181,19 +181,29 @@ const BASE_CONFIG = [
         years: ['2017'],
         yFormat: "$,d"
     },
+    {
+      type: "TextBox",
+      header: "Upstate Alliance for the Creative Economy",
+      subheader: "Data, Reports",
+      body: "",
+      link: "http://www.upstatecreative.org/",
+      layout: { 
+            h: 3,
+            w: 12
+             }
+    },
 
     {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "Center for Economic Growth (CEG) - Economic Scorecard" },
-          { type: "subheader", value: "Reports and Visualizations" },
-          { type: "body", value: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation." },
-          { type: "link", value: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6" }
-        ]
-      ]
+      type: "TextBox",
+      header: "Center for Economic Growth (CEG) - Economic Scorecard",
+      subheader: "Reports and Visualizations",
+      body: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation.",
+      link: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6",
+      layout: { 
+            h: 5,
+            w: 12
+             }
     }
-
 ]
 
 export default configLoader(BASE_CONFIG);

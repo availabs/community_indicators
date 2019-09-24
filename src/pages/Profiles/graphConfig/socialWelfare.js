@@ -170,16 +170,39 @@ const BASE_CONFIG = [
         ]
     },
 
+      {
+      type: "TextBox",
+      header: "Food Access Research Atlas by the United States Department of Agriculture",
+      subheader: "Data Visualization",
+      body: "Map of Food Insecure Areas (nearest grocery store is within 1 and 10 miles.",
+      link: "https://map.feedingamerica.org/",
+      layout: { 
+            h: 3,
+            w: 12
+             }
+
+    },
     {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "New York State Division of Criminal Justice Services" },
-          { type: "subheader", value: "Data Downloads and Report Publications" },
-          { type: "body", value: "Criminal justice data by county from New York State Division of Criminal Justice Services including Violent Crimes, Domestic Violence Victims, Arrests, Dispositions, Youth Justice Data, and more" },
-          { type: "link", value: "https://www.criminaljustice.ny.gov/crimnet/ojsa/stats.htm" }
-        ]
-      ]
+      type: "TextBox",
+      header: "Child Care Regulated Programs",
+      subheader: "Data",
+      body: "Information on OCFS regulated child care programs, which includes program overview information and violation history.",
+      link: "https://data.ny.gov/Human-Services/Child-Care-Regulated-Programs/cb42-qumz/data",
+      layout: { 
+            h: 3,
+            w: 12
+             }
+    },
+    {
+      type: "TextBox",
+      header: "New York State Division of Criminal Justice Services" ,
+      subheader: "Data Downloads and Report Publications" ,
+      body: "Criminal justice data by county from New York State Division of Criminal Justice Services including Violent Crimes, Domestic Violence Victims, Arrests, Dispositions, Youth Justice Data, and more",
+      link: "https://www.criminaljustice.ny.gov/crimnet/ojsa/stats.htm",
+      layout: { 
+            h: 3,
+            w: 12
+             }
     }
 
 ]
