@@ -7,6 +7,7 @@ import ProfileHeader from './components/ProfileHeader'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { falcorChunkerNice } from "store/falcorGraph"
+import SearchCompare from './components/SearchCompare'
 
 import GRAPH_CONFIG from './graphConfig'
 
@@ -43,6 +44,7 @@ const Href = styled.a`
   right: 20px;
 `
 
+
 const GetFooter = ({ type, value }) =>
   type === "header" ? <Header>{ value }</Header> :
   type === "subheader" ? <SubHeader>{ value }</SubHeader> :
@@ -60,6 +62,8 @@ const ProfileFooter = ({ data }) =>
       )
     }
   </div>
+
+
 
 class Profile extends React.Component{
   fetchFalcorDeps() {
@@ -134,7 +138,11 @@ class Profile extends React.Component{
                 <ProfileHeader geoids={[this.props.geoid]} />
                 <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
                     <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
-                        <ul className="nav nav-tabs upper" style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
+                        <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
+
+                            <li className="nav-item" style={{flex: '1 1'}} key={ 'search' }>
+                              <SearchCompare />
+                            </li>
                             {
                                 Object.keys(GRAPH_CONFIG).map(category => {
                                     return (
