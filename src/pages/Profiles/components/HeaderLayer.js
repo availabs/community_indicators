@@ -66,6 +66,7 @@ class TractLayer extends MapLayer{
               });
         })
     }
+
     render(map) {
         map.setFilter('bg-layer', ['all', ['in', 'GEOID', ...this.blockgroups]]);
 

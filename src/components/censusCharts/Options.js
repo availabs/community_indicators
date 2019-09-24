@@ -9,6 +9,12 @@ const A = styled.a`
 `
 
 export default class Options extends React.Component {
+  
+  renderModal(){
+
+  }
+  
+
   render () {
     return (
 
