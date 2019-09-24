@@ -61,6 +61,7 @@ class TractLayer extends MapLayer{
               });
         })
     }
+<<<<<<< HEAD
     render(map) {
         map.setFilter('bg-layer', ['all', ['in', 'GEOID', ...this.blockgroups]]);
 
@@ -96,6 +97,45 @@ class TractLayer extends MapLayer{
         //         }
         //         return out;
         //     }, 0);
+=======
+    receiveData(map, blockgroups) {
+console.log("RECEIVE DATA:", map, blockgroups)
+        const filter = ['all', ['in', 'GEOID', ...blockgroups]];
+        
+        map.setFilter('bg-layer', filter);
+
+        const rendered = map.querySourceFeatures("bg", { sourceLayer: "tl_2017_36_bg", filter });
+console.log("RENDERED:", rendered)
+
+        const data = falcorGraph.getCache();
+
+        let keyDomain = Object.keys(data.acs)
+            .filter(d => d !== 'config')
+            .reduce((out, curr) => {
+                if(data.acs[curr] && this.geom[curr]){
+                    out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
+                }
+                return out;
+            }, {});
+
+        let popSum = Object.keys(data.acs)
+            .filter(d => d !== 'config')
+            .reduce((out, curr) => {
+                if(data.acs[curr] && this.geom[curr]){
+                    out += data.acs[curr]['2016']['B01003_001E'];
+                }
+                return out;
+            }, 0);
+        let areaSum = Object.keys(data.acs)
+            .filter(d => d !== 'config')
+            .reduce((out, curr) => {
+                if(data.acs[curr] && this.geom[curr]){
+                    out += (this.geom[curr])
+                }
+                return out;
+            }, 0);
+        let values = Object.values(keyDomain).sort((a,b) => a - b )
+>>>>>>> 8df93f8347da8153c1424034d55095e6ab257f93
 
         let values = Object.values(keyDomain).sort((a,b) => a - b )
         let min = values[0];
