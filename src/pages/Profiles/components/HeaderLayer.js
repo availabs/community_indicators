@@ -25,20 +25,25 @@ class TractLayer extends MapLayer{
     onAdd(map){
       super.onAdd();
 
+      let timer = 0;
       const rotateCamera = timestamp => {
         const args = {
           bearing: (timestamp * 0.001) % 360,
           pitch: 65,
-          duration: 0
+          duration: 1000
         }
         if (this.centroid) {
           args.center = [...this.centroid];
         }
-        map.easeTo({ ...args });
+        timer += timestamp;
+        if (timer >= 1000) {
+          timer -= 1000;
+          map.easeTo({ ...args });
+        }
         // map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
         this.animation = requestAnimationFrame(rotateCamera);
       }
-      rotateCamera(0);
+      rotateCamera(1000);
 
       return fetch('/data/bg_area.json')
         .then(response => response.json())
@@ -61,7 +66,6 @@ class TractLayer extends MapLayer{
               });
         })
     }
-<<<<<<< HEAD
     render(map) {
         map.setFilter('bg-layer', ['all', ['in', 'GEOID', ...this.blockgroups]]);
 
@@ -97,45 +101,6 @@ class TractLayer extends MapLayer{
         //         }
         //         return out;
         //     }, 0);
-=======
-    receiveData(map, blockgroups) {
-console.log("RECEIVE DATA:", map, blockgroups)
-        const filter = ['all', ['in', 'GEOID', ...blockgroups]];
-        
-        map.setFilter('bg-layer', filter);
-
-        const rendered = map.querySourceFeatures("bg", { sourceLayer: "tl_2017_36_bg", filter });
-console.log("RENDERED:", rendered)
-
-        const data = falcorGraph.getCache();
-
-        let keyDomain = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
-                }
-                return out;
-            }, {});
-
-        let popSum = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out += data.acs[curr]['2016']['B01003_001E'];
-                }
-                return out;
-            }, 0);
-        let areaSum = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out += (this.geom[curr])
-                }
-                return out;
-            }, 0);
-        let values = Object.values(keyDomain).sort((a,b) => a - b )
->>>>>>> 8df93f8347da8153c1424034d55095e6ab257f93
 
         let values = Object.values(keyDomain).sort((a,b) => a - b )
         let min = values[0];
