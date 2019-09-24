@@ -70,7 +70,8 @@ class Profile extends React.Component{
   fetchFalcorDeps() {
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"]);
   }
-    renderCategory(name, configData) {
+  
+  renderCategory(name, configData) {
         const profileHeader = configData.find(({ type }) => type === "ProfileHeader"),
           profileFooter = configData.find(({ type }) => type === "ProfileFooter");
         return (

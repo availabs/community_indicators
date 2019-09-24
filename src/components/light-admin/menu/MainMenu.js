@@ -146,6 +146,7 @@ class MainMenu extends Component {
     return (
       <ul className="main-menu">
         {this.renderMenus(this.props.menus)} 
+        {/*
         <li
           key = {'menuItem_search'}
           id = {'menuItem_search'}
@@ -164,7 +165,7 @@ class MainMenu extends Component {
           <TopSearch /> 
          
         </li>
-         
+         */}
       </ul>
     )
   }

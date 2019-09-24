@@ -8,6 +8,13 @@ let geonames = geographies[0].reduce((acc, curr) =>{
 	return [...acc, curr.name, ...curr.children.map(d => d.name)]
 },[])
 
+let geocodes = geographies[0].reduce((acc, curr) =>{
+	acc[curr.name] = curr.path.split('/')[2]
+	curr.children.forEach(d => { acc[d.name] = d.path.split('/')[2] })
+	return acc
+
+},{})
+
 
 const SearchContainer = styled.div`
 	position: relative;
@@ -37,20 +44,24 @@ const SearchContainer = styled.div`
 class SearchCompareComponent extends React.Component {
    
    selectOption (opt) {
-   	console.log('optionSelected', opt)
+   	console.log('optionSelected', opt, geocodes[opt])
    }	
 
    render () {
    	  console.log('geonames', geonames)
       return (
-        <SearchContainer className="element-search autosuggest-search-activator menu-position-top menu-w">
+        <SearchContainer className="">
           <Tokenizer 
           	placeholder="Compare to ..." 
           	customClasses={{
 	          input: 'searchCompareInput',
-	          results: ""
+	          typeahead: 'typeContainer',
+	          results: 'resultsContainer'
 	        }}
-          	options={geonames}/>
+          	options={geonames}
+          	onTokenAdd={this.selectOption}
+          	onTokenRemove={this.selectOption}
+          	/>
         </SearchContainer>
       )
    }
