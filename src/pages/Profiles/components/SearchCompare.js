@@ -46,27 +46,7 @@ const SearchContainer = styled.div`
 
 
 class SearchCompareComponent extends React.Component {
-<<<<<<< HEAD
 
-   selectOption (opt) {
-   	console.log('optionSelected', opt, geocodes[opt])
-   }
-
-   render () {
-   	  // console.log('geonames', geonames)
-      return (
-        <SearchContainer className="">
-          <Tokenizer
-          	placeholder="Compare to ..."
-          	customClasses={{
-	          input: 'searchCompareInput',
-	          typeahead: 'typeContainer',
-	          results: 'resultsContainer'
-	        }}
-          	options={geonames}
-          	onTokenAdd={this.selectOption}
-          	onTokenRemove={this.selectOption}
-=======
    
 	constructor(props) {
         super(props);
@@ -98,7 +78,6 @@ class SearchCompareComponent extends React.Component {
 	          	options={geonames}
 	          	onTokenAdd={this.selectOption}
 	          	onTokenRemove={this.removeOption}
->>>>>>> 8df93f8347da8153c1424034d55095e6ab257f93
           	/>
         </SearchContainer>
       )
