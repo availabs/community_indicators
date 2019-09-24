@@ -23,7 +23,7 @@ const BASE_CONFIG = [
     {
             type: 'CensusBarChart',
             title: 'Population by County',
-            orientation: 'horizontal',
+            orientation: 'vertical',
             marginLeft: 225,
             censusKeys: [
               'B01003_001E'
@@ -31,28 +31,14 @@ const BASE_CONFIG = [
             ],
             layout:{
          w:12,
-         h:18,
+         h:12,
          x:0,
         },
 
     },
 
 
-   {
-      type:"CensusStatBox",
-      title:'Poverty Rate',
-      sumType: 'pct',
-      censusKeys:["B17001_002E"],
-      divisorKey: "B17001_001E",
-      compareYear: year - 1,
-      year,
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
-      layout:{
-         w:12,
-         h:3
-      }
-   },
+   
 
    
    
