@@ -51,6 +51,7 @@ class TractLayer extends MapLayer{
         })
     }
     receiveData(map, blockgroups) {
+console.log("RECEIVE DATA:", map, blockgroups)
         const filter = ['all', ['in', 'GEOID', ...blockgroups]];
         map.setFilter('bg-layer', filter);
 
