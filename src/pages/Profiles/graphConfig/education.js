@@ -4,6 +4,8 @@ import {
   femaleColor
 } from "./utils"
 
+const year = 2017;
+
 const BASE_CONFIG = [
         
       {
@@ -64,6 +66,23 @@ const BASE_CONFIG = [
             "Enrolled in graduate or professional school, Private School"
           ]
         },
+
+    {
+      type:"CensusStatBox",
+      title: "Median Household Income, Hispanic or Latino",
+      valuePrefix:'$',
+      censusKeys:["B14003_014E, B14003_015E, B14003_015E, B14003_016E, B14003_023E, B14003_024E, B14003_025E, B14003_026E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+        
         {
           type: 'CensusStackedBarChart',
           broadCensusKey: 'B14003',
