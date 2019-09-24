@@ -4,6 +4,8 @@ import {
   femaleColor
 } from "./utils"
 
+const year = 2017;
+
 const BASE_CONFIG = [
   {
           type: "TextBox",
@@ -14,6 +16,38 @@ const BASE_CONFIG = [
             w: 12
              }
         },
+
+{
+      type:"CensusStatBox",
+      title:'Percent of Labor Force Unemployed',
+      sumType: 'pct',
+      censusKeys:["B23025_005E"],
+      divisorKey: "B23025_001E",
+      compareYear: year - 1,
+      year,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:6,
+         h:3
+      }
+   },
+
+  {
+      type:"CensusStatBox",
+      title:'Percent of Populaion Over 16 Years-old, Not in Labor Force',
+      sumType: 'pct',
+      censusKeys:["B23025_007E"],
+      divisorKey: "B23025_001E",
+      compareYear: year - 1,
+      year,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:6,
+         h:3
+      }
+   },
 
   {
     type: "CensusStackedBarChart",
@@ -65,6 +99,65 @@ const BASE_CONFIG = [
     removeLeading: 1
   },
   {
+      type:"CensusStatBox",
+      title: "Median Household Income, White",
+      valuePrefix:'$',
+      censusKeys:["B19013A_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Black",
+      valuePrefix:'$',
+      censusKeys:["B19013B_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Hispanic or Latino",
+      valuePrefix:'$',
+      censusKeys:["B19013I_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Asian",
+      valuePrefix:'$',
+      censusKeys:["B19013D_001E"],
+      amount:true,
+       compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+  {
     type: "CensusLineChart",
     title: "Median Household Income by Race",
     censusKeys: ["B19013A_001E...B19013I_001E"],
@@ -88,19 +181,29 @@ const BASE_CONFIG = [
         years: ['2017'],
         yFormat: "$,d"
     },
+    {
+      type: "TextBox",
+      header: "Upstate Alliance for the Creative Economy",
+      subheader: "Data, Reports",
+      body: "",
+      link: "http://www.upstatecreative.org/",
+      layout: { 
+            h: 3,
+            w: 12
+             }
+    },
 
     {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "Center for Economic Growth (CEG) - Economic Scorecard" },
-          { type: "subheader", value: "Reports and Visualizations" },
-          { type: "body", value: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation." },
-          { type: "link", value: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6" }
-        ]
-      ]
+      type: "TextBox",
+      header: "Center for Economic Growth (CEG) - Economic Scorecard",
+      subheader: "Reports and Visualizations",
+      body: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation.",
+      link: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6",
+      layout: { 
+            h: 5,
+            w: 12
+             }
     }
-
 ]
 
 export default configLoader(BASE_CONFIG);
