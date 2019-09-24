@@ -35,7 +35,6 @@ class acsLayer extends MapLayer{
 
     onAdd(map) {
         super.onAdd(map)
-        this.loading = true;
         return falcorGraph.get(['acs', 'config'])
             .then(res => {
                 Object.keys(res.json.acs.config).forEach(function(cenKey,i){
@@ -55,7 +54,6 @@ class acsLayer extends MapLayer{
                 this.component.forceUpdate()
                 return this.fetchData()
                     .then(data => this.receiveData(map, data))
-                    .then(() => this.loading = false)
             })
 
     }
@@ -212,7 +210,6 @@ class acsLayer extends MapLayer{
 
 const buildingsLayer = new acsLayer("ACS Layer", {
         active: false,
-        loading: true,
         sources: [
             { id: "counties",
                 source: {
@@ -317,7 +314,7 @@ filters: {
                                 }
                         }
                     })
-                    
+
                     layer.component.forceUpdate()
                 }
             },

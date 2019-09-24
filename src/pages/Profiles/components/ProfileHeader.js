@@ -53,9 +53,8 @@ let StatContainer = styled.div`
 class ProfileHeader extends Component {
   componentDidUpdate(oldProps) {
     if (!deepequal(this.props.geoids, HeaderLayer.geoids)) {
-      console.log("DIFFERENT GEOID", oldProps.geoids, this.props.geoids)
       HeaderLayer.geoids = this.props.geoids;
-      HeaderLayer.doAction(["fetchLayerData"]);
+      HeaderLayer.map && HeaderLayer.doAction(["fetchLayerData"]);
     }
   }
     render () {

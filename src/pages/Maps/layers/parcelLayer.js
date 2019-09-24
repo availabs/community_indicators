@@ -79,8 +79,6 @@ class ParcelLayer extends MapLayer {
 
     super.onAdd(map)
 
-    this.loading = true;
-
     const geoLevel = "cousubs";
     falcorGraph.get(["geo", "36", geoLevel])
       .then(res => res.json.geo['36'][geoLevel])

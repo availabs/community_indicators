@@ -37,7 +37,6 @@ let censusConfig = {}
 class CensusLayer extends MapLayer{
     onAdd(map){
         super.onAdd(map)
-        this.loading = true;
         let blockGroups = [];
         return falcorGraph.get(['geo',counties,'blockgroup'],['acs','config'])
             .then(res => {
@@ -218,8 +217,7 @@ class CensusLayer extends MapLayer{
 }
 
 const censusLayer = new CensusLayer("Census Layer", {
-        active: true, //make both active and loading true
-        loading: true,
+        active: true, //make active true
         sources: [
             { id: "dot_density",
                 source: {

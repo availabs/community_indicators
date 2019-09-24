@@ -25,12 +25,25 @@ class TractLayer extends MapLayer{
     onAdd(map){
       super.onAdd();
 
-      map.setPitch(65);
+      let timer = 0;
       const rotateCamera = timestamp => {
-          map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
-          this.animation = requestAnimationFrame(rotateCamera);
+        timer += timestamp;
+        if (timer >= 1000) {
+          const args = {
+            bearing: (timestamp * 0.001) % 360,
+            pitch: 65,
+            duration: 1000
+          }
+          if (this.centroid) {
+            args.center = [...this.centroid];
+          }
+          timer -= 1000;
+          map.easeTo({ ...args });
+        }
+        // map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
+        this.animation = requestAnimationFrame(rotateCamera);
       }
-      rotateCamera(0);
+      rotateCamera(1000);
 
       return fetch('/data/bg_area.json')
         .then(response => response.json())
@@ -42,53 +55,57 @@ class TractLayer extends MapLayer{
     fetchData() {
       return falcorChunkerNice(["geo", this.geoids, "blockgroup"])
         .then(res => {
-          const blockgroups = this.geoids.reduce((a, c) => {
+          this.blockgroups = this.geoids.reduce((a, c) => {
             a.push(...get(res, ["json", "geo", c, "blockgroup"], []))
             return a;
           }, [])
-          return falcorChunkerNice(["acs", blockgroups, 2016, this.censusKeys])
-            .then(() => blockgroups)
+          return falcorChunkerNice(["acs", this.blockgroups, this.year, this.censusKey])
+            .then(() => falcorGraph.call(["geo", "blockgroup", "centroid"], this.blockgroups))
+              .then(res => {
+                this.centroid = get(res, ["json", "geo", "blockgroup", "centroid", "coordinates"], null)
+              });
         })
     }
-    receiveData(map, blockgroups) {
-console.log("RECEIVE DATA:", map, blockgroups)
-        const filter = ['all', ['in', 'GEOID', ...blockgroups]];
-        map.setFilter('bg-layer', filter);
 
-        const rendered = map.querySourceFeatures("bg", { sourceLayer: "tl_2017_36_bg", filter });
-console.log("RENDERED:", rendered)
+    render(map) {
+        map.setFilter('bg-layer', ['all', ['in', 'GEOID', ...this.blockgroups]]);
 
-        const data = falcorGraph.getCache();
+        const cache = falcorGraph.getCache();
 
-        let keyDomain = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
-                }
-                return out;
-            }, {});
+        const keyDomain = this.blockgroups.reduce((a, c) => {
+          a[c] = get(cache, ["acs", c, this.year, this.censusKey], 0) / get(this.geom, [c], 1);
+          return a;
+        }, {})
 
-        let popSum = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out += data.acs[curr]['2016']['B01003_001E'];
-                }
-                return out;
-            }, 0);
-        let areaSum = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out += (this.geom[curr])
-                }
-                return out;
-            }, 0);
+        // let keyDomain = Object.keys(data.acs)
+        //     .filter(d => d !== 'config')
+        //     .reduce((out, curr) => {
+        //         if(data.acs[curr] && this.geom[curr]){
+        //             out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
+        //         }
+        //         return out;
+        //     }, {});
+        //
+        // let popSum = Object.keys(data.acs)
+        //     .filter(d => d !== 'config')
+        //     .reduce((out, curr) => {
+        //         if(data.acs[curr] && this.geom[curr]){
+        //             out += data.acs[curr]['2016']['B01003_001E'];
+        //         }
+        //         return out;
+        //     }, 0);
+        // let areaSum = Object.keys(data.acs)
+        //     .filter(d => d !== 'config')
+        //     .reduce((out, curr) => {
+        //         if(data.acs[curr] && this.geom[curr]){
+        //             out += (this.geom[curr])
+        //         }
+        //         return out;
+        //     }, 0);
+
         let values = Object.values(keyDomain).sort((a,b) => a - b )
-
-        let min = Math.min(...values)
-        let max = Math.max(...values)
+        let min = values[0];
+        let max = values[values.length - 1];
 
         map.setPaintProperty(
             'bg-layer',
@@ -122,18 +139,6 @@ console.log("RENDERED:", rendered)
             1
         );
 
-        /*let renderGeo = map.queryRenderedFeatures({ layers: ['bg-layer'] })
-
-        let tractsGeo = map.querySourceFeatures("bg",
-            {
-                sourceLayer:"tl_2017_36_bg",
-                // filter: ['all', ['in', 'GEOID', ...this.blockgroups]]
-            }
-        )
-        let geojson = {type:'FeatureCollection', features: tractsGeo}
-                console.log('tracts Geo',tractsGeo, renderGeo)
-        let bounds =  geojsonExtent(geojson)*/
-
     }
 }
 
@@ -142,7 +147,10 @@ const tractLayer = new TractLayer("Tracts Layer", {
     active: true,
 
     geoids: ['36001', '36083', '36093', '36091', '36039', '36021', '36115', '36113'],
-    censusKeys: ["B01003_001E"],
+    censusKey: "B01003_001E",
+    blockgroups: [],
+    centroid: null,
+    year: 2017,
 
     sources: [
         {
@@ -188,26 +196,26 @@ const tractLayer = new TractLayer("Tracts Layer", {
         // }
 
     ],
-    filters:{
-        censvar:{
-            name: "censvar",
-            type: "hidden",
-            domain: ["B01003_001E"],
-            value: "B01003_001E"
-        },
-        year:{
-            name: 'year',
-            type: 'hidden',
-            domain: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
-            value: 2017
-        },
-        geo: {
-            name: 'geographies',
-            type: 'hidden',
-            domain: [],
-            value: ['36001','36083','36093','36091','36039','36021','36115','36113']
-        }
-    }
+    // filters:{
+    //     censvar:{
+    //         name: "censvar",
+    //         type: "hidden",
+    //         domain: ["B01003_001E"],
+    //         value: "B01003_001E"
+    //     },
+    //     year:{
+    //         name: 'year',
+    //         type: 'hidden',
+    //         domain: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+    //         value: 2017
+    //     },
+    //     geo: {
+    //         name: 'geographies',
+    //         type: 'hidden',
+    //         domain: [],
+    //         value: ['36001','36083','36093','36091','36039','36021','36115','36113']
+    //     }
+    // }
 
 
 });

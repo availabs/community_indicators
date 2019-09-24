@@ -67,6 +67,12 @@ const ProfileFooter = ({ data }) =>
 
 
 class Profile extends React.Component{
+  constructor(props) {
+      super(props);
+      this.renderCategory = this.renderCategory.bind(this);
+      this.searchNav = this.searchNav.bind(this);
+  }
+
   fetchFalcorDeps() {
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"]);
   }
@@ -119,6 +125,15 @@ class Profile extends React.Component{
         )
     }
 
+    searchNav(type, compareId) {
+      console.log('set compreId', compareId, this.props)
+      if(type === 'add') {
+        this.props.history.push(`/profile/${this.props.geoid}/compare/${compareId}`)
+      } else if (type === 'remove') {
+        this.props.history.push(`/profile/${this.props.geoid}`)
+      } 
+    }
+
     render(){
         const categories = Object.keys(GRAPH_CONFIG).map(category =>
             this.renderCategory(category, GRAPH_CONFIG[category])
@@ -131,7 +146,7 @@ class Profile extends React.Component{
                         <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
 
                             <li className="nav-item" style={{flex: '1 1'}} key={ 'search' }>
-                              <SearchCompare />
+                              <SearchCompare onChange={this.searchNav} compare={this.props.compareGeoid} />
                             </li>
                             {
                                 Object.keys(GRAPH_CONFIG).map(category => {
