@@ -25,10 +25,18 @@ class TractLayer extends MapLayer{
     onAdd(map){
       super.onAdd();
 
-      map.setPitch(65);
       const rotateCamera = timestamp => {
-          map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
-          this.animation = requestAnimationFrame(rotateCamera);
+        const args = {
+          bearing: (timestamp * 0.001) % 360,
+          pitch: 65,
+          duration: 0
+        }
+        if (this.centroid) {
+          args.center = [...this.centroid];
+        }
+        map.easeTo({ ...args });
+        // map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
+        this.animation = requestAnimationFrame(rotateCamera);
       }
       rotateCamera(0);
 
@@ -42,53 +50,56 @@ class TractLayer extends MapLayer{
     fetchData() {
       return falcorChunkerNice(["geo", this.geoids, "blockgroup"])
         .then(res => {
-          const blockgroups = this.geoids.reduce((a, c) => {
+          this.blockgroups = this.geoids.reduce((a, c) => {
             a.push(...get(res, ["json", "geo", c, "blockgroup"], []))
             return a;
           }, [])
-          return falcorChunkerNice(["acs", blockgroups, 2016, this.censusKeys])
-            .then(() => blockgroups)
+          return falcorChunkerNice(["acs", this.blockgroups, 2016, this.censusKeys])
+            .then(() => falcorGraph.call(["geo", "blockgroup", "centroid"], this.blockgroups))
+              .then(res => {
+                this.centroid = get(res, ["json", "geo", "blockgroup", "centroid", "coordinates"], null)
+              });
         })
     }
-    receiveData(map, blockgroups) {
-console.log("RECEIVE DATA:", map, blockgroups)
-        const filter = ['all', ['in', 'GEOID', ...blockgroups]];
-        map.setFilter('bg-layer', filter);
+    render(map) {
+        map.setFilter('bg-layer', ['all', ['in', 'GEOID', ...this.blockgroups]]);
 
-        const rendered = map.querySourceFeatures("bg", { sourceLayer: "tl_2017_36_bg", filter });
-console.log("RENDERED:", rendered)
+        const cache = falcorGraph.getCache();
 
-        const data = falcorGraph.getCache();
+        const keyDomain = this.blockgroups.reduce((a, c) => {
+          a[c] = get(cache, ["acs", c, 2016, 'B01003_001E'], 0) / get(this.geom, [c], 1);
+          return a;
+        }, {})
 
-        let keyDomain = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
-                }
-                return out;
-            }, {});
+        // let keyDomain = Object.keys(data.acs)
+        //     .filter(d => d !== 'config')
+        //     .reduce((out, curr) => {
+        //         if(data.acs[curr] && this.geom[curr]){
+        //             out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
+        //         }
+        //         return out;
+        //     }, {});
+        //
+        // let popSum = Object.keys(data.acs)
+        //     .filter(d => d !== 'config')
+        //     .reduce((out, curr) => {
+        //         if(data.acs[curr] && this.geom[curr]){
+        //             out += data.acs[curr]['2016']['B01003_001E'];
+        //         }
+        //         return out;
+        //     }, 0);
+        // let areaSum = Object.keys(data.acs)
+        //     .filter(d => d !== 'config')
+        //     .reduce((out, curr) => {
+        //         if(data.acs[curr] && this.geom[curr]){
+        //             out += (this.geom[curr])
+        //         }
+        //         return out;
+        //     }, 0);
 
-        let popSum = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out += data.acs[curr]['2016']['B01003_001E'];
-                }
-                return out;
-            }, 0);
-        let areaSum = Object.keys(data.acs)
-            .filter(d => d !== 'config')
-            .reduce((out, curr) => {
-                if(data.acs[curr] && this.geom[curr]){
-                    out += (this.geom[curr])
-                }
-                return out;
-            }, 0);
         let values = Object.values(keyDomain).sort((a,b) => a - b )
-
-        let min = Math.min(...values)
-        let max = Math.max(...values)
+        let min = values[0];
+        let max = values[values.length - 1];
 
         map.setPaintProperty(
             'bg-layer',
@@ -143,6 +154,8 @@ const tractLayer = new TractLayer("Tracts Layer", {
 
     geoids: ['36001', '36083', '36093', '36091', '36039', '36021', '36115', '36113'],
     censusKeys: ["B01003_001E"],
+    blockgroups: [],
+    centroid: null,
 
     sources: [
         {

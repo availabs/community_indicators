@@ -42,17 +42,17 @@ const SearchContainer = styled.div`
 
 
 class SearchCompareComponent extends React.Component {
-   
+
    selectOption (opt) {
    	console.log('optionSelected', opt, geocodes[opt])
-   }	
+   }
 
    render () {
-   	  console.log('geonames', geonames)
+   	  // console.log('geonames', geonames)
       return (
         <SearchContainer className="">
-          <Tokenizer 
-          	placeholder="Compare to ..." 
+          <Tokenizer
+          	placeholder="Compare to ..."
           	customClasses={{
 	          input: 'searchCompareInput',
 	          typeahead: 'typeContainer',
