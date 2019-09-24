@@ -5,14 +5,17 @@ import {
 } from "./utils"
 
 const BASE_CONFIG = [
+        
       {
           type: "TextBox",
-          header: "TEST HEADER",
-          subheader: "TEST SUBHEADER",
-          body: "TEST BODY",
-          link: "TEST LINK",
-          layout: { h: 3 }
+          header: "EDUCATION",
+          body: "Education is key to preparing children for success as adults and for ensuring the economic and civic vitality of our region. ",
+          layout: { 
+            h: 3,
+            w: 12
+             }
         },
+
 
         {
             type: 'CensusBarChart',

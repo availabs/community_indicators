@@ -7,7 +7,7 @@ export default ({ graph, ...rest }) => {
         Graph = CensusCharts[graphType] || CensusCharts['NA']
     return (
         <TrackVisibility partialVisibility style={ { height: '100%' } }>
-        	<GraphHider Graph={Graph} { ...rest } graph={ graph }/>
+        	<GraphHider Graph={ Graph } { ...rest } graph={ graph }/>
         </TrackVisibility>
 	)
 }
@@ -29,9 +29,9 @@ class GraphHider extends React.Component{
     }
 
     render () {
-    	let {isVisible, Graph, graph, ...rest} = this.props
+    	const { isVisible, Graph, graph, ...rest } = this.props
     	return this.state.show ?
-		    <Graph {...rest} {...graph} /> :
+		    <Graph { ...rest } { ...graph } /> :
 		    <div>Loading...</div>
     }
 }

@@ -7,54 +7,55 @@ import {
 const year = 2017;
 
 const BASE_CONFIG = [
+
    {
-      "type":"CensusStatBox",
-      "censusKey":"B01003_001E",
+      type:"CensusStatBox",
+      censusKeys:["B01003_001E"],
       year,
       compareYear: year - 1,
-      "title": "Population",
-      "layout":{
-         "w":3,
-         "h":3
+      title: "Population",
+      layout:{
+         w:3,
+         h:3
       }
    },
    {
-      "id":"2",
-      "type":"CensusStatBox",
-      "title": "Median Age",
-      "censusKey":"B01002_001E",
+      id:"2",
+      type:"CensusStatBox",
+      title: "Median Age",
+      censusKeys:["B01002_001E"],
       maximumFractionDigits: 1,
       year,
-      "demographics":true,
-      "layout":{
-         "w":3,
-         "h":3
+      demographics:true,
+      layout:{
+         w:3,
+         h:3
       }
    },
    {
-      "type":"CensusStatBox",
-      "title": "Median Household Income",
-      valuePrefix:'$',
-      "censusKey":"B19013_001E",
-      "amount":true,
-      year,
-      "layout":{
-         "w":3,
-         "h":9,
-         "x":0
-      }
-   },
-   {
-      "type":"CensusLineChart",
+      type:"CensusStatBox",
       title: "Median Household Income",
-      "censusKeys":[
+      valuePrefix:'$',
+      censusKeys:["B19013_001E"],
+      amount:true,
+      year,
+      layout:{
+         w:3,
+         h:9,
+         x:0
+      }
+   },
+   {
+      type:"CensusLineChart",
+      title: "Median Household Income",
+      censusKeys:[
          "B19013_001E"
       ],
       marginLeft: 75,
       yFormat: "$,d",
-      "layout":{
-         "w":9,
-         "h":9
+      layout:{
+         w:9,
+         h:9
       }
    },
 
@@ -62,15 +63,15 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Poverty Rate',
       sumType: 'pct',
-      censusKey:"B17001_002E",
+      censusKeys:["B17001_002E"],
       divisorKey: "B17001_001E",
       compareYear: year - 1,
       year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
-      "layout":{
-         "w":2,
-         "h":9
+      layout:{
+         w:2,
+         h:9
       }
    },
    {
@@ -80,9 +81,9 @@ const BASE_CONFIG = [
       divisorKeys: ["B17001_001E"],
       sumType: 'pct',
       yFormat: ",.1%",
-      "layout":{
-         "w":10,
-         "h":9
+      layout:{
+         w:10,
+         h:9
       },
    },
 
@@ -90,51 +91,69 @@ const BASE_CONFIG = [
       title: "Percent Vacant Housing Units",
       type:"CensusStatBox",
       sumType: 'pct',
-      censusKey:"B25002_003E",
+      censusKeys:["B25002_003E"],
       divisorKey: 'B25002_001E',
       year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
-      "layout":{
-         "w":3,
-         "h":3,
-         "x":0
+      layout:{
+         w:3,
+         h:3,
+         x:0
       }
    },
    {
       title: "Vacant Housing Units",
       year,
       type:"CensusStatBox",
-      censusKey:"B25002_003E",
-      "layout":{
-         "w":3,
-         "h":3,
-         "x":0
+      censusKeys:["B25002_003E"],
+      layout:{
+         w:3,
+         h:3,
+         x:0
       },
    },
    {
       title: "Occupied Housing Units",
       year,
       type:"CensusStatBox",
-      censusKey:"B25002_002E",
-      "layout":{
-         "w":3,
-         "h":3,
-         "x":0
+      censusKeys:["B25002_002E"],
+      layout:{
+         w:3,
+         h:3,
+         x:0
       },
    },
    {
-      "type":"CensusLineChart",
+      type:"CensusLineChart",
       title: "Percent Vacant Housing Units",
       sumType: 'pct',
       yFormat: ",.1%",
       censusKeys:["B25002_003E"],
       divisorKeys:["B25002_001E"],
-      "layout":{
-         "w":9,
-         "h":9
+      layout:{
+         w:9,
+         h:9
       }
    },
+
+       {
+      type: "CensusLineChart",
+      title: "Per Capita Income",
+      marginLeft: 75,
+      yFormat: "$,d",
+      censusKeys: [
+        "B19301A_001E",
+        "B19301B_001E",
+        "B19301C_001E",
+        "B19301D_001E",
+        "B19301E_001E",
+        "B19301F_001E",
+        "B19301G_001E",
+        "B19301H_001E",
+        "B19301I_001E"
+      ]
+    },
 
    // {
    //    "id":"12",
@@ -163,13 +182,13 @@ const BASE_CONFIG = [
       type: "ProfileFooter",
       data: [
         [
-          { type: "header", value: "Center for Economic Growth (CEG) - Economic Scorecard" },
-          { type: "subheader", value: "Reports and Visualizations" },
-          { type: "body", value: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation." },
-          { type: "link", value: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6" }
+          { type: "header", value: "ALICE from United Way" },
+          { type: "subheader", value: "Reports, Visualizations, and Data Downloads" },
+          { type: "body", value: "The ALICE (Asset Limited, Income Constrained, Employed) Project was initiated by United Way of Northern New Jersey several years ago to bring focus to the families and individuals who work but whose salaries do not provide sufficient resources to meet basic needs. The ALICE Project developed a methodology using publicly available census, employment, wage, cost of living and other data to help to understand the extent of ALICE in our communities, those who are above the federal poverty level, but below a sustainable wage." },
+          { type: "link", value: "https://www.unitedforalice.org/new-york" }
         ]
       ]
-    }
+     }
 ]
 
 export default configLoader(BASE_CONFIG)

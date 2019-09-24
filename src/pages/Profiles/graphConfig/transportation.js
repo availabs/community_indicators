@@ -4,7 +4,20 @@ import {
   femaleColor
 } from "./utils"
 
+const year = 2017;
+
 const BASE_CONFIG = [
+  {
+          type: "TextBox",
+          header: "TRANSPORTATION",
+          body: "This section provides indicators on how the labor force in our region commutes to work and on car ownership.",
+          layout: { 
+            h: 3,
+            w: 12
+             }
+        },
+
+   
   {
     type: "CensusBarChart",
     title: "Means of Transportation to Work",
@@ -13,6 +26,60 @@ const BASE_CONFIG = [
     marginLeft: 490,
     marginRight: 30
   },
+   {
+      type:"CensusStatBox",
+      title:'Total Bike/Ped ',
+      censusKeys:["B08006_014E", "B08006_015E"],
+      amount:true,
+      compareYear: year - 1,
+      year,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
+  {
+      type:"CensusStatBox",
+      title:'Bike/Ped as a Percent of Total Commuters',
+      sumType: 'pct',
+      censusKeys:["B08006_014E", "B08006_015E"],
+      divisorKey: "B23025_001E",
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
+
+  {
+      type:"CensusStatBox",
+      title:'Total Public Transportation ',
+      censusKeys:["B08006_008E"],
+      compareYear: year - 1,
+      year,      
+      amount:true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
+
+  {
+      type:"CensusStatBox",
+      title:'Public Transportation as a Percent of Total Commuters',
+      sumType: 'pct',
+      censusKeys:["B08006_008E"],
+      divisorKey: "B23025_001E",
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:3
+      }
+   },
   {
     title: "Means of Transportation to Work by Sex",
     type: "CensusStackedBarChart",

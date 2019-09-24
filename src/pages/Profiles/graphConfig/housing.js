@@ -19,6 +19,16 @@ const BASE_CONFIG = [
   //     "w":11,"h":17,"x":0,"y":17,"i":"28","static":true
   //   }
   // },
+  {
+          type: "TextBox",
+          header: "HOUSING",
+          body: "Housing is an important asset to our region. Old and new developments offer a diverse mix of styles, materials and landscapes that make the region an attractive place to call home. ",
+          layout: { 
+            h: 3,
+            w: 12
+             }
+        },
+
   { "type": "CensusBarChart",
     "broadCensusKey": "B25087",
     orientation: 'horizontal',
@@ -119,6 +129,7 @@ const BASE_CONFIG = [
   },
   { type: "CensusLineChart",
     title: "Vacancy Status",
+    showCompare: false,
     censusKeys: [
       "B25004_001E",
       "B25004_002E",
