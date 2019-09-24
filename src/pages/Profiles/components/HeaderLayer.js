@@ -53,6 +53,7 @@ class TractLayer extends MapLayer{
     receiveData(map, blockgroups) {
 console.log("RECEIVE DATA:", map, blockgroups)
         const filter = ['all', ['in', 'GEOID', ...blockgroups]];
+        
         map.setFilter('bg-layer', filter);
 
         const rendered = map.querySourceFeatures("bg", { sourceLayer: "tl_2017_36_bg", filter });
