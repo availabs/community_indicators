@@ -10,3 +10,10 @@
   border: none;
   box-shadow: none;
   background: #eee; }
+
+.typeContainer {
+  background: transparent; }
+
+.resultsContainer {
+  position: absolute;
+  background: #fff; }
