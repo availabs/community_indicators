@@ -152,7 +152,18 @@ const BASE_CONFIG = [
         "B19301G_001E",
         "B19301H_001E",
         "B19301I_001E"
-      ]
+      ],
+      censusKeyLabels: {
+        "B19301A_001E": "TEST 1",
+        "B19301B_001E": "TEST 2",
+        "B19301C_001E": "TEST 3",
+        "B19301D_001E": "TEST 4",
+        "B19301E_001E": "TEST 5",
+        "B19301F_001E": "TEST 6",
+        "B19301G_001E": "TEST 7",
+        "B19301H_001E": "TEST 8",
+        "B19301I_001E": "TEST 9"
+      }
     },
 
    // {

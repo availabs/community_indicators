@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 import get from 'lodash.get'
 
-class CensusName extends React.Component {
+class CensusLabel extends React.Component {
   static defaultProps = {
     censusKeys: [],
     removeLeading: 0
@@ -31,7 +31,7 @@ class CensusName extends React.Component {
   }
 }
 
-export const getCensusKeyName = (key, acsGraph, removeLeading = 0) => {
+export const getCensusKeyLabel = (key, acsGraph, removeLeading = 0) => {
   const name = get(acsGraph, ["meta", key, "label"], key);
   if (typeof name !== "string") return key;
 
@@ -50,4 +50,4 @@ const getCensusNames = (state, props) =>
   get(props, "censusKeys", [])
     .map(key => get(state, ["graph", "acs", "meta", key, "label"], key))
 
-export default connect(mapStateToProps, null)(reduxFalcor(CensusName));
+export default connect(mapStateToProps, null)(reduxFalcor(CensusLabel));
