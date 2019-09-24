@@ -15,7 +15,7 @@ import get from "lodash.get"
 import styled from "styled-components"
 
 import GeoName from 'components/censusCharts/geoname'
-import CensusName, { getCensusKeyName } from 'components/censusCharts/CensusName'
+import CensusLabel, { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
 
 const DEFAULT_COLORS = getColorRange(8, "Set2")
 
@@ -34,7 +34,7 @@ const Tooltip = ({ color, value, label, geoid, removeLeading }) =>
     <div style={ { width: "15px", height: "15px", background: color, marginRight: "5px" } }/>
     <div><GeoName geoids={ [geoid] }/></div>
     <div style={ { marginRight: "5px", fontWeight: "bold" } }>
-      <CensusName key={ label } censusKeys={ [label] } removeLeading={ removeLeading }/>
+      <CensusLabel key={ label } censusKeys={ [label] } removeLeading={ removeLeading }/>
     </div>
     <div>{ value }</div>
   </TooltipContainer>
@@ -63,7 +63,7 @@ class CensusBarChart extends React.Component {
     if (this.props.sorted) {
       this.props.barData.sort((a ,b) => a[this.props.geoids[0]] - b[this.props.geoids[0]]);
     }
-    const getKeyName = key => getCensusKeyName(key, this.props.acsGraph, this.props.removeLeading);
+    const getKeyName = key => getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
 
     return (
       <div style={ { width: "100%", height: "100%" } }>

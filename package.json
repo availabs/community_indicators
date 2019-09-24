@@ -45,6 +45,7 @@
     "react-scripts": "^3.0.1",
     "react-scroll": "^1.7.14",
     "react-tooltip": "^3.10.0",
+    "react-typeahead": "^2.0.0-alpha.8",
     "react-vis": "^1.11.7",
     "redux": "^4.0.4",
     "redux-thunk": "^2.2.0",

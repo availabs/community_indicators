@@ -6,7 +6,7 @@ import { ResponsiveLine } from '@nivo/line'
 import Options from '../Options'
 import Title from "../ComponentTitle"
 import GeoName from 'components/censusCharts/geoname'
-import CensusName, { getCensusKeyName } from 'components/censusCharts/CensusName'
+import CensusLabel, { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
 import get from 'lodash.get'
 
 import { format } from "d3-format"
@@ -67,7 +67,8 @@ class CensusLineChart extends React.Component {
           yFormat = format(this.props.yFormat),
           getKeyName = key =>
             this.props.divisorKeys.length ? "Value" :
-            getCensusKeyName(key, this.props.acs, this.props.removeLeading);
+            key in this.props.censusKeyLabels ? this.props.censusKeyLabels[key] :
+            getCensusKeyLabel(key, this.props.acs, this.props.removeLeading);
         return(
             <div style={{height: '100%'}}>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
@@ -151,7 +152,8 @@ class CensusLineChart extends React.Component {
         yFormat: ',d',
         marginLeft: 50,
         showCompare: true,
-        compareGeoid: null
+        compareGeoid: null,
+        censusKeyLabels: {}
     }
 
 }
