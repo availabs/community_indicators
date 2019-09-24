@@ -10,6 +10,8 @@ import styled from 'styled-components'
 import GeoName from 'components/censusCharts/geoname'
 import StatBox from 'components/censusCharts/statBox'
 
+import deepequal from "deep-equal"
+
 let HeaderContainer = styled.div`
  width: 100vw;
  height: 100vh;
@@ -49,7 +51,13 @@ let StatContainer = styled.div`
 `
 
 class ProfileHeader extends Component {
-
+  componentDidUpdate(oldProps) {
+    if (!deepequal(this.props.geoids, HeaderLayer.geoids)) {
+      console.log("DIFFERENT GEOID", oldProps.geoids, this.props.geoids)
+      HeaderLayer.geoids = this.props.geoids;
+      HeaderLayer.doAction(["fetchLayerData"]);
+    }
+  }
     render () {
         return (
                 <div>
@@ -96,7 +104,7 @@ class ProfileHeader extends Component {
                                         valueSuffix={'%'}
                                         maximumFractionDigits={1}
                                         sumType='pct'
-                                        divisorKey={'B17001_001E'}
+                                        divisorKeys={['B17001_001E']}
                                         geoids={this.props.geoids}
                                     />
 

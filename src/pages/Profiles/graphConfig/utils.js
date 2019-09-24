@@ -88,6 +88,9 @@ export const configLoader = BASE_CONFIG => {
     if (config.censusKeys) {
       config.censusKeys = expandKeys(config.censusKeys);
     }
+    if (config.divisorKey) {
+      config.divisorKeys = [config.divisorKey];
+    }
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
 
