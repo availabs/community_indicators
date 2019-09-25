@@ -25,7 +25,7 @@ class TractLayer extends MapLayer{
     onAdd(map){
       super.onAdd();
 
-      let timer = 0;
+      let timer = 1000;
       const rotateCamera = timestamp => {
         timer += timestamp;
         if (timer >= 1000) {
@@ -37,13 +37,13 @@ class TractLayer extends MapLayer{
           if (this.centroid) {
             args.center = [...this.centroid];
           }
-          timer -= 1000;
+          timer = 0;
           map.easeTo({ ...args });
         }
         // map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
         this.animation = requestAnimationFrame(rotateCamera);
       }
-      rotateCamera(1000);
+      rotateCamera(0);
 
       return fetch('/data/bg_area.json')
         .then(response => response.json())

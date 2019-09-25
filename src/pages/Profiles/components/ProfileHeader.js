@@ -55,7 +55,7 @@ class ProfileHeader extends Component {
 
   componentDidUpdate(oldProps) {
     if (!deepequal(this.props.geoids, this.HeaderLayer.geoids)) {
-      this.HeaderLayer.geoids = this.props.geoids;
+      this.HeaderLayer.geoids = [...this.props.geoids];
       this.HeaderLayer.doAction(["fetchLayerData"]);
     }
   }
@@ -118,7 +118,6 @@ class ProfileHeader extends Component {
                         <AvlMap
                             sidebar={false}
                             scrollZoom={false}
-                            zoom={10}
                             style={'mapbox://styles/am3081/cjfxdhwbu06jo2rqn1w0l9x9t'}
                             fitBounds={[
                                 [
