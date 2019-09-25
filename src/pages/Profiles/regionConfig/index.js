@@ -1,11 +1,26 @@
+import SocialWelfare from './socialWelfare'
+import Education from './education'
 import Overview from './overview'
-
+import Housing from './housing'
+import Economy from "./economy"
+import Health from "./health"
+import Transportation from "./transportation"
 
 let ID = 0;
 const getId = () => `id-${ ++ID }`;
 
 const CONFIG = {
-  Overview
+  Overview,
+  'Social Welfare': SocialWelfare,
+  Education,
+  Economy,
+  Health,
+  Housing,
+    Transportation,
+  
+  
+  
+  
 }
 
 export default (

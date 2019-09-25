@@ -163,7 +163,19 @@ const BASE_CONFIG = [
     censusKeys: ["B19013A_001E...B19013I_001E"],
     marginLeft: 75,
     yFormat: "$,d",
-    showCompare: false
+    showCompare: false,
+    censusKeyLabels: {
+        "B19013A_001E": "White",
+        "B19013B_001E": "Black or African American Alone",
+        "B19013C_001E": "American Indian and Alaska Native", 
+        "B19013D_001E": "Asian",
+        "B19013E_001E": "Native Hawaiian and Other Pacific Islander",
+        "B19013F_001E": "Some Other Race Alone",
+        "B19013G_001E": "Two or More Races",
+        "B19013H_001E": "White Alone, Not Hispanic or Latino",
+        "B19013I_001E": "Hispanic or Latino"      }
+
+
   },
   {
     type: "CensusLineChart",
@@ -172,6 +184,7 @@ const BASE_CONFIG = [
     marginLeft: 75,
     yFormat: "$,d",
     showCompare: false
+
   },
 
       {
