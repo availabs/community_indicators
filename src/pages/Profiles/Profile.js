@@ -74,9 +74,10 @@ class Profile extends React.Component{
   }
 
   fetchFalcorDeps() {
-    return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"]);
+    return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"])
+      .then(() => this.props.falcor.get(["geo", [this.props.geoid, this.props.compareGeoid].filter(Boolean), "name"]));
   }
-  
+
   renderCategory(name, configData) {
         const profileHeader = configData.find(({ type }) => type === "ProfileHeader"),
           profileFooter = configData.find(({ type }) => type === "ProfileFooter");
@@ -131,7 +132,7 @@ class Profile extends React.Component{
         this.props.history.push(`/profile/${this.props.geoid}/compare/${compareId}`)
       } else if (type === 'remove') {
         this.props.history.push(`/profile/${this.props.geoid}`)
-      } 
+      }
     }
 
     render(){

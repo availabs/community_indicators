@@ -16,11 +16,13 @@ import { getColorRange } from "constants/color-ranges"
 class CensusLineChart extends React.Component {
 
     fetchFalcorDeps () {
+      const geoids = [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid));
         return falcorGraph.get(
-            ['acs', [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid)),
+            ['acs', geoids,
               this.props.years,
               [...this.props.divisorKeys, ...this.props.censusKeys]
-            ]
+            ],
+            ["geo", geoids, "name"]
         )
         // .then(data =>{
         //     console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
