@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import { reduxFalcor } from 'utils/redux-falcor'
 import AvlMap from 'AvlMap'
-import HeaderLayer from './HeaderLayer'
+import HeaderLayerFactory from './HeaderLayer'
 import styled from 'styled-components'
 
 import GeoName from 'components/censusCharts/geoname'
@@ -51,10 +51,12 @@ let StatContainer = styled.div`
 `
 
 class ProfileHeader extends Component {
+  HeaderLayer = HeaderLayerFactory();
+
   componentDidUpdate(oldProps) {
-    if (!deepequal(this.props.geoids, HeaderLayer.geoids)) {
-      HeaderLayer.geoids = this.props.geoids;
-      HeaderLayer.map && HeaderLayer.doAction(["fetchLayerData"]);
+    if (!deepequal(this.props.geoids, this.HeaderLayer.geoids)) {
+      this.HeaderLayer.geoids = this.props.geoids;
+      this.HeaderLayer.doAction(["fetchLayerData"]);
     }
   }
     render () {
@@ -128,7 +130,7 @@ class ProfileHeader extends Component {
                                 45.042478050891546
                                 ]
                             ]}
-                            layers={[HeaderLayer]}
+                            layers={[this.HeaderLayer]}
                             mapControl={false}
                         />
                     </div>

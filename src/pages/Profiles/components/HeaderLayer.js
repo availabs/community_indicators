@@ -143,7 +143,9 @@ class TractLayer extends MapLayer{
 }
 
 
-const tractLayer = new TractLayer("Tracts Layer", {
+
+export default () =>
+  new TractLayer("Tracts Layer", {
     active: true,
 
     geoids: ['36001', '36083', '36093', '36091', '36039', '36021', '36115', '36113'],
@@ -218,6 +220,4 @@ const tractLayer = new TractLayer("Tracts Layer", {
     // }
 
 
-});
-
-export default tractLayer
+  });
