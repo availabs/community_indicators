@@ -119,16 +119,7 @@ class ProfileHeader extends Component {
                             sidebar={false}
                             scrollZoom={false}
                             style={'mapbox://styles/am3081/cjfxdhwbu06jo2rqn1w0l9x9t'}
-                            fitBounds={[
-                                [
-                                    -75.84467427717281,
-                                    38.538851525354666
-                                ],
-                                [
-                                    -70.7626953125,
-                                45.042478050891546
-                                ]
-                            ]}
+                            zoom={ 8 }
                             layers={[this.HeaderLayer]}
                             mapControl={false}
                         />
@@ -138,7 +129,7 @@ class ProfileHeader extends Component {
         )
     }
     static defaultProps = {
-        geoids: ['36001']
+        geoids: []
     }
 }
 

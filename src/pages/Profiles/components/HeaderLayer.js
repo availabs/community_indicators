@@ -17,33 +17,19 @@ import mapboxgl from 'mapbox-gl/dist/mapbox-gl'
 import COLOR_RANGES from "constants/color-ranges"
 
 import get from "lodash.get"
+import deepequal from "deep-equal"
 
-var geojsonExtent = require('@mapbox/geojson-extent');
-
-class TractLayer extends MapLayer{
-
+class TractLayer extends MapLayer {
+    constructor(...args) {
+      super(...args);
+      this.animationDuration = 4000;
+      this.timer = this.animationDuration;
+      this.now = 0;
+      this.startAnimation = this.startAnimation.bind(this);
+    }
     onAdd(map){
-      super.onAdd();
-
-      let timer = 1000;
-      const rotateCamera = timestamp => {
-        timer += timestamp;
-        if (timer >= 1000) {
-          const args = {
-            bearing: (timestamp * 0.001) % 360,
-            pitch: 65,
-            duration: 1000
-          }
-          if (this.centroid) {
-            args.center = [...this.centroid];
-          }
-          timer = 0;
-          map.easeTo({ ...args });
-        }
-        // map.rotateTo((timestamp * 0.001) % 360, { duration: 0 });
-        this.animation = requestAnimationFrame(rotateCamera);
-      }
-      rotateCamera(0);
+      map.setPitch(65);
+      this.startAnimation();
 
       return fetch('/data/bg_area.json')
         .then(response => response.json())
@@ -51,6 +37,9 @@ class TractLayer extends MapLayer{
             this.geom = bg_area
             this.doAction(["fetchLayerData"])
         })
+    }
+    onRemove(map) {
+      cancelAnimationFrame(this.animation);
     }
     fetchData() {
       return falcorChunkerNice(["geo", this.geoids, "blockgroup"])
@@ -61,14 +50,41 @@ class TractLayer extends MapLayer{
           }, [])
           return falcorChunkerNice(["acs", this.blockgroups, this.year, this.censusKey])
             .then(() => falcorGraph.call(["geo", "blockgroup", "centroid"], this.blockgroups))
-              .then(res => {
-                this.centroid = get(res, ["json", "geo", "blockgroup", "centroid", "coordinates"], null)
-              });
+            .then(res => {
+              const centroid = get(res, ["json", "geo", "blockgroup", "centroid", "coordinates"], null);
+              if (!deepequal(centroid, this.centroid)) {
+                this.centroid = centroid;
+                this.restartAnimation();
+              }
+            });
         })
     }
 
+    restartAnimation(settings) {
+      this.timer += this.animationDuration;
+    }
+    startAnimation(timestamp = 0) {
+      this.timer += (timestamp - this.now);
+      this.now = timestamp;
+
+      if (this.timer >= this.animationDuration) {
+        this.timer = 0;
+        const args = {
+          bearing: (timestamp * 0.001) % 360,
+          duration: this.animationDuration,
+          easing: d => d,
+          zoom: this.geoids.length === 1 ? 10.5 : 8
+        }
+        if (this.centroid) {
+          args.center = [...this.centroid];
+        }
+        this.map.easeTo({ ...args });
+      }
+      this.animation = requestAnimationFrame(this.startAnimation);
+    }
+
     render(map) {
-        map.setFilter('bg-layer', ['all', ['in', 'GEOID', ...this.blockgroups]]);
+        map.setFilter('bg-layer', ['in', 'GEOID', ...this.blockgroups]);
 
         const cache = falcorGraph.getCache();
 
@@ -103,9 +119,9 @@ class TractLayer extends MapLayer{
         //         return out;
         //     }, 0);
 
-        let values = Object.values(keyDomain).sort((a,b) => a - b )
-        let min = values[0];
-        let max = values[values.length - 1];
+        const values = Object.values(keyDomain).sort((a, b) => a - b),
+          min = values[0],
+          max = values[values.length - 1];
 
         map.setPaintProperty(
             'bg-layer',
@@ -114,9 +130,8 @@ class TractLayer extends MapLayer{
                'interpolate',
                 ['linear'],
                 ["get", ["to-string", ["get", "GEOID"]], ["literal", keyDomain]],
-                min,'#160e23',
-                max*0.02,'#00617f',
-                max*0.8,'#55e9ff'
+                min, '#160e23',
+                max, '#55e9ff'
             ]
         );
 
@@ -130,15 +145,7 @@ class TractLayer extends MapLayer{
                 min, 0,
                 max, 10000
             ]
-
         )
-
-        map.setPaintProperty(
-            'bg-layer',
-            'fill-extrusion-opacity',
-            1
-        );
-
     }
 }
 
@@ -178,12 +185,13 @@ export default () =>
             'source-layer': 'tl_2017_36_bg',
             'type': 'fill-extrusion',
             'paint': {
-                'fill-extrusion-color': 'rgba(0, 0, 0, 0.01)',
+                'fill-extrusion-color': '#000',
                 'fill-extrusion-base': 0,
                 'fill-extrusion-height': 0,
-                'fill-extrusion-opacity': 0.0
+                'fill-extrusion-opacity': 1
             },
-            beneath: 'place-neighbourhood'
+            beneath: 'place-neighbourhood',
+            filter: ["in", "GEOID", "none"]
         },
 
 

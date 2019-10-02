@@ -42,7 +42,8 @@ class HorizontalBarChart extends React.Component {
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
-        ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys]
+        ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys],
+        ["geo", this.props.allGeoids, "name"]
     )
   }
   getBarData() {

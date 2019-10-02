@@ -208,8 +208,8 @@ class acsLayer extends MapLayer{
 
 }
 
-const buildingsLayer = new acsLayer("ACS Layer", {
-        active: false,
+export default (options = {}) => new acsLayer("ACS Layer", {
+        ...options,
         sources: [
             { id: "counties",
                 source: {
@@ -241,7 +241,7 @@ const buildingsLayer = new acsLayer("ACS Layer", {
                     'fill-color': 'rgba(196, 0, 0, 0.1)',
                     'fill-opacity': 0.5
                 },
-                filter : ['all',['in','geoid',...counties]]
+                filter : ['in','geoid',...counties]
             },
             { 'id': 'cousubs',
                 'source': 'cousubs',
@@ -278,10 +278,6 @@ const buildingsLayer = new acsLayer("ACS Layer", {
         title: "Parcel Legend"
     },
 
-    modal: {
-    comp: () => <h1>TEST MODAL</h1>,
-    show: false
-},
 filters: {
 
             year: {
@@ -296,28 +292,28 @@ filters: {
                     domain: [],
                     value: 'counties'
             },
-            measures: {
-                name: "measures",
-                type: "dropdown",
-                domain: [],
-                value: "B01003",
-                    onChange: (map, layer, value) => {
-                    Object.keys(layer.acsConfig).forEach(function(item){
-                        if (value === item){
-                            layer.filters.submeasure = {
-                                    name:'submeasure',
-                                    type: 'dropdown',
-                                    domain: layer.acsConfig[item].variables.map(d => {
-                                        return {name:d.name, value:d.value}
-                                    }),
-                                    value: layer.acsConfig[item].variables.map(d => d.value)[0]
-                                }
-                        }
-                    })
-
-                    layer.component.forceUpdate()
-                }
-            },
+            // measures: {
+            //     name: "measures",
+            //     type: "dropdown",
+            //     domain: [],
+            //     value: "B01003",
+            //         onChange: (map, layer, value) => {
+            //         Object.keys(layer.acsConfig).forEach(function(item){
+            //             if (value === item){
+            //                 layer.filters.submeasure = {
+            //                         name:'submeasure',
+            //                         type: 'dropdown',
+            //                         domain: layer.acsConfig[item].variables.map(d => {
+            //                             return {name:d.name, value:d.value}
+            //                         }),
+            //                         value: layer.acsConfig[item].variables.map(d => d.value)[0]
+            //                     }
+            //             }
+            //         })
+            //
+            //         layer.component.forceUpdate()
+            //     }
+            // },
             submeasure: {
                 name:'submeasure',
                     type: 'dropdown',
@@ -325,29 +321,5 @@ filters: {
                     value: 'B01003_001E'
             }
 
-},
-
-actions: [
-    {
-        Icon: ArrowDown,
-        action: ["toggleModal"],
-        tooltip: "Toggle Modal"
-    },
-    {
-        Icon: ArrowRight,
-        action: ["toggleInfoBox", "test"],
-        tooltip: "Toggle Info Box"
-    }
-
-],
-    infoBoxes: {
-    test: {
-        comp: () => <h4>INFO BOX</h4>,
-        show: false
-    }
-}
+        }
 })
-
-
-
-export default buildingsLayer
