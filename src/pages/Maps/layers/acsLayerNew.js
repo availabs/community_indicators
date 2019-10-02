@@ -59,6 +59,9 @@ class Animator {
     this.timeout = null;
   }
   start(requests) {
+    if (!Array.isArray(requests)) {
+      requests = [requests];
+    }
     for (const { to, callback, meta = {}, animateIf = () => true } of requests) {
       if (to === undefined) {
         this.requests.push({ callback, meta })
@@ -292,10 +295,8 @@ class ACS_Layer extends MapLayer {
       if (oldGeolevel && (oldGeolevel !== geolevel)) {
         map.setFilter(oldGeolevel, ["in", "none", "none"]);
       }
-      if (oldGeolevel !== geolevel) {
-        map.setFilter(geolevel, ["in", property, ...geoids]);
-      }
-      this.colorAnimators[geolevel].start([{
+      map.setFilter(geolevel, ["in", property, ...geoids]);
+      this.colorAnimators[geolevel].start({
         to: colors,
         callback: values => {
           map.setPaintProperty(geolevel, "fill-extrusion-color",
@@ -308,7 +309,7 @@ class ACS_Layer extends MapLayer {
         		]
           )
         }
-      }])
+      })
     }
     const callback = values => {
       map.setPaintProperty(geolevel, "fill-extrusion-height",
