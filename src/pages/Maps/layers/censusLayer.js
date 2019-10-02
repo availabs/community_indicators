@@ -216,8 +216,8 @@ class CensusLayer extends MapLayer{
 
 }
 
-const censusLayer = new CensusLayer("Census Layer", {
-        active: true, //make active true
+export default (options = {}) => new CensusLayer("Census Layer", {
+        ...options,
         sources: [
             { id: "dot_density",
                 source: {
@@ -269,10 +269,10 @@ const censusLayer = new CensusLayer("Census Layer", {
         popover: {
                 layers: ['bg_layer'],
                 vertical: true,
-                dataFunc: feature => {
-                    if (censusLayer.filters.measures.value !== 'B01003'){
+                dataFunc: function(feature) {
+                    if (this.filters.measures.value !== 'B01003'){
                         const graph = falcorGraph.getCache().acs[feature.properties.GEOID];
-                        let measure = censusLayer.filters.measures.value
+                        let measure = this.filters.measures.value
                         const acs_config = falcorGraph.getCache().acs['config'];
                         try{
                             let subVar_values ={}
@@ -310,7 +310,7 @@ const censusLayer = new CensusLayer("Census Layer", {
                         }
                     }else{
                         const graph = falcorGraph.getCache().acs[feature.properties.GEOID];
-                        let measure = censusLayer.filters.measures.value
+                        let measure = this.filters.measures.value
                         const acs_config = falcorGraph.getCache().acs['config'];
                         try{
                             let subVar_values ={}
@@ -374,6 +374,3 @@ const censusLayer = new CensusLayer("Census Layer", {
         }
 
 })
-
-
-export default censusLayer;
