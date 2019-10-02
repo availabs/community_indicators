@@ -79,6 +79,9 @@ class Animator {
     this.getRequest();
   }
   initRequest(request) {
+    if (typeof request.to === "function") {
+      request.to = request.to(this.prevMeta);
+    }
     if (!Object.keys(request.to).length) {
       for (const key in this.prev) {
         request.to[key] = this.baseValue;
@@ -181,7 +184,7 @@ class ACS_Layer extends MapLayer {
           }))
         })
     })
-    .then(() => this.doAction(["fetchLayerData"]))
+    .then(() => this.fetchData())
   }
   onRemove(map) {
     unregister(this);
@@ -272,11 +275,6 @@ class ACS_Layer extends MapLayer {
       return a;
     }, {});
 
-    const exitValueMap = geoids.reduce((a, c) => {
-      a[c] = 0;
-      return a;
-    }, {})
-
     const exit = (values, prevMeta) => {
       const oldGeolevel = get(prevMeta, "geolevel", geolevel),
         oldProperty = oldGeolevel === "blockgroup" ? "GEOID" : "geoid";
@@ -286,9 +284,26 @@ class ACS_Layer extends MapLayer {
     }
     const exitIf = prevMeta => {
       const oldGeolevel = get(prevMeta, "geolevel", false),
-        oldThreeD = get(prevMeta, "threeD", threeD);
+        oldThreeD = get(prevMeta, "threeD", threeD),
+        oldGeoids = get(prevMeta, "geoids", []);
 
-      return (oldGeolevel && (oldGeolevel !== geolevel) && threeD) || (oldThreeD && !threeD);
+      return (oldGeolevel && (oldGeolevel !== geolevel) && threeD) ||
+        (oldThreeD && !threeD) ||
+        ((oldGeolevel === geolevel) && (geoids.length < oldGeoids.length));
+    }
+    const exitTo = prevMeta => {
+      const oldGeolevel = get(prevMeta, "geolevel", false),
+        oldThreeD = get(prevMeta, "threeD", threeD),
+        oldGeoids = get(prevMeta, "geoids", []);
+
+      if ((oldGeolevel === geolevel) && (geoids.length < oldGeoids.length)) {
+        const to = {};
+        oldGeoids.forEach(geoid => {
+          to[geoid] = get(newValueMap, geoid, 0);
+        })
+        return to;
+      }
+      return {};
     }
     const filterAndPaint = prevMeta => {
       const oldGeolevel = get(prevMeta, "geolevel", false);
@@ -308,7 +323,7 @@ class ACS_Layer extends MapLayer {
               ]
         		]
           )
-        }
+        } // END callback
       })
     }
     const callback = values => {
@@ -318,9 +333,9 @@ class ACS_Layer extends MapLayer {
     }
     const animateIf = () => threeD;
     this.animator.start([
-      { to: {}, callback: exit, animateIf: exitIf },
+      { to: exitTo, callback: exit, animateIf: exitIf },
       { callback: filterAndPaint },
-      { to: newValueMap, callback, animateIf, meta: { geolevel, threeD } }
+      { to: newValueMap, callback, animateIf, meta: { geoids, geolevel, threeD } }
     ])
   }
   getColorScale(domain) {
