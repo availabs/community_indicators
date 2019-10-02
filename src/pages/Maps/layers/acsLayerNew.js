@@ -289,7 +289,7 @@ class ACS_Layer extends MapLayer {
 
       return (oldGeolevel && (oldGeolevel !== geolevel) && threeD) ||
         (oldThreeD && !threeD) ||
-        ((oldGeolevel === geolevel) && (geoids.length < oldGeoids.length));
+        ((oldGeolevel === geolevel) && (geoids.length < oldGeoids.length) && threeD);
     }
     const exitTo = prevMeta => {
       const oldGeolevel = get(prevMeta, "geolevel", false),
