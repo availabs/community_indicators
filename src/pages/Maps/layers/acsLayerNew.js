@@ -427,7 +427,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       }
     }
   },
-
+  
   legend: {
     title: ({ layer }) => <>{ layer.filters.census.domain.reduce((a, c) => layer.filters.census.value === c.value ? c.name : a, "ACS Layer") }</>,
     type: "quantile",
