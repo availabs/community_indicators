@@ -290,11 +290,16 @@ const CENSUS_FILTER_CONFIG = [
   }
 
 ].map(config => ({
-  value: config.name,
+// supply default values
   format: ",d",
   divisorKeys: [],
   asDensity: false,
-  ...config
+
+// override default values
+  ...config,
+
+// always use name as value
+  value: config.name
 }))
 
 export default (options = {}) => new ACS_Layer("ACS Layer", {
