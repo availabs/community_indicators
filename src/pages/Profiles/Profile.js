@@ -9,6 +9,8 @@ import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } 
 import { falcorChunkerNice } from "store/falcorGraph"
 import SearchCompare from './components/SearchCompare'
 
+import OptionsModal from "components/censusCharts/OptionsModal"
+
 import GRAPH_CONFIG from './graphConfig'
 
 import styled from "styled-components"
@@ -16,7 +18,14 @@ import get from "lodash.get"
 
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>
-    [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]
+    [...a,
+      ...c.reduce((a, c) =>
+        [...a,
+          ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : []),
+          ...(c.divisorKey ? [c.divisorKey] : c.divisorKeys ? c.divisorKeys : [])
+        ]
+      , [])
+    ]
   , [])
 
 const Footer = styled.div`
@@ -167,6 +176,7 @@ class Profile extends React.Component{
                         {categories}
                     </div>
                 </div>
+                <OptionsModal />
             </div>
 
         )

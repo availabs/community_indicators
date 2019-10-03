@@ -58,6 +58,18 @@ class CensusBarChart extends React.Component {
         ["geo", this.props.allGeoids, "name"]
     )
   }
+  processDataForViewing() {
+    const data = [],
+      keys = ["geoid", "name", "year", "census key", "census label", "value"];
+
+    for (const key of this.props.censusKeys) {
+      for (const geoid of this.props.allGeoids) {
+        const row = {}
+      }
+    }
+
+    return { data, keys };
+  }
   render() {
     const colors = scaleOrdinal()
       .domain(this.props.geoids)
@@ -88,7 +100,7 @@ class CensusBarChart extends React.Component {
       <div style={ { width: "100%", height: "100%" } }>
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: "calc(100% - 285px)" } }><Title title={ this.props.title }/></div>
-          <Options />
+          <Options processDataForViewing={ this.processDataForViewing.bind(this) }/>
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
           <ResponsiveBar indexBy={ "id" }

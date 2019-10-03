@@ -315,7 +315,7 @@ export default class AvlTable extends React.Component {
 		const keyMap = sortKeys.reduce((a, c, i) => ({ ...a, [c.key]: { dir: c.dir, i } }), {});
 
 		const { rowsPerPage, pageSpread } = this.props,
-			maxPage = Math.ceil(data.length / rowsPerPage) - 1,
+			maxPage = Math.max(Math.ceil(data.length / rowsPerPage) - 1, 0),
 			length = data.length;
 
 		page = Math.min(maxPage, page);
