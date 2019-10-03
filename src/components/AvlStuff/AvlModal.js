@@ -4,6 +4,8 @@ import styled, { keyframes } from "styled-components"
 
 import classnames from "classnames"
 
+import Loading from "components/loading/loadingPage"
+
 const ANIMATION_DURATION = 1.0;
 
 const fadeIn = keyframes`
@@ -40,7 +42,7 @@ const dropOut = keyframes`
 `
 
 const ModalContainer = styled.div`
-  position: fixed;
+  position: fixed!important;
   top: 0px;
   right: 0px;
   bottom: 0px;
@@ -107,6 +109,17 @@ const ModalContainer = styled.div`
   }
 `
 
+const LoadingContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: radial-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+`
+
 class Modal extends React.Component {
   static defaultProps = {
     onHide: () => {},
@@ -123,7 +136,8 @@ class Modal extends React.Component {
   state = {
     hide: false,
     onResolve: null,
-    onReject: null
+    onReject: null,
+    loading: false
   }
   MOUNTED = false;
   componentDidMount() {
@@ -149,8 +163,10 @@ class Modal extends React.Component {
     , 500)
   }
   onAction(e, action) {
+    this.setState({ loading: true });
     Promise.resolve(action(e))
       .then(res => {
+        this.setState({ loading: false });
         if (Boolean(this.props.onResolve)) {
           this.onResolve(res);
         }
@@ -174,6 +190,11 @@ class Modal extends React.Component {
         numActions={ this.props.actions.length }
         hasChildren={ Boolean(this.props.children) }>
 
+        { !this.state.loading ? null :
+          <LoadingContainer>
+            <Loading width="100px" height="100px"/>
+          </LoadingContainer>
+        }
         <div className="body">
           <div className="content">
             { !show && !persistChildren ? null :
@@ -203,6 +224,7 @@ class Modal extends React.Component {
             }
           </div>
         </div>
+
       </ModalContainer>
     )
   }

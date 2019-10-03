@@ -64,6 +64,52 @@ class CensusLineChart extends React.Component {
         return data;
     }
 
+    getTableData(geoid) {
+      const getKeyName = key =>
+        key in this.props.censusKeyLabels ? this.props.censusKeyLabels[key] :
+        getCensusKeyLabel(key, this.props.acs, this.props.removeLeading),
+
+        yFormat = format(this.props.yFormat);
+
+      const data = [];
+      for (const year of this.props.years) {
+        this.props.censusKeys.forEach((key, i) => {
+          const row = { geoid, year, "census key": key };
+          row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
+          row["census label"] = getKeyName(key);
+          let value = get(this.props, ['acs', geoid, year, key], 0);
+
+          if (this.props.sumType === 'pct') {
+            const divisorKey = this.props.divisorKeys[i],
+              divisor = get(this.props, ['acs', geoid, year, divisorKey], 1);
+            if ((divisor !== null) && !isNaN(divisor)) {
+              value = value / divisor;
+            }
+            row["divisor key"] = divisorKey;
+            row["divisor label"] = getKeyName(divisorKey);
+          }
+          row.value = yFormat(value);
+
+          data.push(row);
+        })
+      }
+      return data;
+    }
+    processDataForViewing() {
+      const data = this.getTableData(this.props.geoids[0]),
+        keys = ["geoid", "name", "year", "census key", "census label"];
+
+      if (this.props.sumType === "pct") {
+        keys.push("divisor key", "divisor label");
+      }
+      keys.push("value");
+
+      return {
+        data,
+        keys
+      };
+    }
+
     render () {
         const title = this.props.title,
           yFormat = format(this.props.yFormat),
@@ -75,7 +121,7 @@ class CensusLineChart extends React.Component {
             <div style={{height: '100%'}}>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
                 <Title title={ title }/>
-                <Options />
+                <Options processDataForViewing={ this.processDataForViewing.bind(this) }/>
               </div>
               <div style={ { height: "calc(100% - 30px)" } }>
                 <ResponsiveLine
@@ -165,6 +211,7 @@ const mapDispatchToProps = { };
 
 const mapStateToProps = (state, ownProps) => ({
   acs: get(state, `graph.acs`, {}),
+  geoGraph: get(state, 'graph.geo', {}),
   theme: state.user.theme
 })
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusLineChart))

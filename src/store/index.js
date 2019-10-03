@@ -4,6 +4,8 @@ import { reducer as graph } from 'utils/redux-falcor';
 
 import user from './modules/user'
 
+import options from "./modules/options"
+
 import {AvlInTheMiddle} from "AvlMap/ReduxMiddleware"
 
 import messages from "./modules/messages"
@@ -34,7 +36,8 @@ const store = createStore(
     user,
     messages,
     graph,
-    router: routerReducer
+    router: routerReducer,
+		options
   }),
   applyMiddleware(...middleware)
 )

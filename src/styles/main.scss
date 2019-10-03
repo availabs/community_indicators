@@ -1,4 +1,4 @@
-/* 
+/*
 TABLE OF CONTENTS
 
 
@@ -16,7 +16,7 @@ TABLE OF CONTENTS
   3h. Override bootstrap modal styles
   3i. Override bootstrap alerts styles
 4. Overrides for various plugins that are included with this template
-5. Handy Animations 
+5. Handy Animations
 6. User Profiles
 7. Layout styles
 8. Menu styles
@@ -78,6 +78,7 @@ TABLE OF CONTENTS
 @import "animations";
 /* 6. User Profile  */
 @import "user_profile";
+@import "font_awesome";
 /* 7. Layout styles */
 @import "layout";
 /* 8. Menu styles */
@@ -89,17 +90,17 @@ TABLE OF CONTENTS
 /* 11. Icon Fonts */
 @import "osfont";
 @import "nysfont";
-/* 12. Chat 
+/* 12. Chat
 @import "chat"; */
-/* 13. App - Email 
+/* 13. App - Email
 @import "app_email"; */
-/* 14. App - Projects 
+/* 14. App - Projects
 @import "projects"; */
-/* 15. App - Full Chat 
+/* 15. App - Full Chat
 @import "full_chat"; */
-/* 16. Pricing Plans 
+/* 16. Pricing Plans
 @import "pricing_plans";*/
-/* 17. Pipelines 
+/* 17. Pipelines
 @import "pipelines"; */
 /* 18. Dropdowns */
 @import "os_dropdowns";
@@ -117,7 +118,7 @@ TABLE OF CONTENTS
 @import "top_bar";
 /* 25. Search */
 @import "search";
-/* 26. Customizer 
+/* 26. Customizer
 @import "customizer"; */
 /* ##. Dark Color Scheme */
 @import "scheme_dark";
