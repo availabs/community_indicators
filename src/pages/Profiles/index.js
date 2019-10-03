@@ -8,6 +8,8 @@ import Profiles from './Profile'
 import ProfileHeader from './components/ProfileHeader'
 import GRAPH_CONFIG from './regionConfig'
 
+import OptionsModal from "components/censusCharts/OptionsModal"
+
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]
@@ -79,6 +81,7 @@ class ReportIndex extends React.Component{
                   {categories}
               </div>
             </div>
+            <OptionsModal />
           </div>
       )
   }

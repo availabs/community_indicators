@@ -27,10 +27,6 @@ class ACS_Layer extends MapLayer {
   onAdd(map) {
     register(this, REDUX_UPDATE, ["graph"]);
 
-    this.threeD && map.easeTo({ pitch: 65, duration: 2000 });
-
-    this.mapActions.test.disabled = false;
-
     return falcorGraph.get(
       ["geo", COUNTIES, ["cousubs", "name"]]
     )
@@ -64,6 +60,10 @@ class ACS_Layer extends MapLayer {
         })
     })
     .then(() => this.fetchData())
+    .then(() => {
+      this.mapActions.test.disabled = false;
+      map.easeTo({ pitch: 65, bearing: 45, duration: 3000 });
+    })
   }
   onRemove(map) {
     unregister(this);
