@@ -139,6 +139,8 @@ class ACS_Layer extends MapLayer {
       censusKeys = censusFilter.domain.reduce((a, c) => c.value === censusValue ? c.censusKeys : a, []),
       divisorKeys = censusFilter.domain.reduce((a, c) => c.value === censusValue ? c.divisorKeys : a, []);
 
+    this.legend.format = censusFilter.domain.reduce((a, c) => c.value === censusValue ? c.format : a, ",d");
+
     const valueMap = geoids.reduce((a, c) => {
       let value = censusKeys.reduce((aa, cc) => {
         const v = get(cache, ["acs", c, year, cc], -666666666);
@@ -273,20 +275,24 @@ const CENSUS_FILTER_CONFIG = [
   { name: "Total Population",
     censusKeys: ["B01003_001E"]
   },
+
   { name: "Median Household Income",
     censusKeys: ["B19013_001E"],
     format: "$,d"
   },
+
   { name: "Poverty Rate",
     censusKeys: ["B17001_002E"]
   },
+
   { name: "Vacant Housing Units",
     censusKeys: ["B25002_003E"]
   },
+  
   { name: "Percent Povert Rate",
     censusKeys:["B17001_002E"],
     divisorKeys: ["B17001_001E"],
-    format: ",.2%"
+    format: ",.1%"
   }
 
 ].map(config => ({
@@ -354,10 +360,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       name: "Census Labels",
       type: "single",
       domain: CENSUS_FILTER_CONFIG,
-      value: CENSUS_FILTER_CONFIG[0].value,
-      onChange: function(oldValue, newValue, domain) {
-        this.legend.format = domain.reduce((a, c) => c.value === newValue ? c.format : a, ",d");
-      }
+      value: CENSUS_FILTER_CONFIG[0].value
     }
   },
 
