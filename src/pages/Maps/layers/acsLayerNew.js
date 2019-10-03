@@ -92,7 +92,12 @@ class ACS_Layer extends MapLayer {
   fetchData() {
     const geolevel = this.filters.geolevel.value,
       year = this.filters.year.value,
-      census = this.filters.census.value;
+      filter = this.filters.census,
+      value = filter.value,
+      census = [
+        ...filter.domain.reduce((a, c) => c.value === value ? c.censusKeys : a, []),
+        ...filter.domain.reduce((a, c) => c.value === value ? c.divisorKeys : a, [])
+      ];
 
     const geoids = this.getBaseGeoids();
 
@@ -125,13 +130,34 @@ class ACS_Layer extends MapLayer {
       geoids = this.getGeoids(),
       threeD = this.threeD,
       geolevel = this.filters.geolevel.value,
-      property = geolevel === "blockgroup" ? "GEOID" : "geoid";
+      property = geolevel === "blockgroup" ? "GEOID" : "geoid",
+
+      year = this.filters.year.value,
+
+      censusFilter = this.filters.census,
+      censusValue = censusFilter.value,
+      censusKeys = censusFilter.domain.reduce((a, c) => c.value === censusValue ? c.censusKeys : a, []),
+      divisorKeys = censusFilter.domain.reduce((a, c) => c.value === censusValue ? c.divisorKeys : a, []);
 
     const valueMap = geoids.reduce((a, c) => {
-      const value = get(cache, ["acs", c, this.filters.year.value, this.filters.census.value], null);
-      if ((value !== null) && (value !== -666666666)) {
-        a[c] = value;
+      let value = censusKeys.reduce((aa, cc) => {
+        const v = get(cache, ["acs", c, year, cc], -666666666);
+        if (v !== -666666666) {
+          aa += v;
+        }
+        return aa;
+      }, 0);
+      const divisor = divisorKeys.reduce((aa, cc) => {
+        const v = get(cache, ["acs", c, year, cc], -666666666);
+        if (v != -666666666) {
+          aa += v;
+        }
+        return aa;
+      }, 0)
+      if (divisor !== 0) {
+        value /= divisor;
       }
+      a[c] = value;
       return a;
     }, {})
     const values = Object.values(valueMap);
@@ -233,6 +259,44 @@ class ACS_Layer extends MapLayer {
   }
 }
 
+/*
+  SOME POSSIBLE FORMATS
+  ",d" ==> number with commas
+  "$,d" ==> number with commas and leading $ sign
+  ",.2%" ==> number converted to percent with commas
+              2 digits after decimal point
+              with following % sign
+*/
+
+const CENSUS_FILTER_CONFIG = [
+
+  { name: "Total Population",
+    censusKeys: ["B01003_001E"]
+  },
+  { name: "Median Household Income",
+    censusKeys: ["B19013_001E"],
+    format: "$,d"
+  },
+  { name: "Poverty Rate",
+    censusKeys: ["B17001_002E"]
+  },
+  { name: "Vacant Housing Units",
+    censusKeys: ["B25002_003E"]
+  },
+  { name: "Percent Povert Rate",
+    censusKeys:["B17001_002E"],
+    divisorKeys: ["B17001_001E"],
+    format: ",.2%"
+  }
+
+].map(config => ({
+  value: config.name,
+  format: ",d",
+  divisorKeys: [],
+  asDensity: false,
+  ...config
+}))
+
 export default (options = {}) => new ACS_Layer("ACS Layer", {
   ...options,
 
@@ -273,13 +337,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         { name: "Tracts", value: "tracts" },
         { name: "Block Groups", value: "blockgroup" }
       ],
-      value: 'tracts',
-      onChange: function(oldValue, newValue) {
-        if (oldValue !== newValue) {
-          this.oldGeolevel = oldValue;
-        }
-      }
-
+      value: 'tracts'
     },
     year: {
       name: "Year",
@@ -290,23 +348,10 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     census: {
       name: "Census Labels",
       type: "single",
-      domain: [
-        { name: "Total Population", value: "B01003_001E" },
-        { name: "Median Household Income", value: "B19013_001E" },
-        { name: "Poverty Rate", value: "B17001_002E" },
-        { name: "Vacant Housing Units", value: "B25002_003E" },
-       
-      ],
-      value: "B01003_001E",
-      onChange: function(oldValue, newValue) {
-        switch (newValue) {
-          case "B19013_001E":
-          case "B19013_001E":
-            this.legend.format = "$,d";
-            break;
-          default:
-            this.legend.format = ",d";
-        }
+      domain: CENSUS_FILTER_CONFIG,
+      value: CENSUS_FILTER_CONFIG[0].value,
+      onChange: function(oldValue, newValue, domain) {
+        this.legend.format = domain.reduce((a, c) => c.value === newValue ? c.format : a, ",d");
       }
     }
   },
