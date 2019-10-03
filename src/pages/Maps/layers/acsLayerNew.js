@@ -395,7 +395,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         { name: "Tracts", value: "tracts" },
         { name: "Block Groups", value: "blockgroup" }
       ],
-      value: 'counties',
+      value: 'tracts',
       onChange: function(oldValue, newValue) {
         if (oldValue !== newValue) {
           this.oldGeolevel = oldValue;
@@ -413,11 +413,14 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       type: "single",
       domain: [
         { name: "Total Population", value: "B01003_001E" },
+        { name: "Median Household Income", value: "B19013_001E" },
+        { name: "Median Household Income", value: "B19013_001E" },
         { name: "Median Household Income", value: "B19013_001E" }
       ],
       value: "B01003_001E",
       onChange: function(oldValue, newValue) {
         switch (newValue) {
+          case "B19013_001E":
           case "B19013_001E":
             this.legend.format = "$,d";
             break;
