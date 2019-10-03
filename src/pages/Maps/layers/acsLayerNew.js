@@ -291,8 +291,9 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       domain: [
         { name: "Total Population", value: "B01003_001E" },
         { name: "Median Household Income", value: "B19013_001E" },
-        { name: "Median Household Income", value: "B19013_001E" },
-        { name: "Median Household Income", value: "B19013_001E" }
+        { name: "Poverty Rate", value: "B17001_002E" },
+        { name: "Vacant Housing Units", value: "B25002_003E" },
+       
       ],
       value: "B01003_001E",
       onChange: function(oldValue, newValue) {
