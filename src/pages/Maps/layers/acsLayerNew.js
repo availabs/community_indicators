@@ -30,6 +30,7 @@ class ACS_Layer extends MapLayer {
     this.threeD && map.easeTo({ pitch: 65, duration: 2000 });
 
     this.mapActions.test.disabled = false;
+
     return falcorGraph.get(
       ["geo", COUNTIES, ["cousubs", "name"]]
     )
@@ -84,7 +85,7 @@ class ACS_Layer extends MapLayer {
     const geolevel = this.filters.geolevel.value;
 
     return this.getBaseGeoids().reduce((a, c) => {
-      a.push(...get(this.falcorCache, ["geo", c, geolevel, "value"], []))
+      a.push(...get(this.falcorCache, ["geo", c, geolevel, "value"], []));
       return a;
     }, []);
   }
@@ -235,7 +236,7 @@ class ACS_Layer extends MapLayer {
 export default (options = {}) => new ACS_Layer("ACS Layer", {
   ...options,
 
-  version: 2.0,
+  version: 2.0, // ONLY SET THIS IF YOU KNOW WHAT IT MEANS!!!
 
   falcorCache: {},
 
@@ -278,6 +279,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
           this.oldGeolevel = oldValue;
         }
       }
+
     },
     year: {
       name: "Year",
@@ -321,8 +323,12 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
   mapActions: {
 		test: {
-			Icon: () => <span className="fa fa-lg fa-car"/>,
-			tooltip: "Toogle 3D",
+			Icon: ({ layer }) => (
+        <div style={ { paddingBottom: "2px" } }>
+          <span className={ `fa fa-2x fa-chevron-${ layer.threeD ? "down" : "up" }` }/>
+        </div>
+      ),
+			tooltip: ({ layer }) => <>{ `Toogle 3D ${ layer.threeD ? "Off" : "On" }` }</>,
 			action: function() {
         if (this.map) {
           this.toggle3D();

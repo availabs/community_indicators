@@ -88,7 +88,7 @@ class CensusLineChart extends React.Component {
             row["divisor key"] = divisorKey;
             row["divisor label"] = getKeyName(divisorKey);
           }
-          row.value = yFormat(value);
+          row.value = value;//yFormat(value);
 
           data.push(row);
         })
@@ -121,7 +121,8 @@ class CensusLineChart extends React.Component {
             <div style={{height: '100%'}}>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
                 <Title title={ title }/>
-                <Options processDataForViewing={ this.processDataForViewing.bind(this) }/>
+                <Options processDataForViewing={ this.processDataForViewing.bind(this) }
+                  tableTitle={ this.props.title }/>
               </div>
               <div style={ { height: "calc(100% - 30px)" } }>
                 <ResponsiveLine

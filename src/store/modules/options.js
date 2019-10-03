@@ -2,12 +2,13 @@ const OPEN_OPTIONS_MODAL = "OPEN_OPTIONS_MODAL";
 const CLOSE_OPTIONS_MODAL = "CLOSE_OPTIONS_MODAL";
 const SET_OPTIONS_MODAL_PAGE = "SET_OPTIONS_MODAL_PAGE";
 
-export const openOptionsModal = (page, args) =>
+export const openOptionsModal = (page, tableTitle, args) =>
   dispatch =>
     Promise.resolve(
       dispatch({
         type: OPEN_OPTIONS_MODAL,
         page,
+        tableTitle,
         args
       })
     )
@@ -30,6 +31,7 @@ export const setOptionsModalPage = page =>
 const INITIAL_STATE = {
   showModal: false,
   page: "",
+  tableTitle: "",
   data: [],
   image: null,
   embed: null
@@ -42,6 +44,7 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         showModal: true,
         page: action.page,
+        tableTitle: action.tableTitle,
         ...action.args
       };
     case CLOSE_OPTIONS_MODAL:

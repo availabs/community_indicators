@@ -15,10 +15,11 @@ const A = styled.a`
 
 class Options extends React.Component {
   static defaultProps = {
-    processDataForViewing: () => []
+    processDataForViewing: () => [],
+    tableTitle: ""
   }
   openModal(page) {
-    this.props.openOptionsModal(page, {
+    this.props.openOptionsModal(page, this.props.tableTitle, {
       data: this.props.processDataForViewing(),
       image: null,
       embed: null
@@ -27,7 +28,6 @@ class Options extends React.Component {
 
   render () {
     return (
-
      <div className="os-tabs-controls"
       style={ {
         position: 'absolute',

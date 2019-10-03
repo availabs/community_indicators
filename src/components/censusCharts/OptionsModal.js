@@ -13,13 +13,13 @@ import {
 
 class OptionsModal extends React.Component {
   getPage() {
-console.log("PROPS:", this.props)
     switch (this.props.page) {
       case "view-data":
         return (
           <div style={ { minWidth: "800px", width: "90vw"}}>
-            <AvlTable { ...this.props.data }
-              showHelp={ true }/>
+            <AvlTable { ...this.props.data } key={ this.props.tableTitle }
+              showHelp={ true }
+              title={ this.props.tableTitle }/>
           </div>
         )
       default:
@@ -42,7 +42,8 @@ console.log("PROPS:", this.props)
 const mapStateToProps = state => ({
   showModal: state.options.showModal,
   page: state.options.page,
-  data: state.options.data
+  data: state.options.data,
+  tableTitle: state.options.tableTitle
 })
 const mapDispatchToProps = {
   setOptionsModalPage,
