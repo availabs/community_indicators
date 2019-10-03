@@ -37,8 +37,12 @@ const Tooltip = ({ color, value, label, geoid }) =>
   </TooltipContainer>
 
 class HorizontalBarChart extends React.Component {
+  static defaultProps = {
+    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+    marginLeft: 100
+  }
   state = {
-    year: 2015
+    year: this.props.years[this.props.years.length - 1]
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
@@ -66,6 +70,40 @@ class HorizontalBarChart extends React.Component {
       left: get(this.props.acsGraph, [this.props.geoids[0], this.state.year, leftVars[i]], 0) * -1,
       right: get(this.props.acsGraph, [this.props.geoids[0], this.state.year, rightVars[i]], 0)
     }));
+  }
+  processDataForViewing() {
+    const data = [],
+      keys = ["geoid", "name", "year", "census key", "census label", "value"],
+
+      leftKeys = this.props.left.keys,
+      leftLabel = this.props.left.key,
+
+      rightKeys = this.props.right.keys,
+      rightLabel = this.props.right.key;
+
+    this.props.labels.forEach((label, i) => {
+      for (const geoid of this.props.allGeoids) {
+        const baseRow = {
+          geoid,
+          name: get(this.props.geoGraph, [geoid, "name"], geoid),
+          year: this.state.year
+        }
+
+        const row1 = { ...baseRow };
+        row1["census key"] = leftKeys[i];
+        row1["census label"] = `${ label }, ${ leftLabel }`;
+        row1.value = get(this.props.acsGraph, [geoid, baseRow.year, leftKeys[i]], 0);
+        data.push(row1);
+
+        const row2 = { ...baseRow };
+        row2["census key"] = rightKeys[i];
+        row2["census label"] = `${ label }, ${ rightLabel }`;
+        row2.value = get(this.props.acsGraph, [geoid, baseRow.year, rightKeys[i]], 0);
+        data.push(row2);
+      }
+    })
+
+    return { data, keys };
   }
   render() {
     const fmt = format(",d");
@@ -95,7 +133,8 @@ class HorizontalBarChart extends React.Component {
       <div style={ { width: "100%", height: "100%" } }>
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: "calc(100% - 285px)" } }><Title title={ this.props.title }/></div>
-          <Options />
+          <Options processDataForViewing={ this.processDataForViewing.bind(this) }
+            tableTitle={ this.props.title }/>
         </div>
         <div style={ { height: "calc(100% - 60px)" } }>
           <ResponsiveBar data={ this.getBarData() }
@@ -145,14 +184,8 @@ class HorizontalBarChart extends React.Component {
 
 const mapStateToProps = (state, props) => ({
   acsGraph: get(state, ["graph", "acs"], {}),
+  geoGraph: get(state, ["graph", "geo"], {}),
   allGeoids: [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
 })
 
-const ConnectedHorizontalBarChart = connect(mapStateToProps, null)(reduxFalcor(HorizontalBarChart));
-
-ConnectedHorizontalBarChart.defaultProps = {
-  years: [2010, 2011, 2012, 2013, 2014, 2015, 2016],
-  marginLeft: 100
-}
-
-export default ConnectedHorizontalBarChart;
+export default connect(mapStateToProps, null)(reduxFalcor(HorizontalBarChart));

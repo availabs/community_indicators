@@ -41,7 +41,7 @@ const Tooltip = ({ color, value, label, id, removeLeading }) =>
 
 class CensusBarChart extends React.Component {
   static defaultProps = {
-    years: [2015],
+    years: [2017],
     yFormat: ",d",
     axisBottom: true,
     marginLeft: 75,
@@ -60,11 +60,22 @@ class CensusBarChart extends React.Component {
   }
   processDataForViewing() {
     const data = [],
-      keys = ["geoid", "name", "year", "census key", "census label", "value"];
+      keys = ["geoid", "name", "year", "census key", "census label", "value"],
+      fmt = format(this.props.yFormat),
+      getKeyName = key => key in this.props.censusKeyLabels ?
+        this.props.censusKeyLabels[key] :
+        getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
 
     for (const key of this.props.censusKeys) {
       for (const geoid of this.props.allGeoids) {
-        const row = {}
+        const row = { geoid }
+        row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
+        row.year = get(this.props, ["years", 0], 2017);
+        row["census key"] = key;
+        row["census label"] = getKeyName(key);
+        row.value = (get(this.props.acsGraph, [geoid, row.year, key], 0));
+
+        data.push(row);
       }
     }
 
@@ -100,7 +111,8 @@ class CensusBarChart extends React.Component {
       <div style={ { width: "100%", height: "100%" } }>
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: "calc(100% - 285px)" } }><Title title={ this.props.title }/></div>
-          <Options processDataForViewing={ this.processDataForViewing.bind(this) }/>
+          <Options processDataForViewing={ this.processDataForViewing.bind(this) }
+            tableTitle={ this.props.title }/>
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
           <ResponsiveBar indexBy={ "id" }
@@ -156,7 +168,7 @@ const groupByCensusKeys = (state, props) =>
     a.push(
       [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
         .reduce((aa, cc, ii) => {
-          const year = get(props, "years[0]", 2015),
+          const year = get(props, "years[0]", 2017),
             value = +get(state, ["graph", "acs", cc, year, c], 0);
           if (value !== -666666666) {
             aa[cc] = value;
@@ -173,7 +185,7 @@ const groupByGeoids = (state, props) =>
     .reduce((a, c) => {
       a.push(
         props.censusKeys.reduce((aa, cc, ii) => {
-          const year = get(props, "years[0]", 2015),
+          const year = get(props, "years[0]", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
           if (value !== -666666666) {
             aa[cc] = value;
