@@ -351,13 +351,13 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Percent Vacant Housing Units",
     censusKeys:["B25002_003E"],
-      divisorKey: 'B25002_001E',
+    divisorKey: ['B25002_001E'],
     format: ",.1%"
   },
 
   { name: "Percent Health Care Coverage",
-      censusKeys:["B18135_001E"],
-      divisorKey: "B01003_001E",
+    censusKeys:["B18135_001E"],
+    divisorKeys: ["B01003_001E"],
     format: ",.1%"
   },
 
@@ -375,7 +375,7 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Bike/Ped as a Percent of Total Commuters",
     censusKeys: ["B08006_014E", "B08006_015E"],
-    divisorKey: "B23025_001E",
+    divisorKeys: ["B23025_001E"],
     format: ",.1%"
   },
 
