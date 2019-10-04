@@ -17,6 +17,68 @@ import { register, unregister } from "AvlMap/ReduxMiddleware"
 
 const LEGEND_COLOR_RANGE = getColorRange(5, "Blues");
 
+const processConfig = config => {
+  config = {
+    format: ",d",
+    censusKeys: [],
+    divisorKeys: [],
+    asDensity: false,
+
+  // override default values
+    ...config,
+
+  // always use name as value
+    value: config.name
+  }
+
+  config.censusKeys = expandKeys(config.censusKeys);
+  config.divisorKeys = expandKeys(config.divisorKeys);
+
+  return config;
+}
+
+const keyRegex = /\w{6}(\w?)_(\d{3})\w/
+
+const ALPHABET = [
+  "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+  "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+]
+
+const expandKeys = keys =>
+  keys.reduce((a, c) => [...a, ...expandKeyRange(c)], [])
+const expandKeyRange = key => {
+  const split = key.split("...");
+  if (split.length === 1) return split;
+  const [start, end] = split,
+    matchStart = keyRegex.exec(start),
+    matchEnd = keyRegex.exec(end);
+
+  if (matchStart[1] !== matchEnd[1] &&
+      matchStart[2] === matchEnd[2]) {
+    const s = matchStart[1],
+      e = matchEnd[1],
+      keys = [];
+    let c = s;
+    while (c <= e) {
+      keys.push(start.replace(`${ s }_`, `${ c }_`));
+      const index = ALPHABET.indexOf(c);
+      c = ALPHABET[index + 1]
+    }
+    return keys;
+  }
+  else if (matchStart[2] !== matchEnd[2] &&
+            matchStart[1] === matchEnd[1]) {
+    const s = +matchStart[2],
+      e = +matchEnd[2],
+      keys = [];
+    for (let i = s; i <= e; ++i) {
+      keys.push(start.replace(`_${ matchStart[2] }`, `_${ (`000${ i }`).slice(-3) }`));
+    }
+    return keys;
+  }
+  return [start];
+}
+
 const COUNTIES = [
   '36001', '36083', '36093', '36091',
   '36039','36021','36115','36113'
@@ -288,25 +350,16 @@ const CENSUS_FILTER_CONFIG = [
   { name: "Vacant Housing Units",
     censusKeys: ["B25002_003E"]
   },
-  
+
   { name: "Percent Povert Rate",
-    censusKeys:["B17001_002E"],
+    censusKeys: ["B17001_002E"],
     divisorKeys: ["B17001_001E"],
     format: ",.1%"
   }
 
-].map(config => ({
-// supply default values
-  format: ",d",
-  divisorKeys: [],
-  asDensity: false,
+].map(processConfig)
 
-// override default values
-  ...config,
-
-// always use name as value
-  value: config.name
-}))
+console.log("CENSUS_FILTER_CONFIG",CENSUS_FILTER_CONFIG)
 
 export default (options = {}) => new ACS_Layer("ACS Layer", {
   ...options,
