@@ -343,19 +343,41 @@ const CENSUS_FILTER_CONFIG = [
     format: "$,d"
   },
 
-  { name: "Poverty Rate",
-    censusKeys: ["B17001_002E"]
+  { name: "Percent Poverty Rate",
+    censusKeys:["B17001_002E"],
+    divisorKeys: ["B17001_001E"],
+    format: ",.1%"
   },
 
-  { name: "Vacant Housing Units",
-    censusKeys: ["B25002_003E"]
+  { name: "Percent Vacant Housing Units",
+    censusKeys:["B25002_003E"],
+      divisorKey: 'B25002_001E',
+    format: ",.1%"
+  },
+
+  { name: "Percent Health Care Coverage",
+      censusKeys:["B18135_001E"],
+      divisorKey: "B01003_001E",
+    format: ",.1%"
   },
 
   { name: "Percent Povert Rate",
     censusKeys: ["B17001_002E"],
     divisorKeys: ["B17001_001E"],
     format: ",.1%"
-  }
+  },
+
+  { name: "Percent of Population with No High School Diploma or Equivalent",
+    censusKeys: ['B15003_002E...B15003_016E'],
+    divisorKeys: ['B01003_001E'],
+    format: ",.1%"
+  },
+
+  { name: "Bike/Ped as a Percent of Total Commuters",
+    censusKeys: ["B08006_014E", "B08006_015E"],
+    divisorKey: "B23025_001E",
+    format: ",.1%"
+  },
 
 ].map(processConfig)
 
