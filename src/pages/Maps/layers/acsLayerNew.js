@@ -60,12 +60,13 @@ const expandKeyRange = key => {
 }
 
 const processConfig = config => {
-  config = {
+  const newConfig = {
 // supply defaults
-    format: ",d",
     censusKeys: [],
     divisorKeys: [],
     asDensity: false,
+
+    format: get(config, ["divisorKeys", "length"], 0) ? ",.1%" : ",d",
 
 // override default values
     ...config,
@@ -74,14 +75,10 @@ const processConfig = config => {
     value: config.name
   }
 
-  config.censusKeys = expandKeys(config.censusKeys);
-  config.divisorKeys = expandKeys(config.divisorKeys);
+  newConfig.censusKeys = expandKeys(newConfig.censusKeys);
+  newConfig.divisorKeys = expandKeys(newConfig.divisorKeys);
 
-  if (config.divisorKeys.length) {
-    config.format = ",.1%";
-  }
-
-  return config;
+  return newConfig;
 }
 
 const COUNTIES = [
@@ -374,7 +371,7 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Percent Ages 3-4 Enrolled in School",
     censusKeys: ['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
-    divisorKeys: ['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ]
+    divisorKeys: ['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E']
   },
 
   { name: "Bike/Ped as a Percent of Total Commuters",
