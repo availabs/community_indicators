@@ -77,6 +77,10 @@ const processConfig = config => {
   config.censusKeys = expandKeys(config.censusKeys);
   config.divisorKeys = expandKeys(config.divisorKeys);
 
+  if (config.divisorKeys.length) {
+    config.format = ",.1%";
+  }
+
   return config;
 }
 
@@ -346,38 +350,36 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Percent Poverty Rate",
     censusKeys: ["B17001_002E"],
-    divisorKeys: ["B17001_001E"],
-    format: ",.1%"
+    divisorKeys: ["B17001_001E"]
   },
 
   { name: "Percent Vacant Housing Units",
     censusKeys: ["B25002_003E"],
-    divisorKeys: ['B25002_001E'],
-    format: ",.1%"
+    divisorKeys: ['B25002_001E']
   },
 
   { name: "Percent Health Care Coverage",
     censusKeys: ["B18135_001E"],
-    divisorKeys: ["B01003_001E"],
-    format: ",.1%"
-  },
-
-  { name: "Percent Povert Rate",
-    censusKeys: ["B17001_002E"],
-    divisorKeys: ["B17001_001E"],
-    format: ",.1%"
+    divisorKeys: ["B01003_001E"]
   },
 
   { name: "Percent of Population with No High School Diploma or Equivalent",
     censusKeys: ['B15003_002E...B15003_016E'],
-    divisorKeys: ['B01003_001E'],
-    format: ",.1%"
+    divisorKeys: ['B01003_001E']
+  },
+
+  { name: "Total Ages 5-19 Not Enrolled in School",
+    censusKeys:["B14003_023E...B14003_026E", "B14003_051E...B14003_054E"],
+  },
+
+  { name: "Percent Ages 3-4 Enrolled in School",
+    censusKeys: ['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
+    divisorKeys: ['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ]
   },
 
   { name: "Bike/Ped as a Percent of Total Commuters",
     censusKeys: ["B08006_014E", "B08006_015E"],
-    divisorKeys: ["B23025_001E"],
-    format: ",.1%"
+    divisorKeys: ["B23025_001E"]
   },
 
 ].map(processConfig)
