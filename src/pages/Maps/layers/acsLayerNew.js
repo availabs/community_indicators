@@ -17,26 +17,6 @@ import { register, unregister } from "AvlMap/ReduxMiddleware"
 
 const LEGEND_COLOR_RANGE = getColorRange(5, "Blues");
 
-const processConfig = config => {
-  config = {
-    format: ",d",
-    censusKeys: [],
-    divisorKeys: [],
-    asDensity: false,
-
-  // override default values
-    ...config,
-
-  // always use name as value
-    value: config.name
-  }
-
-  config.censusKeys = expandKeys(config.censusKeys);
-  config.divisorKeys = expandKeys(config.divisorKeys);
-
-  return config;
-}
-
 const keyRegex = /\w{6}(\w?)_(\d{3})\w/
 
 const ALPHABET = [
@@ -77,6 +57,27 @@ const expandKeyRange = key => {
     return keys;
   }
   return [start];
+}
+
+const processConfig = config => {
+  config = {
+// supply defaults
+    format: ",d",
+    censusKeys: [],
+    divisorKeys: [],
+    asDensity: false,
+
+// override default values
+    ...config,
+
+// always use name as value
+    value: config.name
+  }
+
+  config.censusKeys = expandKeys(config.censusKeys);
+  config.divisorKeys = expandKeys(config.divisorKeys);
+
+  return config;
 }
 
 const COUNTIES = [
@@ -344,19 +345,19 @@ const CENSUS_FILTER_CONFIG = [
   },
 
   { name: "Percent Poverty Rate",
-    censusKeys:["B17001_002E"],
+    censusKeys: ["B17001_002E"],
     divisorKeys: ["B17001_001E"],
     format: ",.1%"
   },
 
   { name: "Percent Vacant Housing Units",
-    censusKeys:["B25002_003E"],
-    divisorKey: ['B25002_001E'],
+    censusKeys: ["B25002_003E"],
+    divisorKeys: ['B25002_001E'],
     format: ",.1%"
   },
 
   { name: "Percent Health Care Coverage",
-    censusKeys:["B18135_001E"],
+    censusKeys: ["B18135_001E"],
     divisorKeys: ["B01003_001E"],
     format: ",.1%"
   },
