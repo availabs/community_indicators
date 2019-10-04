@@ -26,11 +26,11 @@ catch {
   host = 'https://graph.availabs.org/'
 }
 
-console.log("API HOST:", host)
-
 if (process.env.NODE_ENV === 'production') {
   host = 'https://graph.availabs.org/'
 }
+
+console.log("API HOST:", host)
 
 class CustomSource extends HttpDataSource {
   onBeforeRequest (config) {

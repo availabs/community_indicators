@@ -17,6 +17,68 @@ import { register, unregister } from "AvlMap/ReduxMiddleware"
 
 const LEGEND_COLOR_RANGE = getColorRange(5, "Blues");
 
+const processConfig = config => {
+  config = {
+    format: ",d",
+    censusKeys: [],
+    divisorKeys: [],
+    asDensity: false,
+
+  // override default values
+    ...config,
+
+  // always use name as value
+    value: config.name
+  }
+
+  config.censusKeys = expandKeys(config.censusKeys);
+  config.divisorKeys = expandKeys(config.divisorKeys);
+
+  return config;
+}
+
+const keyRegex = /\w{6}(\w?)_(\d{3})\w/
+
+const ALPHABET = [
+  "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M",
+  "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
+]
+
+const expandKeys = keys =>
+  keys.reduce((a, c) => [...a, ...expandKeyRange(c)], [])
+const expandKeyRange = key => {
+  const split = key.split("...");
+  if (split.length === 1) return split;
+  const [start, end] = split,
+    matchStart = keyRegex.exec(start),
+    matchEnd = keyRegex.exec(end);
+
+  if (matchStart[1] !== matchEnd[1] &&
+      matchStart[2] === matchEnd[2]) {
+    const s = matchStart[1],
+      e = matchEnd[1],
+      keys = [];
+    let c = s;
+    while (c <= e) {
+      keys.push(start.replace(`${ s }_`, `${ c }_`));
+      const index = ALPHABET.indexOf(c);
+      c = ALPHABET[index + 1]
+    }
+    return keys;
+  }
+  else if (matchStart[2] !== matchEnd[2] &&
+            matchStart[1] === matchEnd[1]) {
+    const s = +matchStart[2],
+      e = +matchEnd[2],
+      keys = [];
+    for (let i = s; i <= e; ++i) {
+      keys.push(start.replace(`_${ matchStart[2] }`, `_${ (`000${ i }`).slice(-3) }`));
+    }
+    return keys;
+  }
+  return [start];
+}
+
 const COUNTIES = [
   '36001', '36083', '36093', '36091',
   '36039','36021','36115','36113'
@@ -298,31 +360,32 @@ const CENSUS_FILTER_CONFIG = [
       divisorKeys: ["B01003_001E"],
     format: ",.1%"
   },
-  
+
   { name: "Percent of Population with No High School Diploma or Equivalent",
-    censusKeys:['B15003_002E', 'B15003_003E', 'B15003_004E', 'B15003_005E', 'B15003_006E', 'B15003_007E', 'B15003_008E', 'B15003_009E', 'B15003_010E', 'B15003_011E', 'B15003_012E', 'B15003_013E', 'B15003_014E', 'B15003_015E', 'B15003_016E'],
-    divisorKeys:['B01003_001E'],
+    censusKeys: ['B15003_002E...B15003_016E'],
+    divisorKeys: ['B01003_001E'],
+    format: ",.1%"
+  },
+
+  { name: "Total Ages 5-19 Not Enrolled in School",
+    censusKeys:["B14003_023E", "B14003_024E", "B14003_025E", "B14003_026E", "B14003_051E", "B14003_052E", "B14003_053E","B14003_054E"],
+  },  
+
+  { name: "Percent Ages 3-4 Enrolled in School",
+    censusKeys:['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
+    divisorKeys:['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ],
     format: ",.1%"
   },
 
   { name: "Bike/Ped as a Percent of Total Commuters",
-    censusKeys:["B08006_014E", "B08006_015E"],
-      divisorKeys: ["B23025_001E"],
+    censusKeys: ["B08006_014E", "B08006_015E"],
+    divisorKey: "B23025_001E",
     format: ",.1%"
   },
 
-].map(config => ({
-// supply default values
-  format: ",d",
-  divisorKeys: [],
-  asDensity: false,
+].map(processConfig)
 
-// override default values
-  ...config,
-
-// always use name as value
-  value: config.name
-}))
+console.log("CENSUS_FILTER_CONFIG",CENSUS_FILTER_CONFIG)
 
 export default (options = {}) => new ACS_Layer("ACS Layer", {
   ...options,
