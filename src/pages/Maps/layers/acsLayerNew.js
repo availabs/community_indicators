@@ -7,6 +7,7 @@ import get from "lodash.get"
 import deepequal from "deep-equal"
 import { extent } from "d3-array";
 import * as d3scale from "d3-scale"
+import { format as d3format } from "d3-format"
 
 import { falcorGraph, falcorChunkerNiceWithUpdate } from "store/falcorGraph";
 import { getColorRange } from "constants/color-ranges"
@@ -85,6 +86,7 @@ const COUNTIES = [
   '36001', '36083', '36093', '36091',
   '36039','36021','36115','36113'
 ].sort((a, b) => +a - +b);
+
 const YEARS = [2017, 2016, 2015, 2014];
 
 class ACS_Layer extends MapLayer {
@@ -125,7 +127,8 @@ class ACS_Layer extends MapLayer {
     })
     .then(() => this.fetchData())
     .then(() => {
-      this.mapActions.test.disabled = false;
+      this.mapActions.toggle.disabled = false;
+      this.mapActions.reset.disabled = false;
       map.easeTo({ pitch: 65, bearing: 45, duration: 3000 });
     })
   }
@@ -181,11 +184,13 @@ class ACS_Layer extends MapLayer {
   }
   toggle3D() {
     this.threeD = !this.threeD;
-    const pitch = this.map.getPitch()
-    if ((pitch < 45) && this.threeD) {
-      this.map.easeTo({ pitch: 65, duration: 2000 });
+    const mapPitch = this.map.getPitch(),
+      mapBearing = this.map.getBearing();
+    if ((mapPitch < (65 * 0.5)) && this.threeD) {
+      const bearing = Math.abs(mapBearing) < 45 ? (Math.sign(mapBearing) || 1) * 45 : mapBearing;
+      this.map.easeTo({ pitch: 65, bearing, duration: 2000 });
     }
-    else if ((pitch !== 0) && !this.threeD) {
+    else if ((mapPitch !== 0) && !this.threeD) {
       this.map.easeTo({ pitch: 0, bearing: 0, duration: 2000 });
     }
   }
@@ -277,6 +282,8 @@ class ACS_Layer extends MapLayer {
       return {};
     }
     const filterAndPaint = prevMeta => {
+      this.geoData = { ...this.geoData, ...valueMap };
+
       const oldGeolevel = get(prevMeta, "geolevel", false);
       if (oldGeolevel && (oldGeolevel !== geolevel)) {
         map.setFilter(oldGeolevel, ["in", "none", "none"]);
@@ -334,6 +341,8 @@ class ACS_Layer extends MapLayer {
               with following % sign
 */
 
+const DEFAULT_CONFIG_INDEX = 0;
+
 const CENSUS_FILTER_CONFIG = [
 
   { name: "Total Population",
@@ -381,14 +390,13 @@ const CENSUS_FILTER_CONFIG = [
 
 ].map(processConfig)
 
-console.log("CENSUS_FILTER_CONFIG",CENSUS_FILTER_CONFIG)
-
 export default (options = {}) => new ACS_Layer("ACS Layer", {
   ...options,
 
   version: 2.0, // ONLY SET THIS IF YOU KNOW WHAT IT MEANS!!!
 
   falcorCache: {},
+  geoData: {},
 
   threeD: true,
 
@@ -407,6 +415,40 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   //   // }
   // },
 
+  popover: {
+    layers: ["counties", "cousubs", "tracts", "blockgroup"],
+    dataFunc: function(topFeature, features) {
+      let geoid = get(topFeature, ["properties", "geoid"], "");
+      if (!geoid) {
+        geoid = get(topFeature, ["properties", "GEOID"], "");
+      }
+
+      const data = [];
+
+      let name = "";
+      if (geoid.length < 11) {
+        name = get(this.falcorCache, ["geo", geoid, "name"], geoid);
+      }
+      else if (geoid.length === 11) {
+        const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
+        name = county + " Tract";
+      }
+      else if (geoid.length === 12) {
+        const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
+        name = county + " Block Group";
+      }
+      if (name) data.push(name);
+
+      const value = get(this.geoData, [geoid], null);
+      if (value !== null) {
+        const format = d3format(this.legend.format);
+        data.push([this.filters.census.value, format(value)])
+      }
+
+      return data;
+    }
+  },
+
   filters: {
     area: {
       name: "Area",
@@ -423,7 +465,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         { name: "Tracts", value: "tracts" },
         { name: "Block Groups", value: "blockgroup" }
       ],
-      value: 'tracts'
+      value: 'cousubs'
     },
     year: {
       name: "Year",
@@ -435,22 +477,22 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       name: "Census Labels",
       type: "single",
       domain: CENSUS_FILTER_CONFIG,
-      value: CENSUS_FILTER_CONFIG[0].value
+      value: CENSUS_FILTER_CONFIG[DEFAULT_CONFIG_INDEX].value
     }
   },
 
   legend: {
-    title: ({ layer }) => <>{ layer.filters.census.domain.reduce((a, c) => layer.filters.census.value === c.value ? c.name : a, "ACS Layer") }</>,
-    type: "quantile",
+    title: ({ layer }) => <>{ layer.filters.census.value }</>,
+    type: "quantize",
     types: ["quantile", "quantize"],
     active: true,
     domain: [],
-    range: LEGEND_COLOR_RANGE,
-    format: ",d"
+    range: [...LEGEND_COLOR_RANGE],
+    format: CENSUS_FILTER_CONFIG[DEFAULT_CONFIG_INDEX].format
   },
 
   mapActions: {
-		test: {
+		toggle: {
 			Icon: ({ layer }) => (
         <div style={ { paddingBottom: "2px" } }>
           <span className={ `fa fa-2x fa-chevron-${ layer.threeD ? "down" : "up" }` }/>
@@ -465,7 +507,26 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 			},
       disabled: true,
       disableFor: 2500
-		}
+		},
+    reset: {
+      Icon: () => <span className="fa fa-2x fa-home"/>,
+      tooltip: "Reset View",
+      disableFor: 2500,
+      disabled: true,
+      action: function() {
+        const bearing = this.threeD ? 45 : 0,
+          pitch = this.threeD ? 65 : 0;
+        if (this.map) {
+          this.map.easeTo({
+            center: [-73.8014, 42.91],
+            zoom: 7.75,
+            pitch,
+            bearing,
+            duration: 2000
+          })
+        }
+      }
+    }
   },
 
   sources: [
