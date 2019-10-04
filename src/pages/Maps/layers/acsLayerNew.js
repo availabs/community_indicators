@@ -281,19 +281,35 @@ const CENSUS_FILTER_CONFIG = [
     format: "$,d"
   },
 
-  { name: "Poverty Rate",
-    censusKeys: ["B17001_002E"]
-  },
-
-  { name: "Vacant Housing Units",
-    censusKeys: ["B25002_003E"]
-  },
-  
-  { name: "Percent Povert Rate",
+  { name: "Percent Poverty Rate",
     censusKeys:["B17001_002E"],
     divisorKeys: ["B17001_001E"],
     format: ",.1%"
-  }
+  },
+
+  { name: "Percent Vacant Housing Units",
+    censusKeys:["B25002_003E"],
+      divisorKey: 'B25002_001E',
+    format: ",.1%"
+  },
+
+  { name: "Percent Health Care Coverage",
+      censusKeys:["B18135_001E"],
+      divisorKey: "B01003_001E",
+    format: ",.1%"
+  },
+  
+  { name: "Percent of Population with No High School Diploma or Equivalent",
+    censusKeys:['B15003_002E', 'B15003_003E', 'B15003_004E', 'B15003_005E', 'B15003_006E', 'B15003_007E', 'B15003_008E', 'B15003_009E', 'B15003_010E', 'B15003_011E', 'B15003_012E', 'B15003_013E', 'B15003_014E', 'B15003_015E', 'B15003_016E'],
+    divisorKey:'B01003_001E',
+    format: ",.1%"
+  },
+
+  { name: "Bike/Ped as a Percent of Total Commuters",
+    censusKeys:["B08006_014E", "B08006_015E"],
+      divisorKey: "B23025_001E",
+    format: ",.1%"
+  },
 
 ].map(config => ({
 // supply default values
