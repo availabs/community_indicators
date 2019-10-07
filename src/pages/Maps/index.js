@@ -25,9 +25,8 @@ class MapPage extends React.Component {
             this.CensusLayer
           ] }
           header={ SidebarHeader }
-          center={ [-73.8014, 42.91] }
-          minZoom={ 2 }
-          zoom={ 7.75 }/>
+          { ...this.ACS_Layer.baseMapSettings }
+          minZoom={ 2 }/>
       </div>
     )
   }

@@ -7,7 +7,7 @@ export default {
 	subTextColor: 'rgba(0,0,0,0.4)',
 	textColorHl: '#456CF9',
 	panelBackground: '#fafafa',
-	panelBackgroundHover: '#fff',
+	panelBackgroundHover: '#eee',
 
 	transition:'all .4s ease',
 	transitionFast:'all .2s ease',
@@ -121,8 +121,9 @@ export default {
 	switchTrackBgd:'#29323C',
 	//switchTrackBgdActive:activeColor,
 	switchTrackBorderRadius:'1px',
-	switchBtnBgd:'#6A7485',
-	switchBtnBgdActive:'#D3D8E0',
+	switchBtnBgd:'#ccc',
+	switchBtnBgdActive:'#ddd',
+	switchBtnBgdDisabled: '#bbb',
 	switchBtnBoxShadow:'0 2px 4px 0 rgba(0,0,0,0.40)',
 	switchBtnBorderRadius:'1px',
 	switchBtnWidth:'12px',
@@ -143,7 +144,7 @@ export default {
 
 	// Side Panel
 	sidePanelHeaderBg:'#29323C',
-	sidePanelBg:'#242730',
+	sidePanelBg:'#fafafa',
 	//sideBarCloseBtnBgd:secondaryBtnBgd,
 	sideBarCloseBtnColor:'#29323C',
 	//sideBarCloseBtnBgdHover:secondaryBtnActBgd,
@@ -191,5 +192,5 @@ export default {
 	sliderHandleShadow:'0 2px 4px 0 rgba(0,0,0,0.40)',
 
 	// Plot
-	rangeBrushBgd:'#3A414C'	
+	rangeBrushBgd:'#3A414C'
 }

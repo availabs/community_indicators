@@ -403,7 +403,7 @@ const TH = styled.th`
 `
 
 const Button = styled.button`
-	background-color: rgb(50, 50, 70);
+	background-color: ${ props => props.theme.switchBtnBgd };
 	color: ${ props => props.theme.textColorHl };
 	border-radius: 4px;
 	border: none;
@@ -412,17 +412,17 @@ const Button = styled.button`
 	position: relative;
 
 	:hover {
-		background-color: rgb(60, 70, 80);
+		background-color: ${ props => props.theme.switchBtnBgdActive };
 	}
 	:disabled {
 		cursor: not-allowed;
-		background-color: rgb(40, 50, 60);
+		background-color: ${ props => props.theme.switchBtnBgdDisabled };
 		color: ${ props => props.theme.textColor };
 	}
 
 	&.active {
 		background-color: ${ props => props.theme.textColor };
-		color: rgb(50, 50, 70);
+		color: ${ props => props.theme.switchBtnBgdActive };
 	}
 
 	> .button-dropdown {

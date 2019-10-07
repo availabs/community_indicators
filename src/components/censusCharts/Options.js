@@ -16,13 +16,15 @@ const A = styled.a`
 class Options extends React.Component {
   static defaultProps = {
     processDataForViewing: () => [],
-    tableTitle: ""
+    tableTitle: "",
+    layout: {}
   }
   openModal(page) {
     this.props.openOptionsModal(page, this.props.tableTitle, {
       data: this.props.processDataForViewing(),
-      image: null,
-      embed: null
+      image: this.props.id,
+      embed: { ...this.props.embedProps },
+      layout: this.props.layout
     })
   }
 

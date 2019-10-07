@@ -50,12 +50,15 @@ class CensusBarChart extends React.Component {
     animation: false,
     groupMode: "grouped",
     groupBy: "censusKeys",
-    censusKeyLabels: {}
+    censusKeyLabels: {},
+    showOptions: true,
+    sorted: false
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
         ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys],
-        ["geo", this.props.allGeoids, "name"]
+        ["geo", this.props.allGeoids, "name"],
+        ["acs", "meta", this.props.censusKeys, "label"]
     )
   }
   processDataForViewing() {
@@ -108,11 +111,32 @@ class CensusBarChart extends React.Component {
       : get(this.props.geoGraph, [key, "name"], key);
 
     return (
-      <div style={ { width: "100%", height: "100%" } }>
+      <div style={ { width: "100%", height: "100%" } } id={ this.props.id }>
         <div style={ { height: "30px" } }>
-          <div style={ { maxWidth: "calc(100% - 285px)" } }><Title title={ this.props.title }/></div>
-          <Options processDataForViewing={ this.processDataForViewing.bind(this) }
-            tableTitle={ this.props.title }/>
+          <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>
+            <Title title={ this.props.title }/>
+          </div>
+          { !this.props.showOptions ? null :
+            <Options tableTitle={ this.props.title }
+              processDataForViewing={ this.processDataForViewing.bind(this) }
+              id={ this.props.id }
+              layout={ { ...this.props.layout } }
+              embedProps={ {
+                type: "CensusBarChart",
+                geoids: [...this.props.geoids],
+                compareGeoid: this.props.compareGeoid,
+                censusKeys: [...this.props.censusKeys],
+                groupBy: this.props.groupBy,
+                groupMode: this.props.groupMode,
+                title: this.props.title,
+                marginRight: this.props.marginRight,
+                marginLeft: this.props.marginLeft,
+                axisBottom: this.props.axisBottom,
+                orientation: this.props.orientation,
+                yFormat: this.props.yFormat,
+                sorted: this.props.sorted
+              } }/>
+          }
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
           <ResponsiveBar indexBy={ "id" }

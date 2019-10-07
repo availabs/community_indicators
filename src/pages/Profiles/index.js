@@ -5,6 +5,7 @@ import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } 
 
 import subMenus from './submenu.js'
 import Profiles from './Profile'
+import ShareEmbed from "./ShareEmbed"
 import ProfileHeader from './components/ProfileHeader'
 import GRAPH_CONFIG from './regionConfig'
 
@@ -103,5 +104,6 @@ export default [
         subMenus: subMenus,
         component: ReportIndex
     },
-    ...Profiles
+    ...Profiles,
+    ShareEmbed
 ]

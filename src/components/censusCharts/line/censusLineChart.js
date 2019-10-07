@@ -22,7 +22,8 @@ class CensusLineChart extends React.Component {
               this.props.years,
               [...this.props.divisorKeys, ...this.props.censusKeys]
             ],
-            ["geo", geoids, "name"]
+            ["geo", geoids, "name"],
+            ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
         )
         // .then(data =>{
         //     console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
@@ -117,14 +118,34 @@ class CensusLineChart extends React.Component {
             this.props.divisorKeys.length ? "Value" :
             key in this.props.censusKeyLabels ? this.props.censusKeyLabels[key] :
             getCensusKeyLabel(key, this.props.acs, this.props.removeLeading);
+console.log("THEME:", this.props);
         return(
             <div style={{height: '100%'}}>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
                 <Title title={ title }/>
-                <Options processDataForViewing={ this.processDataForViewing.bind(this) }
-                  tableTitle={ this.props.title }/>
+                { !this.props.showOptions ? null :
+                  <Options tableTitle={ this.props.title }
+                    processDataForViewing={ this.processDataForViewing.bind(this) }
+                    id={ this.props.id }
+                    layout={ { ...this.props.layout } }
+                    embedProps={ {
+                      type: "CensusLineChart",
+                      title: this.props.title,
+                      geoids: [...this.props.geoids],
+                      compareGeoid: this.props.compareGeoid,
+                      sumType: this.props.sumType,
+                      censusKeys: [...this.props.censusKeys],
+                      divisorKeys: [...this.props.divisorKeys],
+                      yFormat: this.props.yFormat,
+                      marginLeft: this.props.marginLeft,
+                      stacked: this.props.stacked,
+                      curve: this.props.curve,
+                      theme: JSON.parse(JSON.stringify(this.props.theme).replace(/[#]/g, "__HASH__")),
+                      years: [...this.props.years]
+                    } }/>
+                }
               </div>
-              <div style={ { height: "calc(100% - 30px)" } }>
+              <div style={ { height: "calc(100% - 30px)" } } id={ this.props.id }>
                 <ResponsiveLine
                     data={ this.lineData() }
                     margin={{
@@ -202,7 +223,9 @@ class CensusLineChart extends React.Component {
         marginLeft: 50,
         showCompare: true,
         compareGeoid: null,
-        censusKeyLabels: {}
+        censusKeyLabels: {},
+        showOptions: true,
+        sumType: "sum"
     }
 
 }

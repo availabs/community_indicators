@@ -1,3 +1,5 @@
+import { color as d3color } from "d3-color";
+
 import CENSUS_CONFIG from "./censusConfig"
 
 const DEFAULT_LAYOUT = {

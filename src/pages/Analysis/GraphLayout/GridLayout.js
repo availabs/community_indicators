@@ -14,11 +14,11 @@ class GridLayout extends React.Component {
           y: layout.y,
           w: layout.w,
           h: layout.h,
-          i: layout.i,
+          i: id,
           static: true
         }
         return (
-            <div key={ newLayout.i }
+            <div key={ id }
                 data-grid={ newLayout }
                 style={ {
                     backgroundColor: 'none',
@@ -33,7 +33,8 @@ class GridLayout extends React.Component {
                         { ...rest }
                         geoid={ [geoid] }
                         geoids={ geoids ? geoids : [geoid] }
-                        compareGeoid={ compareGeoid }/>
+                        compareGeoid={ compareGeoid }
+                        id={ id }/>
             </div>
         )
       })
