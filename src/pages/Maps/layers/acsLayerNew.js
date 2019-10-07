@@ -16,7 +16,7 @@ import { UPDATE as REDUX_UPDATE } from 'utils/redux-falcor'
 
 import { register, unregister } from "AvlMap/ReduxMiddleware"
 
-const LEGEND_COLOR_RANGE = getColorRange(5, "Blues");
+const LEGEND_COLOR_RANGE = getColorRange(7, "Blues");
 
 const keyRegex = /\w{6}(\w?)_(\d{3})\w/
 
@@ -496,7 +496,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
   legend: {
     title: ({ layer }) => <>{ layer.filters.census.value }</>,
-    type: "quantize",
+    type: "quantile",
     types: ["quantile", "quantize"],
     active: true,
     domain: [],
