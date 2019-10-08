@@ -21,6 +21,15 @@
 import {css} from 'styled-components';
 import {DIMENSIONS} from 'constants/default-settings';
 
+const createShade = (color, shift) => {
+  const r = parseInt(color.slice(1, 3), 16),
+    g = parseInt(color.slice(3, 5), 16),
+    b = parseInt(color.slice(5, 7), 16);
+
+  return "#" + ("0" + (Math.min(Math.max(0, r + 32 * shift), 255)).toString(16)).slice(-2)
+    + ("0" + (Math.min(Math.max(0, g + 32 * shift), 255)).toString(16)).slice(-2)
+    + ("0" + (Math.min(Math.max(0, b + 32 * shift), 255)).toString(16)).slice(-2);
+}
 
 export const transition = 'all .4s ease';
 export const transitionFast = 'all .2s ease';
@@ -58,6 +67,7 @@ export const primaryBtnActBgd = '#13B17B';
 export const primaryBtnColor = '#FFFFFF';
 export const primaryBtnActColor = '#FFFFFF';
 export const primaryBtnBgdHover = '#13B17B';
+export const primaryBtnDisabled = createShade(primaryBtnBgd, -1);
 export const primaryBtnRadius = '2px';
 
 export const secondaryBtnBgd = '#6A7485';
@@ -65,6 +75,13 @@ export const secondaryBtnActBgd = '#A0A7B4';
 export const secondaryBtnColor = '#FFFFFF';
 export const secondaryBtnActColor = '#FFFFFF';
 export const secondaryBtnBgdHover = '#A0A7B4';
+
+export const darkBtnBgd = "#666666";
+export const darkBtnActBgd = createShade(darkBtnBgd, 1);
+export const darkBtnColor = '#FFFFFF';
+export const darkBtnActColor = '#FFFFFF';
+export const darkBtnBgdHover = createShade(darkBtnBgd, 1);
+export const darkBtnDisabled = createShade(darkBtnBgd, -1);
 
 export const linkBtnBgd = 'transparent';
 export const linkBtnActBgd = linkBtnBgd;
@@ -278,7 +295,7 @@ const input = css`
 
 const inputLT = css`
   ${input}
-  
+
   background-color: ${props => props.theme.selectBackgroundLT};
   border: 1px solid
   ${props =>
@@ -314,7 +331,7 @@ const inputLT = css`
 `;
 
 const secondaryInput = css`
-  ${props => props.theme.input} 
+  ${props => props.theme.input}
   color: ${props => props.theme.secondaryInputColor};
   background-color: ${props => props.theme.secondaryInputBgd};
   height: ${props => props.theme.secondaryInputHeight};
@@ -337,7 +354,7 @@ const secondaryInput = css`
 `;
 
 const chickletedInput = css`
-  ${props => props.theme.secondaryInput} 
+  ${props => props.theme.secondaryInput}
   cursor: pointer;
   flex-wrap: wrap;
   height: auto;
@@ -398,7 +415,7 @@ const switchButton = css`
   display: block;
   height: ${props => props.theme.switchBtnHeight};
   width: ${props => props.theme.switchBtnWidth};
-  background: ${props => props.checked ? 
+  background: ${props => props.checked ?
   props.theme.switchBtnBgdActive : props.theme.switchBtnBgd};
   box-shadow: ${props => props.theme.switchBtnBoxShadow};
 `;
@@ -469,14 +486,14 @@ const inputCheckbox = css`
   :before {
      ${props => props.theme.checkboxBox};
   }
-  
+
   :after {
     ${props => props.theme.checkboxCheck};
   }
 `;
 
 const secondarySwitch = css`
-  ${props => props.theme.inputSwitch} 
+  ${props => props.theme.inputSwitch}
   :before {
     ${props => props.theme.switchTrack} background: ${props =>
         props.checked
@@ -485,7 +502,7 @@ const secondarySwitch = css`
   }
 
   :after {
-    ${props => props.theme.switchButton} 
+    ${props => props.theme.switchButton}
     background: ${props => props.checked
           ? props.theme.switchBtnBgdActive
           : props.theme.secondarySwitchBtnBgd};
@@ -497,21 +514,21 @@ const dropdownScrollBar = css`
     height: 10px;
     width: 10px;
   }
-  
+
   ::-webkit-scrollbar-corner {
     background: ${props => props.theme.dropdownListBgd};
   }
-  
+
   ::-webkit-scrollbar-track {
     background: ${props => props.theme.dropdownListBgd};
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: ${props => props.theme.labelColor};
     border: 3px solid ${props => props.theme.dropdownListBgd};
   };
-  
+
   :vertical:hover {
     background: ${props => props.theme.textColorHl};
     cursor: pointer;
@@ -580,20 +597,20 @@ const sidePanelScrollBar = css`
     height: 10px;
     width: 10px;
   }
-  
+
   ::-webkit-scrollbar-corner {
     background: ${props => props.theme.sidePanelBg};
   }
-  
+
   ::-webkit-scrollbar-track {
     background: ${props => props.theme.sidePanelBg};
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: ${props => props.theme.panelBackgroundHover};
     border: 3px solid ${props => props.theme.sidePanelBg};
-    
+
     :hover {
       background: ${props => props.theme.labelColor};
       cursor: pointer;
@@ -606,15 +623,15 @@ const panelDropdownScrollBar = css`
     height: 10px;
     width: 10px;
   }
-  
+
   ::-webkit-scrollbar-corner {
     background: ${props => props.theme.panelBackground};
   }
-  
+
   ::-webkit-scrollbar-track {
     background: ${props => props.theme.panelBackground};
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: ${props => props.theme.panelBackgroundHover};
@@ -631,15 +648,15 @@ const scrollBar = css`
     height: 10px;
     width: 10px;
   }
-  
+
   ::-webkit-scrollbar-corner {
     background: ${props => props.theme.panelBackground};
   }
-  
+
   ::-webkit-scrollbar-track {
     background: ${props => props.theme.panelBackground};
   }
-  
+
   ::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background: ${props => props.theme.labelColor};
@@ -649,7 +666,7 @@ const scrollBar = css`
       background: ${props => props.theme.textColorHl};
       cursor: pointer;
     }
-    
+
     :horizontal:hover {
       background: ${props => props.theme.textColorHl};
       cursor: pointer;
@@ -826,6 +843,13 @@ const theme = {
   negativeBtnBgdHover,
   negativeBtnColor,
   negativeBtnActColor,
+
+  darkBtnBgd,
+  darkBtnActBgd,
+  darkBtnColor,
+  darkBtnActColor,
+  darkBtnBgdHover,
+  darkBtnDisabled,
 
   linkBtnBgd,
   linkBtnActBgd,

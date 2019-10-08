@@ -81,11 +81,18 @@ export const primaryBtnBgdHover = '#13B17B';
 export const primaryBtnDisabled = createShade(primaryBtnBgd, -1);
 export const primaryBtnRadius = '2px';
 
-export const secondaryBtnBgd = createShade(BASE_TEXT_COLOR, 2);
+export const secondaryBtnBgd = '#6A7485';
 export const secondaryBtnActBgd = '#A0A7B4';
 export const secondaryBtnColor = '#FFFFFF';
 export const secondaryBtnActColor = '#FFFFFF';
 export const secondaryBtnBgdHover = '#A0A7B4';
+
+export const darkBtnBgd = "#666666";
+export const darkBtnActBgd = createShade(darkBtnBgd, 1);
+export const darkBtnColor = '#FFFFFF';
+export const darkBtnActColor = '#FFFFFF';
+export const darkBtnBgdHover = createShade(darkBtnBgd, 1);
+export const darkBtnDisabled = createShade(darkBtnBgd, -1);
 
 export const linkBtnBgd = 'transparent';
 export const linkBtnActBgd = linkBtnBgd;
@@ -842,6 +849,13 @@ const theme = {
   secondaryBtnBgdHover,
   secondaryBtnColor,
   secondaryBtnActColor,
+
+  darkBtnBgd,
+  darkBtnActBgd,
+  darkBtnColor,
+  darkBtnActColor,
+  darkBtnBgdHover,
+  darkBtnDisabled,
 
   negativeBtnBgd,
   negativeBtnActBgd,

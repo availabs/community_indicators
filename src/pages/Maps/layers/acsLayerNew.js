@@ -488,13 +488,13 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     }
   },
 
-  infoBoxes: {
-    test: {
-      title: "TEST INFO BOX",
-      comp: () => <div>TESTING INFO BOX</div>,
-      show: true
-    }
-  },
+  // infoBoxes: {
+  //   test: {
+  //     title: "TEST INFO BOX",
+  //     comp: () => <div>TESTING INFO BOX</div>,
+  //     show: true
+  //   }
+  // },
 
   // modals: {
   //   test: {
