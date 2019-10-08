@@ -128,10 +128,13 @@ function fnum(x) {
 	return "1T+";
 }
 
+const fmoney = x => `$${ fnum(x) }`;
+
 module.exports = {
 
 	getHazardName,
 	fnum,
+	fmoney,
 	getColors,
 	getColors2,
 
@@ -162,11 +165,11 @@ module.exports = {
 					if(data[year-i] && data[year-i][key]){
 						avgTotal += data[year-i][key]
 					}
-					count += 1 
+					count += 1
 				}
-				let avg = !isNaN(avgTotal / count)  > 0 
+				let avg = !isNaN(avgTotal / count)  > 0
 					? (avgTotal / count)
-					: 0 
+					: 0
 				total.push({
 						"x": +year,
 			        	"y": +(avg.toFixed(2))
@@ -213,16 +216,16 @@ module.exports = {
 				if(data[year-i] && data[year-i][key]){
 					avgTotal += data[year-i][key]
 				}
-				count += 1 
+				count += 1
 			}
-			let avg = !isNaN(avgTotal / count) && count > 0 
+			let avg = !isNaN(avgTotal / count) && count > 0
 				? (avgTotal / count)
-				: 0 
+				: 0
 			total[year] = type === 'avg' ?  +(avg.toFixed(2)) : +(avgTotal.toFixed(2))
 			return total
 		}, {})
 	},
-	
+
 	sumData : (data, key, len) => {
 		return Object.keys(data).reduce((total,year) => {
 			let avgTotal = 0
@@ -231,15 +234,15 @@ module.exports = {
 				if(data[year-i] && data[year-i][key]){
 					avgTotal += data[year-i][key]
 				}
-				count += 1 
+				count += 1
 			}
-			let avg = !isNaN(avgTotal / count) && count > 0 
+			let avg = !isNaN(avgTotal / count) && count > 0
 				? (avgTotal / count)
-				: 0 
+				: 0
 			total[year] = +(avgTotal.toFixed(2))
 			return total
 		}, {})
-		
+
 	},
 
 	total : (data,key) => {
@@ -249,7 +252,7 @@ module.exports = {
 			.filter(d => d.length === 4)
 			.length
 
-		if(numYears <= 0) return ''  
+		if(numYears <= 0) return ''
 
 		let total =  Object.keys(data).reduce((total,year) => {
 			if(data[year][key] && !isNaN(+data[year][key])) {
@@ -268,7 +271,7 @@ module.exports = {
 			.length
 
 		if(numYears <= 0) return ''
-		
+
 
 		let total =  Object.keys(data).reduce((total,year) => {
 			if(data[year][key] && !isNaN(+data[year][key])) {
@@ -277,8 +280,8 @@ module.exports = {
 			return total
 		}, 0)
 
-			
-		
+
+
 		return fnum( total / numYears )
 	},
 
@@ -290,15 +293,15 @@ module.exports = {
 				if(data[year-i] && data[year-i][key]){
 					avgTotal += data[year-i][key]
 				}
-				count += 1 
+				count += 1
 			}
-			let avg = !isNaN(avgTotal / count) && count > 0 
+			let avg = !isNaN(avgTotal / count) && count > 0
 				? (avgTotal / count)
-				: 0 
-			total[year] = +(avg.toFixed(2)) 
+				: 0
+			total[year] = +(avg.toFixed(2))
 			return total
 		}, {})
-		
+
 	}
 
 }

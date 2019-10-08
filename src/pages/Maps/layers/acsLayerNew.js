@@ -16,6 +16,8 @@ import { UPDATE as REDUX_UPDATE } from 'utils/redux-falcor'
 
 import { register, unregister } from "AvlMap/ReduxMiddleware"
 
+import { fnum, fmoney } from "utils/sheldusUtils"
+
 const LEGEND_COLOR_RANGE = getColorRange(7, "Blues");
 
 const keyRegex = /\w{6}(\w?)_(\d{3})\w/
@@ -67,7 +69,7 @@ const processConfig = config => {
     divisorKeys: [],
     asDensity: false,
 
-    format: get(config, ["divisorKeys", "length"], 0) ? ",.1%" : ",d",
+    format: get(config, ["divisorKeys", "length"], 0) ? ",.1%" : fnum,
 
 // override default values
     ...config,
@@ -351,7 +353,7 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Median Household Income",
     censusKeys: ["B19013_001E"],
-    format: "$,d"
+    format: fmoney
   },
 
   { name: "Percent Poverty Rate",
@@ -441,7 +443,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
       const value = get(this.geoData, [geoid], null);
       if (value !== null) {
-        const format = d3format(this.legend.format);
+        const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
         data.push([this.filters.census.value, format(value)])
       }
 
@@ -483,6 +485,14 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       type: "single",
       domain: CENSUS_FILTER_CONFIG,
       value: CENSUS_FILTER_CONFIG[DEFAULT_CONFIG_INDEX].value
+    }
+  },
+
+  infoBoxes: {
+    test: {
+      title: "TEST INFO BOX",
+      comp: () => <div>TESTING INFO BOX</div>,
+      show: true
     }
   },
 

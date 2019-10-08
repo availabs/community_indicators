@@ -11,6 +11,8 @@ import censusLayerFactory from "./layers/censusLayer.js"
 // import acsLayerFactory from './layers/acsLayer.js'
 import acsLayerFactory from "./layers/acsLayerNew"
 
+import theme from "components/common/themes/light_new"
+
 const SidebarHeader = ({}) =>
   <div style={ { paddingLeft: "50px" } }><Logo width={ 200 }/></div>
 
@@ -24,9 +26,10 @@ class MapPage extends React.Component {
             this.ACS_Layer,
             this.CensusLayer
           ] }
+          theme={ theme }
           header={ SidebarHeader }
           { ...this.ACS_Layer.baseMapSettings }
-          minZoom={ 2 }/>
+          header={ false }/>
       </div>
     )
   }

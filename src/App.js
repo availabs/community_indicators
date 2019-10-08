@@ -10,7 +10,7 @@ import Layout from './layouts/Layout'
 import Routes from './routes'
 
 import { ThemeProvider }  from 'styled-components';
-import theme from 'components/common/themes/light'
+import theme from 'components/common/themes/light_new'
 
 import './App.css';
 

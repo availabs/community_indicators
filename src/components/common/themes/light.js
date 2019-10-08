@@ -7,7 +7,7 @@ export default {
 	subTextColor: 'rgba(0,0,0,0.4)',
 	textColorHl: '#456CF9',
 	panelBackground: '#fafafa',
-	panelBackgroundHover: '#eee',
+	panelBackgroundHover: '#fff',
 
 	transition:'all .4s ease',
 	transitionFast:'all .2s ease',
@@ -121,9 +121,8 @@ export default {
 	switchTrackBgd:'#29323C',
 	//switchTrackBgdActive:activeColor,
 	switchTrackBorderRadius:'1px',
-	switchBtnBgd:'#ccc',
-	switchBtnBgdActive:'#ddd',
-	switchBtnBgdDisabled: '#bbb',
+	switchBtnBgd:'#6A7485',
+	switchBtnBgdActive:'#D3D8E0',
 	switchBtnBoxShadow:'0 2px 4px 0 rgba(0,0,0,0.40)',
 	switchBtnBorderRadius:'1px',
 	switchBtnWidth:'12px',
@@ -144,7 +143,7 @@ export default {
 
 	// Side Panel
 	sidePanelHeaderBg:'#29323C',
-	sidePanelBg:'#fafafa',
+	sidePanelBg:'#eee',
 	//sideBarCloseBtnBgd:secondaryBtnBgd,
 	sideBarCloseBtnColor:'#29323C',
 	//sideBarCloseBtnBgdHover:secondaryBtnActBgd,
