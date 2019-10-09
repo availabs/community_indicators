@@ -117,7 +117,9 @@ class HorizontalBarChart extends React.Component {
       const r = parseInt(color.slice(1, 3), 16),
         g = parseInt(color.slice(3, 5), 16),
         b = parseInt(color.slice(5), 16);
-      return "#" + (r - 32 * i).toString(16) + (g - 32 * i).toString(16) + (b - 32 * i).toString(16)
+      return "#" + ("0" + (Math.max(0, r - 32 * i)).toString(16)).slice(-2)
+              + ("0" + (Math.max(0, g - 32 * i)).toString(16)).slice(-2)
+              + ("0" + (Math.max(0, b - 32 * i)).toString(16)).slice(-2)
     }
 
     const colors = this.props.allGeoids.reduce((a, c, i) => {

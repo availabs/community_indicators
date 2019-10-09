@@ -70,7 +70,7 @@ export const textColorHlLT = createShade(BASE_TEXT_COLOR, -2);
 
 export const activeColor = '#2171b5';
 export const activeColorHover = '#4292c6';
-export const errorColor = '#F9042C';
+export const errorColor = '#aa0000';
 
 // Button
 export const primaryBtnBgd = '#0F9668';
@@ -116,7 +116,7 @@ export const inputBgdHover = DARKER_2;
 export const inputBgdActive = DARKER_2;
 export const inputBorderColor = DARKER_3;
 export const inputBorderHoverColor = DARKER_5;
-export const inputBorderActiveColor = DARKER_5;
+export const inputBorderActiveColor = DARKER_4;
 export const inputColor = BASE_TEXT_COLOR;
 export const inputBorderRadius = '1px';
 export const inputPlaceholderColor = createShade(BASE_TEXT_COLOR, 2);
@@ -126,9 +126,9 @@ export const secondaryInputHeight = '28px';
 export const secondaryInputBgd = BASE_LIGHT_COLOR;
 export const secondaryInputBgdHover = DARKER_2;
 export const secondaryInputBgdActive = DARKER_2;
-export const secondaryInputColor = '#A0A7B4';
-export const secondaryInputBorderColor = BASE_LIGHT_COLOR;
-export const secondaryInputBorderActiveColor = '#D3D8E0';
+export const secondaryInputColor = BASE_TEXT_COLOR;
+export const secondaryInputBorderColor = DARKER_3;
+export const secondaryInputBorderActiveColor = DARKER_4;
 
 // Select
 export const selectColor = inputColor;

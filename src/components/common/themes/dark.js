@@ -59,7 +59,7 @@ export const textColorHl = '#D3D8E0';
 export const textColorHlLT = '#F1F1F1';
 export const activeColor = '#1FBAD6';
 export const activeColorHover = '#108188';
-export const errorColor = '#F9042C';
+export const errorColor = '#aa0000';
 
 // Button
 export const primaryBtnBgd = '#0F9668';
