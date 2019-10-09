@@ -506,7 +506,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
   legend: {
     title: ({ layer }) => <>{ layer.filters.census.value }</>,
-    type: "quantile",
+    type: "quantize",
     types: ["quantile", "quantize"],
     active: true,
     domain: [],
