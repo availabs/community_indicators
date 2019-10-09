@@ -351,7 +351,7 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Median Household Income",
     censusKeys: ["B19013_001E"],
-    format: "$,d"
+   
   },
 
   { name: "Percent Poverty Rate",
@@ -373,6 +373,12 @@ const CENSUS_FILTER_CONFIG = [
     censusKeys: ['B15003_002E...B15003_016E'],
     divisorKeys: ['B01003_001E']
   },
+
+  { name: "Median Earnings - Less than high school graduate",
+    censusKeys: ['B20004_002E'],
+    format: "$,d"
+  },
+  
 
   { name: "Total Ages 5-19 Not Enrolled in School",
     censusKeys:["B14003_023E...B14003_026E", "B14003_051E...B14003_054E"],

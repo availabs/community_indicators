@@ -117,8 +117,8 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title: "Percent Ages 3-4 Enrolled in School",
       censusKeys:['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
-      sumType: 'pct',
       divisorKeys:['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ],
+      sumType: 'pct',
       valueSuffix: '%',
       maximumFractionDigits: 1,
        compareYear: year - 1,
@@ -223,6 +223,29 @@ const BASE_CONFIG = [
    //       "36001"
    //    ]
    // },
+
+        {
+          title: "Median Earnings by Sex by Education Attainment Ages 25 and Over",
+          type: "CensusStackedBarChart",
+          yFormat: "$,d",
+          marginLeft: 310,
+          layout: { h: 12 },
+          left: {
+            key: "Male", color: maleColor,
+            keys: ["B20004_008E...B20004_012E"]
+          },
+          right: {
+            key: "Female", color: femaleColor,
+            keys: ["B20004_014E...B20004_018E"]
+          },
+          labels: [
+            "Less than high school graduate",
+            "High school graduate",
+            "Some college or associate's degree",
+            "EBachelor's degree",
+            "Graduate or professional degree",
+          ]
+        },
 
  {
       type: "ProfileFooter",

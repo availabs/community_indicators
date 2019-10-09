@@ -20,7 +20,7 @@ const BASE_CONFIG = [
        {
       type:"CensusStatBox",
       title:'Covered by Health Insurance',
-      censusKeys:["B18135_001E"],
+      censusKeys:["B27001_001E"],
       compareYear: year - 1,
       year,
       maximumFractionDigits: 1,
@@ -33,7 +33,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Percent Health Coverage',
       sumType: 'pct',
-      censusKeys:["B18135_001E"],
+      censusKeys:["B27001_001E"],
       divisorKey: "B01003_001E",
       compareYear: year - 1,
       year,
