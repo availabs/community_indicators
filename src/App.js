@@ -10,7 +10,7 @@ import Layout from './layouts/Layout'
 import Routes from './routes'
 
 import { ThemeProvider }  from 'styled-components';
-import theme from 'components/common/themes/dark'
+import theme from 'components/common/themes/light_new'
 
 import './App.css';
 
@@ -41,7 +41,7 @@ class App extends Component {
       activeGeoid = location[2]
     }
     console.log('app render props',this.props, activeGeoid, location)
-    
+
     return (
       <ThemeProvider theme={theme}>
         <div className="all-wrapper solid-bg-all">
@@ -59,11 +59,11 @@ class App extends Component {
                   user = {this.props.user}
                   menuSettings = { route.menuSettings ?  route.menuSettings  : {} }
                   routes={route.routes}
-    	    				menus = { Routes } 
+    	    				menus = { Routes }
                   breadcrumbs = {route.breadcrumbs}
     	    			/>
     	    		)
-  	    	  }) 
+  	    	  })
           }
           </Switch>
           <Messages />
@@ -81,5 +81,5 @@ const mapStateToProps = state => {
     router: state.router
   };
 };
- 
+
 export default connect(mapStateToProps, { auth })(App);

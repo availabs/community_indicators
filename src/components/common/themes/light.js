@@ -143,7 +143,7 @@ export default {
 
 	// Side Panel
 	sidePanelHeaderBg:'#29323C',
-	sidePanelBg:'#242730',
+	sidePanelBg:'#eee',
 	//sideBarCloseBtnBgd:secondaryBtnBgd,
 	sideBarCloseBtnColor:'#29323C',
 	//sideBarCloseBtnBgdHover:secondaryBtnActBgd,
@@ -191,5 +191,5 @@ export default {
 	sliderHandleShadow:'0 2px 4px 0 rgba(0,0,0,0.40)',
 
 	// Plot
-	rangeBrushBgd:'#3A414C'	
+	rangeBrushBgd:'#3A414C'
 }

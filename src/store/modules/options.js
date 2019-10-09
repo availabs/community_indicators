@@ -34,7 +34,8 @@ const INITIAL_STATE = {
   tableTitle: "",
   data: [],
   image: null,
-  embed: null
+  embed: null,
+  layout: {}
 }
 
 export default (state = INITIAL_STATE, action) => {

@@ -39,7 +39,8 @@ const Tooltip = ({ color, value, label, geoid }) =>
 class HorizontalBarChart extends React.Component {
   static defaultProps = {
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
-    marginLeft: 100
+    marginLeft: 100,
+    showOptions: true
   }
   state = {
     year: this.props.years[this.props.years.length - 1]
@@ -47,7 +48,8 @@ class HorizontalBarChart extends React.Component {
   fetchFalcorDeps() {
     return this.props.falcor.get(
         ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys],
-        ["geo", this.props.allGeoids, "name"]
+        ["geo", this.props.allGeoids, "name"],
+        ["acs", "meta", this.props.censusKeys, "label"]
     )
   }
   getBarData() {
@@ -115,7 +117,9 @@ class HorizontalBarChart extends React.Component {
       const r = parseInt(color.slice(1, 3), 16),
         g = parseInt(color.slice(3, 5), 16),
         b = parseInt(color.slice(5), 16);
-      return "#" + (r - 32 * i).toString(16) + (g - 32 * i).toString(16) + (b - 32 * i).toString(16)
+      return "#" + ("0" + (Math.max(0, r - 32 * i)).toString(16)).slice(-2)
+              + ("0" + (Math.max(0, g - 32 * i)).toString(16)).slice(-2)
+              + ("0" + (Math.max(0, b - 32 * i)).toString(16)).slice(-2)
     }
 
     const colors = this.props.allGeoids.reduce((a, c, i) => {
@@ -132,11 +136,25 @@ class HorizontalBarChart extends React.Component {
     return (
       <div style={ { width: "100%", height: "100%" } }>
         <div style={ { height: "30px" } }>
-          <div style={ { maxWidth: "calc(100% - 285px)" } }><Title title={ this.props.title }/></div>
-          <Options processDataForViewing={ this.processDataForViewing.bind(this) }
-            tableTitle={ this.props.title }/>
+          <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }><Title title={ this.props.title }/></div>
+          { !this.props.showOptions ? null :
+            <Options tableTitle={ this.props.title }
+              processDataForViewing={ this.processDataForViewing.bind(this) }
+              id={ this.props.id }
+              layout={ { ...this.props.layout } }
+              embedProps={ {
+                type: "CensusStackedBarChart",
+                geoids: [...this.props.geoids],
+                compareGeoid: this.props.compareGeoid,
+                title: this.props.title,
+                marginLeft: this.props.marginLeft,
+                left: JSON.parse(JSON.stringify(this.props.left).replace(/[#]/g, "__HASH__")),
+                right: JSON.parse(JSON.stringify(this.props.right).replace(/[#]/g, "__HASH__")),
+                labels: [...this.props.labels]
+              } }/>
+          }
         </div>
-        <div style={ { height: "calc(100% - 60px)" } }>
+        <div style={ { height: "calc(100% - 60px)" } } id={ this.props.id }>
           <ResponsiveBar data={ this.getBarData() }
             colors={ ({ id }) => getColors(id) }
             indexBy="label"

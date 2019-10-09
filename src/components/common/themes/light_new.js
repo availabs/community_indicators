@@ -18,8 +18,8 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import {css} from 'styled-components';
-import {DIMENSIONS} from 'constants/default-settings';
+import { css } from 'styled-components';
+import { DIMENSIONS } from 'constants/default-settings';
 
 const createShade = (color, shift) => {
   const r = parseInt(color.slice(1, 3), 16),
@@ -31,6 +31,16 @@ const createShade = (color, shift) => {
     + ("0" + (Math.min(Math.max(0, b + 32 * shift), 255)).toString(16)).slice(-2);
 }
 
+const BASE_LIGHT_COLOR = '#efefef';
+const LIGHTER_1 = createShade(BASE_LIGHT_COLOR, 0.5);
+const DARKER_1 = createShade(BASE_LIGHT_COLOR, -0.5);
+const DARKER_2 = createShade(BASE_LIGHT_COLOR, -1);
+const DARKER_3 = createShade(BASE_LIGHT_COLOR, -1.5);
+const DARKER_4 = createShade(BASE_LIGHT_COLOR, -2);
+const DARKER_5 = createShade(BASE_LIGHT_COLOR, -3);
+
+const BASE_TEXT_COLOR = '#404040';
+
 export const transition = 'all .4s ease';
 export const transitionFast = 'all .2s ease';
 export const transitionSlow = 'all .8s ease';
@@ -38,27 +48,28 @@ export const transitionSlow = 'all .8s ease';
 export const boxShadow = '0 1px 2px 0 rgba(0,0,0,0.10)';
 export const boxSizing = 'border-box';
 export const borderRadius = '1px';
-export const borderColor = '#3A414C';
+export const borderColor = DARKER_2;
 export const borderColorLight = '#F1F1F1';
 
 // TEXT
-export const labelColor = '#6A7485';
+export const labelColor = createShade(BASE_TEXT_COLOR, 2);
 export const labelHoverColor = '#C6C6C6';
-export const labelColorLT = '#6A7485';
+export const labelColorLT = createShade(BASE_TEXT_COLOR, 2);
 
-export const textColor = '#A0A7B4';
-export const textColorLT = '#3A414C';
-export const titleColorLT = '#29323C';
+export const subtextColor = BASE_TEXT_COLOR;
+export const subtextColorLT = createShade(BASE_TEXT_COLOR, 1);
+export const subtextColorActive = createShade(BASE_TEXT_COLOR, 1);
+//["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"]
+export const textColor = BASE_TEXT_COLOR;
+export const textColorLT = createShade(BASE_TEXT_COLOR, 1);
+export const titleColorLT = createShade(BASE_TEXT_COLOR, 1);
 
-export const subtextColor = '#6A7485';
-export const subtextColorLT = '#A0A7B4';
-export const subtextColorActive = '#FFFFFF';
+export const titleTextColor = BASE_TEXT_COLOR;
+export const textColorHl = createShade(BASE_TEXT_COLOR, -3);
+export const textColorHlLT = createShade(BASE_TEXT_COLOR, -2);
 
-export const titleTextColor = '#FFFFFF';
-export const textColorHl = '#D3D8E0';
-export const textColorHlLT = '#F1F1F1';
-export const activeColor = '#1FBAD6';
-export const activeColorHover = '#108188';
+export const activeColor = '#2171b5';
+export const activeColorHover = '#4292c6';
 export const errorColor = '#aa0000';
 
 // Button
@@ -86,7 +97,7 @@ export const darkBtnDisabled = createShade(darkBtnBgd, -1);
 export const linkBtnBgd = 'transparent';
 export const linkBtnActBgd = linkBtnBgd;
 export const linkBtnColor = '#A0A7B4';
-export const linkBtnActColor = '#3A414C';
+export const linkBtnActColor = DARKER_2;
 export const linkBtnActBgdHover = linkBtnBgd;
 
 export const negativeBtnBgd = errorColor;
@@ -100,24 +111,24 @@ export const inputBoxHeight = '34px';
 export const inputPadding = '4px 10px';
 export const inputFontSize = '11px';
 export const inputFontWeight = 500;
-export const inputBgd = '#29323C';
-export const inputBgdHover = '#3A414C';
-export const inputBgdActive = '#3A414C';
-export const inputBorderColor = '#29323C';
-export const inputBorderHoverColor = '#3A414C';
-export const inputBorderActiveColor = '#D3D8E0';
-export const inputColor = '#A0A7B4';
+export const inputBgd = DARKER_1;
+export const inputBgdHover = DARKER_2;
+export const inputBgdActive = DARKER_2;
+export const inputBorderColor = DARKER_3;
+export const inputBorderHoverColor = DARKER_5;
+export const inputBorderActiveColor = DARKER_4;
+export const inputColor = BASE_TEXT_COLOR;
 export const inputBorderRadius = '1px';
-export const inputPlaceholderColor = '#6A7485';
+export const inputPlaceholderColor = createShade(BASE_TEXT_COLOR, 2);
 export const inputPlaceholderFontWeight = 400;
 
 export const secondaryInputHeight = '28px';
-export const secondaryInputBgd = '#242730';
-export const secondaryInputBgdHover = '#3A414C';
-export const secondaryInputBgdActive = '#3A414C';
-export const secondaryInputColor = '#A0A7B4';
-export const secondaryInputBorderColor = '#242730';
-export const secondaryInputBorderActiveColor = '#D3D8E0';
+export const secondaryInputBgd = BASE_LIGHT_COLOR;
+export const secondaryInputBgdHover = DARKER_2;
+export const secondaryInputBgdActive = DARKER_2;
+export const secondaryInputColor = BASE_TEXT_COLOR;
+export const secondaryInputBorderColor = DARKER_3;
+export const secondaryInputBorderActiveColor = DARKER_4;
 
 // Select
 export const selectColor = inputColor;
@@ -128,38 +139,38 @@ export const selectFontSize = '11px';
 export const selectFontWeight = '400';
 export const selectFontWeightBold = '500';
 
-export const selectColorPlaceHolder = '#6A7485';
+export const selectColorPlaceHolder = createShade(BASE_TEXT_COLOR, 2);
 export const selectBackground = inputBgd;
 export const selectBackgroundHover = inputBgdHover;
-export const selectBackgroundLT = '#FFFFFF';
-export const selectBackgroundHoverLT = '#F8F8F9';
+export const selectBackgroundLT = LIGHTER_1;
+export const selectBackgroundHoverLT = createShade(LIGHTER_1, -0.5);
 export const selectBorderColor = '#D3D8E0';
 export const selectBorderColorLT = '#D3D8E0';
 export const selectBorderRadius = '1px';
 export const selectBorder = 0;
 
-export const dropdownListHighlightBg = '#6A7485';
+export const dropdownListHighlightBg = createShade(DARKER_2, -0.5);
 export const dropdownListShadow = '0 6px 12px 0 rgba(0,0,0,0.16)';
-export const dropdownListBgd = '#3A414C';
-export const dropdownListBorderTop = '#242730';
+export const dropdownListBgd = DARKER_2;
+export const dropdownListBorderTop = DARKER_2;
 
 // Switch
 export const switchWidth = 24;
 export const switchHeight = 12;
 export const switchLabelMargin = 12;
 
-export const switchTrackBgd = '#29323C';
+export const switchTrackBgd = DARKER_1;
 export const switchTrackBgdActive = activeColor;
 export const switchTrackBorderRadius = '1px';
-export const switchBtnBgd = '#6A7485';
+export const switchBtnBgd = createShade(BASE_TEXT_COLOR, 2);
 export const switchBtnBgdActive = '#D3D8E0';
 export const switchBtnBoxShadow = '0 2px 4px 0 rgba(0,0,0,0.40)';
 export const switchBtnBorderRadius = '1px';
 export const switchBtnWidth = '12px';
 export const switchBtnHeight = '12px';
 
-export const secondarySwitchTrackBgd = '#242730';
-export const secondarySwitchBtnBgd = '#3A414C';
+export const secondarySwitchTrackBgd = BASE_LIGHT_COLOR;
+export const secondarySwitchBtnBgd = DARKER_2;
 
 // Checkbox
 export const checkboxWidth = 16;
@@ -172,45 +183,45 @@ export const checkboxBoxBgd = 'white';
 export const checkboxBoxBgdChecked = primaryBtnBgd;
 
 // Side Panel
-export const sidePanelHeaderBg = '#29323C';
-export const sidePanelBg = '#242730';
+export const sidePanelHeaderBg = DARKER_1;
+export const sidePanelBg = BASE_LIGHT_COLOR;
 export const sideBarCloseBtnBgd = secondaryBtnBgd;
-export const sideBarCloseBtnColor = '#29323C';
+export const sideBarCloseBtnColor = DARKER_1;
 export const sideBarCloseBtnBgdHover = secondaryBtnActBgd;
 
-export const panelBackground = '#29323C';
-export const panelBackgroundHover = '#3A4552';
-export const panelActiveBg = '#3A4552';
-export const panelActiveBgLT = '#6A7485';
-export const panelHeaderIcon = '#6A7485';
+export const panelBackground = DARKER_1;
+export const panelBackgroundHover = DARKER_2;
+export const panelActiveBg = DARKER_2;
+export const panelActiveBgLT = createShade(BASE_TEXT_COLOR, 2);
+export const panelHeaderIcon = createShade(BASE_TEXT_COLOR, 2);
 export const panelHeaderIconActive = '#A0A7B4';
 export const panelHeaderHeight = 38;
 export const panelBoxShadow = '0 6px 12px 0 rgba(0,0,0,0.16)';
 export const panelBorderRadius = '2px';
 export const panelBackgroundLT = '#f8f8f9';
 
-export const panelBorderColor = '#3A414C';
+export const panelBorderColor = DARKER_2;
 export const panelBorder = `1px solid ${borderColor}`;
 export const panelBorderLT = `1px solid ${borderColorLight}`;
 
-export const mapPanelBackgroundColor = '#242730';
-export const mapPanelHeaderBackgroundColor = '#29323C';
+export const mapPanelBackgroundColor = BASE_LIGHT_COLOR;
+export const mapPanelHeaderBackgroundColor = DARKER_1;
 export const tooltipBg = '#F8F8F9';
 export const tooltipColor = '#333334';
 
 // Modal
-export const modalTitleColor = '#3A414C';
+export const modalTitleColor = DARKER_2;
 export const modalTitleFontSize = '24px';
 export const modalFooterBgd = '#F8F8F9';
 export const modalImagePlaceHolder = '#DDDFE3';
 
 // Modal Dialog (Dark)
-export const modalDialogBgd = '#3A414C';
+export const modalDialogBgd = DARKER_2;
 export const modalDialogColor = textColorHl;
 
 // Slider
-export const sliderBarColor = '#6A7485';
-export const sliderBarBgd = '#3A414C';
+export const sliderBarColor = createShade(BASE_TEXT_COLOR, 2);
+export const sliderBarBgd = DARKER_2;
 export const sliderBarHoverColor = '#D3D8E0';
 export const sliderBarRadius = '1px';
 export const sliderBarHeight = '4px';
@@ -221,7 +232,7 @@ export const sliderHandleHoverColor = '#FFFFFF';
 export const sliderHandleShadow = '0 2px 4px 0 rgba(0,0,0,0.40)';
 
 // Plot
-export const rangeBrushBgd = '#3A414C';
+export const rangeBrushBgd = DARKER_2;
 
 export const textTruncate = {
   maxWidth: '100%',
@@ -827,6 +838,7 @@ const theme = {
 
   // Button
   primaryBtnBgd,
+  primaryBtnDisabled,
   primaryBtnActBgd,
   primaryBtnColor,
   primaryBtnActColor,
@@ -838,18 +850,18 @@ const theme = {
   secondaryBtnColor,
   secondaryBtnActColor,
 
-  negativeBtnBgd,
-  negativeBtnActBgd,
-  negativeBtnBgdHover,
-  negativeBtnColor,
-  negativeBtnActColor,
-
   darkBtnBgd,
   darkBtnActBgd,
   darkBtnColor,
   darkBtnActColor,
   darkBtnBgdHover,
   darkBtnDisabled,
+
+  negativeBtnBgd,
+  negativeBtnActBgd,
+  negativeBtnBgdHover,
+  negativeBtnColor,
+  negativeBtnActColor,
 
   linkBtnBgd,
   linkBtnActBgd,

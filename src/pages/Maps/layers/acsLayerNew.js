@@ -16,6 +16,8 @@ import { UPDATE as REDUX_UPDATE } from 'utils/redux-falcor'
 
 import { register, unregister } from "AvlMap/ReduxMiddleware"
 
+import { fnum, fmoney } from "utils/sheldusUtils"
+
 const LEGEND_COLOR_RANGE = getColorRange(7, "Blues");
 
 const keyRegex = /\w{6}(\w?)_(\d{3})\w/
@@ -67,7 +69,7 @@ const processConfig = config => {
     divisorKeys: [],
     asDensity: false,
 
-    format: get(config, ["divisorKeys", "length"], 0) ? ",.1%" : ",d",
+    format: get(config, ["divisorKeys", "length"], 0) ? ",.1%" : fnum,
 
 // override default values
     ...config,
@@ -351,7 +353,8 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Median Household Income",
     censusKeys: ["B19013_001E"],
-   
+    format: fmoney
+
   },
 
   { name: "Percent Poverty Rate",
@@ -392,7 +395,7 @@ const CENSUS_FILTER_CONFIG = [
   { name: "Bike/Ped as a Percent of Total Commuters",
     censusKeys: ["B08006_014E", "B08006_015E"],
     divisorKeys: ["B23025_001E"]
-  },
+  }
 
 ].map(processConfig)
 
@@ -447,12 +450,17 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
       const value = get(this.geoData, [geoid], null);
       if (value !== null) {
-        const format = d3format(this.legend.format);
+        const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
         data.push([this.filters.census.value, format(value)])
       }
 
       return data;
     }
+  },
+
+  baseMapSettings: {
+    zoom: 7.8,
+    center: [-73.8014, 42.91]
   },
 
   filters: {
@@ -487,9 +495,25 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     }
   },
 
+  // infoBoxes: {
+  //   test: {
+  //     title: "TEST INFO BOX",
+  //     comp: () => <div>TESTING INFO BOX</div>,
+  //     show: true
+  //   }
+  // },
+
+  // modals: {
+  //   test: {
+  //     comp: () => (
+  //       <iframe src="http://localhost:3000/share/embed?type=%22CensusStackedBarChart%22&geoids=%5B%2236001%22%5D&compareGeoid=null&title=%22Means%20of%20Transportation%20to%20Work%20by%20Sex%22&marginLeft=340&left=%7B%22key%22:%22Male%22,%22color%22:%22__HASH__99ccff%22,%22keys%22:%5B%22B08006_019E%22,%22B08006_020E%22,%22B08006_021E%22,%22B08006_022E%22,%22B08006_023E%22,%22B08006_024E%22,%22B08006_025E%22,%22B08006_026E%22,%22B08006_027E%22,%22B08006_028E%22,%22B08006_029E%22,%22B08006_030E%22,%22B08006_031E%22,%22B08006_032E%22,%22B08006_033E%22,%22B08006_034E%22%5D%7D&right=%7B%22key%22:%22Female%22,%22color%22:%22__HASH__ffafcc%22,%22keys%22:%5B%22B08006_036E%22,%22B08006_037E%22,%22B08006_038E%22,%22B08006_039E%22,%22B08006_040E%22,%22B08006_041E%22,%22B08006_042E%22,%22B08006_043E%22,%22B08006_044E%22,%22B08006_045E%22,%22B08006_046E%22,%22B08006_047E%22,%22B08006_048E%22,%22B08006_049E%22,%22B08006_050E%22,%22B08006_051E%22%5D%7D&labels=%5B%22Car,%20Truck%20or%20Van%22,%22Car,%20Truck%20or%20Van,%20Drove%20Alone%22,%22Car,%20Truck%20or%20Van,%20Carpooled%22,%22Car,%20Truck%20or%20Van,%202-Person%20Carpool%22,%22Car,%20Truck%20or%20Van,%203-Person%20Carpool%22,%22Car,%20Truck%20or%20Van,%204-Person%20Carpool%22,%22Public%20Transportation%20(Excluding%20Taxi)%22,%22Public%20Transportation%20(Excluding%20Taxi),%20Bus%20or%20Trolley%20Bus%22,%22Public%20Transportation%20(Excluding%20Taxi),%20Streetcar%20or%20Trolley%20Car%22,%22Public%20Transportation%20(Excluding%20Taxi),%20Subway%20or%20Elevated%22,%22Public%20Transportation%20(Excluding%20Taxi),%20Railroad%22,%22Public%20Transportation%20(Excluding%20Taxi),%20Ferryboat%22,%22Bicycle%22,%22Walked%22,%22Taxicab,%20Motorcycle,%20or%20Other%22,%22Worked%20at%20Home%22%5D" width="1080" height="360" style={ { border: "2px solid #ccc", borderRadius: "4px" } }/>
+  //     )
+  //   }
+  // },
+
   legend: {
     title: ({ layer }) => <>{ layer.filters.census.value }</>,
-    type: "quantile",
+    type: "quantize",
     types: ["quantile", "quantize"],
     active: true,
     domain: [],
@@ -498,6 +522,13 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   },
 
   mapActions: {
+    // test: {
+    //   tooltip: "Test iframe",
+    //   Icon: () => <span className="fa fa-2x fa-car"/>,
+    //   action: function() {
+    //     this.doAction(["toggleModal", "test"]);
+    //   }
+    // },
 		toggle: {
 			Icon: ({ layer }) => (
         <div style={ { paddingBottom: "2px" } }>
@@ -524,8 +555,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
           pitch = this.threeD ? 65 : 0;
         if (this.map) {
           this.map.easeTo({
-            center: [-73.8014, 42.91],
-            zoom: 7.75,
+            ...this.baseMapSettings,
             pitch,
             bearing,
             duration: 2000
