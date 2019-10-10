@@ -225,7 +225,7 @@ const BASE_CONFIG = [
    // },
 
         {
-          title: "Median Earnings by Sex by Education Attainment Ages 25 and Over",
+          title: "Median Earnings by Sex by Educational Attainment Ages 25 and Over",
           type: "CensusStackedBarChart",
           yFormat: "$,d",
           marginLeft: 310,
