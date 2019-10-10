@@ -8,8 +8,8 @@ const DEFAULT_LAYOUT = {
   static: true
 }
 
-export const maleColor = '#99ccff';
-export const femaleColor = '#ffafcc';
+export const maleColor = '#ff9999';
+export const femaleColor = '#b3b3ff';
 
 const keyRegex = /\w{6}(\w?)_(\d{3})\w/
 

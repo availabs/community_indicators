@@ -35,7 +35,7 @@ const BASE_CONFIG = [
 
   {
       type:"CensusStatBox",
-      title:'Percent of Population Over 16 Years-old, Not in Labor Force',
+      title:'Percent of Populaion Over 16 Years-old, Not in Labor Force',
       sumType: 'pct',
       censusKeys:["B23025_007E"],
       divisorKey: "B23025_001E",
