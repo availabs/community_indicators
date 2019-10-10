@@ -201,7 +201,6 @@ class ACS_Layer extends MapLayer {
       geoids = this.getGeoids(),
       threeD = this.threeD,
       geolevel = this.filters.geolevel.value,
-      property = geolevel === "blockgroup" ? "GEOID" : "geoid",
 
       year = this.filters.year.value,
 
@@ -254,10 +253,9 @@ class ACS_Layer extends MapLayer {
     }, {});
 
     const exit = (values, prevMeta) => {
-      const oldGeolevel = get(prevMeta, "geolevel", geolevel),
-        oldProperty = oldGeolevel === "blockgroup" ? "GEOID" : "geoid";
+      const oldGeolevel = get(prevMeta, "geolevel", geolevel);
       map.setPaintProperty(oldGeolevel, "fill-extrusion-height",
-        ["get", ["to-string", ["get", oldProperty]], ["literal", values]]
+        ["get", ["to-string", ["get", "geoid"]], ["literal", values]]
       );
     }
     const exitIf = prevMeta => {
@@ -286,19 +284,22 @@ class ACS_Layer extends MapLayer {
     const filterAndPaint = prevMeta => {
       this.geoData = { ...this.geoData, ...valueMap };
 
+// ORANGES: ["#feedde", "#fdd0a2", "#fdae6b", "#fd8d3c", "#f16913", "#d94801", "#8c2d04"]
+      const HOVER_COLOR = "#f16913";
+
       const oldGeolevel = get(prevMeta, "geolevel", false);
       if (oldGeolevel && (oldGeolevel !== geolevel)) {
         map.setFilter(oldGeolevel, ["in", "none", "none"]);
       }
-      map.setFilter(geolevel, ["in", property, ...geoids]);
+      map.setFilter(geolevel, ["in", "geoid", ...geoids]);
       this.colorAnimators[geolevel].start({
         to: colors,
         callback: values => {
           map.setPaintProperty(geolevel, "fill-extrusion-color",
         		["case",
-        			["boolean", ["feature-state", "hover"], false], "#900",
-              ["match", ["to-string", ["get", property]], colorKeys,
-                ["get", ["to-string", ["get", property]], ["literal", values]],
+        			["boolean", ["feature-state", "hover"], false], HOVER_COLOR,
+              ["match", ["to-string", ["get", "geoid"]], colorKeys,
+                ["get", ["to-string", ["get", "geoid"]], ["literal", values]],
                 "#000"
               ]
         		]
@@ -308,7 +309,7 @@ class ACS_Layer extends MapLayer {
     }
     const callback = values => {
       map.setPaintProperty(geolevel, "fill-extrusion-height",
-        ["get", ["to-string", ["get", property]], ["literal", values]]
+        ["get", ["to-string", ["get", "geoid"]], ["literal", values]]
       );
     }
     const animateIf = () => threeD;
@@ -417,20 +418,17 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     "blockgroup": new Animator({ baseValue: "#fff" })
   },
 
-  // onHover: {
-  //   layers: ['counties', 'cousubs', 'tracts', 'blockgroup'],
-  //   // dataFunc: function(features, point, lngLat, layerName) {
-  //   // 	// DO SOME STUFF
-  //   // }
-  // },
+  onHover: {
+    layers: ['counties', 'cousubs', 'tracts', 'blockgroup'],
+    // dataFunc: function(features, point, lngLat, layerName) {
+    // 	// DO SOME STUFF
+    // }
+  },
 
   popover: {
     layers: ["counties", "cousubs", "tracts", "blockgroup"],
     dataFunc: function(topFeature, features) {
       let geoid = get(topFeature, ["properties", "geoid"], "");
-      if (!geoid) {
-        geoid = get(topFeature, ["properties", "GEOID"], "");
-      }
 
       const data = [];
 
@@ -566,29 +564,35 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   },
 
   sources: [
+    // { id: "the-one-tile",
+    //   source: {
+    //     type: "vector",
+    //     url: "mapbox://am3081.9rcqae8k"
+    //   }
+    // }
     { id: "counties",
       source: {
         'type': "vector",
-        'url': 'mapbox://am3081.1ggw4eku'
+        'url': 'mapbox://am3081.a8ndgl5n'
       },
     },
     { id: "cousubs",
       source: {
         'type': "vector",
-        'url': 'mapbox://am3081.dlnvkxdi'
+        'url': 'mapbox://am3081.36lr7sic'
       },
     },
     { id: "tracts",
       source: {
         'type': "vector",
-        'url': 'mapbox://am3081.92hcxki8'
+        'url': 'mapbox://am3081.2x2v9z60'
       },
     },
     {
       id: "blockgroup",
       source: {
           'type': "vector",
-          'url': 'mapbox://am3081.02eswc9t'
+          'url': 'mapbox://am3081.52dbm7po'
       }
     }
   ],
@@ -615,9 +619,9 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     {
       id: "blockgroup",
       source: "blockgroup",
-      'source-layer': "tl_2017_36_bg",
+      'source-layer': "blockgroups",
       'type': 'fill-extrusion',
-      filter : ['in', 'GEOID', 'none']
+      filter : ['in', 'geoid', 'none']
     }
   ],
 })
