@@ -25,6 +25,7 @@ const BASE_CONFIG = [
             title: 'Population by County',
             orientation: 'vertical',
             marginLeft: 225,
+            groupBy: 'geoid',
             censusKeys: [
               'B01003_001E'
               // 'B15003_002E...B15003_025E',
