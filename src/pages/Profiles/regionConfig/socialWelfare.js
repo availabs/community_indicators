@@ -42,8 +42,23 @@ const BASE_CONFIG = [
          h:3
       }
    },
-    
 
+   {
+            type: 'CensusBarChart',
+            title:'Poverty Rate',
+            sumType: 'pct',
+            censusKeys:["B17001_002E"],
+            divisorKey: "B17001_001E",
+            orientation: 'vertical',
+            marginLeft: 225,
+            groupBy: 'geoid',
+            layout:{
+         w:12,
+         h:12,
+         x:0,
+        },
+    
+    },
   {      
       type:"CensusStatBox",
       title:'Veterans',
