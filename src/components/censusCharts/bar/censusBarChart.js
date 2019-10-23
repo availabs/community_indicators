@@ -50,24 +50,79 @@ class CensusBarChart extends React.Component {
     animation: false,
     groupMode: "grouped",
     groupBy: "censusKeys",
+    divisorKeys: [],
     censusKeyLabels: {},
     showOptions: true,
     sorted: false
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
-        ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys],
+        ['acs', this.props.allGeoids, this.props.years,
+          [...this.props.censusKeys, ...this.props.divisorKeys]
+        ],
         ["geo", this.props.allGeoids, "name"],
-        ["acs", "meta", this.props.censusKeys, "label"]
+        ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
     )
   }
   processDataForViewing() {
+  const fmt = format(this.props.yFormat),
+    getKeyName = key => key in this.props.censusKeyLabels ?
+      this.props.censusKeyLabels[key] :
+      getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
+
+    if (this.props.divisorKeys.length && this.props.groupBy === "geoids") {
+      const data = [],
+        keys = ["geoid", "name", "year"];
+
+      this.props.censusKeys.forEach((k, i) => {
+        keys.push(`census key ${ i + 1 }`, `census label ${ i + 1 }`);
+      })
+
+      keys.push("sum")
+
+      this.props.divisorKeys.forEach((k, i) => {
+        keys.push(`divisor key ${ i + 1 }`, `divisor label ${ i + 1 }`);
+      })
+
+      keys.push("divisor", "value");
+
+      for (const geoid of this.props.allGeoids) {
+        const row = { geoid };
+        row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
+        row.year = get(this.props, ["years", 0], 2017);
+
+        this.props.censusKeys.forEach((k, i) => {
+          row[`census key ${ i + 1 }`] = k;
+          row[`census label ${ i + 1 }`] = getKeyName(k);
+        })
+        row["sum"] = this.props.censusKeys.reduce((a, c) => {
+          const value = get(this.props.acsGraph, [geoid, row.year, c], -666666666)
+          if (value !== -666666666) {
+            a += value;
+          }
+          return a;
+        }, 0)
+
+        this.props.divisorKeys.forEach((k, i) => {
+          row[`divisor key ${ i + 1 }`] = k;
+          row[`divisor label ${ i + 1 }`] = getKeyName(k);
+        })
+        row["divisor"] = this.props.divisorKeys.reduce((a, c) => {
+          const value = get(this.props.acsGraph, [geoid, row.year, c], -666666666)
+          if (value !== -666666666) {
+            a += value;
+          }
+          return a;
+        }, 0)
+
+        row["value"] = row["sum"] / (row["divisor"] === 0 ? 1 : row["divisor"]);
+
+        data.push(row);
+      }
+      return { data, keys };
+    }
     const data = [],
-      keys = ["geoid", "name", "year", "census key", "census label", "value"],
-      fmt = format(this.props.yFormat),
-      getKeyName = key => key in this.props.censusKeyLabels ?
-        this.props.censusKeyLabels[key] :
-        getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
+      keys = ["geoid", "name", "year", "census key", "census label", "value"]
 
     for (const key of this.props.censusKeys) {
       for (const geoid of this.props.allGeoids) {
@@ -76,7 +131,7 @@ class CensusBarChart extends React.Component {
         row.year = get(this.props, ["years", 0], 2017);
         row["census key"] = key;
         row["census label"] = getKeyName(key);
-        row.value = (get(this.props.acsGraph, [geoid, row.year, key], 0));
+        row.value = (get(this.props.acsGraph, [geoid, row.year, key], -666666666));
 
         data.push(row);
       }
@@ -96,6 +151,7 @@ class CensusBarChart extends React.Component {
 
     const getIdName = key => this.props.groupBy === "geoids" ?
       (
+        this.props.divisorKeys.length ? "Value" :
         key in this.props.censusKeyLabels ?
         this.props.censusKeyLabels[key] :
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
@@ -108,6 +164,15 @@ class CensusBarChart extends React.Component {
         this.props.censusKeyLabels[key] :
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
       )
+      : get(this.props.geoGraph, [key, "name"], key);
+
+    const getLabel = key => this.props.groupBy === "censusKeys" ?
+      (
+        key in this.props.censusKeyLabels ?
+        this.props.censusKeyLabels[key] :
+        getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
+      )
+      // : this.props.divisorKeys.length ? "Value"
       : get(this.props.geoGraph, [key, "name"], key);
 
     return (
@@ -126,6 +191,7 @@ class CensusBarChart extends React.Component {
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
                 censusKeys: [...this.props.censusKeys],
+                divisorKeys: [...this.props.divisorKeys],
                 groupBy: this.props.groupBy,
                 groupMode: this.props.groupMode,
                 title: this.props.title,
@@ -140,7 +206,7 @@ class CensusBarChart extends React.Component {
         </div>
         <div style={ { height: "calc(100% - 30px)"} }>
           <ResponsiveBar indexBy={ "id" }
-            keys={ this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.censusKeys }
+            keys={ this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.divisorKeys.length ? ["value"] : this.props.censusKeys }
             data={ this.props.barData }
             margin={ {
               right: this.props.marginRight,
@@ -157,7 +223,7 @@ class CensusBarChart extends React.Component {
                 <Tooltip id={ getIdName(id) }
                   value={ fmt(value) }
                   color={ color }
-                  label={ getKeyName(indexValue) }/>
+                  label={ getLabel(indexValue) }/>
               )
             }
             axisLeft={ {
@@ -193,7 +259,7 @@ const groupByCensusKeys = (state, props) =>
       [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
         .reduce((aa, cc, ii) => {
           const year = get(props, "years[0]", 2017),
-            value = +get(state, ["graph", "acs", cc, year, c], 0);
+            value = +get(state, ["graph", "acs", cc, year, c], -666666666);
           if (value !== -666666666) {
             aa[cc] = value;
             ++aa.num;
@@ -207,17 +273,43 @@ const groupByCensusKeys = (state, props) =>
 const groupByGeoids = (state, props) =>
   [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
     .reduce((a, c) => {
-      a.push(
-        props.censusKeys.reduce((aa, cc, ii) => {
+      const divisorKeys = get(props, "divisorKeys", []);
+      if (divisorKeys.length) {
+        const value = props.censusKeys.reduce((aa, cc, ii) => {
           const year = get(props, "years[0]", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
           if (value !== -666666666) {
-            aa[cc] = value;
-            ++aa.num;
+            aa += value;
           }
           return aa;
-        }, { id: c, num: 0 })
-      )
+        }, 0)
+        const divisor = props.divisorKeys.reduce((aa, cc, ii) => {
+          const year = get(props, "years[0]", 2017),
+            value = +get(state, ["graph", "acs", c, year, cc], 0);
+          if (value !== -666666666) {
+            aa += value;
+          }
+          return aa;
+        }, 0)
+        a.push({
+          id: c,
+          value: divisor === 0 ? value : value / divisor,
+          num: 1
+        })
+      }
+      else {
+        a.push(
+          props.censusKeys.reduce((aa, cc, ii) => {
+            const year = get(props, "years[0]", 2017),
+              value = +get(state, ["graph", "acs", c, year, cc], 0);
+            if (value !== -666666666) {
+              aa[cc] = value;
+              ++aa.num;
+            }
+            return aa;
+          }, { id: c, num: 0 })
+        )
+      }
       return a;
     }, [])
     .filter(d => d.num > 0);

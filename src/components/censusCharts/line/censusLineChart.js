@@ -118,7 +118,6 @@ class CensusLineChart extends React.Component {
             this.props.divisorKeys.length ? "Value" :
             key in this.props.censusKeyLabels ? this.props.censusKeyLabels[key] :
             getCensusKeyLabel(key, this.props.acs, this.props.removeLeading);
-console.log("THEME:", this.props);
         return(
             <div style={{height: '100%'}}>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>

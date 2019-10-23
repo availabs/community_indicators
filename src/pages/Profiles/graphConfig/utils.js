@@ -1,5 +1,3 @@
-import { color as d3color } from "d3-color";
-
 import CENSUS_CONFIG from "./censusConfig"
 
 const DEFAULT_LAYOUT = {
@@ -87,11 +85,15 @@ export const configLoader = BASE_CONFIG => {
       config.censusKeys = [config.censusKey];
     }
 
-    if (config.censusKeys) {
+    if (config["censusKeys"]) {
       config.censusKeys = expandKeys(config.censusKeys);
     }
-    if (config.divisorKey) {
+    if (config["divisorKey"]) {
       config.divisorKeys = [config.divisorKey];
+    }
+
+    if (config["divisorKeys"] && !config["yFormat"]) {
+      config.yFormat = ",.1%";
     }
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)

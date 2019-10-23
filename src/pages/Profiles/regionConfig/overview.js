@@ -21,27 +21,24 @@ const BASE_CONFIG = [
    },
 
     {
-            type: 'CensusBarChart',
-            title: 'Population by County',
-            orientation: 'vertical',
-            marginLeft: 225,
-            censusKeys: [
-              'B01003_001E'
-              // 'B15003_002E...B15003_025E',
-            ],
-            layout:{
-         w:12,
-         h:12,
-         x:0,
-        },
-
+      type: 'CensusBarChart',
+      title: 'Population by County',
+      censusKeys: ['B01003_001E'],
+      groupBy: "geoids"
     },
 
+    {
+      title: "Poverty Rates by County",
+      type: "CensusBarChart",
+      censusKeys: ["B17001_002E"],
+      divisorKeys: ["B17001_001E"],
+      groupBy: "geoids"
+    }
 
-   
 
-   
-   
+
+
+
 
 
 
