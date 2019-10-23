@@ -35,6 +35,13 @@ const BASE_CONFIG = [
       }
    },
 
+   {
+      title:'Percent Health Coverage',
+      type: "CensusBarChart",
+      censusKeys:["B18135_001E"],
+      divisorKey: "B01003_001E",
+      groupBy: "geoids"
+    },
 
 ]
 

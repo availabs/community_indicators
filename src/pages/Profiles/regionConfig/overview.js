@@ -27,16 +27,6 @@ const BASE_CONFIG = [
       groupBy: "geoids"
     },
 
-    {
-      title: "Poverty Rates by County",
-      type: "CensusBarChart",
-      censusKeys: ["B17001_002E"],
-      divisorKeys: ["B17001_001E"],
-      groupBy: "geoids"
-    }
-
-
-
 
 
 

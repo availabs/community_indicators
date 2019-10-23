@@ -34,6 +34,14 @@ const BASE_CONFIG = [
       }
    },
 
+   {
+      title:'Bike/Ped as a Percent of Total Commuters',
+      type: "CensusBarChart",
+      censusKeys:["B08006_014E", "B08006_015E"],
+      divisorKey: "B23025_001E",
+      groupBy: "geoids"
+    },
+
   {
       type:"CensusStatBox",
       title:'Total Public Transportation ',
@@ -61,6 +69,14 @@ const BASE_CONFIG = [
          h:3
       }
    },
+
+   {
+      title:'Public Transportation as a Percent of Total Commuters',
+      type: "CensusBarChart",
+      censusKeys:["B08006_008E"],
+      divisorKey: "B23025_001E",
+      groupBy: "geoids"
+    },
 ]
 
 export default configLoader(BASE_CONFIG);

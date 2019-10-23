@@ -39,6 +39,14 @@ const BASE_CONFIG = [
       }
    },
 
+       {
+      title: "Percent of Population with No High School Diploma or Equivalent",
+      type: "CensusBarChart",
+      censusKeys: ['B15003_002E...B15003_016E'],
+      divisorKeys: ['B01003_001E'],
+      groupBy: "geoids"
+    },
+
    {
       type:"CensusStatBox",
       title: "Total High School Diploma or Equivalent and No College",
@@ -126,6 +134,14 @@ const BASE_CONFIG = [
          h:3,
       }
    },
+
+    {
+      title:"Percent Ages 3-4 Enrolled in School",
+      type: "CensusBarChart",
+      censusKeys: ['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
+      divisorKeys: ['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ],
+      groupBy: "geoids"
+    },
 ]
 
 export default configLoader(BASE_CONFIG);
