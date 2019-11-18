@@ -11,7 +11,7 @@ const BASE_CONFIG = [
           type: "TextBox",
           header: "HEALTH",
           body: "This section takes a population-based approach to our region's health by exploring access to health care, and will one day include indicators measuring the prevalence of selected diseases, mortality rates and behavioral health.",
-          layout: { 
+          layout: {
             h: 3,
             w: 12
              }
@@ -21,8 +21,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Covered by Health Insurance',
       censusKeys:["B27001_001E"],
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
@@ -35,15 +34,14 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B27001_001E"],
       divisorKey: "B01003_001E",
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
          w:6,
          h:3
       }
-   },      
+   },
   {
     type: "CensusBarChart",
     title: "Age by Disability Status by Health Insurance Coverage Status",
@@ -65,7 +63,7 @@ const BASE_CONFIG = [
       ]
     },
 
-    
+
 ]
 
 export default configLoader(BASE_CONFIG);

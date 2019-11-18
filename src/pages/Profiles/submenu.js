@@ -57,7 +57,7 @@ export default
             "name": "Green Island town",
             "path": "/profile/3600130532"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       },
       {
         "name": "Columbia County",
@@ -139,7 +139,7 @@ export default
             "name": "New Lebanon town",
             "path": "/profile/3602150452"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       },
       {
         "name": "Greene County",
@@ -201,7 +201,7 @@ export default
             "name": "Athens town",
             "path": "/profile/3603902913"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       },
       {
         "name": "Rensselaer County",
@@ -271,7 +271,7 @@ export default
             "name": "Petersburgh town",
             "path": "/profile/3608357441"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       },
       {
         "name": "Saratoga County",
@@ -361,7 +361,7 @@ export default
             "name": "Northumberland town",
             "path": "/profile/3609153737"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       },
       {
         "name": "Schenectady County",
@@ -391,7 +391,7 @@ export default
             "name": "Niskayuna town",
             "path": "/profile/3609351264"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       },
       {
         "name": "Warren County",
@@ -445,7 +445,7 @@ export default
             "name": "Hague town",
             "path": "/profile/3611331335"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       },
       {
         "name": "Washington County",
@@ -519,7 +519,7 @@ export default
             "name": "Hampton town",
             "path": "/profile/3611531885"
           }
-        ]
+        ].sort((a, b) => a.name < b.name ? -1 : 1)
       }
     ]
 

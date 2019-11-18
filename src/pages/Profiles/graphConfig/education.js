@@ -7,12 +7,12 @@ import {
 const year = 2017;
 
 const BASE_CONFIG = [
-        
+
       {
           type: "TextBox",
           header: "EDUCATION",
           body: "Education is key to preparing children for success as adults and for ensuring the economic and civic vitality of our region. ",
-          layout: { 
+          layout: {
             h: 3,
             w: 12
              }
@@ -22,9 +22,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title: "Total With No High School Diploma or Equivalent",
       censusKeys:['B15003_002E...B15003_016E'],
-      amount:true,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
@@ -41,9 +39,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       censusKeys:['B15003_002E...B15003_016E'],
       divisorKeys:['B01003_001E'],
-      amount:true,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       layout:{
          w:6,
          h:4,
@@ -104,8 +100,7 @@ const BASE_CONFIG = [
       title: "Total Ages 5-19 Not Enrolled in School",
       censusKeys:["B14003_023E", "B14003_024E", "B14003_025E", "B14003_026E", "B14003_051E", "B14003_052E", "B14003_053E","B14003_054E"],
       amount:true,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
@@ -121,15 +116,14 @@ const BASE_CONFIG = [
       sumType: 'pct',
       valueSuffix: '%',
       maximumFractionDigits: 1,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       layout:{
          w:6,
          h:3,
       }
    },
 
-        
+
         {
           type: 'CensusStackedBarChart',
           broadCensusKey: 'B14003',
@@ -164,65 +158,6 @@ const BASE_CONFIG = [
             'Ages 35 and over, not enrolled in school'
           ]
         },
-   //  {
-   //      id:'26',
-   //      type:'CensusStackedBarChart',
-   //      censusKey:['B14003'],
-   //      schoolEnrollmentAge:true,
-   //      colorRange:[],
-   //      layout:{
-   //          static: true,
-   //          h:17,
-   //          w:12,
-   //          x:0,
-   //          y:14
-   //      }
-   //  },
-   //  {
-   //      id:'27',
-   //      type:'CensusStackedBarChart',
-   //      censusKey:['B14003'],
-   //      schoolEnrollmentAge:true,
-   //      colorRange:[],
-   //      layout:{
-   //          static: true,
-   //          h:17,
-   //          w:9,
-   //          x:0,
-   //          y:31
-   //      }
-   //  },
-   //  {
-   //    title: "Test",
-   //    "type": "CensusStatBox",
-   //    "censusKey": "B15003_002E",
-   //    amount: true,
-   //    "layout": {
-   //       "w":2,
-   //       "h":12
-   //    }
-   // },
-   // {
-   //    "id":"11",
-   //    "type":"CensusMultiStackedLineChart",
-   //    "censusKey":[
-   //       "B15003"
-   //    ],
-   //    "colorRange":[
-   //
-   //    ],
-   //    "education":true,
-   //    "layout":{
-   //       "w":10,
-   //       "h":13,
-   //       "x":2,
-   //       "y":44,
-   //       "i":"11"
-   //    },
-   //    "geoid":[
-   //       "36001"
-   //    ]
-   // },
 
         {
           title: "Median Earnings by Sex by Educational Attainment Ages 25 and Over",

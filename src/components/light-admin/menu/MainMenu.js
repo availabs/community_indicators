@@ -20,8 +20,8 @@ class MainMenu extends Component {
     super(props);
     this.menuMouseOut = this.menuMouseOut.bind(this)
     this.renderMenus = this.renderMenus.bind(this)
-  }  
-  
+  }
+
   renderMenus (menus) {
     return menus
       .filter(menu => {
@@ -32,9 +32,9 @@ class MainMenu extends Component {
           return (!menu.auth || this.props.authed);
       })
       .map((menu, index) => {
-          //console.log('menu',menu)
+console.log('<MainMenu>',menu)
         let topMenu = menu.path ? menu.path.split('/')[1] : ''
-        let currentTop = this.props.path ? this.props.path.split('/')[1] : ' ' 
+        let currentTop = this.props.path ? this.props.path.split('/')[1] : ' '
         let isActive = topMenu === currentTop
           ? 'active'
           : ''
@@ -52,11 +52,11 @@ class MainMenu extends Component {
                     <div className = "icon-w" >
                       <i className = { (menu.class ? menu.class : 'os-icon') + ' ' + menu.icon}/>
                     </div>
-                    <span > {menu.name} {menu.name === 'Profiles' && this.props.activeGeoid ? <GeoName geoid={this.props.activeGeoid} /> : ''}</span>
+                    <span > {menu.name} {menu.name === 'Community Profiles' && this.props.activeGeoid ? <GeoName geoid={this.props.activeGeoid} /> : ''}</span>
                 </Link>
               </li>
             )
-        
+
         }
       if(menu.subMenus){
           return (
@@ -72,9 +72,9 @@ class MainMenu extends Component {
                     <div className="os-icon os-icon-layers"></div>
                   </div>
                   <span>
-                    {menu.name} 
-                    {menu.name === 'Profiles' && this.props.activeGeoid ? (': ') : ''} 
-                    {menu.name === 'Profiles' && this.props.activeGeoid ? (<GeoName style={{display:'inline'}} geoids={[this.props.activeGeoid]} />) : ''}
+                    {menu.name}
+                    {menu.name === 'Community Profiles' && this.props.activeGeoid ? (': ') : ''}
+                    {menu.name === 'Community Profiles' && this.props.activeGeoid ? (<GeoName style={{display:'inline'}} geoids={[this.props.activeGeoid]} />) : ''}
                   </span>
                 </Link>
                 <div className="sub-menu-w">
@@ -106,7 +106,8 @@ class MainMenu extends Component {
                                   {item.children.map((subItem,cindex) =>{
                                       return (
                                           <li key={cindex}>
-                                          <Link to={subItem.path}>{subItem.name}</Link>
+                                          <Link style={ { padding: "8px 10px" } }
+                                            to={subItem.path}>{subItem.name}</Link>
                                           </li>
                                   );
                                   })
@@ -126,14 +127,14 @@ class MainMenu extends Component {
       }
     })
   }
-  
+
   menuMouseOver (event) {
     event.target.closest('.top-menu-tab').classList.add('active');
   }
 
   menuMouseOut (event) {
     if (
-      (!event.relatedTarget 
+      (!event.relatedTarget
       || !event.relatedTarget.closest('ul')
       || event.relatedTarget.closest('ul').id.indexOf('subMenu') === -1|| event.relatedTarget.closest('ul').id.indexOf('subItem') === -1)
       && event.target.closest('.top-menu-tab').getAttribute('name') !== this.props.path
@@ -145,25 +146,25 @@ class MainMenu extends Component {
   render () {
     return (
       <ul className="main-menu">
-        {this.renderMenus(this.props.menus)} 
+        {this.renderMenus(this.props.menus)}
         {/*
         <li
           key = {'menuItem_search'}
           id = {'menuItem_search'}
-          className = {`top-menu-tab`}        
+          className = {`top-menu-tab`}
         >
           <a href='#' style={{display: 'inline'}}>
-            <span style={{display: 'inline'}} >Compare</span> 
-          </a> 
-         
+            <span style={{display: 'inline'}} >Compare</span>
+          </a>
+
         </li>
         <li
           key = {'menuItem_search'}
           id = {'menuItem_search'}
-          className = {`top-menu-tab`}        
+          className = {`top-menu-tab`}
         >
-          <TopSearch /> 
-         
+          <TopSearch />
+
         </li>
          */}
       </ul>

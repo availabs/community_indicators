@@ -4,16 +4,13 @@ import {
   femaleColor
 } from "../graphConfig/utils"
 
-const year = 2017;
-
 const BASE_CONFIG = [
  {
       type:"CensusStatBox",
       title:'Total Bike/Ped ',
       censusKeys:["B08006_014E", "B08006_015E"],
       amount:true,
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
@@ -46,8 +43,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Total Public Transportation ',
       censusKeys:["B08006_008E"],
-      compareYear: year - 1,
-      year,      
+      showCompareYear: true,
       amount:true,
       maximumFractionDigits: 1,
       layout:{

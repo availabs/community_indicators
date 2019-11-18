@@ -13,6 +13,8 @@ import OptionsModal from "components/censusCharts/OptionsModal"
 
 import GRAPH_CONFIG from './graphConfig'
 
+import Sidebar from "./Sidebar"
+
 import styled from "styled-components"
 import get from "lodash.get"
 
@@ -54,6 +56,7 @@ const Href = styled.a`
   right: 20px;
 `
 
+const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
 
 const GetFooter = ({ type, value }) =>
   type === "header" ? <Header>{ value }</Header> :
@@ -80,6 +83,12 @@ class Profile extends React.Component{
       super(props);
       this.renderCategory = this.renderCategory.bind(this);
       this.searchNav = this.searchNav.bind(this);
+
+      this.state = {
+        year: 2017,
+        compareYear: 2016,
+        compareGeoid: null
+      }
   }
 
   fetchFalcorDeps() {
@@ -112,7 +121,17 @@ class Profile extends React.Component{
                               graphs={
                                 configData.filter(d =>
                                   (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
-                                )
+                                ).map(d => {
+                                  const data = {
+                                    ...d,
+                                    year: this.state.year,
+                                    years: YEARS
+                                  };
+                                  if (data.showCompareYear) {
+                                    data.compareYear = this.state.compareYear;
+                                  }
+                                  return data;
+                                })
                               }
                               geoid={ this.props.geoid }
                               compareGeoid={ this.props.compareGeoid }
@@ -144,20 +163,36 @@ class Profile extends React.Component{
       }
     }
 
-    render(){
+    setCompareGeoid(compareGeoid) {
+      if (compareGeoid === null) {
+        this.props.history.push(`/profile/${this.props.geoid}`)
+      }
+      else {
+        this.props.history.push(`/profile/${this.props.geoid}/compare/${compareGeoid}`)
+      }
+    }
+
+    render() {
         const categories = Object.keys(GRAPH_CONFIG).map(category =>
             this.renderCategory(category, GRAPH_CONFIG[category])
         )
+console.log("PROFILE COMPARE GEOID:", this.props.compareGeoid)
         return (
             <div>
-                <ProfileHeader geoids={[this.props.geoid]} />
+                <ProfileHeader geoids={ [this.props.geoid] } { ...this.state } years={ YEARS }/>
                 <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
                     <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
+                        <Sidebar { ...this.state } years={ YEARS }
+                          geoid={ this.props.geoid }
+                          compareGeoid={ this.props.compareGeoid }
+                          setYear={ year => this.setState({ year }) }
+                          setCompareYear={ compareYear => this.setState({ compareYear }) }
+                          setCompareGeoid={ compareGeoid => this.setCompareGeoid(compareGeoid)}/>
                         <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
 
-                            <li className="nav-item" style={{flex: '1 1'}} key={ 'search' }>
+                            {/*<li className="nav-item" style={{flex: '1 1'}} key={ 'search' }>
                               <SearchCompare onChange={this.searchNav} compare={this.props.compareGeoid} />
-                            </li>
+                            </li>*/}
                             {
                                 Object.keys(GRAPH_CONFIG).map(category => {
                                     return (

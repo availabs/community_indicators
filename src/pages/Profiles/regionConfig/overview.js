@@ -4,19 +4,17 @@ import {
   femaleColor
 } from "../graphConfig/utils"
 
-const year = 2017;
-
 const BASE_CONFIG = [
 
    {
       type:"CensusStatBox",
       censusKeys:["B01003_001E"],
-      year,
-      compareYear: year - 1,
+      showCompareYear: true,
       title: "Population",
       layout:{
-         w:12,
-         h:3
+         w:4,
+         h:3,
+         x: 4
       }
    },
 

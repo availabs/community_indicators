@@ -30,7 +30,7 @@ class GraphHider extends React.Component{
 
     render () {
     	const { isVisible, Graph, graph, ...rest } = this.props
-    	return this.state.show ?
+    	return isVisible ?
 		    <Graph { ...rest } { ...graph } /> :
 		    <div>Loading...</div>
     }

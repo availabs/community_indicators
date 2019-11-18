@@ -171,7 +171,7 @@ export default class Typeahead extends Component {
     if (this.entry) {
       this.entry.focus();
     } else {
-      this.root.focus();
+      // this.root.focus();
     }
   }
 
@@ -206,7 +206,7 @@ export default class Typeahead extends Component {
     // return searchOptions(value, options);
 
 // THIS IS A BIT OF A HACK TO GET SEARCH WORKING
-    return options.reduce((a, c) => c.name.toString().toLowerCase().includes(value.toLowerCase()) ? a.concat(c) : a, [])
+    return options.reduce((a, c) => this.props.displayOption(c).toString().toLowerCase().includes(value.toLowerCase()) ? a.concat(c) : a, [])
   }
 
   focus() {

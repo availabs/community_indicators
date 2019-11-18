@@ -4,19 +4,17 @@ import {
   femaleColor
 } from "./utils"
 
-const year = 2017;
-
 const BASE_CONFIG = [
 
    {
       type:"CensusStatBox",
       censusKeys:["B01003_001E"],
-      year,
-      compareYear: year - 1,
+      showCompareYear: true,
+      yearPosition: "block",
       title: "Population",
       layout:{
          w:3,
-         h:3
+         h:6
       }
    },
    {
@@ -25,20 +23,27 @@ const BASE_CONFIG = [
       title: "Median Age",
       censusKeys:["B01002_001E"],
       maximumFractionDigits: 1,
-      year,
       demographics:true,
       layout:{
          w:3,
-         h:3
+         h:6,
+         x: 0
       }
    },
+     {
+       type: "CensusMap",
+       title: "Population",
+       censusKeys: ["B01003_001E"],
+       layout: {
+         h: 12,
+         w: 9
+       }
+     },
    {
       type:"CensusStatBox",
       title: "Median Household Income",
       valuePrefix:'$',
       censusKeys:["B19013_001E"],
-      amount:true,
-      year,
       layout:{
          w:3,
          h:9,
@@ -65,8 +70,7 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B17001_002E"],
       divisorKey: "B17001_001E",
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
@@ -93,7 +97,6 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B25002_003E"],
       divisorKey: 'B25002_001E',
-      year,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
@@ -104,7 +107,6 @@ const BASE_CONFIG = [
    },
    {
       title: "Vacant Housing Units",
-      year,
       type:"CensusStatBox",
       censusKeys:["B25002_003E"],
       layout:{
@@ -115,7 +117,6 @@ const BASE_CONFIG = [
    },
    {
       title: "Occupied Housing Units",
-      year,
       type:"CensusStatBox",
       censusKeys:["B25002_002E"],
       layout:{

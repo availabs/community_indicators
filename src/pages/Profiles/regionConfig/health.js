@@ -4,18 +4,15 @@ import {
   femaleColor
 } from "../graphConfig/utils"
 
-const year = 2017;
-
 const BASE_CONFIG = [
      {
       type:"CensusStatBox",
       title:'Covered by Health Insurance',
       censusKeys:["B18135_001E"],
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
-         w:12,
+         w:6,
          h:3
       }
    },
@@ -25,12 +22,11 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B18135_001E"],
       divisorKey: "B01003_001E",
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
-         w:12,
+         w:6,
          h:3
       }
    },

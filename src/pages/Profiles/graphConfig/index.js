@@ -16,7 +16,7 @@ const CONFIG = {
   Housing,
   Education,
   Health,
-  'SocialWelfare': SocialWelfare
+  'Social Welfare': SocialWelfare
 }
 
 export default (

@@ -131,7 +131,7 @@ class ACS_Layer extends MapLayer {
     .then(() => {
       this.mapActions.toggle.disabled = false;
       this.mapActions.reset.disabled = false;
-      map.easeTo({ pitch: 65, bearing: 45, duration: 3000 });
+      this.threeD && map.easeTo({ pitch: 65, bearing: 45, duration: 3000 });
     })
   }
   onRemove(map) {
@@ -382,7 +382,7 @@ const CENSUS_FILTER_CONFIG = [
     censusKeys: ['B20004_002E'],
     format: "$,d"
   },
-  
+
 
   { name: "Total Ages 5-19 Not Enrolled in School",
     censusKeys:["B14003_023E...B14003_026E", "B14003_051E...B14003_054E"],
@@ -408,7 +408,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   falcorCache: {},
   geoData: {},
 
-  threeD: true,
+  threeD: false,
 
   animator: new Animator(),
   colorAnimators: {
@@ -451,6 +451,11 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
         data.push([this.filters.census.value, format(value)])
       }
+      data.push({
+        type: "link",
+        link: "View Profile",
+        href: `/profile/${ geoid }`
+      })
 
       return data;
     }

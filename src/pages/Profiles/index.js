@@ -11,16 +11,31 @@ import GRAPH_CONFIG from './regionConfig'
 
 import OptionsModal from "components/censusCharts/OptionsModal"
 
+import Sidebar from "./Sidebar"
+
+const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]
   , [])
 
-const geoids = ['36001','36083','36093','36091','36039','36021','36115','36113']
+const REGIONS = {
+  "Capital Region": ['36001','36083','36093','36091'],
+  "Greater Capital Region": ['36001','36083','36093','36091','36039','36021','36115','36113']
+}
 
 class ReportIndex extends React.Component{
+
   state = {
-    graphConfig: GRAPH_CONFIG
+    year: 2017,
+    compareYear: 2016,
+    region: "Capital Region"
+  }
+
+  regionToggle() {
+    const region = this.state.region === "Capital Region" ? "Greater Capital Region" : "Capital Region";
+    this.setState({ region })
   }
 
   renderCategory(name, configData) {
@@ -40,7 +55,7 @@ class ReportIndex extends React.Component{
                               (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
                             )
                           }
-                          geoids={ ['36001','36083','36093','36091','36039','36021','36115','36113'] }
+                          geoids={ REGIONS[this.state.region] }
                           compareGeoid={ this.props.compareGeoid }
                           verticalCompact={false}
                         />
@@ -56,13 +71,17 @@ class ReportIndex extends React.Component{
         this.renderCategory(category, GRAPH_CONFIG[category])
       )
       return(
-          <div >
-            <ProfileHeader
-                title={`Greater Capital Region`}
-                geoids={['36001','36083','36093','36091','36039','36021','36115','36113']}
-            />
+          <div>
+            <ProfileHeader regionToggle={ () => this.regionToggle() }
+              title={ this.state.region }
+              geoids={ REGIONS[this.state.region] }/>
+
             <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
               <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
+                  <Sidebar { ...this.state } years={ YEARS }
+                    geoid={ this.props.geoid }
+                    setYear={ year => this.setState({ year }) }
+                    setCompareYear={ compareYear => this.setState({ compareYear }) }/>
                 <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
                   {
                     Object.keys(GRAPH_CONFIG).map(category => {
@@ -99,7 +118,7 @@ export default [
             scheme: 'color-scheme-dark',
             style: 'color-style-default'
         },
-        name: 'Profiles',
+        name: 'Community Profiles',
         auth:false,
         subMenus: subMenus,
         component: ReportIndex

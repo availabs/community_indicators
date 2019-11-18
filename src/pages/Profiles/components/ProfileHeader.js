@@ -30,13 +30,27 @@ let LandingHeader = styled.h1`
     font-size: 5em;
     font-weight: 500;
     font-family: "Proxima Nova W01";
-    line-height: 0.9;
+    line-height: 1.5em;
     text-shadow:-1px -1px 0 #446,
         1px -1px 0 #446,
        -1px 1px 0 #446,
        1px 1px 0 #446;
     text-align:center;
-    max-width: 800px;
+    margin-bottom: 10px;
+    padding: 0px 40px;
+    > span.fa {
+      display: none;
+      margin-right: 20px;
+    }
+    ${ props => props.canToggle ? `
+      cursor: pointer;
+      :hover {
+        background: rgba(0,0,0,0.3);
+        > span.fa {
+          display: inline-block;
+        }
+      }
+    ` : `` }
 `
 
 let StatContainer = styled.div`
@@ -48,7 +62,17 @@ let StatContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    > * {
+      width: 50%;
+    }
 `
+
+const StyledToggle = styled.div`
+`
+const RegionToggle = ({ title, toggle }) =>
+  <StyledToggle >
+    { title }
+  </StyledToggle>
 
 class ProfileHeader extends Component {
   HeaderLayer = HeaderLayerFactory();
@@ -64,10 +88,12 @@ class ProfileHeader extends Component {
                 <div>
                     <HeaderContainer >
                         <div style={{height: 400}}>
-                            <LandingHeader>
+                            <LandingHeader canToggle={ Boolean(this.props.regionToggle) }
+                              onClick={ Boolean(this.props.regionToggle) ? this.props.regionToggle : null }>
+                                <span className="fa fa-hand-o-up"/>
                                 {
+                                    this.props.title ?
                                     this.props.title
-                                    ? this.props.title
                                     : <GeoName geoids={this.props.geoids} />
                                 }
                             </LandingHeader>
@@ -75,37 +101,41 @@ class ProfileHeader extends Component {
                                 <StatContainer>
                                     <StatBox
                                         title={'Population'}
-                                        year={this.props.years.latest}
-                                        compareYear={this.props.years.latest-1}
+                                        year={ this.props.year }
+                                        compareYear={ this.props.compareYear }
                                         censusKeys={['B01003_001E']}
                                         geoids={this.props.geoids}
+                                        yearPosition="none"
                                     />
                                     <StatBox
                                         title={'Median Age'}
-                                        year={this.props.years.latest}
+                                        year={ this.props.year }
                                         censusKeys={['B01002_001E']}
                                         geoids={this.props.geoids}
                                         sumType='avg'
                                         maximumFractionDigits={1}
+                                        yearPosition="none"
                                     />
                                     <StatBox
                                         title={'Median Household Income'}
-                                        year={this.props.years.latest}
-                                        compareYear={this.props.years.latest-1}
+                                        year={ this.props.year }
+                                        compareYear={ this.props.compareYear }
                                         valuePrefix={'$'}
                                         censusKeys={['B19013_001E']}
                                         geoids={this.props.geoids}
                                         sumType='avg'
+                                        yearPosition="none"
                                                                             />
                                     <StatBox
                                         title={'Poverty Rate'}
-                                        year={this.props.years.latest}
-                                        compareYear={this.props.years.latest-1}
+                                        year={ this.props.year }
+                                        compareYear={ this.props.compareYear }
                                         censusKeys={['B17001_002E']}
                                         valueSuffix={'%'}
                                         maximumFractionDigits={1}
                                         sumType='pct'
                                         divisorKeys={['B17001_001E']}
+                                        yearPosition="none"
                                         geoids={this.props.geoids}
                                     />
 
@@ -136,8 +166,7 @@ class ProfileHeader extends Component {
 const mapStateToProps = state => {
     return {
         geoGraph: state.graph.geo,
-        router: state.router,
-        years: state.user.years
+        router: state.router
     };
 };
 

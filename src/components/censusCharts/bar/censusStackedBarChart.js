@@ -39,6 +39,7 @@ const Tooltip = ({ color, value, label, geoid }) =>
 class HorizontalBarChart extends React.Component {
   static defaultProps = {
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+    year: 2017,
     marginLeft: 100,
     showOptions: true
   }
@@ -58,8 +59,8 @@ class HorizontalBarChart extends React.Component {
     return this.props.labels.map((label, i) => {
       const bar = { label };
       this.props.allGeoids.forEach(geoid => {
-        bar[`left-${ geoid }`] = get(this.props.acsGraph, [geoid, this.state.year, leftVars[i]], 0) * -1
-        bar[`right-${ geoid }`] = get(this.props.acsGraph, [geoid, this.state.year, rightVars[i]], 0)
+        bar[`left-${ geoid }`] = get(this.props.acsGraph, [geoid, this.props.year, leftVars[i]], 0) * -1
+        bar[`right-${ geoid }`] = get(this.props.acsGraph, [geoid, this.props.year, rightVars[i]], 0)
       })
       return bar;
     })
@@ -69,8 +70,8 @@ class HorizontalBarChart extends React.Component {
       rightVars = this.props.right.keys;
     return this.props.labels.map((label, i) => ({
       label,
-      left: get(this.props.acsGraph, [this.props.geoids[0], this.state.year, leftVars[i]], 0) * -1,
-      right: get(this.props.acsGraph, [this.props.geoids[0], this.state.year, rightVars[i]], 0)
+      left: get(this.props.acsGraph, [this.props.geoids[0], this.props.year, leftVars[i]], 0) * -1,
+      right: get(this.props.acsGraph, [this.props.geoids[0], this.props.year, rightVars[i]], 0)
     }));
   }
   processDataForViewing() {
@@ -88,7 +89,7 @@ class HorizontalBarChart extends React.Component {
         const baseRow = {
           geoid,
           name: get(this.props.geoGraph, [geoid, "name"], geoid),
-          year: this.state.year
+          year: this.props.year
         }
 
         const row1 = { ...baseRow };
@@ -146,6 +147,7 @@ class HorizontalBarChart extends React.Component {
                 type: "CensusStackedBarChart",
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
+                year: this.props.year,
                 title: this.props.title,
                 marginLeft: this.props.marginLeft,
                 left: JSON.parse(JSON.stringify(this.props.left).replace(/[#]/g, "__HASH__")),
@@ -185,15 +187,17 @@ class HorizontalBarChart extends React.Component {
             <div style={ { width: "20px", height: "20px", margin: "0px 5px 0px 2.5px", background: getColors("right") } }/>
             { this.props.right.key }
           </div>
+          { /*
           <div style={ { width: "40%", fontSize: "15px", paddingRight: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end" } }>
-            <span style={ { marginRight: "10px" } }>Year: { this.state.year }</span>
+            <span style={ { marginRight: "10px" } }>Year: { this.props.year }</span>
             <input type="range"
               min={ this.props.years[0] }
               max={ this.props.years[this.props.years.length - 1] }
-              value={ this.state.year }
+              value={ this.props.year }
               onChange={ e => this.setState({ year: e.target.value }) }
               step="1"/>
           </div>
+          */ }
         </div>
       </div>
     )

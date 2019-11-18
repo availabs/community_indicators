@@ -13,13 +13,13 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B23025_005E"],
       divisorKey: "B23025_001E",
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
-         w:12,
-         h:3
+         w:4,
+         h:3,
+         x:4
       }
    },
 
@@ -37,13 +37,13 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B23025_007E"],
       divisorKey: "B23025_001E",
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
-         w:12,
-         h:3
+         w:4,
+         h:3,
+         x: 4
       }
    },
 

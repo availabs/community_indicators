@@ -1,24 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
-import {falcorGraph} from "store/falcorGraph";
-import TrackVisibility from 'react-on-screen';
+
 import get from 'lodash.get'
+import styled from "styled-components"
 
-class CensusStatBox extends React.Component{
-    constructor(props) {
-        super(props);
-        this.calculateValues = this.calculateValues.bind(this)
-    }
+const YearDiv = styled.div`
+  position: ${ props => props.position === "block" ? "static" : "absolute" };
+  text-align: ${ props => props.position === "block" ? "center" : "left" };
+  bottom: ${ props => props.position.includes("bottom") ? "10px" : "auto" };
+  left: ${ props => props.position.includes("left") ? "20px" : "auto" };
+  right: ${ props => props.position.includes("right") ? "20px" : "auto" };
+`
+
+class CensusStatBox extends React.Component {
     fetchFalcorDeps(){
-        const years = [this.props.year]
-        if (this.props.compareYear) {
-            years.push(this.props.compareYear)
-        }
-        const censusKeys = [...this.props.censusKeys, ...this.props.divisorKeys];
-
-        return falcorGraph.get(
-          ['acs', this.props.geoids, years, censusKeys]
+        return this.props.falcor.get(
+          ['acs', this.props.geoids, this.props.years,
+            [...this.props.censusKeys, ...this.props.divisorKeys]
+          ]
         )
     }
 
@@ -100,23 +100,29 @@ class CensusStatBox extends React.Component{
     render(){
         let displayData = this.calculateValues()
         return(
-            <div className='el-tablo' style={{padding: 10}}>
+          <div style={ { height: "100%", position: "relative" } }>
+            <div className='el-tablo' style={{padding: "10px", position: "relative"}}>
 
                 <div className='title' style={{fontSize: '1.2em', textAlign: 'center'}}>
                     {this.props.title}
                 </div>
-
                 <div className='value' style={{ textAlign: 'center', display: 'block'}}>
                     {this.props.valuePrefix}
                     {displayData.value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits})}
                     {this.props.valueSuffix}
                 </div>
                 {this.props.compareYear &&
-                    <div className='' style={{ textAlign: 'center'}}>
+                    <div style={{ textAlign: 'center'}}>
                         {Math.abs(displayData.change)}% {displayData.change >= 0 ? 'Growth' : 'Decline'}
                     </div>
                  }
             </div>
+            { this.props.compareYear && (this.props.yearPosition !== "none") &&
+              <YearDiv position={ this.props.yearPosition }>
+                 <b>{ this.props.year }</b> vs <b>{ this.props.compareYear }</b>
+              </YearDiv>
+            }
+          </div>
         )
 
     }
@@ -124,9 +130,12 @@ class CensusStatBox extends React.Component{
     static defaultProps = {
         censusKeys: [],
         geoids: [],
-        year:'2016',
+        years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+        year:'2017',
+        compareYear: null,
         maximumFractionDigits: 0,
-        divisorKeys: []
+        divisorKeys: [],
+        yearPosition: "bottom-left"
     }
 }
 

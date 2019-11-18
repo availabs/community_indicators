@@ -4,14 +4,12 @@ import {
   femaleColor
 } from "./utils"
 
-const year = 2017;
-
 const BASE_CONFIG = [
   {
           type: "TextBox",
           header: "ECONOMY",
           body: "The economic security of individuals and families is essential to achieving the values of American society. For complex reasons, this financial security is beyond the means of many in our community.",
-          layout: { 
+          layout: {
             h: 3,
             w: 12
              }
@@ -23,8 +21,7 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B23025_005E"],
       divisorKey: "B23025_001E",
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
@@ -39,8 +36,7 @@ const BASE_CONFIG = [
       sumType: 'pct',
       censusKeys:["B23025_007E"],
       divisorKey: "B23025_001E",
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
@@ -103,9 +99,7 @@ const BASE_CONFIG = [
       title: "Median Household Income, White",
       valuePrefix:'$',
       censusKeys:["B19013A_001E"],
-      amount:true,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -118,9 +112,7 @@ const BASE_CONFIG = [
       title: "Median Household Income, Black",
       valuePrefix:'$',
       censusKeys:["B19013B_001E"],
-      amount:true,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -133,9 +125,7 @@ const BASE_CONFIG = [
       title: "Median Household Income, Hispanic or Latino",
       valuePrefix:'$',
       censusKeys:["B19013I_001E"],
-      amount:true,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -148,9 +138,7 @@ const BASE_CONFIG = [
       title: "Median Household Income, Asian",
       valuePrefix:'$',
       censusKeys:["B19013D_001E"],
-      amount:true,
-       compareYear: year - 1,
-      year,
+      showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -167,7 +155,7 @@ const BASE_CONFIG = [
     censusKeyLabels: {
         "B19013A_001E": "White",
         "B19013B_001E": "Black or African American Alone",
-        "B19013C_001E": "American Indian and Alaska Native", 
+        "B19013C_001E": "American Indian and Alaska Native",
         "B19013D_001E": "Asian",
         "B19013E_001E": "Native Hawaiian and Other Pacific Islander",
         "B19013F_001E": "Some Other Race Alone",
@@ -200,7 +188,7 @@ const BASE_CONFIG = [
       subheader: "Data, Reports",
       body: "",
       link: "http://www.upstatecreative.org/",
-      layout: { 
+      layout: {
             h: 3,
             w: 12
              }
@@ -212,7 +200,7 @@ const BASE_CONFIG = [
       subheader: "Reports and Visualizations",
       body: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation.",
       link: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6",
-      layout: { 
+      layout: {
             h: 5,
             w: 12
              }

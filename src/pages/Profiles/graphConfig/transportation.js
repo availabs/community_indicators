@@ -4,20 +4,18 @@ import {
   femaleColor
 } from "./utils"
 
-const year = 2017;
-
 const BASE_CONFIG = [
   {
           type: "TextBox",
           header: "TRANSPORTATION",
           body: "This section provides indicators on how the labor force in our region commutes to work and on car ownership.",
-          layout: { 
+          layout: {
             h: 3,
             w: 12
              }
         },
 
-   
+
   {
     type: "CensusBarChart",
     title: "Means of Transportation to Work",
@@ -31,12 +29,12 @@ const BASE_CONFIG = [
       title:'Total Bike/Ped ',
       censusKeys:["B08006_014E", "B08006_015E"],
       amount:true,
-      compareYear: year - 1,
-      year,
+      showCompareYear: true,
+      yearPosition: "block",
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:3
+         h:4
       }
    },
   {
@@ -49,7 +47,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:3
+         h:4
       }
    },
 
@@ -57,13 +55,13 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Total Public Transportation ',
       censusKeys:["B08006_008E"],
-      compareYear: year - 1,
-      year,      
+      showCompareYear: true,
+      yearPosition: "block",
       amount:true,
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:3
+         h:4
       }
    },
 
@@ -77,7 +75,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:3
+         h:4
       }
    },
   {

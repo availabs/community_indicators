@@ -41,7 +41,8 @@ const Tooltip = ({ color, value, label, id, removeLeading }) =>
 
 class CensusBarChart extends React.Component {
   static defaultProps = {
-    years: [2017],
+    year: 2017,
+    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
     yFormat: ",d",
     axisBottom: true,
     marginLeft: 75,
@@ -63,6 +64,11 @@ class CensusBarChart extends React.Component {
         ["geo", this.props.allGeoids, "name"],
         ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
     )
+    .then(res => {
+if (this.props.title === "Language Spoken at Home by Ability to Speak English") {
+  console.log("RES:", res)
+}
+    })
   }
   processDataForViewing() {
   const fmt = format(this.props.yFormat),
@@ -89,7 +95,7 @@ class CensusBarChart extends React.Component {
       for (const geoid of this.props.allGeoids) {
         const row = { geoid };
         row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
-        row.year = get(this.props, ["years", 0], 2017);
+        row.year = get(this.props, "year", 2017);
 
         this.props.censusKeys.forEach((k, i) => {
           row[`census key ${ i + 1 }`] = k;
@@ -128,7 +134,7 @@ class CensusBarChart extends React.Component {
       for (const geoid of this.props.allGeoids) {
         const row = { geoid }
         row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
-        row.year = get(this.props, ["years", 0], 2017);
+        row.year = get(this.props, "year", 2017);
         row["census key"] = key;
         row["census label"] = getKeyName(key);
         row.value = (get(this.props.acsGraph, [geoid, row.year, key], -666666666));
@@ -175,6 +181,9 @@ class CensusBarChart extends React.Component {
       // : this.props.divisorKeys.length ? "Value"
       : get(this.props.geoGraph, [key, "name"], key);
 
+if (this.props.title === "Language Spoken at Home by Ability to Speak English") {
+  console.log("DATA:", this.props.barData)
+}
     return (
       <div style={ { width: "100%", height: "100%" } } id={ this.props.id }>
         <div style={ { height: "30px" } }>
@@ -188,6 +197,7 @@ class CensusBarChart extends React.Component {
               layout={ { ...this.props.layout } }
               embedProps={ {
                 type: "CensusBarChart",
+                year: this.props.year,
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
                 censusKeys: [...this.props.censusKeys],
@@ -258,7 +268,7 @@ const groupByCensusKeys = (state, props) =>
     a.push(
       [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
         .reduce((aa, cc, ii) => {
-          const year = get(props, "years[0]", 2017),
+          const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", cc, year, c], -666666666);
           if (value !== -666666666) {
             aa[cc] = value;
@@ -276,7 +286,7 @@ const groupByGeoids = (state, props) =>
       const divisorKeys = get(props, "divisorKeys", []);
       if (divisorKeys.length) {
         const value = props.censusKeys.reduce((aa, cc, ii) => {
-          const year = get(props, "years[0]", 2017),
+          const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
           if (value !== -666666666) {
             aa += value;
@@ -284,7 +294,7 @@ const groupByGeoids = (state, props) =>
           return aa;
         }, 0)
         const divisor = props.divisorKeys.reduce((aa, cc, ii) => {
-          const year = get(props, "years[0]", 2017),
+          const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
           if (value !== -666666666) {
             aa += value;
@@ -300,7 +310,7 @@ const groupByGeoids = (state, props) =>
       else {
         a.push(
           props.censusKeys.reduce((aa, cc, ii) => {
-            const year = get(props, "years[0]", 2017),
+            const year = get(props, "year", 2017),
               value = +get(state, ["graph", "acs", c, year, cc], 0);
             if (value !== -666666666) {
               aa[cc] = value;
