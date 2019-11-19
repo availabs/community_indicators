@@ -94,44 +94,70 @@ export const chunker = (values, request, options = {}) => {
   for (let n = 0; n < values.length; n += chunkSize) {
     requests.push(request.map(r => r === placeholder ? values.slice(n, n + chunkSize) : r));
   }
-
-  return requests;
+  return requests.length ? requests : [request];
 }
 export const falcorChunker = (values, request, options = {}) => {
   const {
     falcor = falcorGraph,
     ...rest
   } = options;
-
-  return chunker(values, request, rest).reduce((a, c) => a.then(() => falcor.get(c)), Promise.resolve());
+  return chunker(values, request, rest)
+    .reduce((a, c) => a.then(() => falcor.get(c)), Promise.resolve());
 }
 
-export const falcorChunkerWithUpdate = (...args) =>
-  falcorChunker(...args)
-    .then(() => store.dispatch(update(falcorGraph.getCache())));
+export const falcorChunkerWithUpdate = (values, request, options = {}) =>
+  falcorChunker(values, request, options)
+    .then(() => {
+      const {
+        falcor = falcorGraph
+      } = options;
+      store.dispatch(update(falcor.getCache()));
+    });
 
-export const falcorChunkerNice = (request, options = {}) => {
+const getArgs = args =>
+  args.reduce((a, c) => {
+    if (Array.isArray(c)) {
+      a[0].push(c);
+    }
+    else {
+      a[1] = c;
+    }
+    return a;
+  }, [[], {}])
+
+export const falcorChunkerNice = (...args) => {
+  const [requests, options] = getArgs(args);
   const {
     index = null,
     placeholder = "replace_me",
     ...rest
   } = options;
 
-  let values = [], found = false;
+  return requests.reduce((a, c) => {
+    return a.then(() => {
+      let values = [], found = false;
 
-  const replace = request.map((r, i) => {
-    if (Array.isArray(r) && !found && (index === null || index === i)) {
-      found = true;
-      values = r;
-      return placeholder;
-    }
-    return r;
-  })
-  return falcorChunker(values, replace, { ...rest, placeholder });
+      const replace = c.map((r, i) => {
+        if (Array.isArray(r) && !found && (index === null || index === i)) {
+          found = true;
+          values = r;
+          return placeholder;
+        }
+        return r;
+      })
+      return falcorChunker(values, replace, { ...rest, placeholder });
+    })
+  }, Promise.resolve())
 }
 export const falcorChunkerNiceWithUpdate = (...args) =>
   falcorChunkerNice(...args)
-    .then(() => store.dispatch(update(falcorGraph.getCache())));
+    .then(() => {
+      const [, options] = getArgs(args);
+      const {
+        falcor = falcorGraph
+      } = options;
+      store.dispatch(update(falcor.getCache()));
+    });
 
 window.addEventListener('beforeunload', function (e) {
   // var falcorCache = falcorGraph.getCache();

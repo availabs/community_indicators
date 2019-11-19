@@ -1,11 +1,16 @@
 import React from "react"
 
+import mapboxgl from "mapbox-gl"
+
 import AvlMap from "AvlMap"
 import MapLayer from "AvlMap/MapLayer"
 import { register, unregister } from "AvlMap/ReduxMiddleware"
 
 import { UPDATE as REDUX_UPDATE } from 'utils/redux-falcor'
 
+import Title from "../ComponentTitle"
+
+import deepequal from "deep-equal"
 import get from "lodash.get"
 import * as d3scale from "d3-scale"
 import { extent } from "d3-array";
@@ -16,32 +21,43 @@ import { fnum, fmoney } from "utils/sheldusUtils"
 import { falcorGraph, falcorChunkerNiceWithUpdate } from "store/falcorGraph";
 
 import { getColorRange } from "constants/color-ranges"
-const LEGEND_COLOR_RANGE = getColorRange(7, "Blues");
+const NUM_COLORS = 8;
+const LEGEND_COLOR_RANGE = getColorRange(NUM_COLORS, "Oranges").slice(0, NUM_COLORS - 1);
+
+// blues = ["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"]
+const BORDER_COLOR = "#2171b5"
+const HOVER_COLOR = "#6baed6";
 
 class CensusMap extends React.Component {
   censusLayer = LayerFactory(this.props);
-  componentDidUpdate(oldProps) {
-    if (oldProps.year !== this.props.year) {
-      AvlMap.doAction([this.props.id, "fetchLayerData", this.censusLayer.name])
-    }
-  }
   render() {
     return (
-      <div style={ { width: "100%", height: "100%" } }>
-        <AvlMap sidebar={ false }
-          id={ this.props.id }
-          layers={ [this.censusLayer] }
-          layerProps={ {
-            [this.censusLayer.name]: {
-              year: this.props.year
-            }
-          } }/>
+      <div style={ { width: "100%", height: "100%", overflow: "hidden", borderRadius: "4px" } }>
+        <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
+          <Title title={ this.props.title }/>
+        </div>
+        <div style={ { height: "calc(100% - 30px)", width: "100%" } }>
+          <AvlMap sidebar={ false }
+            id={ this.props.id }
+            layers={ [this.censusLayer] }
+            layerProps={ {
+              [this.censusLayer.name]: {
+                year: this.props.year,
+                geoids: this.props.geoids
+              }
+            } }/>
+        </div>
       </div>
     )
   }
 }
 
 export default CensusMap
+
+const COUNTIES = [
+  '36001', '36083', '36093', '36091',
+  '36039','36021','36115','36113'
+].sort((a, b) => +a - +b);
 
 class CensusLayer extends MapLayer {
   constructor(options) {
@@ -56,23 +72,99 @@ class CensusLayer extends MapLayer {
   onAdd() {
     register(this, REDUX_UPDATE, ["graph"]);
 
-    return this.fetchData();
+    return falcorChunkerNiceWithUpdate(
+      ["geo", COUNTIES, ["cousubs", "name"]]
+    )
+    .then(res => {
+      const cousubs = COUNTIES.reduce((a, c) => {
+        a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
+        return a;
+      }, [])
+      return falcorChunkerNiceWithUpdate(["geo", cousubs, "name"])
+    })
+    .then(() => this.fetchData());
   }
   onRemove(map) {
     unregister(this);
   }
+
   receiveMessage(action, data) {
     this.falcorCache = data;
   }
-  onPropsChange(oldProps, newProps) {
+
+	receiveProps(oldProps, newProps) {
     this.year = newProps.year;
-    this.doAction(["fetchData"]);
-  }
+    this.geoids = [...newProps.geoids];
+    this.zoomToBounds = this.zoomToBounds || !deepequal(oldProps.geoids, newProps.geoids);
+	}
+
   getGeoids() {
     return this.geoids.reduce((a, c) => {
       a.push(...get(this.falcorCache, ["geo", c, this.geolevel, "value"], []));
       return a;
     }, []);
+  }
+  resetView() {
+    if (!this.map) return;
+
+    const bounds = this.getBounds();
+
+    if (bounds.isEmpty()) return;
+
+    const options = {
+      padding: {
+        top: 50,
+        right: 400,
+        bottom: 50,
+        left: 10
+      },
+      bearing: 0,
+      pitch: 0,
+      offset: [0, 0]
+    }
+
+
+    const paddingOffset = [options.padding.left - options.padding.right, options.padding.top - options.padding.bottom],
+      lateralPadding = Math.min(options.padding.right, options.padding.left),
+      verticalPadding = Math.min(options.padding.top, options.padding.bottom);
+    options.offset = [options.offset[0] + paddingOffset[0], options.offset[1] + paddingOffset[1]];
+
+    const offset = new mapboxgl.Point(options.offset),
+      tr = this.map.transform,
+      nw = tr.project(bounds.getNorthWest()),
+      se = tr.project(bounds.getSouthEast()),
+      size = se.sub(nw);
+
+    const theta = options.bearing * (Math.PI / 180),
+    	W = size.x * Math.abs( Math.cos(theta) ) + size.y * Math.abs( Math.sin(theta) ),
+    	H = size.x * Math.abs( Math.sin(theta) ) + size.y * Math.abs( Math.cos(theta) ),
+
+    	scaleX = (tr.width - lateralPadding * 2 - Math.abs(offset.x) * 2) / W,
+    	scaleY = (tr.height - verticalPadding * 2 - Math.abs(offset.y) * 2) / H;
+
+    if (scaleY < 0 || scaleX < 0) {
+    	if (typeof console !== "undefined") console.warn('Map cannot fit within canvas with the given bounds, padding, and/or offset.');
+        return this;
+    }
+
+    options.center = tr.unproject(nw.add(se).div(2));
+    options.zoom = Math.min(tr.scaleZoom(tr.scale * Math.min(scaleX, scaleY)), tr.maxZoom);
+
+console.log("OPTIONS:", W, H, scaleX, scaleY, options)
+    this.map.easeTo(options);
+  }
+  getBounds(map = this.map) {
+    const regex = /BOX\((.+)\)/;
+    return this.geoids.reduce((a, c) => {
+      const b = get(this.falcorCache, ["geo", c, "boundingBox", "value"], ""),
+        match = regex.exec(b);
+      if (match) {
+        const split = match[1].split(","),
+          box = split.map(s => s.split(" "))
+        a.extend(box);
+      }
+      return a;
+    }, new mapboxgl.LngLatBounds())
   }
   fetchData() {
     const geolevel = this.geolevel,
@@ -99,17 +191,37 @@ class CensusLayer extends MapLayer {
 
     map.setFilter(this.geolevel, ["in", "geoid", ...geoids]);
 
+    const cousubs = this.geoids.reduce((a, c) => {
+      if (c.length === 5) {
+        const d = get(this.falcorCache, ["geo", c, "cousubs", "value"], []);
+        a.push(...d);
+      }
+      else if (c.length === 11) {
+        a.push(c);
+      }
+      return a;
+    }, [])
+    if (cousubs.length > 1) {
+      map.setFilter("cousubs-symbol", ["in", "geoid", ...cousubs]);
+      map.setFilter("cousubs-line", ["in", "geoid", ...cousubs]);
+      const nameMap = cousubs.reduce((a, c) => {
+        a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
+        return a;
+      }, {})
+      map.setLayoutProperty("cousubs-symbol", "text-field",
+        ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
+      )
+    }
+    else {
+      map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
+      map.setFilter("cousubs-line", ["in", "geoid", "none"]);
+    }
+
     if (this.zoomToBounds) {
-      for (const geoid of this.geoids) {
-        const b = get(this.falcorCache, ["geo", geoid, "boundingBox", "value"], ""),
-          regex = /BOX\((.+)\)/,
-          match = regex.exec(b);
-        if (match) {
-          const split = match[1].split(","),
-            box = split.map(s => s.split(" "))
-          map.fitBounds(box, { padding: { top: 50, right: 350, bottom: 50, left: 10 } });
-          this.zoomToBounds = false;
-        }
+      const bounds = this.getBounds();
+      if (!bounds.isEmpty()) {
+        map.fitBounds(bounds, { padding: { top: 50, right: 400, bottom: 50, left: 10 } });
+        this.zoomToBounds = false;
       }
     }
 
@@ -148,9 +260,7 @@ class CensusLayer extends MapLayer {
     })
     const colorKeys = Object.keys(colors);
 
-    const HOVER_COLOR = "#f16913";
-
-    map.setPaintProperty(this.geolevel, "fill-extrusion-color",
+    map.setPaintProperty(this.geolevel, "fill-color",
       ["case",
         ["boolean", ["feature-state", "hover"], false], HOVER_COLOR,
         ["match", ["to-string", ["get", "geoid"]], colorKeys,
@@ -184,7 +294,6 @@ const LayerFactory = props => {
     divisorKeys: props.divisorKeys || [],
 
     legend: {
-      title: props.title || "Legend",
       type: "quantile",
       domain: [],
       range: LEGEND_COLOR_RANGE,
@@ -192,39 +301,37 @@ const LayerFactory = props => {
     },
 
     popover: {
-      layers: ["counties", "cousubs", "tracts", "blockgroup"],
+      layers: ["blockgroup"],
       dataFunc: function(topFeature, features) {
         let geoid = get(topFeature, ["properties", "geoid"], "");
 
         const data = [];
 
-        let name = "";
-        if (geoid.length < 11) {
-          name = get(this.falcorCache, ["geo", geoid, "name"], geoid);
-        }
-        else if (geoid.length === 11) {
-          const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
-          name = county + " Tract";
-        }
-        else if (geoid.length === 12) {
-          const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
-          name = county + " Block Group";
-        }
-        if (name) data.push(name);
-
         const value = get(this.geoData, [geoid], null);
         if (value !== null) {
           const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
-          data.push([this.legend.title, format(value)])
+          data.push(["Value", format(value)])
         }
-        // data.push({
-        //   type: "link",
-        //   link: "View Profile",
-        //   href: `/profile/${ geoid }`
-        // })
 
         return data;
       }
+    },
+
+    mapActions: {
+      // reset: {
+      //   Icon: () => <span className="fa fa-2x fa-home"/>,
+      //   tooltip: "Reset View",
+      //   action: function() {
+      //     this.resetView();
+      //   }
+      // }
+      // test: {
+      //   tooltip: "Test iframe",
+      //   Icon: () => <span className="fa fa-2x fa-car"/>,
+      //   action: function() {
+      //     this.doAction(["toggleModal", "test"]);
+      //   }
+      // },
     },
 
     onHover: {
@@ -238,12 +345,12 @@ const LayerFactory = props => {
       //     'url': 'mapbox://am3081.a8ndgl5n'
       //   },
       // },
-      // { id: "cousubs",
-      //   source: {
-      //     'type': "vector",
-      //     'url': 'mapbox://am3081.36lr7sic'
-      //   },
-      // },
+      { id: "cousubs",
+        source: {
+          'type': "vector",
+          'url': 'mapbox://am3081.36lr7sic'
+        },
+      },
       // { id: "tracts",
       //   source: {
       //     'type': "vector",
@@ -263,27 +370,46 @@ const LayerFactory = props => {
       // { 'id': 'counties',
       //   'source': 'counties',
       //   'source-layer': 'counties',
-      //   'type': 'fill-extrusion',
-      //   filter : ['in', 'geoid', 'none']
-      // },
-      // { 'id': 'cousubs',
-      //   'source': 'cousubs',
-      //   'source-layer': 'cousubs',
-      //   'type': 'fill-extrusion',
+      //   'type': 'fill',
       //   filter : ['in', 'geoid', 'none']
       // },
       // { 'id': 'tracts',
       //   'source': 'tracts',
       //   'source-layer': 'tracts',
-      //   'type': 'fill-extrusion',
+      //   'type': 'fill',
       //   filter : ['in', 'geoid', 'none']
       // },
       {
         id: "blockgroup",
         source: "blockgroup",
         'source-layer': "blockgroups",
-        'type': 'fill-extrusion',
+        'type': 'fill',
         filter : ['in', 'geoid', 'none']
+      },
+      { 'id': 'cousubs-line',
+        'source': 'cousubs',
+        'source-layer': 'cousubs',
+        'type': 'line',
+        filter : ['in', 'geoid', 'none'],
+        paint: {
+          "line-color": BORDER_COLOR,
+          "line-width": 2
+        }
+      },
+      { 'id': 'cousubs-symbol',
+        'source': 'cousubs',
+        'source-layer': 'cousubs',
+        'type': 'symbol',
+        filter : ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          "text-allow-overlap": true,
+          "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
+        }
       }
     ]
   })
