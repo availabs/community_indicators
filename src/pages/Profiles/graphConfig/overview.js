@@ -73,6 +73,7 @@ const BASE_CONFIG = [
       showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
+      invertColors: true,
       layout:{
          w:2,
          h:9

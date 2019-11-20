@@ -144,7 +144,7 @@ class HorizontalBarChart extends React.Component {
               id={ this.props.id }
               layout={ { ...this.props.layout } }
               embedProps={ {
-                type: "CensusStackedBarChart",
+                type: this.props.type,
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
                 year: this.props.year,

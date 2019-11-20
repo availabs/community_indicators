@@ -136,6 +136,7 @@ class ProfileHeader extends Component {
                                         sumType='pct'
                                         divisorKeys={['B17001_001E']}
                                         yearPosition="none"
+                                        invertColors={ true }
                                         geoids={this.props.geoids}
                                     />
 

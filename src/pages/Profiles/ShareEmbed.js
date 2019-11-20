@@ -6,11 +6,13 @@ import get from "lodash.get";
 import CensusBarChart from "components/censusCharts/bar/censusBarChart"
 import CensusStackedBarChart from "components/censusCharts/bar/censusStackedBarChart"
 import CensusLineChart from "components/censusCharts/line/censusLineChart"
+import CensusMap from "components/censusCharts/map"
 
 const TYPES = {
   CensusBarChart,
   CensusStackedBarChart,
-  CensusLineChart
+  CensusLineChart,
+  CensusMap
 }
 const NotYetImplemented = ({ type }) =>
   <h1>{ type } NOT YET IMPLEMENTED</h1>

@@ -33,7 +33,7 @@ const DefaultLayout = ({component: Component, ...rest}) => {
   ) : (
     rest.useLayout === false ?
       <Route { ...rest } render={ matchProps => (
-        <div style={ { height: "100vh", paddingBottom: "20px" } }>
+        <div style={ { height: "100vh" } }>
           <Component {...matchProps} {...rest}/>
         </div>
       )}/>

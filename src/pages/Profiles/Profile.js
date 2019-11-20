@@ -176,7 +176,7 @@ class Profile extends React.Component{
         const categories = Object.keys(GRAPH_CONFIG).map(category =>
             this.renderCategory(category, GRAPH_CONFIG[category])
         )
-console.log("PROFILE COMPARE GEOID:", this.props.compareGeoid)
+// console.log("PROFILE COMPARE GEOID:", this.props.compareGeoid)
         return (
             <div>
                 <ProfileHeader geoids={ [this.props.geoid] } { ...this.state } years={ YEARS }/>

@@ -181,9 +181,6 @@ if (this.props.title === "Language Spoken at Home by Ability to Speak English") 
       // : this.props.divisorKeys.length ? "Value"
       : get(this.props.geoGraph, [key, "name"], key);
 
-if (this.props.title === "Language Spoken at Home by Ability to Speak English") {
-  console.log("DATA:", this.props.barData)
-}
     return (
       <div style={ { width: "100%", height: "100%" } } id={ this.props.id }>
         <div style={ { height: "30px" } }>
@@ -196,7 +193,7 @@ if (this.props.title === "Language Spoken at Home by Ability to Speak English") 
               id={ this.props.id }
               layout={ { ...this.props.layout } }
               embedProps={ {
-                type: "CensusBarChart",
+                type: this.props.type,
                 year: this.props.year,
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,

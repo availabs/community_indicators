@@ -24,6 +24,7 @@ const BASE_CONFIG = [
       censusKeys:['B15003_002E...B15003_016E'],
       showCompareYear: true,
       maximumFractionDigits: 1,
+      invertColors: true,
       layout:{
          w:6,
          h:4,
@@ -40,6 +41,7 @@ const BASE_CONFIG = [
       censusKeys:['B15003_002E...B15003_016E'],
       divisorKeys:['B01003_001E'],
       showCompareYear: true,
+      invertColors: true,
       layout:{
          w:6,
          h:4,
@@ -102,6 +104,7 @@ const BASE_CONFIG = [
       amount:true,
       showCompareYear: true,
       maximumFractionDigits: 1,
+      invertColors: true,
       layout:{
          w:6,
          h:3,

@@ -23,6 +23,7 @@ const BASE_CONFIG = [
       divisorKey: "B23025_001E",
       showCompareYear: true,
       valueSuffix: '%',
+      invertColors: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
@@ -37,6 +38,7 @@ const BASE_CONFIG = [
       censusKeys:["B23025_007E"],
       divisorKey: "B23025_001E",
       showCompareYear: true,
+      invertColors: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{

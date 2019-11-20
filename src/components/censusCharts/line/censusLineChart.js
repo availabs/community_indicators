@@ -128,7 +128,7 @@ class CensusLineChart extends React.Component {
                     id={ this.props.id }
                     layout={ { ...this.props.layout } }
                     embedProps={ {
-                      type: "CensusLineChart",
+                      type: this.props.type,
                       title: this.props.title,
                       geoids: [...this.props.geoids],
                       compareGeoid: this.props.compareGeoid,

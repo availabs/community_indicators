@@ -98,7 +98,10 @@ class CensusStatBox extends React.Component {
     }
 
     render(){
-        let displayData = this.calculateValues()
+        const displayData = this.calculateValues(),
+          growthColors = [this.props.increaseColor, this.props.decreaseColor];
+        this.props.invertColors && growthColors.reverse();
+        const growthColor = displayData.change ? growthColors[displayData.change >= 0 ? 0 : 1] : "currentColor";
         return(
           <div style={ { height: "100%", position: "relative" } }>
             <div className='el-tablo' style={{padding: "10px", position: "relative"}}>
@@ -106,13 +109,13 @@ class CensusStatBox extends React.Component {
                 <div className='title' style={{fontSize: '1.2em', textAlign: 'center'}}>
                     {this.props.title}
                 </div>
-                <div className='value' style={{ textAlign: 'center', display: 'block'}}>
+                <div className='value' style={{ textAlign: 'center', display: 'block', color: growthColor}}>
                     {this.props.valuePrefix}
                     {displayData.value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits})}
                     {this.props.valueSuffix}
                 </div>
                 {this.props.compareYear &&
-                    <div style={{ textAlign: 'center'}}>
+                    <div style={{ textAlign: 'center', color: growthColor}}>
                         {Math.abs(displayData.change)}% {displayData.change >= 0 ? 'Growth' : 'Decline'}
                     </div>
                  }
@@ -135,7 +138,10 @@ class CensusStatBox extends React.Component {
         compareYear: null,
         maximumFractionDigits: 0,
         divisorKeys: [],
-        yearPosition: "bottom-left"
+        yearPosition: "bottom-left",
+        increaseColor: "#090",
+        decreaseColor: "#900",
+        invertColors: false
     }
 }
 

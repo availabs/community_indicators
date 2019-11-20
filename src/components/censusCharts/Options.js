@@ -17,12 +17,13 @@ class Options extends React.Component {
   static defaultProps = {
     processDataForViewing: () => [],
     tableTitle: "",
-    layout: {}
+    layout: {},
+    saveImage: null
   }
   openModal(page) {
     this.props.openOptionsModal(page, this.props.tableTitle, {
       data: this.props.processDataForViewing(),
-      image: this.props.id,
+      image: this.props.saveImage || this.props.id,
       embed: { ...this.props.embedProps },
       layout: this.props.layout
     })
@@ -34,7 +35,8 @@ class Options extends React.Component {
       style={ {
         position: 'absolute',
         top: "3px", right: "10px",
-        zIndex: 999, margin: 0
+        zIndex: 999, margin: 0,
+        cursor: "pointer"
       } }>
        <ul className="nav nav-tabs smaller">
           <li className="nav-item" style={ { margin: 0 } }>

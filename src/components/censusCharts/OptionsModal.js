@@ -56,7 +56,8 @@ const mapStateToProps = state => ({
   image: state.options.image,
   embed: state.options.embed,
   layout: state.options.layout,
-  tableTitle: state.options.tableTitle
+  tableTitle: state.options.tableTitle,
+  saveImage: state.options.saveImage
 })
 const mapDispatchToProps = {
   setOptionsModalPage,
@@ -108,7 +109,7 @@ class ShareEmbedTab extends React.Component {
             value={ this.makeHTML() }
             className="form-control"
             style={ { cursor: "pointer" } }
-            readonly/>
+            readOnly/>
         </div>
         <div style={ { width: "25%", padding: "4px 2px", display: "flex", justifyContent: "flex-end" } }>
           <button className="btn btn-primary btn-block"
@@ -122,7 +123,7 @@ class ShareEmbedTab extends React.Component {
             value={ this.makeJSX() }
             className="form-control"
             style={ { cursor: "pointer" } }
-            readonly/>
+            readOnly/>
         </div>
         <div style={ { width: "25%", padding: "4px 2px", display: "flex", justifyContent: "flex-end" } }>
           <button className="btn btn-primary btn-block"
@@ -148,12 +149,16 @@ class SaveImageTab extends React.Component {
     this.setState({ fileName });
   }
   onSave() {
+    if (typeof this.props.image === "function") {
+      return this.props.image(`${ this.state.fileName }.png`);
+    }
     const svg = d3selection.select(`#${ this.props.image }`).select("svg").node(),
       options={ backgroundColor: "#fff" },
       fileName = `${ this.state.fileName }.png`;
     Boolean(svg) && saveSvgAsPng(svg, fileName, options);
   }
   render() {
+    const renderAnchor = (typeof this.props.image === "function");
     return (
       <div style={ { display: "flex" } }>
         <div style={ { width: "75%", padding: "4px 2px" } }>
@@ -166,11 +171,21 @@ class SaveImageTab extends React.Component {
             </div>
           </div>
         </div>
-        <div style={ { width: "25%", padding: "4px 2px", display: "flex", justifyContent: "flex-end" } }>
-          <button className="btn btn-primary btn-block"
-            onClick={ e => this.onSave() }>
-            <span className="fa fa-download mr-2"/>Save as .png
-          </button>
+        <div style={ { width: "25%", padding: "4px 2px", display: "flex" } }>
+          { renderAnchor ?
+              <a className="btn btn-primary btn-block"
+                download={ this.state.fileName }
+                href={ this.props.image() }>
+                <div style={ { display: "flex", justifyContent: "center", alignItems: "center", height: "100%" } }>
+                  <span className="fa fa-download mr-2"/>Save as .png
+                </div>
+              </a>
+            :
+              <button className="btn btn-primary btn-block"
+                onClick={ e => this.onSave() }>
+                <span className="fa fa-download mr-2"/>Save as .png
+              </button>
+          }
         </div>
       </div>
     )
