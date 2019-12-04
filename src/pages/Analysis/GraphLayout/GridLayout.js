@@ -42,15 +42,14 @@ class GridLayout extends React.Component {
 
     render() {
       return (
-        <div className='container'>
-          <ReactGridLayout
-            rowHeight={ 30 }
-            cols={ { lg: 12, md: 12, sm: 6, xs: 6, xxs: 6 } }>
+        <ReactGridLayout
+          rowHeight={ 30 }
+          breakpoints={ { lg: 1260, md: 1170, sm: 940, xs: 700, xxs: 520 } }
+          cols={ { lg: 12, md: 12, sm: 6, xs: 3, xxs: 3 } }>
 
-            { this.loadComps() }
+          { this.loadComps() }
 
-          </ReactGridLayout>
-        </div>
+        </ReactGridLayout>
       )
     }
 }

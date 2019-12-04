@@ -96,60 +96,39 @@ class Profile extends React.Component{
       .then(() => this.props.falcor.get(["geo", [this.props.geoid, this.props.compareGeoid].filter(Boolean), "name"]));
   }
 
-  renderCategory(name, configData) {
-        const profileHeader = configData.find(({ type }) => type === "ProfileHeader"),
-          profileFooter = configData.find(({ type }) => type === "ProfileFooter");
+  renderCategory(name, configData, i) {
         return (
             <Element name={name} key={ name }>
-                <div className='content-box'>
-                    <div className='element-wrapper'>
-                        <h4 className='element-header'>{ name.toUpperCase() }</h4>
-                          {
-                            !profileHeader ? null :
-                            <div classname='element-content' style={ { marginTop: "-0.9rem" } }>
-                              <div className="container">
-                                <ProfileFooter { ...profileHeader }/>
-                              </div>
-                            </div>
-                          }
-                        <div classname='element-content'>
-                            <GridLayout
-                              sideWidth={800}
-                              minifiedWidth={1}
-                              isOpen={1}
-                              title={''}
-                              graphs={
-                                configData.filter(d =>
-                                  (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
-                                ).map(d => {
-                                  const data = {
-                                    ...d,
-                                    year: this.state.year,
-                                    years: YEARS
-                                  };
-                                  if (data.showCompareYear) {
-                                    data.compareYear = this.state.compareYear;
-                                  }
-                                  return data;
-                                })
-                              }
-                              geoid={ this.props.geoid }
-                              compareGeoid={ this.props.compareGeoid }
-                              verticalCompact={false}
-                            />
-                        </div>
+                    <div className='element-wrapper'
+                      style={ { padding: 0, marginTop: 1 === 0 ? 0 : "20px" } }>
+                        <h4 className='element-header'
+                          style={ { marginBottom: "1rem" } }>
+                          { name.toUpperCase() }
+                        </h4>
                     </div>
-                    {
-                      !profileFooter ? null :
-                      <div className='element-wrapper'>
-                        <div classname='element-content'>
-                          <div className="container" style={ { marginTop: "-2rem" } }>
-                            <ProfileFooter { ...profileFooter }/>
-                          </div>
-                        </div>
-                      </div>
-                    }
-                </div>
+                    <GridLayout
+                      sideWidth={800}
+                      minifiedWidth={1}
+                      isOpen={1}
+                      title={''}
+                      graphs={
+                        configData.filter(d =>
+                          (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
+                        ).map(d => {
+                          const data = {
+                            ...d,
+                            year: this.state.year,
+                            years: YEARS
+                          };
+                          if (data.showCompareYear) {
+                            data.compareYear = this.state.compareYear;
+                          }
+                          return data;
+                        })
+                      }
+                      geoid={ this.props.geoid }
+                      compareGeoid={ this.props.compareGeoid }
+                      verticalCompact={false}/>
             </Element>
         )
     }
@@ -163,6 +142,14 @@ class Profile extends React.Component{
       }
     }
 
+    setGeoid(geoid) {
+      if (this.props.compareGeoid === null) {
+        this.props.history.push(`/profile/${ geoid }`)
+      }
+      else {
+        this.props.history.push(`/profile/${ geoid }/compare/${ this.props.compareGeoid }`)
+      }
+    }
     setCompareGeoid(compareGeoid) {
       if (compareGeoid === null) {
         this.props.history.push(`/profile/${this.props.geoid}`)
@@ -173,17 +160,18 @@ class Profile extends React.Component{
     }
 
     render() {
-        const categories = Object.keys(GRAPH_CONFIG).map(category =>
-            this.renderCategory(category, GRAPH_CONFIG[category])
+        const categories = Object.keys(GRAPH_CONFIG).map((category, i) =>
+            this.renderCategory(category, GRAPH_CONFIG[category], i)
         )
 // console.log("PROFILE COMPARE GEOID:", this.props.compareGeoid)
         return (
             <div>
                 <ProfileHeader geoids={ [this.props.geoid] } { ...this.state } years={ YEARS }/>
-                <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
+                <div className='content-w' style={{ width: '100%', marginTop: '95vh', position: 'relative', zIndex: 4}}>
                     <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
                         <Sidebar { ...this.state } years={ YEARS }
                           geoid={ this.props.geoid }
+                          setGeoid={ geoid => this.setGeoid(geoid) }
                           compareGeoid={ this.props.compareGeoid }
                           setYear={ year => this.setState({ year }) }
                           setCompareYear={ compareYear => this.setState({ compareYear }) }

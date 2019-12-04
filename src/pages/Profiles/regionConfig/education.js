@@ -5,6 +5,20 @@ import {
 } from "../graphConfig/utils"
 
 const BASE_CONFIG = [
+
+  {
+      type: 'CensusPieChart',
+      title: 'Educational Attainment',
+      censusKeys: [
+        'B15003_016E...B15003_025E'
+        // 'B15003_002E...B15003_025E',
+      ],
+      piesPerRow: 4,
+      legendWidth: 260,
+      layout: {
+        h: 12
+      }
+  },
      {
       type:"CensusStatBox",
       title: "Total With No High School Diploma or Equivalent",

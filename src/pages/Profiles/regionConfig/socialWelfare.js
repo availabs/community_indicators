@@ -95,6 +95,7 @@ const BASE_CONFIG = [
           {
       title: "Percent of Households with Children Under Age 18 that Received Supplemental Security Income (SSI), Cash Public Assistance Income, or Food Stamps/SNAP",
       type: "CensusBarChart",
+      marginTop: 35,
       censusKeys: ["B09010_002E"],
       divisorKeys: ["B09010_001E"],
       groupBy: "geoids",

@@ -41,29 +41,42 @@ class ReportIndex extends React.Component{
   renderCategory(name, configData) {
       return (
         <Element name={name} key={ name }>
-            <div className='content-box'>
-                <div className='element-wrapper'>
-                    <h4 className='element-header'>{ name.toUpperCase() }</h4>
-                    <div classname='element-content'>
-                        <GridLayout
-                          sideWidth={800}
-                          minifiedWidth={1}
-                          isOpen={1}
-                          title={''}
-                          graphs={
-                            configData.filter(d =>
-                              (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
-                            )
-                          }
-                          geoids={ REGIONS[this.state.region] }
-                          compareGeoid={ this.props.compareGeoid }
-                          verticalCompact={false}
-                        />
-                    </div>
-                </div>
+            <div className='element-wrapper'
+              style={ { padding: 0, marginTop: 1 === 0 ? 0 : "20px" } }>
+                <h4 className='element-header'
+                  style={ { marginBottom: "1rem" } }>
+                  { name.toUpperCase() }
+                </h4>
             </div>
+            <GridLayout
+              sideWidth={800}
+              minifiedWidth={1}
+              isOpen={1}
+              title={''}
+              graphs={
+                configData.filter(d =>
+                  (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
+                ).map(d => {
+                  const data = {
+                    ...d,
+                    year: this.state.year,
+                    years: YEARS
+                  };
+                  if (data.showCompareYear) {
+                    data.compareYear = this.state.compareYear;
+                  }
+                  return data;
+                })
+              }
+              geoids={ REGIONS[this.state.region] }
+              verticalCompact={false}
+            />
         </Element>
       )
+    }
+
+    setGeoid(geoid) {
+      this.props.history.push(`/profile/${ geoid }`)
     }
 
   render() {
@@ -79,9 +92,11 @@ class ReportIndex extends React.Component{
             <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
               <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
                   <Sidebar { ...this.state } years={ YEARS }
-                    geoid={ this.props.geoid }
+                    setGeoid={ geoid => this.setGeoid(geoid) }
                     setYear={ year => this.setState({ year }) }
-                    setCompareYear={ compareYear => this.setState({ compareYear }) }/>
+                    setCompareYear={ compareYear => this.setState({ compareYear }) }
+                    region={ this.state.region }
+                    regionToggle={ () => this.regionToggle() }/>
                 <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
                   {
                     Object.keys(GRAPH_CONFIG).map(category => {

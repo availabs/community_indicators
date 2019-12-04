@@ -7,35 +7,29 @@ import Health from "./health"
 import Transportation from "./transportation"
 
 let ID = 0;
-const getId = () => `id-${ ++ID }`;
+const getId = () => `region-${ ++ID }`;
 
 const CONFIG = {
   Overview,
-  'Social Welfare': SocialWelfare,
-  Education,
   Economy,
-  Health,
+  Transportation,
   Housing,
-    Transportation,
-  
-  
-  
-  
+  Education,
+  Health,
+  'Social Welfare': SocialWelfare,
 }
 
-export default (
-  () => Object.keys(CONFIG).reduce((a, k) => ({
-    ...a,
-    [k]: CONFIG[k].map(c => {
-      const id = getId();
-      return {
-        ...c,
-        id,
-        layout: {
-          ...c.layout,
-          i: id
-        }
+export default Object.keys(CONFIG).reduce((a, k) => ({
+  ...a,
+  [k]: CONFIG[k].map(c => {
+    const id = getId();
+    return {
+      ...c,
+      id,
+      layout: {
+        ...c.layout,
+        i: id
       }
-    })
-  }), {})
-)()
+    }
+  })
+}), {})

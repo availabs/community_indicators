@@ -7,7 +7,7 @@ import Health from "./health"
 import Transportation from "./transportation"
 
 let ID = 0;
-const getId = () => `id-${ ++ID }`;
+const getId = () => `profile-${ ++ID }`;
 
 const CONFIG = {
   Overview,
@@ -19,19 +19,17 @@ const CONFIG = {
   'Social Welfare': SocialWelfare
 }
 
-export default (
-  () => Object.keys(CONFIG).reduce((a, k) => ({
-    ...a,
-    [k]: CONFIG[k].map(c => {
-      const id = getId();
-      return {
-        ...c,
-        id,
-        layout: {
-          ...c.layout,
-          i: id
-        }
+export default Object.keys(CONFIG).reduce((a, k) => ({
+  ...a,
+  [k]: CONFIG[k].map(c => {
+    const id = getId();
+    return {
+      ...c,
+      id,
+      layout: {
+        ...c.layout,
+        i: id
       }
-    })
-  }), {})
-)()
+    }
+  })
+}), {})

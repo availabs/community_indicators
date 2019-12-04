@@ -18,6 +18,9 @@ import { register, unregister } from "AvlMap/ReduxMiddleware"
 
 import { fnum, fmoney } from "utils/sheldusUtils"
 
+// ORANGES: ["#feedde", "#fdd0a2", "#fdae6b", "#fd8d3c", "#f16913", "#d94801", "#8c2d04"]
+const HOVER_COLOR = "#f16913";
+
 const LEGEND_COLOR_RANGE = getColorRange(7, "Blues");
 
 const keyRegex = /\w{6}(\w?)_(\d{3})\w/
@@ -284,9 +287,6 @@ class ACS_Layer extends MapLayer {
     const filterAndPaint = prevMeta => {
       this.geoData = { ...this.geoData, ...valueMap };
 
-// ORANGES: ["#feedde", "#fdd0a2", "#fdae6b", "#fd8d3c", "#f16913", "#d94801", "#8c2d04"]
-      const HOVER_COLOR = "#f16913";
-
       const oldGeolevel = get(prevMeta, "geolevel", false);
       if (oldGeolevel && (oldGeolevel !== geolevel)) {
         map.setFilter(oldGeolevel, ["in", "none", "none"]);
@@ -427,6 +427,14 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
   popover: {
     layers: ["counties", "cousubs", "tracts", "blockgroup"],
+    setPinnedState: true,
+    onPinned: function(features, lngLat, point) {
+      const geoid = get(features, [0, "properties", "geoid"], null);
+      geoid && this.map && this.map.setFilter(`${ this.filters.geolevel.value }-line`, ["in", "geoid", geoid]);
+    },
+    onUnPinned: function() {
+      this.map && this.map.setFilter(`${ this.filters.geolevel.value }-line`, ["in", "geoid", "none"]);
+    },
     dataFunc: function(topFeature, features) {
       let geoid = get(topFeature, ["properties", "geoid"], "");
 
@@ -438,11 +446,11 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       }
       else if (geoid.length === 11) {
         const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
-        name = county + " Tract";
+        name = county + " Tract " + geoid.slice(5);
       }
       else if (geoid.length === 12) {
         const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
-        name = county + " Block Group";
+        name = county + " Block Group " + geoid.slice(5);
       }
       if (name) data.push(name);
 
@@ -478,7 +486,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       type: 'single',
       domain: [
         { name: "Counties", value: "counties" },
-        { name: "County Subdivisions", value: "cousubs" },
+        { name: "Municipalities", value: "cousubs" },
         { name: "Tracts", value: "tracts" },
         { name: "Block Groups", value: "blockgroup" }
       ],
@@ -627,6 +635,63 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       'source-layer': "blockgroups",
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
+    },
+
+    { 'id': 'counties-line',
+      'source': 'counties',
+      'source-layer': 'counties',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
+    },
+    { 'id': 'cousubs-line',
+      'source': 'cousubs',
+      'source-layer': 'cousubs',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
+    },
+    { 'id': 'tracts-line',
+      'source': 'tracts',
+      'source-layer': 'tracts',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
+    },
+    { 'id': 'blockgroup-line',
+      'source': 'blockgroup',
+      'source-layer': 'blockgroups',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
     }
   ],
 })

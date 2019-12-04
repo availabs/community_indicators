@@ -77,6 +77,10 @@ const BASE_CONFIG = [
       "65 years and over In labor force Employed",
       "65 years and over In labor force Unemployed",
       "65 years and over Not in labor force"
+    ],
+    description: [
+      "Testing CensusStackedBarChart descriptions!!!",
+      "Testing CensusStackedBarChart descriptions!!!"
     ]
   },
   {
@@ -84,7 +88,12 @@ const BASE_CONFIG = [
     title: "Employment Status for the Population 16 Years and Over",
     orientation: "horizontal",
     marginLeft: 250,
-    censusKeys: ["B23025_001E...B23025_007E"]
+    legendPosition: "bottom-right",
+    censusKeys: ["B23025_001E...B23025_007E"],
+    description: [
+      "Testing CensusBarChart descriptions!!!",
+      "Testing CensusBarChart descriptions!!!"
+    ]
   },
   {
     type: "CensusBarChart",

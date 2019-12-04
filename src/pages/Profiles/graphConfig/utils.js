@@ -84,12 +84,34 @@ export const configLoader = BASE_CONFIG => {
     if (config["censusKey"]) {
       config.censusKeys = [config.censusKey];
     }
+    if (config["divisorKey"]) {
+      config.divisorKeys = [config.divisorKey];
+    }
 
     if (config["censusKeys"]) {
       config.censusKeys = expandKeys(config.censusKeys);
     }
-    if (config["divisorKey"]) {
-      config.divisorKeys = [config.divisorKey];
+    if (config["divisorKeys"]) {
+      config.divisorKeys = expandKeys(config.divisorKeys);
+    }
+
+    if (config["censusKeys"]) {
+      config.censusKeysMoE = config.censusKeys.reduce((a, c) => {
+        const regex = /(.+)E$/;
+        if (regex.test(c)) {
+          a.push(c.replace(regex, (match, p1) => p1 + "M"))
+        }
+        return a;
+      }, [])
+    }
+    if (config["divisorKeys"]) {
+      config.divisorKeysMoE = config.divisorKeys.reduce((a, c) => {
+        const regex = /(.+)E$/;
+        if (regex.test(c)) {
+          a.push(c.replace(regex, (match, p1) => p1 + "M"))
+        }
+        return a;
+      }, [])
     }
 
     if (config["divisorKeys"] && !config["yFormat"]) {

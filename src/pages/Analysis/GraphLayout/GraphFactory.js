@@ -12,8 +12,6 @@ export default ({ graph, ...rest }) => {
 	)
 }
 
-
-
 class GraphHider extends React.Component{
     constructor(props) {
         super(props);

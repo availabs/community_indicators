@@ -9,7 +9,7 @@ const BASE_CONFIG = [
           type: "TextBox",
           header: "SOCIAL WELFARE",
           body: "This section covers issues related to fabric of our community",
-          layout: { 
+          layout: {
             h: 3,
             w: 12
              }
@@ -144,7 +144,7 @@ const BASE_CONFIG = [
         layout: { h: 18 }
     },
 
-   
+
     {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B21001',
@@ -171,10 +171,11 @@ const BASE_CONFIG = [
     },
 
         {
-        
+
       type: "CensusLineChart",
       title: "Receipt of Food Stamps/SNAP by Race",
       marginLeft: 75,
+      showCompare: false,
       censusKeys: [
         "B22005A_001E",
         "B22005B_001E",
@@ -199,7 +200,7 @@ const BASE_CONFIG = [
       }
     },
 
-    
+
 
       {
       type: "TextBox",
@@ -207,7 +208,7 @@ const BASE_CONFIG = [
       subheader: "Data Visualization",
       body: "Map of Food Insecure Areas (nearest grocery store is within 1 and 10 miles.",
       link: "https://map.feedingamerica.org/",
-      layout: { 
+      layout: {
             h: 3,
             w: 12
              }
@@ -219,7 +220,7 @@ const BASE_CONFIG = [
       subheader: "Data",
       body: "Information on OCFS regulated child care programs, which includes program overview information and violation history.",
       link: "https://data.ny.gov/Human-Services/Child-Care-Regulated-Programs/cb42-qumz/data",
-      layout: { 
+      layout: {
             h: 3,
             w: 12
              }
@@ -230,7 +231,7 @@ const BASE_CONFIG = [
       subheader: "Data Downloads and Report Publications" ,
       body: "Criminal justice data by county from New York State Division of Criminal Justice Services including Violent Crimes, Domestic Violence Victims, Arrests, Dispositions, Youth Justice Data, and more",
       link: "https://www.criminaljustice.ny.gov/crimnet/ojsa/stats.htm",
-      layout: { 
+      layout: {
             h: 3,
             w: 12
              }

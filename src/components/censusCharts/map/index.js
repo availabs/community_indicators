@@ -39,7 +39,9 @@ class CensusMap extends React.Component {
     divisorKeys: [],
     year: 2017,
     geoids: [],
-    format: ",d"
+    compareGeoid: null,
+    format: ",d",
+    description: ""
   }
   censusLayer = LayerFactory(this.props);
   processDataForViewing() {
@@ -143,6 +145,7 @@ class CensusMap extends React.Component {
                 type: this.props.type,
                 title: this.props.title,
                 geoids: [...this.props.geoids],
+                compareGeoid: this.props.compareGeoid,
                 censusKeys: [...this.props.censusKeys],
                 divisorKeys: [...this.props.divisorKeys],
                 format: this.props.format,
@@ -152,13 +155,17 @@ class CensusMap extends React.Component {
         </div>
         <div style={ { height: "calc(100% - 35px)", width: "100%" } }>
           <AvlMap sidebar={ false }
+            style={ "mapbox://styles/am3081/ck3971lrq00g71co3ud6ye42i" }
             preserveDrawingBuffer={ true }
             id={ this.props.id }
             layers={ [this.censusLayer] }
             layerProps={ {
               [this.censusLayer.name]: {
                 year: this.props.year,
-                geoids: this.props.geoids
+                geoids: [
+                  ...this.props.geoids,
+                  this.props.compareGeoid
+                ].filter(Boolean)
               }
             } }/>
         </div>
@@ -385,7 +392,10 @@ class CensusLayer extends MapLayer {
 
 const LayerFactory = props => {
   return new CensusLayer({
-    geoids: props.geoids || [],
+    geoids: [
+      ...props.geoids,
+      props.compareGeoid
+    ].filter(Boolean) || [],
     year: props.year || 2017,
     censusKeys: props.censusKeys || [],
     divisorKeys: props.divisorKeys || [],
