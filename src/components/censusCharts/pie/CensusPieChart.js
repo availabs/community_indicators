@@ -294,7 +294,7 @@ class CensusPieGraph extends React.Component {
           </svg>
           {
             !this.state.hoverData ? null :
-            <HoverComp style={ { top: `${ y + 10 }px`, left: `${ x + 10 }px` } }>
+            <HoverComp style={ { top: `${ y - 15 }px`, left: `${ x + 15 }px` } }>
               <div style={ {
                 width: "15px",
                 height: "15px",
@@ -355,4 +355,6 @@ const HoverComp = styled.div`
   padding: 5px 10px;
   background-color: #fff;
   display: flex;
+  border-radius: 4px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.25);
 `
