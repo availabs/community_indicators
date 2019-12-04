@@ -31,7 +31,6 @@ const BASE_CONFIG = [
       }
    },
      {
-       description: "Test description!!!",
        type: "CensusMap",
        title: "Population",
        censusKeys: ["B01003_001E"],
@@ -61,10 +60,6 @@ const BASE_CONFIG = [
       censusKeyLabels: {
         B19013_001E: "Median Household Income"
       },
-      description: [
-        "Testing descriptions for CensusLineChart!!!",
-        "Testing descriptions for CensusLineChart!!!"
-      ],
       layout:{
          w:9,
          h:9

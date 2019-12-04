@@ -57,8 +57,7 @@ const BASE_CONFIG = [
             censusKeys: [
               'B15003_016E...B15003_025E'
               // 'B15003_002E...B15003_025E',
-            ],
-            description: ["Testing", "Testing"]
+            ]
         },
 
           {
@@ -68,8 +67,7 @@ const BASE_CONFIG = [
               censusKeys: [
                 'B15003_016E...B15003_025E'
                 // 'B15003_002E...B15003_025E',
-              ],
-              description: ["Testing", "Testing"]
+              ]
           },
         {
           title: "Sex by School Enrollment by Level of School by Type of School",
