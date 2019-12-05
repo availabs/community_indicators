@@ -335,7 +335,7 @@ const getPieData = (state, props) =>
       pie: get(props, "censusKeys", []).reduce((a, c) => {
         const y = get(props, "year", 2017),
           v = +get(state, ["graph", "acs", g, y, c], -666666666),
-          regex = /(.+)E$/,
+          regex = /^(.+)E$/,
           M = c.replace(regex, (m, p1) => p1 + "M"),
           moe = +get(state, ["graph", "acs", g, y, M], "unknown");
         if (v !== -666666666) {

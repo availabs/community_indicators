@@ -87,7 +87,7 @@ class HorizontalBarChart extends React.Component {
   }
   processDataForViewing() {
     const data = [],
-      keys = ["geoid", "name", "year", "census key", "census label", "value"],
+      keys = ["geoid", "name", "year", "census key", "census label", "value", "moe"],
 
       leftKeys = this.props.left.keys,
       leftLabel = this.props.left.key,
@@ -107,12 +107,22 @@ class HorizontalBarChart extends React.Component {
         row1["census key"] = leftKeys[i];
         row1["census label"] = `${ label }, ${ leftLabel }`;
         row1.value = get(this.props.acsGraph, [geoid, baseRow.year, leftKeys[i]], 0);
+
+        const regex = /^(.+)E$/;
+
+        let M = leftKeys[i].replace(regex, (m, p1) => p1 + "M");
+        row1.moe = get(this.props, ["acsGraph", geoid, baseRow.year, M], "unknown");
+
         data.push(row1);
 
         const row2 = { ...baseRow };
         row2["census key"] = rightKeys[i];
         row2["census label"] = `${ label }, ${ rightLabel }`;
         row2.value = get(this.props.acsGraph, [geoid, baseRow.year, rightKeys[i]], 0);
+
+        M = rightKeys[i].replace(regex, (m, p1) => p1 + "M");
+        row2.moe = get(this.props, ["acsGraph", geoid, baseRow.year, M], "unknown");
+
         data.push(row2);
       }
     })

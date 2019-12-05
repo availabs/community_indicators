@@ -94,6 +94,11 @@ class CensusLineChart extends React.Component {
             row["divisor key"] = divisorKey;
             row["divisor label"] = getKeyName(divisorKey);
           }
+          else {
+            const regex = /^(.+)E$/,
+              M = key.replace(regex, (m, p1) => p1 + "M");
+            row.moe = +get(this.props, ["acs", geoid, year, M], "unknown");
+          }
           row.value = value;//yFormat(value);
 
           data.push(row);
@@ -109,6 +114,9 @@ class CensusLineChart extends React.Component {
         keys.push("divisor key", "divisor label");
       }
       keys.push("value");
+      if (this.props.sumType !== 'pct') {
+        keys.push("moe");
+      }
 
       return {
         data,

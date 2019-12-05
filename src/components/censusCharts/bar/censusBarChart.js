@@ -137,7 +137,7 @@ class CensusBarChart extends React.Component {
       return { data, keys };
     }
     const data = [],
-      keys = ["geoid", "name", "year", "census key", "census label", "value"]
+      keys = ["geoid", "name", "year", "census key", "census label", "value", "moe"]
 
     for (const key of this.props.censusKeys) {
       for (const geoid of this.props.allGeoids) {
@@ -147,6 +147,10 @@ class CensusBarChart extends React.Component {
         row["census key"] = key;
         row["census label"] = getKeyName(key);
         row.value = (get(this.props.acsGraph, [geoid, row.year, key], -666666666));
+
+        const regex = /^(.+)E$/,
+          M = key.replace(regex, (m, p1) => p1 + "M");
+        row.moe = get(this.props, ["acsGraph", geoid, row.year, M], "unknown");
 
         data.push(row);
       }
