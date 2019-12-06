@@ -106,8 +106,19 @@ class ACS_Layer extends MapLayer {
         a.push(...get(res, ["json", "geo", c, "cousubs"], []));
         return a;
       }, [])
+
+      map.setFilter('cousubs-labels', ["in", "geoid", ...cousubs])
+      map.setFilter('cousubs-outline', ["in", "geoid", ...cousubs])
+
       return falcorChunkerNiceWithUpdate(["geo", cousubs, "name"])
         .then(() => {
+          const nameMap = cousubs.reduce((a, c) => {
+            a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
+            return a;
+          }, {})
+          map.setLayoutProperty("cousubs-labels", "text-field",
+            ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
+          )
           const cache = falcorGraph.getCache();
           this.filters.area.domain = [
             ...COUNTIES,
@@ -197,6 +208,14 @@ class ACS_Layer extends MapLayer {
     }
     else if ((mapPitch !== 0) && !this.threeD) {
       this.map.easeTo({ pitch: 0, bearing: 0, duration: 2000 });
+    }
+    if (this.threeD) {
+      this.map.setLayoutProperty('cousubs-labels', "visibility", "none")
+      this.map.setLayoutProperty('cousubs-outline', "visibility", "none")
+    }
+    else {
+      this.map.setLayoutProperty('cousubs-labels', "visibility", "visible")
+      this.map.setLayoutProperty('cousubs-outline', "visibility", "visible")
     }
   }
   render(map) {
@@ -503,6 +522,18 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       type: "single",
       domain: CENSUS_FILTER_CONFIG,
       value: CENSUS_FILTER_CONFIG[DEFAULT_CONFIG_INDEX].value
+    },
+    opacity: {
+      name: "Opacity",
+      type: "slider",
+      value: 1,
+      min: 0,
+      max: 1,
+      onChange: function(oldValue, newValue) {
+        this.map && ['counties', 'cousubs', 'tracts', 'blockgroup'].forEach(l => {
+          this.map.setPaintProperty(l, "fill-extrusion-opacity", newValue)
+        })
+      }
     }
   },
 
@@ -637,6 +668,17 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       filter : ['in', 'geoid', 'none']
     },
 
+    { id: 'cousubs-outline',
+      source: 'cousubs',
+      'source-layer': 'cousubs',
+      type: 'line',
+      filter : ['in', 'geoid', 'none'],
+      paint: {
+        "line-color": "#b00",
+        "line-width": 1
+      }
+    },
+
     { 'id': 'counties-line',
       'source': 'counties',
       'source-layer': 'counties',
@@ -691,6 +733,20 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
           ["boolean", ["feature-state", "pinned"], false],
           1.0, 0.0
         ]
+      }
+    },
+
+    { id: 'cousubs-labels',
+      source: 'cousubs',
+      'source-layer': 'cousubs',
+      type: 'symbol',
+      filter : ['in', 'geoid', 'none'],
+      layout: {
+        "symbol-placement": "point",
+        "text-size": 12
+      },
+      paint: {
+        "text-color": "#000"
       }
     }
   ],
