@@ -111,23 +111,22 @@ console.log('<MainMenu>',menu)
                                   return (
                                       <StyledSubMenuLi key={ssindex}
                                         style={ { width: `${ 100 / menu.subMenus.length }%` } }>
-                                          <Link to={item.path}
-                                          >{item.name}</Link>
-                                      <ul
-                                  className ="sub-sub-menu"
-                                  key={'subItem_'+ ssindex}
-                                  id= {'subItem_'+ ssindex}
-                                  >
-                                  {item.children.map((subItem,cindex) =>{
-                                      return (
-                                          <li key={cindex}>
-                                          <Link style={ { padding: "8px 10px" } }
-                                            to={subItem.path}>{subItem.name}</Link>
-                                          </li>
-                                  );
-                                  })
-                                  }
-                                      </ul>
+                                          <Link to={item.path}>{item.name}</Link>
+                                          <ul
+                                            className ="sub-sub-menu"
+                                            key={'subItem_'+ ssindex}
+                                            id= {'subItem_'+ ssindex}
+                                            >
+                                            {item.children.map((subItem,cindex) =>{
+                                                return (
+                                                    <li key={cindex}>
+                                                    <Link style={ { padding: "8px 10px" } }
+                                                      to={subItem.path}>{subItem.name}</Link>
+                                                    </li>
+                                            );
+                                            })
+                                            }
+                                          </ul>
                                       </StyledSubMenuLi>
                                   );
                               })

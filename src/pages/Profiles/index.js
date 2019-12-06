@@ -25,17 +25,11 @@ const REGIONS = {
   "Greater Capital Region": ['36001','36083','36093','36091','36039','36021','36115','36113']
 }
 
-class ReportIndex extends React.Component{
+class Profile extends React.Component{
 
   state = {
     year: 2017,
-    compareYear: 2016,
-    region: "Capital Region"
-  }
-
-  regionToggle() {
-    const region = this.state.region === "Capital Region" ? "Greater Capital Region" : "Capital Region";
-    this.setState({ region })
+    compareYear: 2016
   }
 
   renderCategory(name, configData) {
@@ -68,7 +62,7 @@ class ReportIndex extends React.Component{
                   return data;
                 })
               }
-              geoids={ REGIONS[this.state.region] }
+              geoids={ REGIONS[this.props.region] }
               verticalCompact={false}
             />
         </Element>
@@ -85,18 +79,16 @@ class ReportIndex extends React.Component{
       )
       return(
           <div>
-            <ProfileHeader regionToggle={ () => this.regionToggle() }
-              title={ this.state.region }
-              geoids={ REGIONS[this.state.region] }/>
+            <ProfileHeader key={ this.props.region }
+              title={ this.props.region }
+              geoids={ REGIONS[this.props.region] }/>
 
             <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
               <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
                   <Sidebar { ...this.state } years={ YEARS }
                     setGeoid={ geoid => this.setGeoid(geoid) }
                     setYear={ year => this.setState({ year }) }
-                    setCompareYear={ compareYear => this.setState({ compareYear }) }
-                    region={ this.state.region }
-                    regionToggle={ () => this.regionToggle() }/>
+                    setCompareYear={ compareYear => this.setState({ compareYear }) }/>
                 <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
                   {
                     Object.keys(GRAPH_CONFIG).map(category => {
@@ -122,6 +114,9 @@ class ReportIndex extends React.Component{
   }
 }
 
+const Factory = region =>
+  ({ ...props }) => <Profile { ...props } region={ region }/>
+
 export default [
     {
         icon: 'os-icon-home',
@@ -133,10 +128,29 @@ export default [
             scheme: 'color-scheme-dark',
             style: 'color-style-default'
         },
-        name: 'Community Profiles',
+        name: 'Capital Region',
+        auth:false,
+        subMenus: [subMenus[0].filter(({ path }) =>
+          REGIONS['Capital Region'].reduce((a, c) =>
+            a || path.includes(c)
+          , false)
+        )],
+        component: Factory("Capital Region")
+    },
+    {
+        icon: 'os-icon-home',
+        path: '/profiles-greater',
+        mainNav: true,
+        exact: true,
+        menuSettings:{
+            image: 'none',
+            scheme: 'color-scheme-dark',
+            style: 'color-style-default'
+        },
+        name: 'Greater Capital Region',
         auth:false,
         subMenus: subMenus,
-        component: ReportIndex
+        component: Factory("Greater Capital Region")
     },
     ...Profiles,
     ShareEmbed
