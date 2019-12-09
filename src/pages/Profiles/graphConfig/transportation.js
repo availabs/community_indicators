@@ -21,8 +21,7 @@ const BASE_CONFIG = [
     title: "Means of Transportation to Work",
     censusKeys: ["B08006_002E...B08006_017E"],
     orientation: "horizontal",
-    marginLeft: 490,
-    marginRight: 30
+    marginLeft: 490
   },
    {
       type:"CensusStatBox",

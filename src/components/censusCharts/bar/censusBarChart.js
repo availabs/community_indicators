@@ -44,7 +44,6 @@ class CensusBarChart extends React.Component {
     year: 2017,
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
     yFormat: ",d",
-    axisBottom: true,
     marginLeft: 75,
     marginRight: 20,
     marginTop: 10,
@@ -59,10 +58,7 @@ class CensusBarChart extends React.Component {
     censusKeyLabels: {},
     showOptions: true,
     sorted: false,
-    legendPosition: null,
     showLegend: true,
-    description: "",
-    descriptionLines: 1,
     description: []
   }
 
@@ -220,8 +216,7 @@ class CensusBarChart extends React.Component {
                 id: this.props.id,
                 year: this.props.year,
                 geoids: [...this.props.geoids],
-                compareGeoid: this.props.compareGeoid,
-                axisBottom: this.props.axisBottom
+                compareGeoid: this.props.compareGeoid
               } }/>
           }
         </div>
@@ -233,7 +228,7 @@ class CensusBarChart extends React.Component {
               right: this.props.marginRight,
               top: showLegend ? (this.props.marginTop + 30) : this.props.marginTop,
               bottom: (this.props.axisBottom ? 30 : 20) + descriptionHeight,
-              left: this.props.marginLeft } }
+              left: 20 } }
             colors={ d => colors(d.id) }
             labelSkipWidth={ 100 }
             labelSkipHeight={ 12 }

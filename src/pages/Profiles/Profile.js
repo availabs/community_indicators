@@ -114,7 +114,8 @@ class Profile extends React.Component{
                       graphs={
                         configData.filter(d =>
                           (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
-                        ).map(d => {
+                        )
+                        .map(d => {
                           const data = {
                             ...d,
                             year: this.state.year,
