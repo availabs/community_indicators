@@ -13,7 +13,7 @@ const BASE_CONFIG = [
       title: "Population",
       layout:{
          w:4,
-         h:3,
+         h:4,
          x: 4
       }
    },

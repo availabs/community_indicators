@@ -121,7 +121,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:6,
-         h:3,
+         h:4,
       }
    },
 
@@ -136,7 +136,7 @@ const BASE_CONFIG = [
       showCompareYear: true,
       layout:{
          w:6,
-         h:3,
+         h:4,
       }
    },
 

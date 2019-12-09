@@ -18,7 +18,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:4,
-         h:3,
+         h:4,
          x: 4
       }
    },
@@ -40,7 +40,7 @@ const BASE_CONFIG = [
       title: "Total Households",
       layout:{
          w:6,
-         h:3
+         h:4
       }
    },
    {
@@ -52,7 +52,7 @@ const BASE_CONFIG = [
       title: "Households that Received Food Stamps/SNAP in the Past 12 Months",
       layout:{
          w:6,
-         h:3
+         h:4
       }
    },
 
@@ -113,7 +113,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:4,
-         h:3,
+         h:4,
          x: 4
       }
    },
