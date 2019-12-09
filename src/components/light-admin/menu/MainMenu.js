@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import GeoName from 'components/censusCharts/geoname'
 
+import styled from "styled-components"
+
 class TopSearch extends Component {
   render () {
     return (
@@ -12,6 +14,18 @@ class TopSearch extends Component {
   }
 }
 
+const StyledSubMenuLi = styled.li`
+  background-color: #fff;
+  > ul {
+    display: none;
+    > li:last-child {
+      padding-bottom: 10px;
+    }
+  }
+  :hover > ul {
+    display: block;
+  }
+`
 
 
 class MainMenu extends Component {
@@ -77,7 +91,7 @@ console.log('<MainMenu>',menu)
                     {menu.name === 'Community Profiles' && this.props.activeGeoid ? (<GeoName style={{display:'inline'}} geoids={[this.props.activeGeoid]} />) : ''}
                   </span>
                 </Link>
-                <div className="sub-menu-w">
+                <div className="sub-menu-w" style={ { backgroundColor: "transparent", boxShadow: "none" } }>
                   <div className="sub-menu-header">{menu.name}</div>
                     <div className="sub-menu-icon">
                       <i className="os-icon os-icon-window-content"/>
@@ -89,31 +103,31 @@ console.log('<MainMenu>',menu)
                       return (
                           <ul
                       className="sub-menu"
-                      style={{alignItems:'flex-start'}}
+                      style={{alignItems:'flex-start', width: "100%"}}
                       key={'subMenu_' + sindex}
                       id={'subMenu_' + index}
                           >
                           {subMenu.map((item, ssindex) => {
                                   return (
-                                      <li key={ssindex}>
-                                          <Link to={item.path}
-                                          >{item.name}</Link>
-                                      <ul
-                                  className ="sub-sub-menu"
-                                  key={'subItem_'+ ssindex}
-                                  id= {'subItem_'+ ssindex}
-                                  >
-                                  {item.children.map((subItem,cindex) =>{
-                                      return (
-                                          <li key={cindex}>
-                                          <Link style={ { padding: "8px 10px" } }
-                                            to={subItem.path}>{subItem.name}</Link>
-                                          </li>
-                                  );
-                                  })
-                                  }
-                                      </ul>
-                                      </li>
+                                      <StyledSubMenuLi key={ssindex}
+                                        style={ { width: `${ 100 / menu.subMenus.length }%` } }>
+                                          <Link to={item.path}>{item.name}</Link>
+                                          <ul
+                                            className ="sub-sub-menu"
+                                            key={'subItem_'+ ssindex}
+                                            id= {'subItem_'+ ssindex}
+                                            >
+                                            {item.children.map((subItem,cindex) =>{
+                                                return (
+                                                    <li key={cindex}>
+                                                    <Link style={ { padding: "8px 10px" } }
+                                                      to={subItem.path}>{subItem.name}</Link>
+                                                    </li>
+                                            );
+                                            })
+                                            }
+                                          </ul>
+                                      </StyledSubMenuLi>
                                   );
                               })
                           }

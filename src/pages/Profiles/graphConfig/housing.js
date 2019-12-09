@@ -23,17 +23,17 @@ const BASE_CONFIG = [
           type: "TextBox",
           header: "HOUSING",
           body: "Housing is an important asset to our region. Old and new developments offer a diverse mix of styles, materials and landscapes that make the region an attractive place to call home. ",
-          layout: { 
+          layout: {
             h: 3,
             w: 12
-             }
+          }
+
         },
 
   { "type": "CensusBarChart",
     "broadCensusKey": "B25087",
     orientation: 'horizontal',
     marginLeft: 280,
-    //axisBottom: false,
     "layout": {
       "h": 18
     }

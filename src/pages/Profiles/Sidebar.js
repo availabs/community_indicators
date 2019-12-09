@@ -3,6 +3,7 @@ import React from "react"
 import styled from "styled-components"
 
 import ItemSelector from "components/common/item-selector/item-selector"
+import { ArrowRight } from 'components/common/icons';
 
 import SubMenu from "./submenu"
 
@@ -22,63 +23,132 @@ const geoOptions = SubMenu[0].reduce((a, c) => {
   return a;
 }, [])
 
+const TRANSITION_TIME = 500;
+
 const SidebarContainer = styled.div`
   background-color: ${ props => props.theme.sidePanelBg };
   color: ${ props => props.theme.textColor };
-  width: 250px;
-  /*height: 75vh;*/
+  width: ${ props => props.width }px;
+  transition: width ${ TRANSITION_TIME }ms;
   left: 20px;
   top: 100px;
   position: absolute;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
-  padding: 15px;
 `
+ const ContentCollapser = styled.div`
+  overflow: ${ props => props.isOpen ? "visible" : "hidden" };
+ `
+ const Toggle = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: ${ props => props.theme.sideBarCloseBtnBgd };
+  transition: background-color 0.15s;
+  color: ${ props => props.theme.sideBarCloseBtnColor };
+  position: absolute;
+  right: -10px;
+  top: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(${ props => props.doRotate ? 180 : 0 }deg);
+  :hover {
+    background-color: ${ props => props.theme.sideBarCloseBtnBgdHover };
+  }
+ `
 
 class Sidebar extends React.Component {
+  timeout = null;
+  state = {
+    open: true,
+    transitioning: false
+  }
+  componentWillUnmount() {
+    clearTimeout(this.timeout);
+  }
+  toggle() {
+    this.setState({ open: !this.state.open, transitioning: true });
+    this.timeout = setTimeout(() => this.setState({ transitioning: false }), TRANSITION_TIME);
+  }
   render() {
     const years = this.props.years.slice().reverse();
     return (
-      <SidebarContainer>
-        <div>Current Year</div>
-        <div style={ { position: "relative" } }>
-          <ItemSelector
-            selectedItems={ this.props.year }
-            multiSelect={ false }
-            searchable={ false }
-            options={ years }
-            onChange={ year => this.props.setYear(year) }
-            displayOption={ d => d }
-            getOptionValue={ d => d }/>
-        </div>
+      <SidebarContainer width={ this.state.open ? 250 : 1 }>
+        <Toggle onClick={ () => this.toggle() }
+          doRotate={
+            (this.state.open && !this.state.transitioning) ||
+            (!this.state.open && this.state.transitioning)
+          }>
+          <ArrowRight height="12px"/>
+        </Toggle>
+        <ContentCollapser isOpen={ this.state.open && !this.state.transitioning }>
+          <div style={ { width: "250px", padding: "15px" } }>
 
-        <div style={ { marginTop: "10px" } }>Compare Year</div>
-        <div style={ { position: "relative" } }>
-          <ItemSelector
-            selectedItems={ this.props.compareYear }
-            multiSelect={ false }
-            searchable={ false }
-            options={ years }
-            onChange={ year => this.props.setCompareYear(year) }
-            displayOption={ d => d }
-            getOptionValue={ d => d }/>
-        </div>
+            { !this.props.regionToggle ? null :
+              <div style={ { marginBottom: "10px" } }>
+                <div>{ this.props.region }</div>
+                <button onClick={ this.props.regionToggle }
+                  className="btn btn-block btn-outline-dark">
+                  Toggle Region
+                </button>
+              </div>
+            }
 
-        { !this.props.setCompareGeoid ? null :
-          <>
-            <div style={ { marginTop: "10px" } }>Compare Geography</div>
+            <div>Geography</div>
             <div style={ { position: "relative" } }>
-              <ItemSelector erasable={ true }
-                selectedItems={ geoOptions.reduce((a, c) => c.value === this.props.compareGeoid ? c : a, null) }
-                placeholder="Select a geography..."
+              <ItemSelector
+                placeholder="Select an geography..."
+                selectedItems={ geoOptions.reduce((a, c) => c.value === this.props.geoid ? c : a, null) }
                 multiSelect={ false }
                 searchable={ true }
-                options={ geoOptions.filter(d => d.value !== this.props.geoid) }
-                onChange={ d => this.props.setCompareGeoid(d === null ? d : d.value) }
+                options={ geoOptions }
+                onChange={ d => this.props.setGeoid(d.value) }
                 displayOption={ d => d.name }
                 getOptionValue={ d => d }/>
             </div>
-          </>
-        }
+
+            <div style={ { marginTop: "10px" } }>Current Year</div>
+            <div style={ { position: "relative" } }>
+              <ItemSelector
+                selectedItems={ this.props.year }
+                multiSelect={ false }
+                searchable={ false }
+                options={ years }
+                onChange={ this.props.setYear }
+                displayOption={ d => d }
+                getOptionValue={ d => d }/>
+            </div>
+
+            <div style={ { marginTop: "10px" } }>Compare Year</div>
+            <div style={ { position: "relative" } }>
+              <ItemSelector
+                selectedItems={ this.props.compareYear }
+                multiSelect={ false }
+                searchable={ false }
+                options={ years }
+                onChange={ this.props.setCompareYear }
+                displayOption={ d => d }
+                getOptionValue={ d => d }/>
+            </div>
+
+            { !this.props.setCompareGeoid ? null :
+              <>
+                <div style={ { marginTop: "10px" } }>Compare Geography</div>
+                <div style={ { position: "relative" } }>
+                  <ItemSelector erasable={ true }
+                    selectedItems={ geoOptions.reduce((a, c) => c.value === this.props.compareGeoid ? c : a, null) }
+                    placeholder="Select a geography..."
+                    multiSelect={ false }
+                    searchable={ true }
+                    options={ geoOptions.filter(d => d.value !== this.props.geoid) }
+                    onChange={ d => this.props.setCompareGeoid(d === null ? d : d.value) }
+                    displayOption={ d => d.name }
+                    getOptionValue={ d => d }/>
+                </div>
+              </>
+            }
+          </div>
+        </ContentCollapser>
       </SidebarContainer>
     )
   }

@@ -7,6 +7,7 @@ import Options from '../Options'
 import Title from "../ComponentTitle"
 import GeoName from 'components/censusCharts/geoname'
 import CensusLabel, { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
+
 import get from 'lodash.get'
 
 import { format } from "d3-format"
@@ -15,12 +16,16 @@ import { getColorRange } from "constants/color-ranges"
 
 class CensusLineChart extends React.Component {
 
+  container = React.createRef();
+
     fetchFalcorDeps () {
       const geoids = [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid));
         return falcorGraph.get(
             ['acs', geoids,
               this.props.years,
-              [...this.props.divisorKeys, ...this.props.censusKeys]
+              [...this.props.divisorKeys, ...this.props.censusKeys,
+                ...this.props.divisorKeysMoE, ...this.props.censusKeysMoE
+              ]
             ],
             ["geo", geoids, "name"],
             ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
@@ -89,6 +94,11 @@ class CensusLineChart extends React.Component {
             row["divisor key"] = divisorKey;
             row["divisor label"] = getKeyName(divisorKey);
           }
+          else {
+            const regex = /^(.+)E$/,
+              M = key.replace(regex, (m, p1) => p1 + "M");
+            row.moe = +get(this.props, ["acs", geoid, year, M], "unknown");
+          }
           row.value = value;//yFormat(value);
 
           data.push(row);
@@ -104,6 +114,9 @@ class CensusLineChart extends React.Component {
         keys.push("divisor key", "divisor label");
       }
       keys.push("value");
+      if (this.props.sumType !== 'pct') {
+        keys.push("moe");
+      }
 
       return {
         data,
@@ -118,39 +131,51 @@ class CensusLineChart extends React.Component {
             this.props.divisorKeys.length ? "Value" :
             key in this.props.censusKeyLabels ? this.props.censusKeyLabels[key] :
             getCensusKeyLabel(key, this.props.acs, this.props.removeLeading);
+
+        const lineData = this.lineData();
+
+        const getLegendLabel = line =>
+          this.props.compareGeoid && this.props.showCompare ?
+            get(this.props.geoGraph, [line.geoid, "name"], line.geoid) :
+          line.censusKey in this.props.censusKeyLabels ?
+            this.props.censusKeyLabels[line.censusKey] :
+          getCensusKeyLabel(line.censusKey, this.props.acs, this.props.removeLeading);
+
+        const showLegend = (this.props.showLegend && this.props.showCompare && this.props.compareGeoid) ||
+          (this.props.showLegend && !this.props.showCompare)
+
+        const showDescription = Boolean(this.props.description.length),
+          descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;
+
         return(
-            <div style={{height: '100%'}}>
+            <div style={ { width: "100%", height: '100%' } }
+              id={ this.props.id }
+              ref={ this.container }>
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
                 <Title title={ title }/>
                 { !this.props.showOptions ? null :
                   <Options tableTitle={ this.props.title }
                     processDataForViewing={ this.processDataForViewing.bind(this) }
+                    width={ this.container.current && this.container.current.clientWidth }
+                    height={ this.container.current && this.container.current.clientHeight }
                     id={ this.props.id }
                     layout={ { ...this.props.layout } }
                     embedProps={ {
-                      type: "CensusLineChart",
-                      title: this.props.title,
+                      id: this.props.id,
                       geoids: [...this.props.geoids],
                       compareGeoid: this.props.compareGeoid,
-                      sumType: this.props.sumType,
-                      censusKeys: [...this.props.censusKeys],
-                      divisorKeys: [...this.props.divisorKeys],
-                      yFormat: this.props.yFormat,
-                      marginLeft: this.props.marginLeft,
                       stacked: this.props.stacked,
-                      curve: this.props.curve,
-                      theme: JSON.parse(JSON.stringify(this.props.theme).replace(/[#]/g, "__HASH__")),
-                      years: [...this.props.years]
+                      curve: this.props.curve
                     } }/>
                 }
               </div>
-              <div style={ { height: "calc(100% - 30px)" } } id={ this.props.id }>
+              <div style={ { height: `calc(100% - 30px)`, position: "relative" } } id={ this.props.id }>
                 <ResponsiveLine
-                    data={ this.lineData() }
+                    data={ lineData }
                     margin={{
-                            "top": 30,
-                            "right": 20,
-                            "bottom": 30,
+                            "top": this.props.marginTop,
+                          "right": showLegend ? this.props.legendWidth : 20,
+                            "bottom": 30 + descriptionHeight,
                             "left": this.props.marginLeft
                     }}
                     xScale={{
@@ -162,56 +187,46 @@ class CensusLineChart extends React.Component {
                             "min": 'auto',
                             "max": 'auto'
                     }}
-                    colors={ getColorRange(8, "Set2") }
+                    colors={ this.props.colors }
                     curve={this.props.curve}
-                    theme={this.props.theme}
-                    lineWidth = {2.5}
                     dotSize={5}
-                    dotColor="inherit:darker(0.3)"
+                    dotColor={ { from: "color" } }
                     dotBorderWidth={2}
-                    dotBorderColor="#ffffff"
+                    dotBorderColor="#f2f4f8"
                     enableDotLabel={false}
-                    dotLabel="y"
-                    dotLabelYOffset={-12}
-                    animate={false}
-                    enableGridX={true}
-                    enableGridY={true}
-                    enableArea={false}
-                    areaOpacity={0.35}
-                    motionStiffness={90}
-                    motionDamping={15}
+                    layers={ [
+                      showLegend ? LegendFactory(lineData, this.props.legendWidth, this.props.colors, getLegendLabel, yFormat) : null,
+                      showDescription ? DescriptionFactory(this.props.description) : null,
+                      'grid', 'axes', 'lines', 'dots', 'slices'
+                    ] }
                     axisLeft={ {
                       format: yFormat
                     } }
-                    tooltip={({ id, indexValue, value, color, data }) => (
-                      <table>
-                        <thead>
-                          <tr>
-                            <th colSpan="4" style={ { fontSize: "1rem" } }>Year: { id }</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {
-                            data.map(({ data, serie: { id, censusKey, geoid, color } }) =>
-                              <tr key={ id }>
-                                <td style={ { paddingRight: "5px" } }><div style={ { width: "15px", height: "15px", background: color } }/></td>
-                                <td style={ { paddingRight: "5px" } }><GeoName geoids={ [geoid] }/></td>
-                                <td style={ { paddingRight: "5px" } }>{ getKeyName(censusKey) }</td>
-                                <td style={ { textAlign: "right" } }>{ yFormat(data.y) }</td>
-                              </tr>
-                            )
-                          }
-                        </tbody>
-                      </table>
-                    )}/>
+                    enableSlices={ "x" }
+                    tooltip={ ({ id, data }) =>
+                      <div key={ id }>
+                        {
+                          data.map(({ serie, data }, i) =>
+                            <div style={ { display: "flex" } } key={ i }>
+                              <div style={ { width: "15px", height: "15px", background: serie.color, margin: "0px 2px" } }/>
+                              <div style={ { margin: "0px 2px" } }>{ get(this.props.geoGraph, [serie.geoid, "name"], serie.geoid) },</div>
+                              <div style={ { margin: "0px 2px" } }>{ getKeyName(serie.censusKey) }:</div>
+                              <div style={ { margin: "0px 2px" } }>{ yFormat(data.y) }</div>
+                            </div>
+                          )
+                        }
+                      </div>
+                    }/>
                 </div>
            </div>
         )
     }
 
     static defaultProps = {
-        censusKeys: ['B19013_001E'], //'B19013',,
+        censusKeys: [],
         divisorKeys: [],
+        censusKeysMoE: [],
+        divisorKeysMoE: [],
         geoids: ['36001'],
         colorRange:['#047bf8','#6610f2','#6f42c1','#e83e8c','#e65252','#fd7e14','#fbe4a0','#24b314','#20c997','#5bc0de'],
         years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
@@ -220,11 +235,16 @@ class CensusLineChart extends React.Component {
         stacked: false,
         yFormat: ',d',
         marginLeft: 50,
+        marginTop: 30,
         showCompare: true,
         compareGeoid: null,
         censusKeyLabels: {},
         showOptions: true,
-        sumType: "sum"
+        sumType: "sum",
+        showLegend: true,
+        legendWidth: 250,
+        colors: [...getColorRange(12, "Set3").slice(3), ...getColorRange(12, "Set3").slice(0, 3)],
+        description: []
     }
 
 }
@@ -234,7 +254,39 @@ const mapDispatchToProps = { };
 
 const mapStateToProps = (state, ownProps) => ({
   acs: get(state, `graph.acs`, {}),
-  geoGraph: get(state, 'graph.geo', {}),
-  theme: state.user.theme
+  geoGraph: get(state, 'graph.geo', {})
 })
 export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusLineChart))
+
+const DescriptionFactory = lines =>
+  graph => (
+    <g style={ { transform: `translate(-${ graph.margin.left - 7 }px, ${ graph.height + graph.margin.bottom - lines.length * 12 }px)` } }>
+      <rect width={ graph.width + graph.margin.left + graph.margin.right - 14 }
+        height={ lines.length * 12 + 5 }
+        y={ -12 }
+        fill="rgba(0, 0, 0, 0.05)"/>
+      {
+        lines.map((line, i) =>
+          <text key={ i } y={ i * 12 } x={ 10 } fontSize="12px" fontFamily="sans-serif">
+            { line }
+          </text>
+        )
+      }
+    </g>
+  )
+
+const LegendFactory = (data, width, colors, getLegendLabel, yFormat) =>
+  graph => (
+    <g style={ { transform: `translate(${ graph.width }px, -${ graph.margin.top }px)` } }>
+      {
+        data.map((d, i) =>
+          <g style={ { transform: `translate(10px, ${ i * 19 + 10 }px)` } } key={ i }>
+            <rect width="15" height="15" fill={ colors[i] }/>
+            <text x="19" y="13" fontFamily="sans-serif" fontSize="0.75rem">
+              { getLegendLabel(d) }
+            </text>
+          </g>
+        )
+      }
+    </g>
+  )

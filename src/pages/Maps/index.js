@@ -1,7 +1,7 @@
 import React from 'react';
 import Logo from "components/mitigate-ny/Logo"
 
-import AvlMap from "AvlMap"
+import AvlMap, { DEFAULT_STYLES } from "AvlMap"
 
 import buildingsLayer from "./layers/buildingsLayer"
 import parcelLayer from "./layers/parcelLayer"
@@ -10,8 +10,6 @@ import threedLayer from "./layers/3d-buildingsLayer"
 import censusLayerFactory from "./layers/censusLayer.js"
 // import acsLayerFactory from './layers/acsLayer.js'
 import acsLayerFactory from "./layers/acsLayerNew"
-
-import theme from "components/common/themes/light_new"
 
 const SidebarHeader = ({}) =>
   <div style={ { paddingLeft: "50px" } }><Logo width={ 200 }/></div>
@@ -26,10 +24,11 @@ class MapPage extends React.Component {
             this.ACS_Layer,
             this.CensusLayer
           ] }
-          theme={ theme }
           header={ SidebarHeader }
           { ...this.ACS_Layer.baseMapSettings }
-          header={ false }/>
+          header={ false }
+          style="mapbox://styles/am3081/ck3uimjaa0p6u1cqmndfy4nmr"
+          sidebarPages={ ["layers"] }/>
       </div>
     )
   }

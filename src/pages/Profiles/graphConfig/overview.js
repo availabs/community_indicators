@@ -53,11 +53,13 @@ const BASE_CONFIG = [
    {
       type:"CensusLineChart",
       title: "Median Household Income",
-      censusKeys:[
-         "B19013_001E"
-      ],
+      censusKeys:["B19013_001E"],
       marginLeft: 75,
       yFormat: "$,d",
+      legendWidth: 175,
+      censusKeyLabels: {
+        B19013_001E: "Median Household Income"
+      },
       layout:{
          w:9,
          h:9
@@ -73,6 +75,7 @@ const BASE_CONFIG = [
       showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
+      invertColors: true,
       layout:{
          w:2,
          h:9
@@ -85,6 +88,7 @@ const BASE_CONFIG = [
       divisorKeys: ["B17001_001E"],
       sumType: 'pct',
       yFormat: ",.1%",
+      legendWidth: 175,
       layout:{
          w:10,
          h:9
@@ -128,6 +132,7 @@ const BASE_CONFIG = [
    {
       type:"CensusLineChart",
       title: "Percent Vacant Housing Units",
+      legendWidth: 175,
       sumType: 'pct',
       yFormat: ",.1%",
       censusKeys:["B25002_003E"],
@@ -143,6 +148,8 @@ const BASE_CONFIG = [
       title: "Per Capita Income",
       marginLeft: 75,
       yFormat: "$,d",
+      showCompare: false,
+      legendWidth: 270,
       censusKeys: [
         "B19301A_001E",
         "B19301B_001E",
@@ -208,15 +215,14 @@ const BASE_CONFIG = [
    //    ]
    // },
     {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "ALICE from United Way" },
-          { type: "subheader", value: "Reports, Visualizations, and Data Downloads" },
-          { type: "body", value: "The ALICE (Asset Limited, Income Constrained, Employed) Project was initiated by United Way of Northern New Jersey several years ago to bring focus to the families and individuals who work but whose salaries do not provide sufficient resources to meet basic needs. The ALICE Project developed a methodology using publicly available census, employment, wage, cost of living and other data to help to understand the extent of ALICE in our communities, those who are above the federal poverty level, but below a sustainable wage." },
-          { type: "link", value: "https://www.unitedforalice.org/new-york" }
-        ]
-      ]
+      type: "TextBox",
+      header: "ALICE from United Way",
+      subheader: "Reports, Visualizations, and Data Downloads",
+      body: "The ALICE (Asset Limited, Income Constrained, Employed) Project was initiated by United Way of Northern New Jersey several years ago to bring focus to the families and individuals who work but whose salaries do not provide sufficient resources to meet basic needs. The ALICE Project developed a methodology using publicly available census, employment, wage, cost of living and other data to help to understand the extent of ALICE in our communities, those who are above the federal poverty level, but below a sustainable wage.",
+      link: "https://www.unitedforalice.org/new-york",
+      layout: {
+        h: 6
+      }
      }
 ]
 

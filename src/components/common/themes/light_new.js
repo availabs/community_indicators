@@ -227,7 +227,7 @@ export const sliderBarRadius = '1px';
 export const sliderBarHeight = '4px';
 export const sliderHandleHeight = '12px';
 export const sliderHandleWidth = '12px';
-export const sliderHandleColor = '#D3D8E0';
+export const sliderHandleColor = DARKER_5;
 export const sliderHandleHoverColor = '#FFFFFF';
 export const sliderHandleShadow = '0 2px 4px 0 rgba(0,0,0,0.40)';
 

@@ -41,14 +41,25 @@ class HorizontalBarChart extends React.Component {
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
     year: 2017,
     marginLeft: 100,
-    showOptions: true
+    marginTop: 10,
+    showOptions: true,
+    yFormat: ",d",
+    description: [],
+    censusKeys: [],
+    censusKeysMoE: [],
   }
+
+  container = React.createRef();
+
   state = {
     year: this.props.years[this.props.years.length - 1]
   }
   fetchFalcorDeps() {
     return this.props.falcor.get(
-        ['acs', this.props.allGeoids, this.props.years, this.props.censusKeys],
+        ['acs', this.props.allGeoids, this.props.years,
+          [...this.props.censusKeys,
+            ...this.props.censusKeysMoE]
+        ],
         ["geo", this.props.allGeoids, "name"],
         ["acs", "meta", this.props.censusKeys, "label"]
     )
@@ -76,7 +87,7 @@ class HorizontalBarChart extends React.Component {
   }
   processDataForViewing() {
     const data = [],
-      keys = ["geoid", "name", "year", "census key", "census label", "value"],
+      keys = ["geoid", "name", "year", "census key", "census label", "value", "moe"],
 
       leftKeys = this.props.left.keys,
       leftLabel = this.props.left.key,
@@ -96,12 +107,22 @@ class HorizontalBarChart extends React.Component {
         row1["census key"] = leftKeys[i];
         row1["census label"] = `${ label }, ${ leftLabel }`;
         row1.value = get(this.props.acsGraph, [geoid, baseRow.year, leftKeys[i]], 0);
+
+        const regex = /^(.+)E$/;
+
+        let M = leftKeys[i].replace(regex, (m, p1) => p1 + "M");
+        row1.moe = get(this.props, ["acsGraph", geoid, baseRow.year, M], "unknown");
+
         data.push(row1);
 
         const row2 = { ...baseRow };
         row2["census key"] = rightKeys[i];
         row2["census label"] = `${ label }, ${ rightLabel }`;
         row2.value = get(this.props.acsGraph, [geoid, baseRow.year, rightKeys[i]], 0);
+
+        M = rightKeys[i].replace(regex, (m, p1) => p1 + "M");
+        row2.moe = get(this.props, ["acsGraph", geoid, baseRow.year, M], "unknown");
+
         data.push(row2);
       }
     })
@@ -109,7 +130,7 @@ class HorizontalBarChart extends React.Component {
     return { data, keys };
   }
   render() {
-    const fmt = format(",d");
+    const fmt = format(this.props.yFormat);
 
     const left = get(this.props, ["left", "color"], DEFAULT_COLORS[0]),
       right = get(this.props, ["right", "color"], DEFAULT_COLORS[1]);
@@ -134,34 +155,40 @@ class HorizontalBarChart extends React.Component {
     const keys = this.props.allGeoids.reduce((a, c) => [...a, `left-${ c }`, `right-${ c }`], [])
       .sort((a, b) => a.includes("left") ? -1 : 1);
 
+    const showDescription = Boolean(this.props.description.length),
+      descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;
+
     return (
-      <div style={ { width: "100%", height: "100%" } }>
+      <div style={ { width: "100%", height: "100%" } }
+        id={ this.props.id }
+        ref={ this.container }>
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }><Title title={ this.props.title }/></div>
           { !this.props.showOptions ? null :
             <Options tableTitle={ this.props.title }
               processDataForViewing={ this.processDataForViewing.bind(this) }
+              width={ this.container.current && this.container.current.clientWidth }
+              height={ this.container.current && this.container.current.clientHeight }
               id={ this.props.id }
               layout={ { ...this.props.layout } }
               embedProps={ {
-                type: "CensusStackedBarChart",
+                id: this.props.id,
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
-                year: this.props.year,
-                title: this.props.title,
-                marginLeft: this.props.marginLeft,
-                left: JSON.parse(JSON.stringify(this.props.left).replace(/[#]/g, "__HASH__")),
-                right: JSON.parse(JSON.stringify(this.props.right).replace(/[#]/g, "__HASH__")),
-                labels: [...this.props.labels]
+                year: this.props.year
               } }/>
           }
         </div>
-        <div style={ { height: "calc(100% - 60px)" } } id={ this.props.id }>
+        <div style={ { height: "calc(100% - 30px)" } } id={ this.props.id }>
           <ResponsiveBar data={ this.getBarData() }
             colors={ ({ id }) => getColors(id) }
             indexBy="label"
             keys={ keys }
-            margin={ { top: 10, right: 20, bottom: 30, left: this.props.marginLeft } }
+            margin={ { top: this.props.marginTop + 10,
+              right: 20,
+              bottom: 30 + descriptionHeight,
+              left: this.props.marginLeft
+            } }
             layout="horizontal"
             groupMode={ this.props.allGeoids.length > 1 ? "grouped" : "stacked" }
             enableLabel={ true }
@@ -171,6 +198,11 @@ class HorizontalBarChart extends React.Component {
             axisBottom={ {
               format: d => fmt(Math.abs(d))
             } }
+            layers={ [
+              DescriptionFactory(this.props.description),
+              'grid', 'axes', 'bars', 'markers', 'annotations',
+              StackedLegendFactory(this.props.left, this.props.right, getColors)
+            ].slice(showDescription ? 0 : 1) }
             tooltip={ ({ color, indexValue, value, id, ...rest }) => (
                 <Tooltip
                   value={ fmt(Math.abs(value)) }
@@ -179,25 +211,6 @@ class HorizontalBarChart extends React.Component {
                   label={ `${ indexValue }` }/>
               )
             }/>
-        </div>
-        <div style={ { height: "30px", display: "flex" } }>
-          <div style={ { width: "60%", fontSize: "15px", display: "flex", justifyContent: "center", alignItems: "center" } }>
-            { this.props.left.key }
-            <div style={ { width: "20px", height: "20px", margin: "0px 2.5px 0px 5px", background: getColors("left") } }/>
-            <div style={ { width: "20px", height: "20px", margin: "0px 5px 0px 2.5px", background: getColors("right") } }/>
-            { this.props.right.key }
-          </div>
-          { /*
-          <div style={ { width: "40%", fontSize: "15px", paddingRight: "20px", display: "flex", alignItems: "center", justifyContent: "flex-end" } }>
-            <span style={ { marginRight: "10px" } }>Year: { this.props.year }</span>
-            <input type="range"
-              min={ this.props.years[0] }
-              max={ this.props.years[this.props.years.length - 1] }
-              value={ this.props.year }
-              onChange={ e => this.setState({ year: e.target.value }) }
-              step="1"/>
-          </div>
-          */ }
         </div>
       </div>
     )
@@ -211,3 +224,30 @@ const mapStateToProps = (state, props) => ({
 })
 
 export default connect(mapStateToProps, null)(reduxFalcor(HorizontalBarChart));
+
+const DescriptionFactory = lines =>
+  graph => (
+    <g style={ { transform: `translate(-${ graph.margin.left - 7 }px, ${ graph.height + graph.margin.bottom - lines.length * 12 }px)` } }>
+      <rect width={ graph.width + graph.margin.left + graph.margin.right - 14 }
+        height={ lines.length * 12 + 5 }
+        y={ -12 }
+        fill="rgba(0, 0, 0, 0.05)"/>
+      {
+        lines.map((line, i) =>
+          <text key={ i } y={ i * 12 } x={ 10 } fontSize="12px" fontFamily="sans-serif">
+            { line }
+          </text>
+        )
+      }
+    </g>
+  )
+
+const StackedLegendFactory = (left, right, getColors) =>
+  graph => (
+    <g style={ { transform: `translate(-${ graph.margin.left }px, -20px)` } }>
+      <text y={ 15 } x={ (graph.width + graph.margin.left) * 0.5 - 26 } textAnchor="end" fontSize="1rem" fontFamily="sans-serif">{ left.key }</text>
+      <rect y={ 0 } x={ (graph.width + graph.margin.left) * 0.5 - 2 - 20 } fill={ getColors("left") } width="20" height="20"/>
+      <rect y={ 0 } x={ (graph.width + graph.margin.left) * 0.5 + 2 } fill={ getColors("right") } width="20" height="20"/>
+      <text y={ 15 } x={ (graph.width + graph.margin.left) * 0.5 + 26 } fontSize="1rem" fontFamily="sans-serif">{ right.key }</text>
+    </g>
+  )

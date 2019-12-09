@@ -12,13 +12,11 @@ export default ({ graph, ...rest }) => {
 	)
 }
 
-
-
 class GraphHider extends React.Component{
     constructor(props) {
         super(props);
         this.state={
-            show: props.isVisible ? true : false
+            show: Boolean(props.isVisible)
         }
     }
 
@@ -29,8 +27,8 @@ class GraphHider extends React.Component{
     }
 
     render () {
-    	const { isVisible, Graph, graph, ...rest } = this.props
-    	return isVisible ?
+    	const { isVisible, Graph, graph, ...rest } = this.props;
+    	return (rest.type === "CensusMap" ? this.state.show : isVisible) ?
 		    <Graph { ...rest } { ...graph } /> :
 		    <div>Loading...</div>
     }

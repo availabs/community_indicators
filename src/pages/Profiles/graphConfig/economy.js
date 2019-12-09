@@ -23,6 +23,7 @@ const BASE_CONFIG = [
       divisorKey: "B23025_001E",
       showCompareYear: true,
       valueSuffix: '%',
+      invertColors: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
@@ -37,6 +38,7 @@ const BASE_CONFIG = [
       censusKeys:["B23025_007E"],
       divisorKey: "B23025_001E",
       showCompareYear: true,
+      invertColors: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
@@ -82,6 +84,7 @@ const BASE_CONFIG = [
     title: "Employment Status for the Population 16 Years and Over",
     orientation: "horizontal",
     marginLeft: 250,
+    legendPosition: "bottom-right",
     censusKeys: ["B23025_001E...B23025_007E"]
   },
   {

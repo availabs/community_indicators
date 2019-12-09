@@ -47,28 +47,37 @@ class CensusBarChart extends React.Component {
     axisBottom: true,
     marginLeft: 75,
     marginRight: 20,
+    marginTop: 10,
     orientation: 'vertical',
     animation: false,
     groupMode: "grouped",
     groupBy: "censusKeys",
+    censusKeys: [],
     divisorKeys: [],
+    censusKeysMoE: [],
+    divisorKeysMoE: [],
     censusKeyLabels: {},
     showOptions: true,
-    sorted: false
+    sorted: false,
+    legendPosition: null,
+    showLegend: true,
+    description: "",
+    descriptionLines: 1,
+    description: []
   }
+
+  container = React.createRef();
+
   fetchFalcorDeps() {
     return this.props.falcor.get(
         ['acs', this.props.allGeoids, this.props.years,
-          [...this.props.censusKeys, ...this.props.divisorKeys]
+          [...this.props.censusKeys, ...this.props.divisorKeys,
+            ...this.props.censusKeysMoE, ...this.props.divisorKeysMoE
+          ]
         ],
         ["geo", this.props.allGeoids, "name"],
         ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
     )
-    .then(res => {
-if (this.props.title === "Language Spoken at Home by Ability to Speak English") {
-  console.log("RES:", res)
-}
-    })
   }
   processDataForViewing() {
   const fmt = format(this.props.yFormat),
@@ -128,7 +137,7 @@ if (this.props.title === "Language Spoken at Home by Ability to Speak English") 
       return { data, keys };
     }
     const data = [],
-      keys = ["geoid", "name", "year", "census key", "census label", "value"]
+      keys = ["geoid", "name", "year", "census key", "census label", "value", "moe"]
 
     for (const key of this.props.censusKeys) {
       for (const geoid of this.props.allGeoids) {
@@ -139,6 +148,10 @@ if (this.props.title === "Language Spoken at Home by Ability to Speak English") 
         row["census label"] = getKeyName(key);
         row.value = (get(this.props.acsGraph, [geoid, row.year, key], -666666666));
 
+        const regex = /^(.+)E$/,
+          M = key.replace(regex, (m, p1) => p1 + "M");
+        row.moe = get(this.props, ["acsGraph", geoid, row.year, M], "unknown");
+
         data.push(row);
       }
     }
@@ -147,8 +160,9 @@ if (this.props.title === "Language Spoken at Home by Ability to Speak English") 
   }
   render() {
     const colors = scaleOrdinal()
-      .domain(this.props.geoids)
+      .domain(this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.divisorKeys.length ? ["value"] : this.props.censusKeys)
       .range(DEFAULT_COLORS);
+
     const fmt = format(this.props.yFormat);
     // console.log('data', this.props.barData)
     if (this.props.sorted) {
@@ -181,11 +195,16 @@ if (this.props.title === "Language Spoken at Home by Ability to Speak English") 
       // : this.props.divisorKeys.length ? "Value"
       : get(this.props.geoGraph, [key, "name"], key);
 
-if (this.props.title === "Language Spoken at Home by Ability to Speak English") {
-  console.log("DATA:", this.props.barData)
-}
+    const showLegend = this.props.showLegend &&
+      (this.props.groupBy === "censusKeys" && this.props.compareGeoid);
+
+    const showDescription = Boolean(this.props.description.length),
+      descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;
+
     return (
-      <div style={ { width: "100%", height: "100%" } } id={ this.props.id }>
+      <div style={ { width: "100%", height: "100%" } }
+        id={ this.props.id }
+        ref={ this.container }>
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>
             <Title title={ this.props.title }/>
@@ -195,40 +214,37 @@ if (this.props.title === "Language Spoken at Home by Ability to Speak English") 
               processDataForViewing={ this.processDataForViewing.bind(this) }
               id={ this.props.id }
               layout={ { ...this.props.layout } }
+              width={ this.container.current && this.container.current.clientWidth }
+              height={ this.container.current && this.container.current.clientHeight }
               embedProps={ {
-                type: "CensusBarChart",
+                id: this.props.id,
                 year: this.props.year,
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
-                censusKeys: [...this.props.censusKeys],
-                divisorKeys: [...this.props.divisorKeys],
-                groupBy: this.props.groupBy,
-                groupMode: this.props.groupMode,
-                title: this.props.title,
-                marginRight: this.props.marginRight,
-                marginLeft: this.props.marginLeft,
-                axisBottom: this.props.axisBottom,
-                orientation: this.props.orientation,
-                yFormat: this.props.yFormat,
-                sorted: this.props.sorted
+                axisBottom: this.props.axisBottom
               } }/>
           }
         </div>
-        <div style={ { height: "calc(100% - 30px)"} }>
+        <div style={ { height: `calc(100% - 30px)`, position: "relative" } }>
           <ResponsiveBar indexBy={ "id" }
             keys={ this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.divisorKeys.length ? ["value"] : this.props.censusKeys }
             data={ this.props.barData }
             margin={ {
               right: this.props.marginRight,
-              top: 10,
-              bottom: this.props.axisBottom ? 30 : 20,
+              top: showLegend ? (this.props.marginTop + 30) : this.props.marginTop,
+              bottom: (this.props.axisBottom ? 30 : 20) + descriptionHeight,
               left: this.props.marginLeft } }
             colors={ d => colors(d.id) }
             labelSkipWidth={ 100 }
             labelSkipHeight={ 12 }
             labelFormat={ fmt }
             groupMode={ this.props.groupMode }
-            layout={this.props.orientation}
+            layers={ [
+              showDescription ? DescriptionFactory(this.props.description) : null,
+              showLegend ? LegendFactory(colors, this.props.allGeoids, getIdName) : null,
+              'grid', 'axes', 'bars', 'markers', 'annotations'
+            ].filter(Boolean) }
+            layout={ this.props.orientation }
             tooltip={ ({ color, indexValue, value, id, ...rest }) => (//console.log("REST:", rest),
                 <Tooltip id={ getIdName(id) }
                   value={ fmt(value) }
@@ -325,3 +341,49 @@ const groupByGeoids = (state, props) =>
     .filter(d => d.num > 0);
 
 export default connect(mapStateToProps, null)(reduxFalcor(CensusBarChart));
+
+const DescriptionFactory = lines =>
+  graph => (
+    <g style={ { transform: `translate(-${ graph.margin.left - 7 }px, ${ graph.height + graph.margin.bottom - lines.length * 12 }px)` } }>
+      <rect width={ graph.width + graph.margin.left + graph.margin.right - 14 }
+        height={ lines.length * 12 + 5 }
+        y={ -12 }
+        fill="rgba(0, 0, 0, 0.05)"/>
+      {
+        lines.map((line, i) =>
+          <text key={ i } y={ i * 12 } x={ 10 } fontSize="12px" fontFamily="sans-serif">
+            { line }
+          </text>
+        )
+      }
+    </g>
+  )
+
+const LegendFactory = (colors, keys, getKeyName) =>
+  graph => {
+    const width = graph.width + graph.margin.left,
+      w = width / keys.length;
+    return (
+      <g style={ { transform: `translate(-${ graph.margin.left }px, -20px)` } }>
+        {
+          keys.map((k, i) =>
+            <g key={ k }>
+              { (i % 2) === 0 ? null :
+                <rect width="20" height="20" fill={ colors(k) }
+                  x={ width * 0.5 - (Math.floor(i * 0.5) * w) - 22 }/>
+              }
+              <text fontSize="1rem" y="15" fontFamily="sans-serif"
+                x={ width * 0.5 - ((Math.floor(i * 0.5) * w) + 26) * (i % 2 === 0 ? 1 : -1) }
+                textAnchor={ i % 2 === 0 ? "end" : "start" }>
+                { getKeyName(k) }
+              </text>
+              { (i % 2) === 1 ? null :
+                <rect width="20" height="20" fill={ colors(k) }
+                  x={ width * 0.5 + (Math.floor(i * 0.5) * w) + 2 }/>
+              }
+            </g>
+          )
+        }
+      </g>
+    )
+  }

@@ -9,9 +9,11 @@ import { register, unregister } from "AvlMap/ReduxMiddleware"
 import { UPDATE as REDUX_UPDATE } from 'utils/redux-falcor'
 
 import Title from "../ComponentTitle"
+import Options from '../Options'
 
 import deepequal from "deep-equal"
 import get from "lodash.get"
+import * as d3selection from "d3-selection"
 import * as d3scale from "d3-scale"
 import { extent } from "d3-array";
 import { format as d3format } from "d3-format"
@@ -19,6 +21,8 @@ import { format as d3format } from "d3-format"
 import { fnum, fmoney } from "utils/sheldusUtils"
 
 import { falcorGraph, falcorChunkerNiceWithUpdate } from "store/falcorGraph";
+
+import LightTheme from "components/common/themes/light_new"
 
 import { getColorRange } from "constants/color-ranges"
 const NUM_COLORS = 8;
@@ -29,21 +33,139 @@ const BORDER_COLOR = "#2171b5"
 const HOVER_COLOR = "#6baed6";
 
 class CensusMap extends React.Component {
+  static defaultProps = {
+    showOptions: true,
+    censusKeys: [],
+    divisorKeys: [],
+    year: 2017,
+    geoids: [],
+    compareGeoid: null,
+    format: ",d",
+    description: ""
+  }
   censusLayer = LayerFactory(this.props);
+  processDataForViewing() {
+    const cousubs = this.censusLayer.geoids.reduce((a, c) => {
+      a.push(...get(this.censusLayer, ["falcorCache", "geo", c, "cousubs", "value"], []));
+      return a;
+    }, [])
+    const bgsInCousubs = cousubs.reduce((a, c) => {
+      a[c] = get(this.censusLayer, ["falcorCache", "geo", c, "blockgroup", "value"], []);
+      return a;
+    }, {})
+
+    const data = this.censusLayer.getGeoids()
+      .reduce((a, c) => {
+        a.push({
+          cousub: Object.keys(bgsInCousubs).reduce((aa, cc) =>
+            bgsInCousubs[cc].includes(c) ? get(this.censusLayer, ["falcorCache", "geo", cc, "name"], aa) : aa
+          , "Unknown Cousub"),
+          county: get(this.censusLayer, ["falcorCache", "geo", c.slice(0, 5), "name"], "Unknown County"),
+          blockgroup: c,
+          [this.props.title]: get(this.censusLayer, ["geoData", c], "no data")
+        })
+        return a;
+      }, [])
+
+    return { data, keys: ["county", "cousub", "blockgroup", this.props.title] };
+  }
+  saveImage() {
+    const canvas = d3selection.select(`#${ this.props.id } canvas.mapboxgl-canvas`).node(),
+      newCanvas = document.createElement("canvas");
+
+    newCanvas.width = canvas.width;
+    newCanvas.height = canvas.height;
+
+    const context = newCanvas.getContext("2d")
+    context.drawImage(canvas, 0, 0);
+
+    let x = canvas.width - 20 - 360,
+      y = 20;
+
+    context.fillStyle = LightTheme.sidePanelBg;
+    context.fillRect(x, y, 360, 70);
+
+    x += 10;
+    y += 10;
+
+    context.fillStyle = LightTheme.sidePanelHeaderBg;
+    context.fillRect(x, y, 340, 50);
+
+    x += 10;
+    y += 10;
+    const w = 320 / this.censusLayer.legend.range.length;
+    this.censusLayer.legend.range.forEach((c, i) => {
+      context.fillStyle = c;
+      context.fillRect(x + i * w, y, w, 20);
+    })
+
+    let scale;
+
+    switch (this.censusLayer.legend.type) {
+      case "quantile":
+        scale = d3scale.scaleQuantile()
+          .domain(this.censusLayer.legend.domain)
+          .range(this.censusLayer.legend.range);
+        break;
+      case "quantize":
+        scale = d3scale.scaleQuantize()
+          .domain(this.censusLayer.legend.domain)
+          .range(this.censusLayer.legend.range);
+        break;
+    }
+
+    const format = (typeof this.censusLayer.legend.format === "function") ?
+      this.censusLayer.legend.format :
+      d3format(this.censusLayer.legend.format);
+
+    x += 3;
+    y += 33;
+    context.fillStyle = LightTheme.textColor;
+    context.font = "12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif";
+    context.textAlign = "right";
+    this.censusLayer.legend.range.forEach((c, i) => {
+      const text = format(scale.invertExtent(c)[1]);
+      context.fillText(text, x + w + i * w, y);
+    })
+
+    return newCanvas.toDataURL();//canvas.toDataURL();
+  }
   render() {
     return (
       <div style={ { width: "100%", height: "100%", overflow: "hidden", borderRadius: "4px" } }>
-        <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
+        <div style={ { height: "30px", maxWidth: "calc(100% - 285px)", marginBottom: "5px" } }>
           <Title title={ this.props.title }/>
+          { !this.props.showOptions ? null :
+            <Options tableTitle={ this.props.title }
+              processDataForViewing={ () => this.processDataForViewing() }
+              id={ this.props.id }
+              layout={ { ...this.props.layout } }
+              saveImage={ fn => this.saveImage(fn) }
+              embedProps={ {
+                type: this.props.type,
+                title: this.props.title,
+                geoids: [...this.props.geoids],
+                compareGeoid: this.props.compareGeoid,
+                censusKeys: [...this.props.censusKeys],
+                divisorKeys: [...this.props.divisorKeys],
+                format: this.props.format,
+                year: this.props.year
+              } }/>
+          }
         </div>
-        <div style={ { height: "calc(100% - 30px)", width: "100%" } }>
+        <div style={ { height: "calc(100% - 35px)", width: "100%" } }>
           <AvlMap sidebar={ false }
+            style={ "mapbox://styles/am3081/ck3971lrq00g71co3ud6ye42i" }
+            preserveDrawingBuffer={ true }
             id={ this.props.id }
             layers={ [this.censusLayer] }
             layerProps={ {
               [this.censusLayer.name]: {
                 year: this.props.year,
-                geoids: this.props.geoids
+                geoids: [
+                  ...this.props.geoids,
+                  this.props.compareGeoid
+                ].filter(Boolean)
               }
             } }/>
         </div>
@@ -72,17 +194,7 @@ class CensusLayer extends MapLayer {
   onAdd() {
     register(this, REDUX_UPDATE, ["graph"]);
 
-    return falcorChunkerNiceWithUpdate(
-      ["geo", COUNTIES, ["cousubs", "name"]]
-    )
-    .then(res => {
-      const cousubs = COUNTIES.reduce((a, c) => {
-        a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
-        return a;
-      }, [])
-      return falcorChunkerNiceWithUpdate(["geo", cousubs, "name"])
-    })
-    .then(() => this.fetchData());
+    return this.fetchData();
   }
   onRemove(map) {
     unregister(this);
@@ -105,11 +217,11 @@ class CensusLayer extends MapLayer {
     }, []);
   }
   resetView() {
-    if (!this.map) return;
+    if (!this.map) return false;
 
     const bounds = this.getBounds();
 
-    if (bounds.isEmpty()) return;
+    if (bounds.isEmpty()) return false;
 
     const options = {
       padding: {
@@ -119,42 +231,32 @@ class CensusLayer extends MapLayer {
         left: 10
       },
       bearing: 0,
-      pitch: 0,
-      offset: [0, 0]
+      pitch: 0
     }
 
+    options.offset = [
+      (options.padding.left - options.padding.right) * 0.5,
+      (options.padding.top - options.padding.bottom) * 0.5
+    ];
 
-    const paddingOffset = [options.padding.left - options.padding.right, options.padding.top - options.padding.bottom],
-      lateralPadding = Math.min(options.padding.right, options.padding.left),
-      verticalPadding = Math.min(options.padding.top, options.padding.bottom);
-    options.offset = [options.offset[0] + paddingOffset[0], options.offset[1] + paddingOffset[1]];
-
-    const offset = new mapboxgl.Point(options.offset),
-      tr = this.map.transform,
+    const tr = this.map.transform,
       nw = tr.project(bounds.getNorthWest()),
       se = tr.project(bounds.getSouthEast()),
       size = se.sub(nw);
 
-    const theta = options.bearing * (Math.PI / 180),
-    	W = size.x * Math.abs( Math.cos(theta) ) + size.y * Math.abs( Math.sin(theta) ),
-    	H = size.x * Math.abs( Math.sin(theta) ) + size.y * Math.abs( Math.cos(theta) ),
-
-    	scaleX = (tr.width - lateralPadding * 2 - Math.abs(offset.x) * 2) / W,
-    	scaleY = (tr.height - verticalPadding * 2 - Math.abs(offset.y) * 2) / H;
-
-    if (scaleY < 0 || scaleX < 0) {
-    	if (typeof console !== "undefined") console.warn('Map cannot fit within canvas with the given bounds, padding, and/or offset.');
-        return this;
-    }
+    const scaleX = (tr.width - (options.padding.left + options.padding.right)) / size.x,
+      scaleY = (tr.height - (options.padding.top + options.padding.bottom)) / size.y;
 
     options.center = tr.unproject(nw.add(se).div(2));
     options.zoom = Math.min(tr.scaleZoom(tr.scale * Math.min(scaleX, scaleY)), tr.maxZoom);
 
-console.log("OPTIONS:", W, H, scaleX, scaleY, options)
     this.map.easeTo(options);
+
+    return true;
   }
-  getBounds(map = this.map) {
+  getBounds() {
     const regex = /BOX\((.+)\)/;
+
     return this.geoids.reduce((a, c) => {
       const b = get(this.falcorCache, ["geo", c, "boundingBox", "value"], ""),
         match = regex.exec(b);
@@ -170,15 +272,23 @@ console.log("OPTIONS:", W, H, scaleX, scaleY, options)
     const geolevel = this.geolevel,
       year = this.year,
       census = this.censusKeys,
-      geoids = this.geoids;
+      geoids = this.geoids,
+      counties = this.geoids.map(g => g.slice(0, 5));
 
     return falcorChunkerNiceWithUpdate(
-      ["geo", geoids, [geolevel, "boundingBox"]]
+      ["geo", counties, "name"],
+      ["geo", geoids, ["cousubs", "blockgroup", "boundingBox", "name"]]
     )
     .then(() => {
-      const cache = this.falcorCache,
-        subGeoids = geoids.reduce((a, c) => {
-          a.push(...get(cache, ["geo", c, geolevel, "value"], []))
+      const cousubs = this.geoids.reduce((a, c) => {
+        a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
+        return a;
+      }, [])
+      return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", "blockgroup"]])
+    })
+    .then(() => {
+      const subGeoids = geoids.reduce((a, c) => {
+          a.push(...get(this.falcorCache, ["geo", c, geolevel, "value"], []))
           return a;
         }, []);
       return falcorChunkerNiceWithUpdate(
@@ -217,13 +327,7 @@ console.log("OPTIONS:", W, H, scaleX, scaleY, options)
       map.setFilter("cousubs-line", ["in", "geoid", "none"]);
     }
 
-    if (this.zoomToBounds) {
-      const bounds = this.getBounds();
-      if (!bounds.isEmpty()) {
-        map.fitBounds(bounds, { padding: { top: 50, right: 400, bottom: 50, left: 10 } });
-        this.zoomToBounds = false;
-      }
-    }
+    this.zoomToBounds && this.resetView() && (this.zoomToBounds = false);
 
     const valueMap = geoids.reduce((a, c) => {
       let value = this.censusKeys.reduce((aa, cc) => {
@@ -288,7 +392,10 @@ console.log("OPTIONS:", W, H, scaleX, scaleY, options)
 
 const LayerFactory = props => {
   return new CensusLayer({
-    geoids: props.geoids || [],
+    geoids: [
+      ...props.geoids,
+      props.compareGeoid
+    ].filter(Boolean) || [],
     year: props.year || 2017,
     censusKeys: props.censusKeys || [],
     divisorKeys: props.divisorKeys || [],
@@ -318,13 +425,13 @@ const LayerFactory = props => {
     },
 
     mapActions: {
-      // reset: {
-      //   Icon: () => <span className="fa fa-2x fa-home"/>,
-      //   tooltip: "Reset View",
-      //   action: function() {
-      //     this.resetView();
-      //   }
-      // }
+      reset: {
+        Icon: () => <span className="fa fa-2x fa-home"/>,
+        tooltip: "Reset View",
+        action: function() {
+          this.resetView();
+        }
+      }
       // test: {
       //   tooltip: "Test iframe",
       //   Icon: () => <span className="fa fa-2x fa-car"/>,
@@ -404,8 +511,8 @@ const LayerFactory = props => {
         layout: {
           "symbol-placement": "point",
           "text-size": 12,
-          "text-allow-overlap": true,
-          "text-ignore-placement": true
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
         },
         paint: {
           "text-color": "#000"

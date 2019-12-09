@@ -136,17 +136,6 @@ const initialState = {
     latest: 2017,
     earliest: 2012,
     active: 2017
-  },
-  theme: {
-    axis: {
-      textColor: '#eee',
-      fontSize: '34px',
-      tickColor: '#eee',
-    },
-    grid: {
-      stroke: '#888',
-      strokeWidth: 1
-    },
   }
 };
 

@@ -25,45 +25,52 @@ const REGIONS = {
   "Greater Capital Region": ['36001','36083','36093','36091','36039','36021','36115','36113']
 }
 
-class ReportIndex extends React.Component{
+class Profile extends React.Component{
 
   state = {
     year: 2017,
-    compareYear: 2016,
-    region: "Capital Region"
-  }
-
-  regionToggle() {
-    const region = this.state.region === "Capital Region" ? "Greater Capital Region" : "Capital Region";
-    this.setState({ region })
+    compareYear: 2016
   }
 
   renderCategory(name, configData) {
       return (
         <Element name={name} key={ name }>
-            <div className='content-box'>
-                <div className='element-wrapper'>
-                    <h4 className='element-header'>{ name.toUpperCase() }</h4>
-                    <div classname='element-content'>
-                        <GridLayout
-                          sideWidth={800}
-                          minifiedWidth={1}
-                          isOpen={1}
-                          title={''}
-                          graphs={
-                            configData.filter(d =>
-                              (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
-                            )
-                          }
-                          geoids={ REGIONS[this.state.region] }
-                          compareGeoid={ this.props.compareGeoid }
-                          verticalCompact={false}
-                        />
-                    </div>
-                </div>
+            <div className='element-wrapper'
+              style={ { padding: 0, marginTop: 1 === 0 ? 0 : "20px" } }>
+                <h4 className='element-header'
+                  style={ { marginBottom: "1rem" } }>
+                  { name.toUpperCase() }
+                </h4>
             </div>
+            <GridLayout
+              sideWidth={800}
+              minifiedWidth={1}
+              isOpen={1}
+              title={''}
+              graphs={
+                configData.filter(d =>
+                  (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
+                ).map(d => {
+                  const data = {
+                    ...d,
+                    year: this.state.year,
+                    years: YEARS
+                  };
+                  if (data.showCompareYear) {
+                    data.compareYear = this.state.compareYear;
+                  }
+                  return data;
+                })
+              }
+              geoids={ REGIONS[this.props.region] }
+              verticalCompact={false}
+            />
         </Element>
       )
+    }
+
+    setGeoid(geoid) {
+      this.props.history.push(`/profile/${ geoid }`)
     }
 
   render() {
@@ -72,14 +79,14 @@ class ReportIndex extends React.Component{
       )
       return(
           <div>
-            <ProfileHeader regionToggle={ () => this.regionToggle() }
-              title={ this.state.region }
-              geoids={ REGIONS[this.state.region] }/>
+            <ProfileHeader key={ this.props.region }
+              title={ this.props.region }
+              geoids={ REGIONS[this.props.region] }/>
 
             <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
               <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
                   <Sidebar { ...this.state } years={ YEARS }
-                    geoid={ this.props.geoid }
+                    setGeoid={ geoid => this.setGeoid(geoid) }
                     setYear={ year => this.setState({ year }) }
                     setCompareYear={ compareYear => this.setState({ compareYear }) }/>
                 <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
@@ -107,6 +114,9 @@ class ReportIndex extends React.Component{
   }
 }
 
+const Factory = region =>
+  ({ ...props }) => <Profile { ...props } region={ region }/>
+
 export default [
     {
         icon: 'os-icon-home',
@@ -118,10 +128,29 @@ export default [
             scheme: 'color-scheme-dark',
             style: 'color-style-default'
         },
-        name: 'Community Profiles',
+        name: 'Capital Region',
+        auth:false,
+        subMenus: [subMenus[0].filter(({ path }) =>
+          REGIONS['Capital Region'].reduce((a, c) =>
+            a || path.includes(c)
+          , false)
+        )],
+        component: Factory("Capital Region")
+    },
+    {
+        icon: 'os-icon-home',
+        path: '/profiles-greater',
+        mainNav: true,
+        exact: true,
+        menuSettings:{
+            image: 'none',
+            scheme: 'color-scheme-dark',
+            style: 'color-style-default'
+        },
+        name: 'Greater Capital Region',
         auth:false,
         subMenus: subMenus,
-        component: ReportIndex
+        component: Factory("Greater Capital Region")
     },
     ...Profiles,
     ShareEmbed

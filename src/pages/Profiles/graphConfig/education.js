@@ -24,6 +24,7 @@ const BASE_CONFIG = [
       censusKeys:['B15003_002E...B15003_016E'],
       showCompareYear: true,
       maximumFractionDigits: 1,
+      invertColors: true,
       layout:{
          w:6,
          h:4,
@@ -40,6 +41,7 @@ const BASE_CONFIG = [
       censusKeys:['B15003_002E...B15003_016E'],
       divisorKeys:['B01003_001E'],
       showCompareYear: true,
+      invertColors: true,
       layout:{
          w:6,
          h:4,
@@ -55,8 +57,18 @@ const BASE_CONFIG = [
             censusKeys: [
               'B15003_016E...B15003_025E'
               // 'B15003_002E...B15003_025E',
-            ],
+            ]
         },
+
+          {
+              type: 'CensusPieChart',
+              title: 'Educational Attainment',
+              legendWidth: 260,
+              censusKeys: [
+                'B15003_016E...B15003_025E'
+                // 'B15003_002E...B15003_025E',
+              ]
+          },
         {
           title: "Sex by School Enrollment by Level of School by Type of School",
           type: "CensusStackedBarChart",
@@ -102,6 +114,7 @@ const BASE_CONFIG = [
       amount:true,
       showCompareYear: true,
       maximumFractionDigits: 1,
+      invertColors: true,
       layout:{
          w:6,
          h:3,
@@ -164,7 +177,6 @@ const BASE_CONFIG = [
           type: "CensusStackedBarChart",
           yFormat: "$,d",
           marginLeft: 310,
-          layout: { h: 12 },
           left: {
             key: "Male", color: maleColor,
             keys: ["B20004_008E...B20004_012E"]
