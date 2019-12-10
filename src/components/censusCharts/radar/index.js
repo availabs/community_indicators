@@ -184,7 +184,8 @@ class RadarGraph extends React.Component {
                 itemHeight: 19,
                 itemTextColor: '#000',
                 symbolSize: 15,
-                symbolShape: 'square'
+                symbolShape: 'square',
+                format: ",d",
               }
             ].filter(d => showLegend) }/>
         </div>

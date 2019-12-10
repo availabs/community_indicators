@@ -16,6 +16,7 @@ const BASE_CONFIG = [
       showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
+      invertColors: true,
       layout:{
          w:4,
          h:4,
@@ -49,6 +50,7 @@ const BASE_CONFIG = [
         "B22001_002E",
         ],
         showCompareYear: true,
+        invertColors: true,
       title: "Households that Received Food Stamps/SNAP in the Past 12 Months",
       layout:{
          w:6,
@@ -71,7 +73,6 @@ const BASE_CONFIG = [
       censusKeys:[
         "B09010_001E",
         ],
-        showCompareYear: true,
       title: "Households with Children Under Age 18",
       layout:{
          w:6,
@@ -85,6 +86,7 @@ const BASE_CONFIG = [
         "B09010_002E",
         ],
         showCompareYear: true,
+        invertColors: true,
       title: "Households with Children Under Age 18 that Received Supplemental Security Income (SSI), Cash Public Assistance Income, or Food Stamps/SNAP",
       layout:{
          w:6,

@@ -54,6 +54,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       censusKeys:["B25002_003E"],
       showCompareYear: true,
+      invertColors: true,
       layout:{
          w:6,
          h:4,
@@ -67,6 +68,8 @@ const BASE_CONFIG = [
       censusKeys:["B25002_003E"],
       divisorKey: 'B25002_001E',
       valueSuffix: '%',
+      showCompareYear: true,
+      invertColors: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,

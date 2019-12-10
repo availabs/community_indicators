@@ -25,6 +25,7 @@ const BASE_CONFIG = [
       censusKeys:['B15003_002E...B15003_016E'],
       amount:true,
       showCompareYear: true,
+      invertColors: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
@@ -42,6 +43,7 @@ const BASE_CONFIG = [
       censusKeys:['B15003_002E...B15003_016E'],
       divisorKeys:['B01003_001E'],
       amount:true,
+      invertColors: true,
       showCompareYear: true,
       layout:{
          w:6,
@@ -54,7 +56,8 @@ const BASE_CONFIG = [
       type: "CensusBarChart",
       censusKeys: ['B15003_002E...B15003_016E'],
       divisorKeys: ['B01003_001E'],
-      groupBy: "geoids"
+      groupBy: "geoids",
+
     },
 
    {
@@ -62,7 +65,7 @@ const BASE_CONFIG = [
       title: "Total High School Diploma or Equivalent and No College",
       censusKeys:['B15003_017E','B15003_018E'],
       amount:true,
-      showCompareYear: true,
+
       maximumFractionDigits: 1,
       layout:{
          w:4,
@@ -75,7 +78,7 @@ const BASE_CONFIG = [
       title: "Some College but No Degree",
       censusKeys:['B15003_019E','B15003_020E'],
       amount:true,
-      showCompareYear: true,
+
       maximumFractionDigits: 1,
       layout:{
          w:4,
@@ -118,6 +121,7 @@ const BASE_CONFIG = [
       censusKeys:["B14003_023E", "B14003_024E", "B14003_025E", "B14003_026E", "B14003_051E", "B14003_052E", "B14003_053E","B14003_054E"],
       amount:true,
       showCompareYear: true,
+      invertColors: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,

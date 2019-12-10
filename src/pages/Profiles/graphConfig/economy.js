@@ -23,7 +23,7 @@ const BASE_CONFIG = [
       divisorKey: "B23025_001E",
       showCompareYear: true,
       valueSuffix: '%',
-      invertColors: false,
+      invertColors: true,
       maximumFractionDigits: 1,
       layout:{
          w:6,
