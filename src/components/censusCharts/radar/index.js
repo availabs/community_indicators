@@ -9,6 +9,7 @@ import Title from "../ComponentTitle"
 
 import { scaleOrdinal } from "d3-scale"
 import { format } from "d3-format"
+import * as d3 from "d3-selection"
 
 import get from "lodash.get"
 import styled from "styled-components"
@@ -75,6 +76,49 @@ class RadarGraph extends React.Component {
       keys: ["geoid", "name", "year", "census key", "census label", "value", "moe"]
     };
   }
+  componentDidMount() {
+    this.renderDescription();
+  }
+  componentDidUpdate() {
+    this.renderDescription();
+  }
+  renderDescription() {
+    const showDescription = Boolean(this.props.description.length),
+      descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
+
+    if (!showDescription) return;
+
+    if (!this.container.current) return;
+
+    const description = this.props.description;
+
+    d3.select(this.container.current)
+      .select("svg")
+      .selectAll("g.description-group")
+      .data([description])
+        .join("g")
+          .attr("class", "description-group")
+          .style("transform", `translate(7px, calc(100% - ${ descriptionHeight }px))`)
+          .each(function(d) {
+            d3.select(this)
+              .selectAll("text")
+              .data(d)
+              .join("text")
+                .attr("font-size", "12px")
+                .attr("font-family", "sans-serif")
+                .attr("x", 10)
+                .attr("y", (d, i) => (i + 1) * 12)
+                .text(d => d);
+
+            d3.select(this)
+              .selectAll("rect")
+              .data(["rect"])
+              .join("rect")
+                .attr("width", "calc(100% - 14px)")
+                .attr("height", description.length * 12 + 5)
+                .attr("fill", "rgba(0, 0, 0, 0.05)")
+          })
+  }
   render() {
     const getLabel = key =>
       key in this.props.censusKeyLabels ?
@@ -82,6 +126,9 @@ class RadarGraph extends React.Component {
       getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
 
     const showLegend = this.props.allGeoids.length > 1;
+
+    const showDescription = Boolean(this.props.description.length),
+      descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
 
     return (
       <div style={ { width: "100%", height: "100%" } }
@@ -123,22 +170,22 @@ class RadarGraph extends React.Component {
             }
             margin={ {
               top: this.props.marginTop,
-              bottom: 30,
+              bottom: 30 + descriptionHeight,
               right: showLegend ? this.props.legendWidth : 0
             } }
 
             legends={ [
-                {
-                    anchor: 'top-right',
-                    direction: 'column',
-                    translateX: -50,
-                    translateY: 0,
-                    itemWidth: this.props.legendWidth,
-                    itemHeight: 19,
-                    itemTextColor: '#000',
-                    symbolSize: 15,
-                    symbolShape: 'square'
-                }
+              {
+                anchor: 'top-right',
+                direction: 'column',
+                translateX: -50,
+                translateY: 0,
+                itemWidth: this.props.legendWidth,
+                itemHeight: 19,
+                itemTextColor: '#000',
+                symbolSize: 15,
+                symbolShape: 'square'
+              }
             ].filter(d => showLegend) }/>
         </div>
       </div>

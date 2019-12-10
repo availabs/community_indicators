@@ -195,7 +195,7 @@ class CensusBarChart extends React.Component {
       (this.props.groupBy === "censusKeys" && this.props.compareGeoid);
 
     const showDescription = Boolean(this.props.description.length),
-      descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;
+      descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
 
     return (
       <div style={ { width: "100%", height: "100%" } }
@@ -227,8 +227,8 @@ class CensusBarChart extends React.Component {
             margin={ {
               right: this.props.marginRight,
               top: showLegend ? (this.props.marginTop + 30) : this.props.marginTop,
-              bottom: (this.props.axisBottom ? 30 : 20) + descriptionHeight,
-              left: 20 } }
+              bottom: 30 + descriptionHeight,
+              left: this.props.marginLeft } }
             colors={ d => colors(d.id) }
             labelSkipWidth={ 100 }
             labelSkipHeight={ 12 }
@@ -250,11 +250,9 @@ class CensusBarChart extends React.Component {
             axisLeft={ {
               format: this.props.orientation === 'horizontal' ? getKeyName : fmt
             } }
-            axisBottom={
-              !this.props.axisBottom ? null : {
-                format: this.props.orientation === "horizontal" ? fmt : getKeyName
-              }
-            }/>
+            axisBottom={ {
+              format: this.props.orientation === "horizontal" ? fmt : getKeyName
+            } }/>
         </div>
       </div>
     );
