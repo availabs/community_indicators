@@ -7,6 +7,7 @@ import CensusPieChart from "./pie/CensusPieChart.js"
 import CensusStatBox from "./statBox/index.js"
 import TextBox from "./TextBox"
 import CensusMap from "./map"
+import CensusRadarGraph from "./radar"
 
 const NA = ({ type, state, routes }) =>
   <div>
@@ -24,6 +25,7 @@ export default {
     CensusStatBox,
     TextBox,
     CensusMap,
+    CensusRadarGraph,
     NE,
     NA
 }

@@ -8,6 +8,7 @@ import CensusStackedBarChart from "components/censusCharts/bar/censusStackedBarC
 import CensusLineChart from "components/censusCharts/line/censusLineChart"
 import CensusMap from "components/censusCharts/map"
 import CensusPieChart from "components/censusCharts/pie/CensusPieChart"
+import CensusRadarChart from "components/censusCharts/radar"
 
 import PROFILE_CONFIG from "pages/Profiles/graphConfig"
 import REGION_CONFIG from "pages/Profiles/regionConfig"
@@ -17,7 +18,8 @@ const TYPES = {
   CensusStackedBarChart,
   CensusLineChart,
   CensusMap,
-  CensusPieChart
+  CensusPieChart,
+  CensusRadarChart
 }
 const NotYetImplemented = ({ type }) =>
   <h1>{ type } NOT YET IMPLEMENTED</h1>

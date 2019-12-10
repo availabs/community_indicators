@@ -172,6 +172,33 @@ const BASE_CONFIG = [
         "B19301H_001E": "White Alone, Not Hispanic or Latino",
         "B19301I_001E": "Hispanic or Latino"      }
     },
+    {
+      type: "CensusRadarGraph",
+      title: "Per Capita Income",
+      format: "$,d",
+      censusKeys: [
+        "B19301A_001E",
+        "B19301B_001E",
+        "B19301C_001E",
+        "B19301D_001E",
+        "B19301E_001E",
+        "B19301F_001E",
+        "B19301G_001E",
+        "B19301H_001E",
+        "B19301I_001E"
+      ],
+      censusKeyLabels: {
+        "B19301A_001E": "White",
+        "B19301B_001E": "Black or African American Alone",
+        "B19301C_001E": "American Indian and Alaska Native",
+        "B19301D_001E": "Asian",
+        "B19301E_001E": "Native Hawaiian and Other Pacific Islander",
+        "B19301F_001E": "Some Other Race Alone",
+        "B19301G_001E": "Two or More Races",
+        "B19301H_001E": "White Alone, Not Hispanic or Latino",
+        "B19301I_001E": "Hispanic or Latino"
+      }
+    },
 
     // { type: "CensusBarChart",
     //   title: "TEST",
