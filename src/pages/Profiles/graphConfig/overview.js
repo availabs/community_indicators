@@ -10,7 +10,6 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       censusKeys:["B01003_001E"],
       showCompareYear: true,
-      yearPosition: "block",
       title: "Population",
       layout:{
          w:3,

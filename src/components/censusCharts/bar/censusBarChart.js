@@ -361,7 +361,7 @@ const LegendFactory = (colors, keys, getKeyName) =>
         {
           keys.map((k, i) =>
             <g key={ k }>
-              { (i % 2) === 0 ? null :
+              { (i % 2) === 1 ? null :
                 <rect width="20" height="20" fill={ colors(k) }
                   x={ width * 0.5 - (Math.floor(i * 0.5) * w) - 22 }/>
               }
@@ -370,7 +370,7 @@ const LegendFactory = (colors, keys, getKeyName) =>
                 textAnchor={ i % 2 === 0 ? "end" : "start" }>
                 { getKeyName(k) }
               </text>
-              { (i % 2) === 1 ? null :
+              { (i % 2) === 0 ? null :
                 <rect width="20" height="20" fill={ colors(k) }
                   x={ width * 0.5 + (Math.floor(i * 0.5) * w) + 2 }/>
               }
