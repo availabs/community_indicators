@@ -98,9 +98,12 @@ class CensusStatBox extends React.Component {
     }
 
     render(){
-        const displayData = this.calculateValues(),
+        let displayData = this.calculateValues(),
           growthColors = [this.props.increaseColor, this.props.decreaseColor];
         this.props.invertColors && growthColors.reverse();
+        if (!this.props.showColors) {
+          growthColors = ["currentColor", "currentColor"];
+        }
         const growthColor = displayData.change ? growthColors[displayData.change >= 0 ? 0 : 1] : "currentColor";
         return(
           <div style={ { height: "100%", position: "relative" } }>
@@ -141,7 +144,8 @@ class CensusStatBox extends React.Component {
         yearPosition: "bottom-left",
         increaseColor: "#090",
         decreaseColor: "#900",
-        invertColors: false
+        invertColors: false,
+        showColors: true
     }
 }
 

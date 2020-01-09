@@ -8,6 +8,23 @@ const HOST = 'https://availauth.availabs.org'
 const USER_LOGIN = 'USER_LOGIN';
 const USER_LOGOUT = 'USER_LOGOUT';
 const AUTH_FAILURE = 'AUTH_FAILURE'
+
+const SET_YEAR = "SET_YEAR"
+export const setYear = year =>
+  dispatch =>
+    dispatch({
+      type: SET_YEAR,
+      year
+    })
+
+const SET_COMPARE_YEAR = "SET_COMPARE_YEAR"
+export const setCompareYear = year =>
+  dispatch =>
+    dispatch({
+      type: SET_COMPARE_YEAR,
+      year
+    })
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -136,7 +153,9 @@ const initialState = {
     latest: 2017,
     earliest: 2012,
     active: 2017
-  }
+  },
+  year: 2017,
+  compareYear: 2012
 };
 
 // ------------------------------------
@@ -164,6 +183,18 @@ const ACTION_HANDLERS = {
   [USER_LOGOUT]: (state = initialState, action) => {
     removeUserToken()
     return initialState;
+  },
+  [SET_COMPARE_YEAR]: (state = initialState, action) => {
+    return {
+      ...state,
+      compareYear: action.year
+    }
+  },
+  [SET_YEAR]: (state = initialState, action) => {
+    return {
+      ...state,
+      year: action.year
+    }
   }
 };
 
