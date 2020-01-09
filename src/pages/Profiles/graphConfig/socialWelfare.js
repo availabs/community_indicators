@@ -119,6 +119,7 @@ const BASE_CONFIG = [
         left: { key: "Below Poverty Level", slice: [0, 26] },
         right: { key: "Above Poverty Level", slice: [26, 52] },
         showCompare: false,
+        showCompareGeoid: false,
         marginLeft: 150,
         layout: { h: 12 },
         labels: [
