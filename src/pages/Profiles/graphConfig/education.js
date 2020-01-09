@@ -45,7 +45,7 @@ const BASE_CONFIG = [
           layout:{
              w:3,
              h:6,
-             X:0,
+             x:0,
           }
        },
 
@@ -61,7 +61,7 @@ const BASE_CONFIG = [
             layout:{
               w:9,
               h:12,
-             }   
+             }
         },
 
 
@@ -131,9 +131,9 @@ const BASE_CONFIG = [
                 ]
               },
               marginLeft: 250,
-              layout: { 
+              layout: {
                 w: 9,
-                h: 12, 
+                h: 12,
               },
               labels: [
                 'Ages 3 and 4, enrolled in school',
@@ -182,6 +182,7 @@ const BASE_CONFIG = [
           layout:{
              w:3,
              h:6,
+             x: 0
           }
        },
 
@@ -198,6 +199,7 @@ const BASE_CONFIG = [
           layout:{
              w:3,
              h:6,
+             x: 0
             }
         },
 
@@ -256,9 +258,9 @@ const BASE_CONFIG = [
           ],
         },
 
-          
 
-       
+
+
 
         {
           title: "Median Earnings by Sex by Educational Attainment Ages 25 and Over",
