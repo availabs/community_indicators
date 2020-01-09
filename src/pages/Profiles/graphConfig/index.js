@@ -12,11 +12,13 @@ const getId = () => `profile-${ ++ID }`;
 const CONFIG = {
   Overview,
   Economy,
-  Transportation,
-  Housing,
-  Education,
+  'Social Welfare': SocialWelfare,
   Health,
-  'Social Welfare': SocialWelfare
+  Education,
+  Housing,
+  Transportation,
+  
+  
 }
 
 export default Object.keys(CONFIG).reduce((a, k) => ({

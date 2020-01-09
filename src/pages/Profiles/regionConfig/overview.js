@@ -10,11 +10,11 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       censusKeys:["B01003_001E"],
       showCompareYear: true,
-      title: "Population",
+      title: "Regional Population",
       layout:{
-         w:4,
-         h:4,
-         x: 4
+         w:3,
+         h:9,
+         
       }
    },
 
@@ -22,8 +22,41 @@ const BASE_CONFIG = [
       type: 'CensusBarChart',
       title: 'Population by County',
       censusKeys: ['B01003_001E'],
-      groupBy: "geoids"
+      groupBy: "geoids",
+      layout: {
+        w:9,
+        h: 9
+
+      }
+
     },
+
+    {
+      type:"CensusStatBox",
+      title: "Median Household Income",
+      valuePrefix:'$',
+      censusKeys:["B19013_001E"],
+      groupBy: "geoids",
+      layout:{
+         w:3,
+         h:9,
+         x:0
+      }
+   },
+
+   {
+      type:"CensusBarChart",
+      title: "Median Household Income",
+      censusKeys:["B19013_001E"],
+      marginLeft: 75,
+      yFormat: "$,d",
+      legendWidth: 175,
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:9
+      }
+   },
 
 
 

@@ -13,10 +13,24 @@ const BASE_CONFIG = [
       showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
-         w:6,
+         w:3,
          h:4
       }
-   },
+   }, 
+
+      {
+      title:'Bike/Ped as a Percent of Total Commuters',
+      type: "CensusBarChart",
+      censusKeys:["B08006_014E", "B08006_015E"],
+      divisorKey: "B23025_001E",
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:9,
+       },
+
+  },
+
   {
       type:"CensusStatBox",
       title:'Bike/Ped as a Percent of Total Commuters',
@@ -25,19 +39,14 @@ const BASE_CONFIG = [
       divisorKey: "B23025_001E",
       valueSuffix: '%',
       maximumFractionDigits: 1,
+      showCompareYear: true,
       layout:{
-         w:6,
-         h:4
+         w:3,
+         h:5,
       }
    },
 
-   {
-      title:'Bike/Ped as a Percent of Total Commuters',
-      type: "CensusBarChart",
-      censusKeys:["B08006_014E", "B08006_015E"],
-      divisorKey: "B23025_001E",
-      groupBy: "geoids"
-    },
+
 
   {
       type:"CensusStatBox",
@@ -48,7 +57,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:6,
-         h:4
+         h:4,
       }
    },
 
@@ -60,6 +69,7 @@ const BASE_CONFIG = [
       divisorKey: "B23025_001E",
       valueSuffix: '%',
       maximumFractionDigits: 1,
+      showCompareYear: true,
       layout:{
          w:6,
          h:4

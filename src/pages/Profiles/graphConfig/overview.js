@@ -21,6 +21,7 @@ const BASE_CONFIG = [
       id:"2",
       type:"CensusStatBox",
       title: "Median Age",
+      showCompareYear: true,
       censusKeys:["B01002_001E"],
       maximumFractionDigits: 1,
       demographics:true,
@@ -39,10 +40,45 @@ const BASE_CONFIG = [
          w: 9
        }
      },
+
+   {
+        type: 'CensusStackedBarChart',
+        broadCensusKey: 'B01001',
+        left: { key: "Male", slice: [2, 25], color: maleColor },
+        right: { key: "Female", slice: [26, 49], color: femaleColor },
+        layout: { h: 12 },
+        marginLeft: 115,
+        labels: [
+          'Under Age 5',
+          'Ages 5-9',
+          'Ages 10-14',
+          'Ages 15-17',
+          'Ages 18-19',
+          'Ages 20',
+          'Ages 21',
+          'Ages 22-24',
+          'Ages 25-29',
+          'Ages 30-34',
+          'Ages 35-39',
+          'Ages 40-44',
+          'Ages 45-49',
+          'Ages 50-54',
+          'Ages 55-59',
+          'Ages 60-61',
+          'Ages 62-64',
+          'Ages 65-66',
+          'Ages 67-69',
+          'Ages 70-74',
+          'Ages 75-79',
+          'Ages 80-84',
+          'Ages 85 and over'
+        ]
+    },
    {
       type:"CensusStatBox",
       title: "Median Household Income",
       valuePrefix:'$',
+      showCompareYear: true,
       censusKeys:["B19013_001E"],
       layout:{
          w:3,
@@ -99,13 +135,15 @@ const BASE_CONFIG = [
       title: "Percent Vacant Housing Units",
       type:"CensusStatBox",
       sumType: 'pct',
+      showCompareYear: true,
+      invertColors: true,
       censusKeys:["B25002_003E"],
       divisorKey: 'B25002_001E',
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:3,
+         h:4,
          x:0
       }
    },
@@ -139,13 +177,13 @@ const BASE_CONFIG = [
       divisorKeys:["B25002_001E"],
       layout:{
          w:9,
-         h:9
+         h:10
       }
    },
 
        {
       type: "CensusLineChart",
-      title: "Per Capita Income",
+      title: "Per Capita Income By Race and Ethnicity",
       marginLeft: 75,
       yFormat: "$,d",
       showCompare: false,
@@ -153,23 +191,13 @@ const BASE_CONFIG = [
       censusKeys: [
         "B19301A_001E",
         "B19301B_001E",
-        "B19301C_001E",
         "B19301D_001E",
-        "B19301E_001E",
-        "B19301F_001E",
-        "B19301G_001E",
-        "B19301H_001E",
         "B19301I_001E"
       ],
       censusKeyLabels: {
         "B19301A_001E": "White",
         "B19301B_001E": "Black or African American Alone",
-        "B19301C_001E": "American Indian and Alaska Native",
         "B19301D_001E": "Asian",
-        "B19301E_001E": "Native Hawaiian and Other Pacific Islander",
-        "B19301F_001E": "Some Other Race Alone",
-        "B19301G_001E": "Two or More Races",
-        "B19301H_001E": "White Alone, Not Hispanic or Latino",
         "B19301I_001E": "Hispanic or Latino"      }
     },
     {

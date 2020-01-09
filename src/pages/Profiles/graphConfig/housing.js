@@ -30,6 +30,62 @@ const BASE_CONFIG = [
 
         },
 
+     {
+      title: "Vacant Housing Units",
+      type:"CensusStatBox",
+      censusKeys:["B25002_003E"],
+      showCompareYear: true,
+      invertColors: true,
+      layout:{
+         w:3,
+         h:4,
+      },
+   },
+
+    {
+      title:"Percent Vacant Housing Units",
+      type: "CensusLineChart",
+      sumType: 'pct',
+      censusKeys:["B25002_003E"],
+      divisorKey: 'B25002_001E',
+      marginLeft: 100,
+       layout:{
+         w:9,
+         h:8,
+      },
+    },
+
+   {
+      title: "Percent Vacant Housing Units",
+      type:"CensusStatBox",
+      sumType: 'pct',
+
+      censusKeys:["B25002_003E"],
+      divisorKey: 'B25002_001E',
+      valueSuffix: '%',
+      showCompareYear: true,
+      invertColors: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+     { type: "CensusLineChart",
+    title: "Vacancy Status",
+    showCompare: false,
+    censusKeys: [
+      "B25004_002E",
+      "B25004_003E",
+      "B25004_004E",
+      "B25004_005E",
+      "B25004_006E",
+      "B25004_007E",
+      "B25004_008E"
+    ]
+  },
+
+
   { "type": "CensusBarChart",
     "broadCensusKey": "B25087",
     orientation: 'horizontal',
@@ -57,7 +113,7 @@ const BASE_CONFIG = [
     ]
   },
   { type: "CensusBarChart",
-    title: "Mortgate Status and Selected MOnthly Owner Costs",
+    title: "Mortgate Status and Selected Monthly Owner Costs",
     orientation: "horizontal",
     marginLeft: 260,
     censusKeys: [
@@ -83,7 +139,7 @@ const BASE_CONFIG = [
     ]
   },
   { type: "CensusStackedBarChart",
-    title: "Tenure by Household Icome in the Past 12 Months",
+    title: "Tenure by Household Income in the Past 12 Months",
     marginLeft: 140,
     left: { key: "Owner Occupied",
       keys: [
@@ -127,20 +183,7 @@ const BASE_CONFIG = [
       "$150,000 or more"
     ]
   },
-  { type: "CensusLineChart",
-    title: "Vacancy Status",
-    showCompare: false,
-    censusKeys: [
-      "B25004_001E",
-      "B25004_002E",
-      "B25004_003E",
-      "B25004_004E",
-      "B25004_005E",
-      "B25004_006E",
-      "B25004_007E",
-      "B25004_008E"
-    ]
-  },
+
 
  {
       type: "ProfileFooter",

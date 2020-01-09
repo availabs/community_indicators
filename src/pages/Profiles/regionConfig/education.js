@@ -6,19 +6,6 @@ import {
 
 const BASE_CONFIG = [
 
-  {
-      type: 'CensusPieChart',
-      title: 'Educational Attainment',
-      censusKeys: [
-        'B15003_016E...B15003_025E'
-        // 'B15003_002E...B15003_025E',
-      ],
-      piesPerRow: 4,
-      legendWidth: 260,
-      layout: {
-        h: 12
-      }
-  },
      {
       type:"CensusStatBox",
       title: "Total With No High School Diploma or Equivalent",
@@ -115,9 +102,23 @@ const BASE_CONFIG = [
         },
     },
 
+      {
+      type: 'CensusPieChart',
+      title: 'Educational Attainment',
+      censusKeys: [
+        'B15003_016E...B15003_025E'
+        // 'B15003_002E...B15003_025E',
+      ],
+      piesPerRow: 4,
+      legendWidth: 260,
+      layout: {
+        h: 12
+      }
+  },
+
     {
       type:"CensusStatBox",
-      title: "Total Ages 5-19 Not Enrolled in School",
+      title: "Total Ages 5-19 Not Enrolled in School (census proxy for dropout rate)",
       censusKeys:["B14003_023E", "B14003_024E", "B14003_025E", "B14003_026E", "B14003_051E", "B14003_052E", "B14003_053E","B14003_054E"],
       amount:true,
       showCompareYear: true,

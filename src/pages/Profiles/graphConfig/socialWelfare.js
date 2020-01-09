@@ -15,40 +15,77 @@ const BASE_CONFIG = [
              }
         },
 
+        {
+      type:"CensusStatBox",
+      title: "Median Household Income, White",
+      valuePrefix:'$',
+      censusKeys:["B19013A_001E"],
+      showCompareYear: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
 
-    {
-        type: 'CensusStackedBarChart',
-        broadCensusKey: 'B01001',
-        left: { key: "Male", slice: [2, 25], color: maleColor },
-        right: { key: "Female", slice: [26, 49], color: femaleColor },
-        layout: { h: 12 },
-        marginLeft: 115,
-        labels: [
-          'Under Age 5',
-          'Ages 5-9',
-          'Ages 10-14',
-          'Ages 15-17',
-          'Ages 18-19',
-          'Ages 20',
-          'Ages 21',
-          'Ages 22-24',
-          'Ages 25-29',
-          'Ages 30-34',
-          'Ages 35-39',
-          'Ages 40-44',
-          'Ages 45-49',
-          'Ages 50-54',
-          'Ages 55-59',
-          'Ages 60-61',
-          'Ages 62-64',
-          'Ages 65-66',
-          'Ages 67-69',
-          'Ages 70-74',
-          'Ages 75-79',
-          'Ages 80-84',
-          'Ages 85 and over'
-        ]
-    },
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Black",
+      valuePrefix:'$',
+      censusKeys:["B19013B_001E"],
+      showCompareYear: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Hispanic or Latino",
+      valuePrefix:'$',
+      censusKeys:["B19013I_001E"],
+      showCompareYear: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+
+     {
+      type:"CensusStatBox",
+      title: "Median Household Income, Asian",
+      valuePrefix:'$',
+      censusKeys:["B19013D_001E"],
+      showCompareYear: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:4,
+      }
+   },
+  {
+    type: "CensusLineChart",
+    title: "Median Household Income by Race",
+    censusKeys: ["B19013A_001E...B19013I_001E"],
+    marginLeft: 75,
+    yFormat: "$,d",
+    showCompare: false,
+    censusKeyLabels: {
+        "B19013A_001E": "White",
+        "B19013B_001E": "Black or African American Alone",
+        "B19013C_001E": "American Indian and Alaska Native",
+        "B19013D_001E": "Asian",
+        "B19013E_001E": "Native Hawaiian and Other Pacific Islander",
+        "B19013F_001E": "Some Other Race Alone",
+        "B19013G_001E": "Two or More Races",
+        "B19013H_001E": "White Alone, Not Hispanic or Latino",
+        "B19013I_001E": "Hispanic or Latino"      }
+
+
+  },
         {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B17001',
@@ -85,6 +122,48 @@ const BASE_CONFIG = [
           'Female ages 75 and over',
         ]
     },
+
+      {
+        type: 'CensusBarChart',
+        title: "Median Family Income by Family Size",
+        censusKeys: ['B19119_001E...B19119_007E'],
+        years: ['2017'],
+        yFormat: "$,d"
+    },
+
+    {
+
+      type: "CensusBarChart",
+      title: "Receipt of Food Stamps/SNAP by Race",
+      marginLeft: 75,
+      showCompare: false,
+      marginLeft: 300,
+      orientation: 'horizontal',
+      layout: { h: 12 },
+      censusKeys: [
+        "B22005A_001E",
+        "B22005B_001E",
+        "B22005C_001E",
+        "B22005D_001E",
+        "B22005E_001E",
+        "B22005F_001E",
+        "B22005G_001E",
+        "B22005H_001E",
+        "B22005I_001E"
+      ],
+      censusKeyLabels: {
+        "B22005A_001E": "White",
+        "B22005B_001E": "Black or African American Alone",
+        "B22005C_001E": "American Indian and Alaska Native",
+        "B22005D_001E": "Asian",
+        "B22005E_001E": "Native Hawaiian and Other Pacific Islander",
+        "B22005F_001E": "Some Other Race Alone",
+        "B22005G_001E": "Two or More Races",
+        "B22005H_001E": "White Alone, Not Hispanic or Latino",
+       "B22005I_001E": "Hispanic or Latino"
+      }
+    },
+
     {
         type: 'CensusBarChart',
         title: "Language Spoken at Home by Ability to Speak English",
@@ -144,13 +223,27 @@ const BASE_CONFIG = [
         layout: { h: 18 }
     },
 
-
+    {
+      type:"CensusStatBox",
+      title:'Veterans',
+      censusKeys:['B21001_002E'],
+      showCompareYear: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:9,
+      }
+   },
     {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B21001',
         left: { key: "Male", slice: [5, 20], color: maleColor },
         right: { key: "Female", slice: [23, 38], color: femaleColor },
         marginLeft: 175,
+        layout:{
+         w:9,
+         h:9,
+      },
         labels: [
           'Total 18-34',
           '18-34 years, veteran',
@@ -169,38 +262,6 @@ const BASE_CONFIG = [
           '75 years and over, non-veteran',
         ]
     },
-
-        {
-
-      type: "CensusLineChart",
-      title: "Receipt of Food Stamps/SNAP by Race",
-      marginLeft: 75,
-      showCompare: false,
-      censusKeys: [
-        "B22005A_001E",
-        "B22005B_001E",
-        "B22005C_001E",
-        "B22005D_001E",
-        "B22005E_001E",
-        "B22005F_001E",
-        "B22005G_001E",
-        "B22005H_001E",
-        "B22005I_001E"
-      ],
-      censusKeyLabels: {
-        "B22005A_001E": "White",
-        "B22005B_001E": "Black or African American Alone",
-        "B22005C_001E": "American Indian and Alaska Native",
-        "B22005D_001E": "Asian",
-        "B22005E_001E": "Native Hawaiian and Other Pacific Islander",
-        "B22005F_001E": "Some Other Race Alone",
-        "B22005G_001E": "Two or More Races",
-        "B22005H_001E": "White Alone, Not Hispanic or Latino",
-       "B22005I_001E": "Hispanic or Latino"
-      }
-    },
-
-
 
       {
       type: "TextBox",

@@ -18,36 +18,36 @@ const BASE_CONFIG = [
              }
         },
 
- {
-      type:"CensusStatBox",
-      title: "Total With No High School Diploma or Equivalent",
-      censusKeys:['B15003_002E...B15003_016E'],
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      invertColors: true,
-      layout:{
-         w:6,
-         h:4,
-      }
-   },
+       {
+            type:"CensusStatBox",
+            title: "Total With No High School Diploma or Equivalent",
+            censusKeys:['B15003_002E...B15003_016E'],
+            showCompareYear: true,
+            maximumFractionDigits: 1,
+            invertColors: true,
+            layout:{
+               w:3,
+               h:6,
+            }
+         },
 
-   {
-      type:"CensusStatBox",
-      title: "Percent of Population with No High School Diploma or Equivalent",
-      sumType: 'pct',
-      divisorKey: "B23025_001E",
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
-      censusKeys:['B15003_002E...B15003_016E'],
-      divisorKeys:['B01003_001E'],
-      showCompareYear: true,
-      invertColors: true,
-      layout:{
-         w:6,
-         h:4,
-      }
-   },
-
+         {
+          type:"CensusStatBox",
+          title: "Percent of Population with No High School Diploma or Equivalent",
+          sumType: 'pct',
+          divisorKey: "B23025_001E",
+          valueSuffix: '%',
+          maximumFractionDigits: 1,
+          censusKeys:['B15003_002E...B15003_016E'],
+          divisorKeys:['B01003_001E'],
+          showCompareYear: true,
+          invertColors: true,
+          layout:{
+             w:3,
+             h:6,
+             X:0,
+          }
+       },
 
         {
             type: 'CensusBarChart',
@@ -57,18 +57,167 @@ const BASE_CONFIG = [
             censusKeys: [
               'B15003_016E...B15003_025E'
               // 'B15003_002E...B15003_025E',
-            ]
+            ],
+            layout:{
+              w:9,
+              h:12,
+             }   
         },
+
+
+
+       {
+            type:"CensusStatBox",
+            title: "Total Ages 5-19 Not Enrolled in School",
+            censusKeys:["B14003_023E", "B14003_024E", "B14003_025E", "B14003_026E", "B14003_051E", "B14003_052E", "B14003_053E","B14003_054E"],
+            amount:true,
+            showCompareYear: true,
+            maximumFractionDigits: 1,
+            invertColors: true,
+            layout:{
+               w:3,
+               h:6,
+            }
+         },
+
+        {
+              type: "CensusStackedBarChart",
+              marginLeft: 310,
+              layout: { h: 12 },
+              left: {
+                key: "Male", color: maleColor,
+                keys: [
+                  "B14003_004E",
+                  "B14003_005E",
+                  "B14003_006E",
+                  "B14003_007E",
+                  "B14003_008E",
+                  "B14003_009E",
+                  "B14003_013E",
+                  "B14003_014E",
+                  "B14003_015E",
+                  "B14003_016E",
+                  "B14003_017E",
+                  "B14003_018E",
+                  "B14003_022E",
+                  "B14003_023E",
+                  "B14003_024E",
+                  "B14003_025E",
+                  "B14003_026E",
+                  "B14003_027E",
+                ]
+              },
+              right: {
+                key: "Female", color: femaleColor,
+                keys: [
+                  "B14003_032E",
+                  "B14003_033E",
+                  "B14003_034E",
+                  "B14003_035E",
+                  "B14003_036E",
+                  "B14003_037E",
+                  "B14003_041E",
+                  "B14003_042E",
+                  "B14003_043E",
+                  "B14003_044E",
+                  "B14003_045E",
+                  "B14003_046E",
+                  "B14003_050E",
+                  "B14003_051E",
+                  "B14003_052E",
+                  "B14003_053E",
+                  "B14003_054E",
+                  "B14003_055E",
+                ]
+              },
+              marginLeft: 250,
+              layout: { 
+                w: 9,
+                h: 12, 
+              },
+              labels: [
+                'Ages 3 and 4, enrolled in school',
+                'Ages 5 to 9, enrolled in school',
+                'Ages 10 to 14, enrolled in school',
+                'Ages 15 to 17, enrolled in school',
+                'Ages 18 and 19, enrolled in school',
+                'Ages 20 to 24, enrolled in school',
+                'Ages 3 and 4, enrolled in private school',
+                'Ages 5 to 9, enrolled in private school',
+                'Ages 10 to 14, enrolled in private school',
+                'Ages 15 to 17, enrolled in private school',
+                'Ages 18 and 19, enrolled in private school',
+                'Ages 20 to 24, enrolled in private school',
+                'Ages 3 and 4, not enrolled in school',
+                'Ages 5 to 9, not enrolled in school',
+                'Ages 10 to 14, not enrolled in school',
+                'Ages 15 to 17, not enrolled in school',
+                'Ages 18 and 19, not enrolled in school',
+                'Ages 20 to 24, not enrolled in school',
+              ],
+        },
+
+         {
+            type:"CensusStatBox",
+            title: "Percent Ages 3-4 Enrolled in School",
+            censusKeys:['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
+            divisorKeys:['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ],
+            sumType: 'pct',
+            valueSuffix: '%',
+            maximumFractionDigits: 1,
+            showCompareYear: true,
+            layout:{
+               w:3,
+               h:6,
+            }
+         },
+
+
+        {
+          type:"CensusStatBox",
+          title: "Total With Bachelors Degree or Higher",
+          censusKeys:['B15003_022E...B15003_025E'],
+          showCompareYear: true,
+          maximumFractionDigits: 1,
+          layout:{
+             w:3,
+             h:6,
+          }
+       },
+
+      {
+          type:"CensusStatBox",
+          title: "Percent of Population with Bachelors Degree or Higher",
+          sumType: 'pct',
+          divisorKey: "B23025_001E",
+          valueSuffix: '%',
+          maximumFractionDigits: 1,
+          censusKeys:['B15003_022E...B15003_025E'],
+          divisorKeys:['B01003_001E'],
+          showCompareYear: true,
+          layout:{
+             w:3,
+             h:6,
+            }
+        },
+
 
           {
               type: 'CensusPieChart',
               title: 'Educational Attainment',
               legendWidth: 260,
+               layout:{
+                 w:9,
+                 h:12,
+                },
               censusKeys: [
                 'B15003_016E...B15003_025E'
                 // 'B15003_002E...B15003_025E',
-              ]
+              ],
+
+
           },
+
         {
           title: "Sex by School Enrollment by Level of School by Type of School",
           type: "CensusStackedBarChart",
@@ -104,73 +253,12 @@ const BASE_CONFIG = [
             "Enrolled in graduate or professional school",
             "Enrolled in graduate or professional school, Public School",
             "Enrolled in graduate or professional school, Private School"
-          ]
+          ],
         },
 
-    {
-      type:"CensusStatBox",
-      title: "Total Ages 5-19 Not Enrolled in School",
-      censusKeys:["B14003_023E", "B14003_024E", "B14003_025E", "B14003_026E", "B14003_051E", "B14003_052E", "B14003_053E","B14003_054E"],
-      amount:true,
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      invertColors: true,
-      layout:{
-         w:6,
-         h:3,
-      }
-   },
+          
 
-   {
-      type:"CensusStatBox",
-      title: "Percent Ages 3-4 Enrolled in School",
-      censusKeys:['B14003_004E', 'B14003_013E', 'B14003_032E', 'B14003_041E'],
-      divisorKeys:['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E' ],
-      sumType: 'pct',
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
-      showCompareYear: true,
-      layout:{
-         w:6,
-         h:3,
-      }
-   },
-
-
-        {
-          type: 'CensusStackedBarChart',
-          broadCensusKey: 'B14003',
-          left: { key: "Male", slice: [0, 24], color: maleColor },
-          right: { key: "Female", slice: [24, 48], color: femaleColor },
-          marginLeft: 250,
-          layout: { h: 12 },
-          labels: [
-            'Ages 3 and 4, enrolled in school',
-            'Ages 5 to 9, enrolled in school',
-            'Ages 10 to 14, enrolled in school',
-            'Ages 15 to 17, enrolled in school',
-            'Ages 18 and 19, enrolled in school',
-            'Ages 20 to 24, enrolled in school',
-            'Ages 25 to 34, enrolled in school',
-            'Ages 35 and over, enrolled in school',
-            'Ages 3 and 4, enrolled in private school',
-            'Ages 5 to 9, enrolled in private school',
-            'Ages 10 to 14, enrolled in private school',
-            'Ages 15 to 17, enrolled in private school',
-            'Ages 18 and 19, enrolled in private school',
-            'Ages 20 to 24, enrolled in private school',
-            'Ages 25 to 34, enrolled in private school',
-            'Ages 35 and over, enrolled in private school',
-            'Ages 3 and 4, not enrolled in school',
-            'Ages 5 to 9, not enrolled in school',
-            'Ages 10 to 14, not enrolled in school',
-            'Ages 15 to 17, not enrolled in school',
-            'Ages 18 and 19, not enrolled in school',
-            'Ages 20 to 24, not enrolled in school',
-            'Ages 25 to 34, not enrolled in school',
-            'Ages 35 and over, not enrolled in school'
-          ]
-        },
+       
 
         {
           title: "Median Earnings by Sex by Educational Attainment Ages 25 and Over",

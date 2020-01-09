@@ -9,7 +9,7 @@ const year = 2017;
 const BASE_CONFIG = [
   {
       type:"CensusStatBox",
-      title:'Percent of Labor Force Unemployed',
+      title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
       sumType: 'pct',
       censusKeys:["B23025_005E"],
       divisorKey: "B23025_001E",
@@ -18,9 +18,8 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       invertColors: true,
       layout:{
-         w:4,
-         h:4,
-         x:4
+         w:3,
+         h:9,
       }
    },
 
@@ -29,7 +28,11 @@ const BASE_CONFIG = [
       type: "CensusBarChart",
       censusKeys:["B23025_005E"],
       divisorKey: "B23025_001E",
-      groupBy: "geoids"
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:9,
+      }
     },
 
      {
@@ -43,9 +46,8 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       invertColors: true,
       layout:{
-         w:4,
-         h:4,
-         x: 4
+         w:3,
+         h:9,
       }
    },
 
@@ -54,7 +56,11 @@ const BASE_CONFIG = [
       type: "CensusBarChart",
       censusKeys:["B23025_007E"],
       divisorKey: "B23025_001E",
-      groupBy: "geoids"
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:9,
+      }
     },
 ]
 

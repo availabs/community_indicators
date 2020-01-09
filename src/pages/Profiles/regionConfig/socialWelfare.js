@@ -114,9 +114,20 @@ const BASE_CONFIG = [
       showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
-         w:4,
-         h:4,
-         x: 4
+         w:3,
+         h:9,
+      }
+   },
+
+     {
+      type:"CensusBarChart",
+      title:'Veterans',
+      groupBy: "geoids",
+      censusKeys:['B21001_002E'],
+      maximumFractionDigits: 1,
+      layout:{
+         w:9,
+         h:9,
       }
    },
 ]

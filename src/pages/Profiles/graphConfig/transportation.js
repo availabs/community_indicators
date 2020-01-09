@@ -21,7 +21,10 @@ const BASE_CONFIG = [
     title: "Means of Transportation to Work",
     censusKeys: ["B08006_002E...B08006_017E"],
     orientation: "horizontal",
-    marginLeft: 490
+    marginLeft: 490,
+    layout:{
+         h:12,
+      }
   },
    {
       type:"CensusStatBox",
@@ -168,14 +171,7 @@ const BASE_CONFIG = [
     orientation: "horizontal",
     marginLeft: 175
   },
-  {
-    type: "CensusBarChart",
-    title: "Means of Transportation to Work by Workers' Earnings",
-    censusKeys: ["B08119_002E...B08119_063E"],
-    orientation: "horizontal",
-    marginLeft: 330,
-    layout: { h: 21 }
-  }
+
 ]
 
 export default configLoader(BASE_CONFIG);

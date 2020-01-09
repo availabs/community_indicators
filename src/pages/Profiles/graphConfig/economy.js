@@ -17,7 +17,7 @@ const BASE_CONFIG = [
 
 {
       type:"CensusStatBox",
-      title:'Percent of Labor Force Unemployed',
+      title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
       sumType: 'pct',
       censusKeys:["B23025_005E"],
       divisorKey: "B23025_001E",
@@ -47,6 +47,16 @@ const BASE_CONFIG = [
       }
    },
 
+ 
+  {
+    type: "CensusBarChart",
+    title: "Employment Status for the Population 16 Years and Over",
+    orientation: "horizontal",
+    marginLeft: 250,
+    legendPosition: "bottom-right",
+    censusKeys: ["B23025_001E...B23025_007E"]
+  },
+ 
   {
     type: "CensusStackedBarChart",
     title: "Labor Force Participation",
@@ -79,14 +89,7 @@ const BASE_CONFIG = [
       "65 years and over Not in labor force"
     ]
   },
-  {
-    type: "CensusBarChart",
-    title: "Employment Status for the Population 16 Years and Over",
-    orientation: "horizontal",
-    marginLeft: 250,
-    legendPosition: "bottom-right",
-    censusKeys: ["B23025_001E...B23025_007E"]
-  },
+
   {
     type: "CensusBarChart",
     title: "Industry by Median Earnings",
@@ -95,96 +98,14 @@ const BASE_CONFIG = [
     marginLeft: 480,
     yFormat: "$,d",
     censusKeys: ["B24031_001E...B24031_027E"],
-    removeLeading: 1
-  },
-  {
-      type:"CensusStatBox",
-      title: "Median Household Income, White",
-      valuePrefix:'$',
-      censusKeys:["B19013A_001E"],
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:4,
+    removeLeading: 1,
+    layout:{
+         w:12,
+         h:17,
       }
-   },
-
-     {
-      type:"CensusStatBox",
-      title: "Median Household Income, Black",
-      valuePrefix:'$',
-      censusKeys:["B19013B_001E"],
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:4,
-      }
-   },
-
-     {
-      type:"CensusStatBox",
-      title: "Median Household Income, Hispanic or Latino",
-      valuePrefix:'$',
-      censusKeys:["B19013I_001E"],
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:4,
-      }
-   },
-
-     {
-      type:"CensusStatBox",
-      title: "Median Household Income, Asian",
-      valuePrefix:'$',
-      censusKeys:["B19013D_001E"],
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:4,
-      }
-   },
-  {
-    type: "CensusLineChart",
-    title: "Median Household Income by Race",
-    censusKeys: ["B19013A_001E...B19013I_001E"],
-    marginLeft: 75,
-    yFormat: "$,d",
-    showCompare: false,
-    censusKeyLabels: {
-        "B19013A_001E": "White",
-        "B19013B_001E": "Black or African American Alone",
-        "B19013C_001E": "American Indian and Alaska Native",
-        "B19013D_001E": "Asian",
-        "B19013E_001E": "Native Hawaiian and Other Pacific Islander",
-        "B19013F_001E": "Some Other Race Alone",
-        "B19013G_001E": "Two or More Races",
-        "B19013H_001E": "White Alone, Not Hispanic or Latino",
-        "B19013I_001E": "Hispanic or Latino"      }
-
 
   },
-  {
-    type: "CensusLineChart",
-    title: "Median Household Income by Household Size",
-    censusKeys: ["B19019_001E...B19019_008E"],
-    marginLeft: 75,
-    yFormat: "$,d",
-    showCompare: false
-
-  },
-
-      {
-        type: 'CensusBarChart',
-        title: "Median Family Income by Family Size",
-        censusKeys: ['B19119_001E...B19119_007E'],
-        years: ['2017'],
-        yFormat: "$,d"
-    },
+  
     {
       type: "TextBox",
       header: "Upstate Alliance for the Creative Economy",
