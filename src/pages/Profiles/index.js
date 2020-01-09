@@ -1,4 +1,6 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { reduxFalcor } from 'utils/redux-falcor'
 import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
@@ -8,6 +10,9 @@ import Profiles from './Profile'
 import ShareEmbed from "./ShareEmbed"
 import ProfileHeader from './components/ProfileHeader'
 import GRAPH_CONFIG from './regionConfig'
+
+import { setYear, setCompareYear } from "store/modules/user"
+import { falcorChunkerNice } from "store/falcorGraph"
 
 import OptionsModal from "components/censusCharts/OptionsModal"
 
@@ -27,10 +32,11 @@ const REGIONS = {
 
 class Profile extends React.Component{
 
-  state = {
-    year: 2017,
-    compareYear: 2016
+  fetchFalcorDeps() {
+    return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"])
+      .then(() => this.props.falcor.get(["geo", [this.props.geoid, this.props.compareGeoid].filter(Boolean), "name"]));
   }
+
 
   renderCategory(name, configData) {
       return (
@@ -53,11 +59,11 @@ class Profile extends React.Component{
                 ).map(d => {
                   const data = {
                     ...d,
-                    year: this.state.year,
+                    year: this.props.year,
                     years: YEARS
                   };
                   if (data.showCompareYear) {
-                    data.compareYear = this.state.compareYear;
+                    data.compareYear = this.props.compareYear;
                   }
                   return data;
                 })
@@ -81,14 +87,18 @@ class Profile extends React.Component{
           <div>
             <ProfileHeader key={ this.props.region }
               title={ this.props.region }
-              geoids={ REGIONS[this.props.region] }/>
+              geoids={ REGIONS[this.props.region] }
+                year={ this.props.year }
+                compareYear={ this.props.compareYear }/>
 
             <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
               <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
-                  <Sidebar { ...this.state } years={ YEARS }
+                  <Sidebar years={ YEARS }
+                    year={ this.props.year }
+                    compareYear={ this.props.compareYear }
                     setGeoid={ geoid => this.setGeoid(geoid) }
-                    setYear={ year => this.setState({ year }) }
-                    setCompareYear={ compareYear => this.setState({ compareYear }) }/>
+                    setYear={ year => this.props.setYear(year) }
+                    setCompareYear={ compareYear => this.props.setCompareYear(compareYear) }/>
                 <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
                   {
                     Object.keys(GRAPH_CONFIG).map(category => {
@@ -114,8 +124,20 @@ class Profile extends React.Component{
   }
 }
 
+const mapStateToProps = (state, ownProps) => ({
+  year: state.user.year,
+  compareYear: state.user.compareYear
+})
+
+const mapDispatchToProps = {
+  setYear,
+  setCompareYear
+};
+
+const Component = connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Profile));
+
 const Factory = region =>
-  ({ ...props }) => <Profile { ...props } region={ region }/>
+  ({ ...props }) => <Component { ...props } region={ region }/>
 
 export default [
     {

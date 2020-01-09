@@ -8,6 +8,7 @@ import ProfileHeader from './components/ProfileHeader'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { falcorChunkerNice } from "store/falcorGraph"
 import SearchCompare from './components/SearchCompare'
+
 import { setYear, setCompareYear } from "store/modules/user"
 
 import OptionsModal from "components/censusCharts/OptionsModal"

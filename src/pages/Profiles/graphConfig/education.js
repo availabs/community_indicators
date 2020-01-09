@@ -80,7 +80,8 @@ const BASE_CONFIG = [
             }
          },
 
-        {
+        { title: "GIVE ME A TITLE!!!",
+          showCompareGeoid: false,
               type: "CensusStackedBarChart",
               marginLeft: 310,
               layout: { h: 12 },

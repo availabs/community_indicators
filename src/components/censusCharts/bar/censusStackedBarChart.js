@@ -47,6 +47,7 @@ class HorizontalBarChart extends React.Component {
     description: [],
     censusKeys: [],
     censusKeysMoE: [],
+    showCompareGeoid: true
   }
 
   container = React.createRef();
@@ -175,6 +176,7 @@ class HorizontalBarChart extends React.Component {
                 id: this.props.id,
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
+                showCompareGeoid: this.props.showCompareGeoid,
                 year: this.props.year
               } }/>
           }
@@ -220,7 +222,7 @@ class HorizontalBarChart extends React.Component {
 const mapStateToProps = (state, props) => ({
   acsGraph: get(state, ["graph", "acs"], {}),
   geoGraph: get(state, ["graph", "geo"], {}),
-  allGeoids: [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
+  allGeoids: [...props.geoids, get(props, "showCompareGeoid", true) && props.compareGeoid].filter(geoid => Boolean(geoid))
 })
 
 export default connect(mapStateToProps, null)(reduxFalcor(HorizontalBarChart));
