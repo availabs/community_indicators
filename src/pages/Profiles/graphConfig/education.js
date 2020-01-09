@@ -45,7 +45,7 @@ const BASE_CONFIG = [
           layout:{
              w:3,
              h:6,
-             X:0,
+             x:0,
           }
        },
 

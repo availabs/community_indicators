@@ -24,7 +24,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
       }
    },
 
@@ -37,11 +37,33 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
+         x:0,
       }
    },
 
-     {
+  {
+      type: "CensusBarChart",
+      title: "Median Household Income by Race",
+      censusKeys: [
+        "B19013A_001E",
+        "B19013B_001E",
+        "B19013D_001E",
+        "B19013I_001E"],
+      yFormat: "$,d",
+      censusKeyLabels: {
+          "B19013A_001E": "White",
+          "B19013B_001E": "Black or African American Alone",
+          "B19013D_001E": "Asian",
+          "B19013I_001E": "Hispanic or Latino"      },
+        layout:{
+           w:9,
+           h:12,
+        }
+
+    },
+
+       {
       type:"CensusStatBox",
       title: "Median Household Income, Hispanic or Latino",
       valuePrefix:'$',
@@ -50,7 +72,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
       }
    },
 
@@ -63,34 +85,40 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
+         x:0,
       }
    },
-  {
+
+      {
     type: "CensusLineChart",
     title: "Median Household Income by Race",
-    censusKeys: ["B19013A_001E...B19013I_001E"],
+    censusKeys: [
+      "B19013A_001E",
+      "B19013B_001E",
+      "B19013D_001E",
+      "B19013I_001E"],
     marginLeft: 75,
     yFormat: "$,d",
-    showCompare: false,
     censusKeyLabels: {
         "B19013A_001E": "White",
         "B19013B_001E": "Black or African American Alone",
-        "B19013C_001E": "American Indian and Alaska Native",
         "B19013D_001E": "Asian",
-        "B19013E_001E": "Native Hawaiian and Other Pacific Islander",
-        "B19013F_001E": "Some Other Race Alone",
-        "B19013G_001E": "Two or More Races",
-        "B19013H_001E": "White Alone, Not Hispanic or Latino",
-        "B19013I_001E": "Hispanic or Latino"      }
-
+        "B19013I_001E": "Hispanic or Latino"      },
+      layout:{
+         w:9,
+         h:12,
+      }
 
   },
+
+
         {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B17001',
         left: { key: "Below Poverty Level", slice: [0, 26] },
         right: { key: "Above Poverty Level", slice: [26, 52] },
+        showCompare: false,
         marginLeft: 150,
         layout: { h: 12 },
         labels: [
@@ -132,6 +160,35 @@ const BASE_CONFIG = [
     },
 
     {
+      type:"CensusStatBox",
+      censusKeys:[
+        "B22001_002E",
+        ],
+        showCompareYear: true,
+        invertColors: true,
+      title: "Households that Received Food Stamps/SNAP in the Past 12 Months",
+      layout:{
+         w:3,
+         h:6,
+      }
+   },
+
+      {
+      type:"CensusStatBox",
+      censusKeys:[
+        "B09010_002E",
+        ],
+        showCompareYear: true,
+        invertColors: true,
+      title: "Households with Children Under Age 18 that Received Supplemental Security Income (SSI), Cash Public Assistance Income, or Food Stamps/SNAP",
+      layout:{
+         w:3,
+         h:6,
+         x:0,
+      }
+   },
+
+    {
 
       type: "CensusBarChart",
       title: "Receipt of Food Stamps/SNAP by Race",
@@ -161,6 +218,10 @@ const BASE_CONFIG = [
         "B22005G_001E": "Two or More Races",
         "B22005H_001E": "White Alone, Not Hispanic or Latino",
        "B22005I_001E": "Hispanic or Latino"
+      },
+        layout:{
+         w:9,
+         h:12,
       }
     },
 
