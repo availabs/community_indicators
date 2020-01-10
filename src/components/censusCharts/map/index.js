@@ -257,7 +257,8 @@ class CensusLayer extends MapLayer {
   getBounds() {
     const regex = /BOX\((.+)\)/;
 
-    return this.geoids.reduce((a, c) => {
+    // return this.geoids.reduce((a, c) => {
+    return this.getGeoids().reduce((a, c) => {
       const b = get(this.falcorCache, ["geo", c, "boundingBox", "value"], ""),
         match = regex.exec(b);
       if (match) {
@@ -272,12 +273,12 @@ class CensusLayer extends MapLayer {
     const geolevel = this.geolevel,
       year = this.year,
       census = this.censusKeys,
-      geoids = this.geoids,
+      // geoids = this.geoids,
       counties = this.geoids.map(g => g.slice(0, 5));
 
     return falcorChunkerNiceWithUpdate(
       ["geo", counties, "name"],
-      ["geo", geoids, ["cousubs", "blockgroup", "boundingBox", "name"]]
+      ["geo", this.geoids, ["cousubs", "blockgroup", "boundingBox", "name"]]
     )
     .then(() => {
       const cousubs = this.geoids.reduce((a, c) => {
@@ -287,12 +288,13 @@ class CensusLayer extends MapLayer {
       return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", "blockgroup"]])
     })
     .then(() => {
-      const subGeoids = geoids.reduce((a, c) => {
+      const subGeoids = this.geoids.reduce((a, c) => {
           a.push(...get(this.falcorCache, ["geo", c, geolevel, "value"], []))
           return a;
         }, []);
       return falcorChunkerNiceWithUpdate(
-        ["acs", subGeoids, year, census]
+        ["acs", subGeoids, year, census],
+        ["geo", subGeoids, "boundingBox"]
       )
     })
   }
@@ -306,12 +308,12 @@ class CensusLayer extends MapLayer {
         const d = get(this.falcorCache, ["geo", c, "cousubs", "value"], []);
         a.push(...d);
       }
-      else if (c.length === 11) {
+      else if (c.length === 10) {
         a.push(c);
       }
       return a;
     }, [])
-    if (cousubs.length > 1) {
+    if (cousubs.length > 0) {
       map.setFilter("cousubs-symbol", ["in", "geoid", ...cousubs]);
       map.setFilter("cousubs-line", ["in", "geoid", ...cousubs]);
       const nameMap = cousubs.reduce((a, c) => {
@@ -410,15 +412,19 @@ const LayerFactory = props => {
     popover: {
       layers: ["blockgroup"],
       dataFunc: function(topFeature, features) {
-        let geoid = get(topFeature, ["properties", "geoid"], "");
-
-        const data = [];
-
-        const value = get(this.geoData, [geoid], null);
+        const geoid = get(topFeature, ["properties", "geoid"], null),
+          data = [],
+          value = get(this.geoData, [geoid], null);
+          
         if (value !== null) {
           const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
           data.push(["Value", format(value)])
         }
+        data.push({
+          type: "link",
+          link: "View Profile",
+          href: `/profile/${ geoid }`
+        })
 
         return data;
       }
