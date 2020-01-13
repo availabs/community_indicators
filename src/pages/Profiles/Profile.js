@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor } from 'utils/redux-falcor'
 import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
-import subMenus from './submenu.js'
+// import subMenus from './submenu.js'
 import ProfileHeader from './components/ProfileHeader'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
@@ -240,7 +240,7 @@ export default [
           'scheme': 'color-scheme-dark',
           style: 'color-style-default'
       },
-      subMenus,
+      // subMenus,
       auth: false,
       component
   },
@@ -254,7 +254,7 @@ export default [
           'scheme': 'color-scheme-dark',
           style: 'color-style-default'
       },
-      subMenus,
+      // subMenus,
       auth: false,
       component
   }

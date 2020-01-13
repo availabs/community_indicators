@@ -270,30 +270,29 @@ class CensusLayer extends MapLayer {
     }, new mapboxgl.LngLatBounds())
   }
   fetchData() {
-    const geolevel = this.geolevel,
-      year = this.year,
-      census = this.censusKeys,
-      // geoids = this.geoids,
-      counties = this.geoids.map(g => g.slice(0, 5));
+    const counties = this.geoids.reduce((a, c) => {
+      c.length !== 7 && a.push(c.slice(0, 5));
+      return a;
+    }, []);
 
     return falcorChunkerNiceWithUpdate(
       ["geo", counties, "name"],
-      ["geo", this.geoids, ["cousubs", "blockgroup", "boundingBox", "name"]]
+      ["geo", this.geoids, ["cousubs", this.geolevel, "boundingBox", "name"]]
     )
     .then(() => {
       const cousubs = this.geoids.reduce((a, c) => {
         a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
         return a;
       }, [])
-      return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", "blockgroup"]])
+      return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", this.geolevel]])
     })
     .then(() => {
       const subGeoids = this.geoids.reduce((a, c) => {
-          a.push(...get(this.falcorCache, ["geo", c, geolevel, "value"], []))
+          a.push(...get(this.falcorCache, ["geo", c, this.geolevel, "value"], []))
           return a;
         }, []);
       return falcorChunkerNiceWithUpdate(
-        ["acs", subGeoids, year, census],
+        ["acs", subGeoids, this.year, this.censusKeys],
         ["geo", subGeoids, "boundingBox"]
       )
     })
@@ -352,9 +351,11 @@ class CensusLayer extends MapLayer {
       a[c] = value;
       return a;
     }, {})
-    const values = Object.values(valueMap);
 
     this.geoData = valueMap;
+
+    const values = Object.values(valueMap);
+    if (!values.length) return;
 
     const colorScale = this.getColorScale(values),
       colors = {};
@@ -415,7 +416,7 @@ const LayerFactory = props => {
         const geoid = get(topFeature, ["properties", "geoid"], null),
           data = [],
           value = get(this.geoData, [geoid], null);
-          
+
         if (value !== null) {
           const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
           data.push(["Value", format(value)])

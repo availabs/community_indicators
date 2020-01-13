@@ -117,7 +117,7 @@ class ProfileHeader extends Component {
                                         yearPosition="none"
                                     />
                                     <StatBox
-                                        title={'Median Household Income'}
+                                        title={'Average Median Household Income'}
                                         year={ this.props.year }
                                         compareYear={ this.props.compareYear }
                                         valuePrefix={'$'}

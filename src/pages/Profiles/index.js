@@ -5,7 +5,9 @@ import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
 //import GraphLayout from 'pages/Analysis/GraphLayout'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
-import subMenus from './submenu.js'
+// import subMenus from './submenu.js'
+import subMenus from "./submenu"
+
 import Profiles from './Profile'
 import ShareEmbed from "./ShareEmbed"
 import ProfileHeader from './components/ProfileHeader'
@@ -21,7 +23,7 @@ import Sidebar from "./Sidebar"
 import { YEARS } from "./graphConfig/utils"
 
 // const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
-
+console.log("MENUS:", subMenus)
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]

@@ -138,7 +138,7 @@ export const falcorChunkerNice = (...args) => {
       let values = [], found = false;
 
       const replace = c.map((r, i) => {
-        if (Array.isArray(r) && !found && (index === null || index === i)) {
+        if (Array.isArray(r) && r.length && !found && (index === null || index === i)) {
           found = true;
           values = r;
           return placeholder;

@@ -144,6 +144,7 @@ this.props.title === "Percent Ages 3-4 Enrolled in School" && console.log("<Stat
     }
 
     render(){
+// console.log("GEOIDS:", this.props.geoids)
         return(
           <div style={ { height: "100%", position: "relative" } }>
             <div className='el-tablo'

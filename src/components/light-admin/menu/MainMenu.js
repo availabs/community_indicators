@@ -4,6 +4,12 @@ import GeoName from 'components/censusCharts/geoname'
 
 import styled from "styled-components"
 
+const ChildUL = styled.ul`
+  ${ props => props.theme.panelDropdownScrollBar };
+  max-height: 75vh;
+  overflow: auto;
+`
+
 class TopSearch extends Component {
   render () {
     return (
@@ -46,7 +52,7 @@ class MainMenu extends Component {
           return (!menu.auth || this.props.authed);
       })
       .map((menu, index) => {
-console.log('<MainMenu>',menu)
+// console.log('<MainMenu>',menu)
         let topMenu = menu.path ? menu.path.split('/')[1] : ''
         let currentTop = this.props.path ? this.props.path.split('/')[1] : ' '
         let isActive = topMenu === currentTop
@@ -112,7 +118,7 @@ console.log('<MainMenu>',menu)
                                       <StyledSubMenuLi key={ssindex}
                                         style={ { width: `${ 100 / menu.subMenus.length }%` } }>
                                           <Link to={item.path}>{item.name}</Link>
-                                          <ul
+                                          <ChildUL
                                             className ="sub-sub-menu"
                                             key={'subItem_'+ ssindex}
                                             id= {'subItem_'+ ssindex}
@@ -120,13 +126,13 @@ console.log('<MainMenu>',menu)
                                             {item.children.map((subItem,cindex) =>{
                                                 return (
                                                     <li key={cindex}>
-                                                    <Link style={ { padding: "8px 10px" } }
+                                                    <Link style={ { padding: "2px 10px" } }
                                                       to={subItem.path}>{subItem.name}</Link>
                                                     </li>
                                             );
                                             })
                                             }
-                                          </ul>
+                                          </ChildUL>
                                       </StyledSubMenuLi>
                                   );
                               })
