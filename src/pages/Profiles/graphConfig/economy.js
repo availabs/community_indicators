@@ -15,21 +15,6 @@ const BASE_CONFIG = [
              }
         },
 
-{
-      type:"CensusStatBox",
-      title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
-      sumType: 'pct',
-      censusKeys:["B23025_005E"],
-      divisorKey: "B23025_001E",
-      showCompareYear: true,
-      valueSuffix: '%',
-      invertColors: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:6,
-         h:3
-      }
-   },
 
   {
       type:"CensusStatBox",
@@ -42,8 +27,8 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
-         w:6,
-         h:3
+         w:3,
+         h:9
       }
    },
 
@@ -54,14 +39,39 @@ const BASE_CONFIG = [
     orientation: "horizontal",
     marginLeft: 250,
     legendPosition: "bottom-right",
-    censusKeys: ["B23025_001E...B23025_007E"]
+    censusKeys: ["B23025_001E...B23025_007E"],
+    layout:{
+         w:9,
+         h:9
+      }
   },
+
+  {
+      type:"CensusStatBox",
+      title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
+      sumType: 'pct',
+      censusKeys:["B23025_005E"],
+      divisorKey: "B23025_001E",
+      showCompareYear: true,
+      valueSuffix: '%',
+      invertColors: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:9
+      }
+   },
  
   {
     type: "CensusStackedBarChart",
     title: "Labor Force Participation",
+    showCompareGeoid: false,
     orientation: "horizontal",
     marginLeft: 275,
+    layout:{
+         w:9,
+         h:9
+      },
     left: {
       key: "Male", color: maleColor,
       keys: [

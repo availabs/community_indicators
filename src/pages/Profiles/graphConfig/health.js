@@ -24,8 +24,8 @@ const BASE_CONFIG = [
       showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
-         w:6,
-         h:3
+         w:3,
+         h:6
       }
    },
   {
@@ -38,17 +38,47 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
-         w:6,
-         h:3
+         w:3,
+         h:6,
+         x: 0 
       }
    },
   {
     type: "CensusBarChart",
     title: "Age by Disability Status by Health Insurance Coverage Status",
-    censusKeys: ["B18135_002E...B18135_034E"],
+    censusKeys: [
+      "B18135_004E",
+      "B18135_005E",
+      "B18135_006E",
+      "B18135_007E",
+      "B18135_009E",
+      "B18135_010E",
+      "B18135_011E",
+      "B18135_012E",
+      "B18135_015E",
+      "B18135_016E",
+      "B18135_017E",
+      "B18135_018E",
+      "B18135_020E",
+      "B18135_021E",
+      "B18135_022E",
+      "B18135_023E",
+      "B18135_026E",
+      "B18135_027E",
+      "B18135_028E",
+      "B18135_029E",
+      "B18135_031E",
+      "B18135_032E",
+      "B18135_033E",
+      "B18135_034E"
+      ],
     orientation: "horizontal",
     marginLeft: 550,
-    layout: { h: 12 }
+    layout: { 
+      w: 9, 
+      h: 12,
+      
+    }
   },
 
   {

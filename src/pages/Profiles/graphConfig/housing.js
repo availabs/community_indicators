@@ -38,7 +38,7 @@ const BASE_CONFIG = [
       invertColors: true,
       layout:{
          w:3,
-         h:4,
+         h:6,
       },
    },
 
@@ -51,7 +51,7 @@ const BASE_CONFIG = [
       marginLeft: 100,
        layout:{
          w:9,
-         h:8,
+         h:9,
       },
     },
 
@@ -68,10 +68,26 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
+         x:0
       }
    },
-     { type: "CensusLineChart",
+
+   {
+      title: "Units for Rent",
+      type:"CensusStatBox",
+      censusKeys:["B25004_002E",],
+      showCompareYear: true,
+      showColors: false,
+      layout:{
+         w:3,
+         h:6,
+         x:0
+      }
+   },
+
+   { 
+    type: "CensusLineChart",
     title: "Vacancy Status",
     showCompare: false,
     censusKeys: [
@@ -82,20 +98,44 @@ const BASE_CONFIG = [
       "B25004_006E",
       "B25004_007E",
       "B25004_008E"
-    ]
+    ],
+    layout:{
+         w:9,
+         h:9,
+      }
   },
 
 
-  { "type": "CensusBarChart",
-    "broadCensusKey": "B25087",
-    orientation: 'horizontal',
-    marginLeft: 280,
-    "layout": {
-      "h": 18
-    }
-  },
+  // { "type": "CensusLineChart",
+  //   title: "Housing Units With and Without Mortgages",
+  //   marginLeft: 140,
+  //   // "broadCensusKey": "B25087",
+  //    censusKeys: [
+  //     "B25087_002E",
+  //     "B25087_020E",
+  //   ],
+  //   showCompare: false,
+  //   labels: [
+  //     "Housing units with a mortgage",
+  //     "Housing units without a mortgage"
+  //   ]
+  // },
+
+   {
+      type:"CensusStatBox",
+      title:'Number of Mortgages with Monthly Owner Costs Above 30%',
+      censusKeys:["B25091_008E", "B25091_009E", "B25091_010E", "B25091_011E", "B25091_019E", "B25091_020E", "B25091_021E", "B25091_022E"],
+      showCompareYear: true,
+      invertColors: true,
+      layout:{
+         w:3,
+         h:9,
+      }
+   },
+
   { "type":"CensusStackedBarChart",
     "broadCensusKey": "B25091",
+    showCompareGeoid: false,
     orientation: 'horizontal',
     marginLeft: 140,
     left: { key: "With Mortgage", slice: [0, 9] },
@@ -110,36 +150,16 @@ const BASE_CONFIG = [
       '35.0 to 39.9 percent',
       '40.0 to 49.9 percent',
       '50.0 percent or more',
-    ]
+    ],
+    layout:{
+      w:9,
+      h:9,
+    }
   },
-  { type: "CensusBarChart",
-    title: "Mortgate Status and Selected Monthly Owner Costs",
-    orientation: "horizontal",
-    marginLeft: 260,
-    censusKeys: [
-      "B25087_001E",
-      "B25087_002E",
-      "B25087_003E",
-      "B25087_004E",
-      "B25087_005E",
-      "B25087_006E",
-      "B25087_007E",
-      "B25087_008E",
-      "B25087_009E",
-      "B25087_010E",
-      "B25087_011E",
-      "B25087_012E",
-      "B25087_013E",
-      "B25087_014E",
-      "B25087_015E",
-      "B25087_016E",
-      "B25087_017E",
-      "B25087_018E",
-      "B25087_019E"
-    ]
-  },
+ 
   { type: "CensusStackedBarChart",
     title: "Tenure by Household Income in the Past 12 Months",
+    showCompareGeoid: false,
     marginLeft: 140,
     left: { key: "Owner Occupied",
       keys: [
@@ -184,6 +204,30 @@ const BASE_CONFIG = [
     ]
   },
 
+ { type: "CensusBarChart",
+    title: "Mortgate Status and Selected Monthly Owner Costs",
+    orientation: "horizontal",
+    marginLeft: 260,
+    censusKeys: [
+      "B25087_003E",
+      "B25087_004E",
+      "B25087_005E",
+      "B25087_006E",
+      "B25087_007E",
+      "B25087_008E",
+      "B25087_009E",
+      "B25087_010E",
+      "B25087_011E",
+      "B25087_012E",
+      "B25087_013E",
+      "B25087_014E",
+      "B25087_015E",
+      "B25087_016E",
+      "B25087_017E",
+      "B25087_018E",
+      "B25087_019E"
+    ]
+  },
 
  {
       type: "ProfileFooter",

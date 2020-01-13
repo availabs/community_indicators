@@ -80,7 +80,7 @@ const BASE_CONFIG = [
             }
          },
 
-        { title: "GIVE ME A TITLE!!!",
+        { title: "School Enrollment by Sex",
           showCompareGeoid: false,
               type: "CensusStackedBarChart",
               marginLeft: 310,
@@ -224,6 +224,7 @@ const BASE_CONFIG = [
         {
           title: "Sex by School Enrollment by Level of School by Type of School",
           type: "CensusStackedBarChart",
+          showCompareGeoid: false,
           marginLeft: 310,
           layout: { h: 12 },
           left: {
@@ -266,6 +267,7 @@ const BASE_CONFIG = [
         {
           title: "Median Earnings by Sex by Educational Attainment Ages 25 and Over",
           type: "CensusStackedBarChart",
+          showCompareGeoid: false,
           yFormat: "$,d",
           marginLeft: 310,
           left: {
