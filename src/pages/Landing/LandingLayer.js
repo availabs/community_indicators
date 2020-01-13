@@ -19,7 +19,7 @@ import COLOR_RANGES from "constants/color-ranges"
 var geojsonExtent = require('@mapbox/geojson-extent');
 
 //Albany, Rensselaer, Schenectady, Saratoga
-const counties = ['36001','36083','36093','36091']//,'36039','36021','36115','36113'];
+export const counties = ['36001','36083','36093','36091']//,'36039','36021','36115','36113'];
 
 export const getGeo = (map, filter, source, sourceLayer) => {
   return new Promise(resolve => {

@@ -156,7 +156,8 @@ class CensusBarChart extends React.Component {
   }
   render() {
     const colors = scaleOrdinal()
-      .domain(this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.divisorKeys.length ? ["value"] : this.props.censusKeys)
+      // .domain(this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.divisorKeys.length ? ["value"] : this.props.censusKeys)
+      .domain(this.props.allGeoids)
       .range(DEFAULT_COLORS);
 
     const fmt = format(this.props.yFormat);
@@ -229,7 +230,7 @@ class CensusBarChart extends React.Component {
               top: showLegend ? (this.props.marginTop + 30) : this.props.marginTop,
               bottom: 30 + descriptionHeight,
               left: this.props.marginLeft } }
-            colors={ d => colors(d.id) }
+            colors={ d => this.props.groupBy === "censusKeys" ? colors(d.id) : colors(d.data.geoid) }
             labelSkipWidth={ 100 }
             labelSkipHeight={ 12 }
             labelFormat={ fmt }
@@ -313,7 +314,8 @@ const groupByGeoids = (state, props) =>
         a.push({
           id: c,
           value: divisor === 0 ? value : value / divisor,
-          num: 1
+          num: 1,
+          geoid: c
         })
       }
       else {
@@ -326,7 +328,7 @@ const groupByGeoids = (state, props) =>
               ++aa.num;
             }
             return aa;
-          }, { id: c, num: 0 })
+          }, { id: c, num: 0, geoid: c })
         )
       }
       return a;

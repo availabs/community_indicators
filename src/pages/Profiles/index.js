@@ -18,7 +18,9 @@ import OptionsModal from "components/censusCharts/OptionsModal"
 
 import Sidebar from "./Sidebar"
 
-const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+import { YEARS } from "./graphConfig/utils"
+
+// const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
 
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>

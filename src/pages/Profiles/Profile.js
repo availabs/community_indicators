@@ -20,6 +20,8 @@ import Sidebar from "./Sidebar"
 import styled from "styled-components"
 import get from "lodash.get"
 
+import { YEARS } from "./graphConfig/utils"
+
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a,
@@ -58,7 +60,7 @@ const Href = styled.a`
   right: 20px;
 `
 
-const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
+// const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
 
 const GetFooter = ({ type, value }) =>
   type === "header" ? <Header>{ value }</Header> :

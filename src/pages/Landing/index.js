@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import AvlMap from 'AvlMap'
-import LandingLayer from './LandingLayer'
+import LandingLayer, { counties } from './LandingLayer'
 import styled from 'styled-components'
+import StatBox from 'components/censusCharts/statBox'
 
 let flexStyle = {width: '100vw',
  height: '100vh',
@@ -37,26 +38,30 @@ class Home extends Component {
                 <div style={flexStyle}>
                     <div style={{height: 400}}>
                         <LandingHeader>
-                            CAPITAL REGION INDICATORS
+                            CAPITAL REGION INDICATORS ({ this.props.year })
                         </LandingHeader>
                         <div className='container' style={{maxWidth: '869px', color: '#efefef', background: 'rgba(0,0,0,0.3)', borderRadius: 4}}>
                             <div className='row'>
-                                 <div className='col-md-6' style={{ padding: 15}}> 
+                                 <div className='col-md-6' style={{ padding: 15}}>
                                     <p style={{fontSize: '1.1em'}}>
-                                    The Capital Region Indicators website aggregates and monitors local information that tells the story of New York State's Greater Capital Region. 
-                                    By analyzing and then planning action from a common set of data, we can work together to measure our 
-                                    progress and transform our region for the better. 
+                                    The Capital Region Indicators website aggregates and monitors local information that tells the story of New York State's Greater Capital Region.
+                                    By analyzing and then planning action from a common set of data, we can work together to measure our
+                                    progress and transform our region for the better.
                                     </p>
                                 </div>
-                                <div className='col-md-6' style={{ padding: 15, textAlign: 'center'}}> 
-                                   <div style={{color: '#efefef', fontSize: '3em', lineHeight: 1, fontWeight: '100'}}>Population</div>
-                                   <div style={{color: '#efefef', fontSize: '4em', lineHeight: 1, fontWeight: '100'}}>1,032,180</div>
-                                   <div style={{color: '#efefef', fontSize: '2em', lineHeight: 1, fontWeight: '100'}}>&nbsp;89.25 person / km<sup>2</sup></div>
+                                <div className='col-md-6' style={{ padding: 15, textAlign: 'center'}}>
+                                    <StatBox
+                                        title={'Population'}
+                                        year={ this.props.year }
+                                        censusKeys={['B01003_001E']}
+                                        geoids={counties}
+                                        yearPosition="none"
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> 
+                </div>
                 <div style={{width: '100vw', height: '100vh', backgroundColor: '#333', position: 'fixed', top: 0, left: 0}}>
                     <AvlMap
                         sidebar={false}
@@ -71,7 +76,7 @@ class Home extends Component {
                             [
                                 -70.7626953125,
                             45.042478050891546
-                            ]   
+                            ]
                         ]}
                         layers={[LandingLayer]}
                         mapControl={false}
@@ -83,6 +88,10 @@ class Home extends Component {
     }
 }
 
+const mapStateToProps = state => ({
+  year: state.user.year
+})
+
 export default {
     icon: 'icon-map',
     path: '/',
@@ -92,5 +101,5 @@ export default {
     menuSettings: {image: 'none', 'scheme': 'color-scheme-dark'},
     name: 'Home',
     auth: false,
-    component: Home
+    component: connect(mapStateToProps)(Home)
 }
