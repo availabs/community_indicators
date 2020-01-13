@@ -12,11 +12,11 @@ const getId = () => `region-${ ++ID }`;
 const CONFIG = {
   Overview,
   Economy,
-  Transportation,
-  Housing,
-  Education,
-  Health,
   'Social Welfare': SocialWelfare,
+  Health,
+  Education,
+  Housing,
+  Transportation,
 }
 
 export default Object.keys(CONFIG).reduce((a, k) => ({

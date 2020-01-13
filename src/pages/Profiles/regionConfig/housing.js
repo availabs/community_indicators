@@ -9,35 +9,41 @@ const BASE_CONFIG = [
    {
       title: "Total Housing Units",
       type:"CensusStatBox",
+      yearPosition: "block",
       censusKeys:["B25002_001E"],
       showCompareYear: true,
       layout:{
-         w:4,
+         w:3,
          h:4
       },
    },
    {
       title: "Occupied Housing Units",
       type:"CensusStatBox",
+      yearPosition: "block",
       censusKeys:["B25002_002E"],
       showCompareYear: true,
       layout:{
-         w:4,
+         w:3,
          h:4,
+         x:0
       },
    },
 
    {
       title: "Percent Occupied Housing Units",
       type:"CensusStatBox",
+      yearPosition: "block",
       sumType: 'pct',
+      showCompareYear: true,
       censusKeys:["B25002_002E"],
       divisorKey: 'B25002_001E',
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
-         w:4,
+         w:3,
          h:4,
+         x:0
       }
    },
 
@@ -46,17 +52,23 @@ const BASE_CONFIG = [
       type: "CensusBarChart",
       censusKeys:["B25002_002E"],
       divisorKey: 'B25002_001E',
-      groupBy: "geoids"
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:12,
+
+      }
     },
 
    {
       title: "Vacant Housing Units",
       type:"CensusStatBox",
+      yearPosition: "block",
       censusKeys:["B25002_003E"],
       showCompareYear: true,
       invertColors: true,
       layout:{
-         w:6,
+         w:3,
          h:4,
       },
    },
@@ -64,6 +76,7 @@ const BASE_CONFIG = [
    {
       title: "Percent Vacant Housing Units",
       type:"CensusStatBox",
+      yearPosition: "block",
       sumType: 'pct',
       censusKeys:["B25002_003E"],
       divisorKey: 'B25002_001E',
@@ -72,8 +85,9 @@ const BASE_CONFIG = [
       invertColors: true,
       maximumFractionDigits: 1,
       layout:{
-         w:6,
+         w:3,
          h:4,
+         x:0
       }
    },
 
@@ -82,7 +96,12 @@ const BASE_CONFIG = [
       type: "CensusBarChart",
       censusKeys:["B25002_003E"],
       divisorKey: 'B25002_001E',
-      groupBy: "geoids"
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:8,
+
+      }
     },
 
 

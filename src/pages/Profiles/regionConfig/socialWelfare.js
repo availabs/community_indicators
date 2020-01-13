@@ -17,10 +17,11 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       invertColors: true,
+      yearPosition: "block",
       layout:{
-         w:4,
-         h:4,
-         x: 4
+         w:3,
+         h:8,
+         x: 0
       }
    },
 
@@ -29,19 +30,27 @@ const BASE_CONFIG = [
       type: "CensusBarChart",
       censusKeys: ["B17001_002E"],
       divisorKeys: ["B17001_001E"],
-      groupBy: "geoids"
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:8,
+      }
     },
 
    {
       type:"CensusStatBox",
-      censusKeys:[
-        "B22001_001E",
-        ],
-        showCompareYear: true,
-      title: "Total Households",
+      censusKeys:["B22001_002E"],
+      divisorKey: "B17001_001E",
+      sumType: 'pct',
+      showCompareYear: true,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      invertColors: true,
+      title: "Percent of Households Receiving Food Stamps/SNAP",
+      yearPosition: "block",
       layout:{
-         w:6,
-         h:4
+         w:3,
+         h:5
       }
    },
    {
@@ -52,9 +61,11 @@ const BASE_CONFIG = [
         showCompareYear: true,
         invertColors: true,
       title: "Households that Received Food Stamps/SNAP in the Past 12 Months",
+      yearPosition: "block",
       layout:{
-         w:6,
-         h:4
+         w:3,
+         h:5,
+         x:0
       }
    },
 
@@ -63,20 +74,36 @@ const BASE_CONFIG = [
       type: "CensusBarChart",
       censusKeys: ["B22001_002E"],
       divisorKeys: ["B22001_001E"],
-      groupBy: "geoids"
+      groupBy: "geoids",
+      layout:{
+        w:9,
+        h:10
+      }
     },
 
-
+    {
+          type: "TextBox",
+          header: "Households with Children Under Age 18 that Received Supplemental Security Income (SSI), Cash Public Assistance Income, or Food Stamps/SNAP Over the Last 12 Months",
+         layout: {
+            h: 3,
+            w: 12
+             }
+        },
 
    {
       type:"CensusStatBox",
-      censusKeys:[
-        "B09010_001E",
-        ],
-      title: "Households with Children Under Age 18",
+      censusKeys:["B09010_002E",],
+      divisorKey:"B09010_001E",
+      sumType: 'pct',
+      showCompareYear: true,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      invertColors: true,
+      yearPosition: "block",
+      title: "Percent of Households that Received Support",
       layout:{
-         w:6,
-         h:4
+         w:3,
+         h:5
       }
    },
 
@@ -87,49 +114,27 @@ const BASE_CONFIG = [
         ],
         showCompareYear: true,
         invertColors: true,
-      title: "Households with Children Under Age 18 that Received Supplemental Security Income (SSI), Cash Public Assistance Income, or Food Stamps/SNAP",
+      title: "Households that Received Support",
+      yearPosition: "block",
       layout:{
-         w:6,
-         h:4
-      }
+         w:3,
+         h:5,
+         x:0      }
    },
 
           {
-      title: "Percent of Households with Children Under Age 18 that Received Supplemental Security Income (SSI), Cash Public Assistance Income, or Food Stamps/SNAP",
+      title: "Percent of Households with Children Under Age 18 that Received Support",
       type: "CensusBarChart",
       marginTop: 35,
       censusKeys: ["B09010_002E"],
       divisorKeys: ["B09010_001E"],
       groupBy: "geoids",
       layout:{
-         w:12,
+         w:9,
          h:10
       }
     },
 
-  {
-      type:"CensusStatBox",
-      title:'Veterans',
-      censusKeys:['B21001_002E'],
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:9,
-      }
-   },
-
-     {
-      type:"CensusBarChart",
-      title:'Veterans',
-      groupBy: "geoids",
-      censusKeys:['B21001_002E'],
-      maximumFractionDigits: 1,
-      layout:{
-         w:9,
-         h:9,
-      }
-   },
 ]
 
 export default configLoader(BASE_CONFIG);

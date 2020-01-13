@@ -261,48 +261,6 @@ const BASE_CONFIG = [
         layout: { h: 18 }
     },
 
-    {
-      type:"CensusStatBox",
-      title:'Veterans',
-      censusKeys:['B21001_002E'],
-      showCompareYear: true,
-      showColors: false,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:9,
-      }
-   },
-    {
-        type:'CensusStackedBarChart',
-        broadCensusKey: 'B21001',
-        showCompareGeoid: false,
-        left: { key: "Male", slice: [5, 20], color: maleColor },
-        right: { key: "Female", slice: [23, 38], color: femaleColor },
-        marginLeft: 175,
-        layout:{
-         w:9,
-         h:9,
-      },
-        labels: [
-          'Total 18-34',
-          '18-34 years, veteran',
-          '18-34 years, non-veteran',
-          'Total 35-54 years',
-          '35-54 years, veteran',
-          '35-54 years, non-veteran',
-          'Total 55-64 years',
-          '55-64 years, veteran',
-          '55-64 years, non-veteran',
-          'Total 65-74 years',
-          '65-74 years, veteran',
-          '65-74 years, non-veteran',
-          'Total 75 years and over',
-          '75 years and over, veteran',
-          '75 years and over, non-veteran',
-        ]
-    },
-
       {
       type: "TextBox",
       header: "Food Access Research Atlas by the United States Department of Agriculture",

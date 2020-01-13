@@ -32,6 +32,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Bike/Ped as a Percent of Total Commuters',
       sumType: 'pct',
+      yearPosition: "block",
       showCompareYear: true,
       censusKeys:["B08006_014E", "B08006_015E"],
       divisorKey: "B23025_001E",
@@ -93,6 +94,7 @@ const BASE_CONFIG = [
       censusKeys:["B08006_008E"],
       divisorKey: "B23025_001E",
       valueSuffix: '%',
+      yearPosition: "block",
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -161,6 +163,37 @@ const BASE_CONFIG = [
       }
   },
 
+       {
+      type:"CensusStatBox",
+      title:'Total No Vehicle Available',
+      censusKeys:[ "B08541_002E",],
+      showCompareYear: true,
+      yearPosition: "block",
+      amount:true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:6
+      }
+   },
+
+
+
+  {
+    type: "CensusBarChart",
+    title: "Vehicle Availability",
+    censusKeys: [
+    "B08541_002E",
+    "B08541_003E",
+    "B08541_004E",
+    "B08541_005E"
+    ],
+    layout:{
+      w:9,
+      h:6
+    }
+  },
+
    {
       type:"CensusStatBox",
       title:'Total Worked at Home ',
@@ -179,6 +212,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Work at Home as a Percent of Total Commuters',
       sumType: 'pct',
+      yearPosition: "block",
       showCompareYear: true,
       censusKeys:["B08006_017E"],
       divisorKey: "B23025_001E",
@@ -190,6 +224,8 @@ const BASE_CONFIG = [
          x:0
       }
    },
+
+
 
   {
     type: "CensusLineChart",
@@ -241,11 +277,8 @@ const BASE_CONFIG = [
       "90 or More Minutes"
     ]
   },
-  {
-    type: "CensusBarChart",
-    title: "Vehicle Availability",
-    censusKeys: ["B08541_002E...B08541_005E"]
-  },
+
+
   {
     type: "CensusBarChart",
     title: "Travelled by Public Transportation to Work by Earnings",

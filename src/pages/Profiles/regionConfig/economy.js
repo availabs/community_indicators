@@ -16,6 +16,7 @@ const BASE_CONFIG = [
       showCompareYear: true,
       valueSuffix: '%',
       maximumFractionDigits: 1,
+      yearPosition: "block",
       invertColors: true,
       layout:{
          w:3,
@@ -45,6 +46,7 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       invertColors: true,
+      yearPosition: "block",
       layout:{
          w:3,
          h:9,
