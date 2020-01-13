@@ -293,7 +293,8 @@ class CensusLayer extends MapLayer {
         }, []);
       return falcorChunkerNiceWithUpdate(
         ["acs", subGeoids, this.year, this.censusKeys],
-        ["geo", subGeoids, "boundingBox"]
+        ["geo", subGeoids, "boundingBox"],
+        ["geo", subGeoids.map(geoid => geoid.slice(0, 5)), "name"]
       )
     })
   }
@@ -414,7 +415,11 @@ const LayerFactory = props => {
       layers: ["blockgroup"],
       dataFunc: function(topFeature, features) {
         const geoid = get(topFeature, ["properties", "geoid"], null),
-          data = [],
+          county = geoid.slice(0, 5),
+          countyName = get(this.falcorCache, ["geo", county, "name"], ""),
+          data = [
+            [`${ countyName }${ countyName && " "}Blockgroup`, geoid.slice(5)]
+          ],
           value = get(this.geoData, [geoid], null);
 
         if (value !== null) {
