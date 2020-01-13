@@ -21,6 +21,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title: "Median Age",
       showCompareYear: true,
+      showColors: false,
       censusKeys:["B01002_001E"],
       maximumFractionDigits: 1,
       demographics:true,
@@ -43,6 +44,7 @@ const BASE_CONFIG = [
    {
         type: 'CensusStackedBarChart',
         broadCensusKey: 'B01001',
+        showCompareGeoid: false,
         left: { key: "Male", slice: [2, 25], color: maleColor },
         right: { key: "Female", slice: [26, 49], color: femaleColor },
         layout: { h: 12 },
@@ -112,7 +114,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       invertColors: true,
       layout:{
-         w:2,
+         w:3,
          h:9
       }
    },
@@ -125,7 +127,7 @@ const BASE_CONFIG = [
       yFormat: ",.1%",
       legendWidth: 175,
       layout:{
-         w:10,
+         w:9,
          h:9
       },
    },
@@ -142,30 +144,23 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
          x:0
       }
    },
    {
       title: "Vacant Housing Units",
       type:"CensusStatBox",
+      showCompareYear: true,
+      invertColors: true,
       censusKeys:["B25002_003E"],
       layout:{
          w:3,
-         h:3,
+         h:6,
          x:0
       },
    },
-   {
-      title: "Occupied Housing Units",
-      type:"CensusStatBox",
-      censusKeys:["B25002_002E"],
-      layout:{
-         w:3,
-         h:3,
-         x:0
-      },
-   },
+
    {
       type:"CensusLineChart",
       title: "Percent Vacant Housing Units",
@@ -176,7 +171,7 @@ const BASE_CONFIG = [
       divisorKeys:["B25002_001E"],
       layout:{
          w:9,
-         h:10
+         h:12
       }
    },
 
@@ -185,7 +180,6 @@ const BASE_CONFIG = [
       title: "Per Capita Income By Race and Ethnicity",
       marginLeft: 75,
       yFormat: "$,d",
-      showCompare: false,
       legendWidth: 270,
       censusKeys: [
         "B19301A_001E",

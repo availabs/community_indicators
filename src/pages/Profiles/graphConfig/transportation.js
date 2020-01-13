@@ -15,17 +15,6 @@ const BASE_CONFIG = [
              }
         },
 
-
-  {
-    type: "CensusBarChart",
-    title: "Means of Transportation to Work",
-    censusKeys: ["B08006_002E...B08006_017E"],
-    orientation: "horizontal",
-    marginLeft: 490,
-    layout:{
-         h:12,
-      }
-  },
    {
       type:"CensusStatBox",
       title:'Total Bike/Ped ',
@@ -36,24 +25,54 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4
+         h:6
       }
    },
   {
       type:"CensusStatBox",
       title:'Bike/Ped as a Percent of Total Commuters',
       sumType: 'pct',
+      yearPosition: "block",
+      showCompareYear: true,
       censusKeys:["B08006_014E", "B08006_015E"],
       divisorKey: "B23025_001E",
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4
+         h:6,
+         x:0
       }
    },
 
+
   {
+    type: "CensusBarChart",
+    title: "Means of Transportation to Work",
+    censusKeys: [
+      "B08006_002E",
+      "B08006_003E",
+      "B08006_004E",
+      "B08006_005E",
+      "B08006_006E",
+      "B08006_007E",
+      "B08006_008E",
+      "B08006_009E",
+      "B08006_014E",
+      "B08006_015E",
+      "B08006_016E",
+      "B08006_017E"
+      ],
+    orientation: "horizontal",
+    marginLeft: 300,
+    layout:{
+         w:9,
+         h:12,
+      }
+  },
+
+
+   {
       type:"CensusStatBox",
       title:'Total Public Transportation ',
       censusKeys:["B08006_008E"],
@@ -63,7 +82,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4
+         h:6
       }
    },
 
@@ -71,26 +90,57 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Public Transportation as a Percent of Total Commuters',
       sumType: 'pct',
+      showCompareYear: true,
       censusKeys:["B08006_008E"],
       divisorKey: "B23025_001E",
       valueSuffix: '%',
+      yearPosition: "block",
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4
+         h:6,
+         x:0
       }
    },
+
   {
     title: "Means of Transportation to Work by Sex",
     type: "CensusStackedBarChart",
+    showCompareGeoid: false,
     marginLeft: 340,
     left: {
       key: "Male", color: maleColor,
-      keys: ["B08006_019E...B08006_034E"]
+      keys: [
+       "B08006_019E",
+       "B08006_020E",
+       "B08006_021E",
+       "B08006_022E",
+       "B08006_023E",
+       "B08006_024E",
+       "B08006_025E",
+       "B08006_016E",
+       "B08006_031E",
+       "B08006_032E",
+       "B08006_033E",
+       "B08006_034E"
+       ]
     },
     right: {
       key: "Female", color: femaleColor,
-      keys: ["B08006_036E...B08006_051E"]
+      keys: [
+        "B08006_036E",
+       "B08006_037E",
+       "B08006_038E",
+       "B08006_039E",
+       "B08006_040E",
+       "B08006_041E",
+       "B08006_042E",
+       "B08006_043E",
+       "B08006_048E",
+       "B08006_049E",
+       "B08006_050E",
+        "B08006_051E"
+        ]
     },
     labels: [
       "Car, Truck or Van",
@@ -101,16 +151,97 @@ const BASE_CONFIG = [
       "Car, Truck or Van, 4-Person Carpool",
       "Public Transportation (Excluding Taxi)",
       "Public Transportation (Excluding Taxi), Bus or Trolley Bus",
-      "Public Transportation (Excluding Taxi), Streetcar or Trolley Car",
-      "Public Transportation (Excluding Taxi), Subway or Elevated",
-      "Public Transportation (Excluding Taxi), Railroad",
-      "Public Transportation (Excluding Taxi), Ferryboat",
       "Bicycle",
       "Walked",
       "Taxicab, Motorcycle, or Other",
       "Worked at Home"
-    ]
+    ],
+    layout:{
+         w:9,
+         h:12,
+         
+      }
   },
+
+       {
+      type:"CensusStatBox",
+      title:'Total No Vehicle Available',
+      censusKeys:[ "B08541_002E",],
+      showCompareYear: true,
+      yearPosition: "block",
+      amount:true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:6
+      }
+   },
+
+
+
+  {
+    type: "CensusBarChart",
+    title: "Vehicle Availability",
+    censusKeys: [
+    "B08541_002E",
+    "B08541_003E",
+    "B08541_004E",
+    "B08541_005E"
+    ],
+    layout:{
+      w:9,
+      h:6
+    }
+  },
+
+   {
+      type:"CensusStatBox",
+      title:'Total Worked at Home ',
+      censusKeys:[ "B08006_017E"],
+      showCompareYear: true,
+      yearPosition: "block",
+      amount:true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:6
+      }
+   },
+
+  {
+      type:"CensusStatBox",
+      title:'Work at Home as a Percent of Total Commuters',
+      sumType: 'pct',
+      yearPosition: "block",
+      showCompareYear: true,
+      censusKeys:["B08006_017E"],
+      divisorKey: "B23025_001E",
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:6,
+         x:0
+      }
+   },
+
+
+
+  {
+    type: "CensusLineChart",
+    title: "Means of Transportation to Work",
+    censusKeys: [
+      "B08006_014E",
+      "B08006_015E",
+      "B08006_017E"
+      ],
+    marginLeft: 100,
+    layout:{
+         w:9,
+         h:12,
+      }
+  },
+
   {
     type: "CensusBarChart",
     title: "Travel Time to Work",
@@ -121,6 +252,7 @@ const BASE_CONFIG = [
   {
     type: "CensusStackedBarChart",
     title: "Travel Time to Work by Sex",
+    showCompareGeoid: false,
     left: {
       key: "Male", color: maleColor,
       keys: ["B08412_015E...B08412_026E"]
@@ -145,11 +277,8 @@ const BASE_CONFIG = [
       "90 or More Minutes"
     ]
   },
-  {
-    type: "CensusBarChart",
-    title: "Vehicle Availability",
-    censusKeys: ["B08541_002E...B08541_005E"]
-  },
+
+
   {
     type: "CensusBarChart",
     title: "Travelled by Public Transportation to Work by Earnings",

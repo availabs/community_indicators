@@ -24,7 +24,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
       }
    },
 
@@ -37,11 +37,33 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
+         x:0,
       }
    },
 
-     {
+  {
+      type: "CensusBarChart",
+      title: "Median Household Income by Race",
+      censusKeys: [
+        "B19013A_001E",
+        "B19013B_001E",
+        "B19013D_001E",
+        "B19013I_001E"],
+      yFormat: "$,d",
+      censusKeyLabels: {
+          "B19013A_001E": "White",
+          "B19013B_001E": "Black or African American Alone",
+          "B19013D_001E": "Asian",
+          "B19013I_001E": "Hispanic or Latino"      },
+        layout:{
+           w:9,
+           h:12,
+        }
+
+    },
+
+       {
       type:"CensusStatBox",
       title: "Median Household Income, Hispanic or Latino",
       valuePrefix:'$',
@@ -50,7 +72,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
       }
    },
 
@@ -63,34 +85,41 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
+         x:0,
       }
    },
-  {
+
+      {
     type: "CensusLineChart",
     title: "Median Household Income by Race",
-    censusKeys: ["B19013A_001E...B19013I_001E"],
+    censusKeys: [
+      "B19013A_001E",
+      "B19013B_001E",
+      "B19013D_001E",
+      "B19013I_001E"],
     marginLeft: 75,
     yFormat: "$,d",
-    showCompare: false,
     censusKeyLabels: {
         "B19013A_001E": "White",
         "B19013B_001E": "Black or African American Alone",
-        "B19013C_001E": "American Indian and Alaska Native",
         "B19013D_001E": "Asian",
-        "B19013E_001E": "Native Hawaiian and Other Pacific Islander",
-        "B19013F_001E": "Some Other Race Alone",
-        "B19013G_001E": "Two or More Races",
-        "B19013H_001E": "White Alone, Not Hispanic or Latino",
-        "B19013I_001E": "Hispanic or Latino"      }
-
+        "B19013I_001E": "Hispanic or Latino"      },
+      layout:{
+         w:9,
+         h:12,
+      }
 
   },
+
+
         {
         type:'CensusStackedBarChart',
         broadCensusKey: 'B17001',
         left: { key: "Below Poverty Level", slice: [0, 26] },
         right: { key: "Above Poverty Level", slice: [26, 52] },
+        showCompare: false,
+        showCompareGeoid: false,
         marginLeft: 150,
         layout: { h: 12 },
         labels: [
@@ -132,6 +161,35 @@ const BASE_CONFIG = [
     },
 
     {
+      type:"CensusStatBox",
+      censusKeys:[
+        "B22001_002E",
+        ],
+        showCompareYear: true,
+        invertColors: true,
+      title: "Households that Received Food Stamps/SNAP in the Past 12 Months",
+      layout:{
+         w:3,
+         h:6,
+      }
+   },
+
+      {
+      type:"CensusStatBox",
+      censusKeys:[
+        "B09010_002E",
+        ],
+        showCompareYear: true,
+        invertColors: true,
+      title: "Households with Children Under Age 18 Receiving Public Assistance (e.g., Food Stamps/SNAP)",
+      layout:{
+         w:3,
+         h:6,
+         x:0,
+      }
+   },
+
+    {
 
       type: "CensusBarChart",
       title: "Receipt of Food Stamps/SNAP by Race",
@@ -161,6 +219,10 @@ const BASE_CONFIG = [
         "B22005G_001E": "Two or More Races",
         "B22005H_001E": "White Alone, Not Hispanic or Latino",
        "B22005I_001E": "Hispanic or Latino"
+      },
+        layout:{
+         w:9,
+         h:12,
       }
     },
 
@@ -168,99 +230,35 @@ const BASE_CONFIG = [
         type: 'CensusBarChart',
         title: "Language Spoken at Home by Ability to Speak English",
         censusKeys: [
-          'B16001_004E',
           'B16001_005E',
-          'B16001_007E',
           'B16001_008E',
-          'B16001_010E',
           'B16001_011E',
-          'B16001_013E',
           'B16001_014E',
-          'B16001_016E',
           'B16001_017E',
-          'B16001_019E',
           'B16001_020E',
-          'B16001_022E',
           'B16001_023E',
-          'B16001_094E',
           'B16001_095E',
           'B16001_030E',
-          'B16001_031E',
-          'B16001_034E',
           'B16001_035E',
-          'B16001_037E',
           'B16001_038E',
-          'B16001_040E',
           'B16001_041E',
-          'B16001_043E',
           'B16001_044E',
-          'B16001_091E',
           'B16001_092E',
-          'B16001_049E',
           'B16001_050E',
-          'B16001_052E',
           'B16001_053E',
-          'B16001_055E',
           'B16001_056E',
-          'B16001_058E',
           'B16001_059E',
-          'B16001_061E',
           'B16001_062E',
-          'B16001_064E',
           'B16001_065E',
-          'B16001_067E',
           'B16001_068E',
-          'B16001_070E',
           'B16001_071E',
-          'B16001_073E',
           'B16001_074E',
-          'B16001_076E',
           'B16001_077E',
         ],
         orientation: 'horizontal',
         marginLeft: 500,
         sorted: true,
         layout: { h: 18 }
-    },
-
-    {
-      type:"CensusStatBox",
-      title:'Veterans',
-      censusKeys:['B21001_002E'],
-      showCompareYear: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:9,
-      }
-   },
-    {
-        type:'CensusStackedBarChart',
-        broadCensusKey: 'B21001',
-        left: { key: "Male", slice: [5, 20], color: maleColor },
-        right: { key: "Female", slice: [23, 38], color: femaleColor },
-        marginLeft: 175,
-        layout:{
-         w:9,
-         h:9,
-      },
-        labels: [
-          'Total 18-34',
-          '18-34 years, veteran',
-          '18-34 years, non-veteran',
-          'Total 35-54 years',
-          '35-54 years, veteran',
-          '35-54 years, non-veteran',
-          'Total 55-64 years',
-          '55-64 years, veteran',
-          '55-64 years, non-veteran',
-          'Total 65-74 years',
-          '65-74 years, veteran',
-          '65-74 years, non-veteran',
-          'Total 75 years and over',
-          '75 years and over, veteran',
-          '75 years and over, non-veteran',
-        ]
     },
 
       {

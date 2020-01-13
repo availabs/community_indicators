@@ -24,8 +24,8 @@ const BASE_CONFIG = [
       showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{
-         w:6,
-         h:3
+         w:3,
+         h:6
       }
    },
   {
@@ -38,17 +38,47 @@ const BASE_CONFIG = [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{
-         w:6,
-         h:3
+         w:3,
+         h:6,
+         x: 0 
       }
    },
   {
     type: "CensusBarChart",
     title: "Age by Disability Status by Health Insurance Coverage Status",
-    censusKeys: ["B18135_002E...B18135_034E"],
+    censusKeys: [
+      "B18135_004E",
+      "B18135_005E",
+      "B18135_006E",
+      "B18135_007E",
+      "B18135_009E",
+      "B18135_010E",
+      "B18135_011E",
+      "B18135_012E",
+      "B18135_015E",
+      "B18135_016E",
+      "B18135_017E",
+      "B18135_018E",
+      "B18135_020E",
+      "B18135_021E",
+      "B18135_022E",
+      "B18135_023E",
+      "B18135_026E",
+      "B18135_027E",
+      "B18135_028E",
+      "B18135_029E",
+      "B18135_031E",
+      "B18135_032E",
+      "B18135_033E",
+      "B18135_034E"
+      ],
     orientation: "horizontal",
     marginLeft: 550,
-    layout: { h: 12 }
+    layout: { 
+      w: 9, 
+      h: 12,
+      
+    }
   },
 
   {
@@ -61,6 +91,48 @@ const BASE_CONFIG = [
           { type: "link", value: "https://www.health.ny.gov/statistics/chac/indicators/" }
         ]
       ]
+    },
+
+    {
+      type:"CensusStatBox",
+      title:'Veterans',
+      censusKeys:['B21001_002E'],
+      showCompareYear: true,
+      showColors: false,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:9,
+      }
+   },
+    {
+        type:'CensusStackedBarChart',
+        broadCensusKey: 'B21001',
+        showCompareGeoid: false,
+        left: { key: "Male", slice: [5, 20], color: maleColor },
+        right: { key: "Female", slice: [23, 38], color: femaleColor },
+        marginLeft: 175,
+        layout:{
+         w:9,
+         h:9,
+      },
+        labels: [
+          'Total 18-34',
+          '18-34 years, veteran',
+          '18-34 years, non-veteran',
+          'Total 35-54 years',
+          '35-54 years, veteran',
+          '35-54 years, non-veteran',
+          'Total 55-64 years',
+          '55-64 years, veteran',
+          '55-64 years, non-veteran',
+          'Total 65-74 years',
+          '65-74 years, veteran',
+          '65-74 years, non-veteran',
+          'Total 75 years and over',
+          '75 years and over, veteran',
+          '75 years and over, non-veteran',
+        ]
     },
 
 
