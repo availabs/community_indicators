@@ -81,18 +81,18 @@ let OverlayEffect = styled.div`
     height: 100%;
     background: #fff;
     padding-top: 75px;
-    color: #5d5d5d;
+    color: #293145;
     padding-bottom: 50px;
 `
  let PageHeader = styled.h4`
     padding-top: 50px;
     text-transform: uppercase;
-    color: #5d5d5d;
+    color: #293145;
 `
 
  let SectionHeader = styled.h2`
     padding-top: 50px;
-    color: #5d5d5d;
+    color: #293145;
     text-transform: uppercase;
 `
  let ContentContainer = styled.div`
@@ -107,7 +107,7 @@ let OverlayEffect = styled.div`
 
  let ContentHeader = styled.h3`
     padding-top: 50px;
-    color: #5d5d5d;
+    color: #293145;
 `
  let SectionBoxMain = styled.div`
     flex-grow: 1;
@@ -133,6 +133,9 @@ let OverlayEffect = styled.div`
     display:block;
 
     height:70px;
+`
+  let IA = styled.a`
+    color: #5e8dbf;
 `
 
 class Home extends Component {
@@ -160,7 +163,12 @@ class Home extends Component {
                                      Mission and Purpose
                                  </ContentHeader>
                                  <SectionBoxMain>
-                                    <p>Capital Region Indicators is a joint initiative of the <a href="">Capital District Regional Planning Commission (CDRPC)</a>, <a href="">Capital Region Chamber</a>, <a href=""> The Community Foundation for the Greater Capital Region </a> and <a href=""> the Capital District Transportation Committee </a>. This initiative seeks to help a wide variety of public and private organizations better understand the communities of New York’s Capital Region.  Using the best available information, the website serves as a common source for data and interactive visualizations that will inform community members on critical topics related to the economic and social health, as well as progress of our region.  
+                                    <p>Capital Region Indicators is a joint initiative of the&nbsp;
+                                    <IA href="https://cdrpc.org/" target="blank">Capital District Regional Planning Commission (CDRPC)</IA>,&nbsp;  
+                                    <IA href="https://capitalregionchamber.com/" target="blank">Capital Region Chamber</IA>,&nbsp;
+                                    <IA href="https://www.cfgcr.org/" target="blank"> The Community Foundation for the Greater Capital Region </IA> and&nbsp;
+                                    <IA href="https://www.cdtcmpo.org/index.php" target="blank"> the Capital District Transportation Committee </IA>.&nbsp;
+                                    This initiative seeks to help a wide variety of public and private organizations better understand the communities of New York’s Capital Region.  Using the best available information, the website serves as a common source for data and interactive visualizations that will inform community members on critical topics related to the economic and social health, as well as progress of our region.  
                                     </p>
                                     <p>The purpose of NY’s Capital Region Indicators is to: 
                                       <ul>
@@ -172,7 +180,9 @@ class Home extends Component {
                                       </ul>
                                     </p>
                                     <p>
-                                        The site was custom-designed by <a href="">the Albany Visualization and Informatics Lab (AVAIL)</a> located in the Geography and Planning Department at the University at Albany, State University of New York, and is maintained by <a href="">CDRPC</a>. 
+                                        The site was custom-designed by 
+                                        <IA href="https://availabs.org/" target="blank">the Albany Visualization and Informatics Lab (AVAIL)</IA> located in the Geography and Planning Department at the University at Albany, State University of New York, and is maintained by 
+                                        &nbsp;<IA href="https://cdrpc.org/" target="blank">CDRPC</IA>. 
                                     </p>
                                 </SectionBoxMain>
 
@@ -234,7 +244,7 @@ class Home extends Component {
                                    Contact
                                  </ContentHeader>  
                                  <SectionBoxMain>
-                                    This website is maintained by the Capital District Regional Planning Commission. For questions, please contact <a href="mailto:indicators@cdrpc.org">indicators@cdrpc.org</a> or 518-453-0850. 
+                                    This website is maintained by the Capital District Regional Planning Commission. For questions, please contact <IA href="mailto:indicators@cdrpc.org">indicators@cdrpc.org</IA> or 518-453-0850. 
                                  </SectionBoxMain>
                                 <ContentHeader>
                                     Terms of Use: 
