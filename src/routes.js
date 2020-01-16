@@ -10,6 +10,7 @@ import Test from "./pages/Test"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Landing from './pages/Landing'
+import About from './pages/About'
 import NoMatch from './pages/404.js'
 
 const routes = [
@@ -17,6 +18,7 @@ const routes = [
   ...Profiles,
   ...Test,
   Maps,
+  About,
   Login,
   Signup,
   NoMatch

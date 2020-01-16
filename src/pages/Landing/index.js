@@ -38,7 +38,8 @@ class Home extends Component {
                 <div style={flexStyle}>
                     <div style={{height: 400}}>
                         <LandingHeader>
-                            CAPITAL REGION INDICATORS ({ this.props.year })
+                            <p>CAPITAL REGION INDICATORS</p> 
+                            <p style={{fontSize: '18px'}}>{ this.props.year } US Census American Communities Survey</p>
                         </LandingHeader>
                         <div className='container' style={{maxWidth: '869px', color: '#efefef', background: 'rgba(0,0,0,0.3)', borderRadius: 4}}>
                             <div className='row'>
@@ -56,11 +57,13 @@ class Home extends Component {
                                         censusKeys={['B01003_001E']}
                                         geoids={counties}
                                         yearPosition="none"
-                                    />
+
+                                    /> 
+                                </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+
                 </div>
                 <div style={{width: '100vw', height: '100vh', backgroundColor: '#333', position: 'fixed', top: 0, left: 0}}>
                     <AvlMap

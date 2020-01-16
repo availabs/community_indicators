@@ -162,8 +162,7 @@ const BASE_CONFIG = [
          
       }
   },
-
-       {
+  {
       type:"CensusStatBox",
       title:'Total No Vehicle Available',
       censusKeys:[ "B08541_002E",],
