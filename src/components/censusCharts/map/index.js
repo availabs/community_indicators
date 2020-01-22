@@ -29,7 +29,7 @@ const NUM_COLORS = 8;
 const LEGEND_COLOR_RANGE = getColorRange(NUM_COLORS, "Oranges").slice(0, NUM_COLORS - 1);
 
 // blues = ["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"]
-const BORDER_COLOR = "#2171b5"
+const BORDER_COLOR = "#4292c6"
 const HOVER_COLOR = "#6baed6";
 
 class CensusMap extends React.Component {
@@ -161,6 +161,7 @@ class CensusMap extends React.Component {
             layers={ [this.censusLayer] }
             layerProps={ {
               [this.censusLayer.name]: {
+                title: this.props.title,
                 year: this.props.year,
                 geoids: [
                   ...this.props.geoids,
@@ -207,6 +208,7 @@ class CensusLayer extends MapLayer {
 	receiveProps(oldProps, newProps) {
     this.year = newProps.year;
     this.geoids = [...newProps.geoids];
+    this.title = newProps.title;
     this.zoomToBounds = this.zoomToBounds || !deepequal(oldProps.geoids, newProps.geoids);
 	}
 
@@ -294,7 +296,7 @@ class CensusLayer extends MapLayer {
       return falcorChunkerNiceWithUpdate(
         ["acs", subGeoids, this.year, this.censusKeys],
         ["geo", subGeoids, "boundingBox"],
-        ["geo", subGeoids.map(geoid => geoid.slice(0, 5)), "name"]
+        ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "name"]
       )
     })
   }
@@ -327,6 +329,18 @@ class CensusLayer extends MapLayer {
     else {
       map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
       map.setFilter("cousubs-line", ["in", "geoid", "none"]);
+    }
+
+    if ((this.geoids.length === 1) && (this.geoids[0].length === 7)) {
+      const geoid = this.geoids[0];
+      map.setFilter("places-line", ["in", "geoid", geoid]);
+      map.setFilter("places-symbol", ["in", "geoid", geoid]);
+      const name = get(this.falcorCache, ["geo", geoid, "name"], "");
+      map.setLayoutProperty("places-symbol", "text-field", name);
+    }
+    else {
+      map.setFilter("places-line", ["in", "geoid", "none"]);
+      map.setFilter("places-symbol", ["in", "geoid", "none"]);
     }
 
     this.zoomToBounds && this.resetView() && (this.zoomToBounds = false);
@@ -424,7 +438,7 @@ const LayerFactory = props => {
 
         if (value !== null) {
           const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
-          data.push(["Value", format(value)])
+          data.push([this.title, format(value)])
         }
         data.push({
           type: "link",
@@ -482,6 +496,13 @@ const LayerFactory = props => {
             'type': "vector",
             'url': 'mapbox://am3081.52dbm7po'
         }
+      },
+      {
+        id: "places",
+        source: {
+          type: "vector",
+          url: "mapbox://am3081.6u9e7oi9"
+        }
       }
     ],
 
@@ -505,6 +526,7 @@ const LayerFactory = props => {
         'type': 'fill',
         filter : ['in', 'geoid', 'none']
       },
+
       { 'id': 'cousubs-line',
         'source': 'cousubs',
         'source-layer': 'cousubs',
@@ -520,6 +542,32 @@ const LayerFactory = props => {
         'source-layer': 'cousubs',
         'type': 'symbol',
         filter : ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
+        }
+      },
+
+      { id: 'places-line',
+        source: 'places',
+        'source-layer': 'places',
+        type: 'line',
+        filter: ['in', 'geoid', 'none'],
+        paint: {
+          'line-color': BORDER_COLOR,
+          'line-width': 2
+        }
+      },
+      { id: 'places-symbol',
+        source: 'places',
+        'source-layer': 'places',
+        type: 'symbol',
+        filter: ['in', 'geoid', 'none'],
         layout: {
           "symbol-placement": "point",
           "text-size": 12,

@@ -42,20 +42,18 @@ def getPlaces(cursor, geoid):
 
 def has(cousubNames, placeName):
     for n in cousubNames:
-        if placeName.lower() in n.lower(): return True
+        if placeName.lower() in n: return True
     return False
 
 def processChild(geoid, name, lsad=None):
-    if lsad == '21':
-        name += " borough"
-    elif lsad == '25':
-        name += " city"
-    elif lsad == '43':
-        name += " town"
-    elif lsad == '47':
-        name += " village"
+    switch = {
+        '21': " borough",
+        '25': " city",
+        '43': " town",
+        '47': " village"
+    }
     return {
-        "name": name,
+        "name": name + switch.get(lsad, ""),
         "path": "/profile/" + geoid
     }
 
@@ -73,7 +71,7 @@ def main():
         geoid = county["geoid"]
 
         cousubs = sorted(getCousubs(cursor, geoid), key=lambda d: d[1])
-        cousubNames.extend([c[1] for c in cousubs])
+        cousubNames.extend([c[1].lower() for c in cousubs])
 
         county["children"].extend([processChild(*c) for c in cousubs])
 
