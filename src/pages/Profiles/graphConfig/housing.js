@@ -30,6 +30,32 @@ const BASE_CONFIG = [
 
         },
 
+    {
+      title: "Total Housing Units",
+      type:"CensusStatBox",
+      yearPosition: "block",
+      censusKeys:["B25002_001E"],
+      showCompareYear: true,
+      layout:{
+         w:3,
+         h:8
+      },
+
+   },
+    {
+      title: "Total Housing Units",
+      type:"CensusLineChart",
+      sumType: 'sum',
+      showCompare: true,
+      censusKeys:["B25002_001E"],
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:8
+      },
+
+   },
+
      {
       title: "Vacant Housing Units",
       type:"CensusStatBox",

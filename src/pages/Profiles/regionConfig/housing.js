@@ -16,7 +16,21 @@ const BASE_CONFIG = [
          w:3,
          h:4
       },
+
    },
+   //  {
+   //    title: "Total Housing Units",
+   //    type:"CensusLineChart",
+   //    sumType: 'sum',
+   //    showCompare: true,
+   //    censusKeys:["B25002_001E"],
+   //    groupBy: "geoids",
+   //    layout:{
+   //       w:9,
+   //       h:8
+   //    },
+
+   // },
    {
       title: "Occupied Housing Units",
       type:"CensusStatBox",
