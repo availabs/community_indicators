@@ -6,6 +6,10 @@ import AvlMap from 'AvlMap'
 import styled from 'styled-components'
 import StatBox from 'components/censusCharts/statBox'
 import { Element } from 'react-scroll'
+import Carousel1 from 'components/AvlStuff/Carousel'
+
+
+
 
 let flexStyle = {width: '100vw',
  height: '100vh',
@@ -43,7 +47,7 @@ let HeaderContainer = styled.div`
  display: flex;
  justify-content:center;
  align-items: center;
- background-image: url("/Indicators/empire-plaza.jpg");
+ position: absolute;
  z-index:2
  `
 
@@ -83,6 +87,9 @@ let OverlayEffect = styled.div`
     padding-top: 75px;
     color: #293145;
     padding-bottom: 50px;
+    position:relative;
+    z-index:1
+    margin-top:100vh
 `
  let PageHeader = styled.h4`
     padding-top: 50px;
@@ -143,15 +150,17 @@ class Home extends Component {
         return (
 
             <div>
-                <div style={{minHeight: '100vh', justifyContent: 'center',  zIndex:9999}}>
+                <div style={{display:'flex' , top:0 , backgroundAttachment: 'fixed' , position:'fixed' , minHeight: '100vh', justifyContent: 'center',  }}>
+                    <Carousel1/>
                     <HeaderContainer>
-                        <OverlayEffect>
-                            <LandingHeader>   
+                        <OverlayEffect>   
+                             <LandingHeader>
                                 <p>Using Data to Inform Action</p>
                                 <p>In the Greater Capital Region</p>
-                            </LandingHeader>
+                             </LandingHeader>
                         </OverlayEffect>
                     </HeaderContainer>
+
                 </div>
                 <PageContainer>
                      <ContentContainer>
@@ -278,7 +287,7 @@ export default {
     icon: 'icon-map',
     path: '/about',
     exact: true,
-    mainNav: true,
+    mainNav: false,
     title: 'Welcome to Community Indicators',
     menuSettings:{
             image: 'none',

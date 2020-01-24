@@ -18,7 +18,6 @@ const routes = [
   ...Profiles,
   ...Test,
   Maps,
-  About,
   Login,
   Signup,
   NoMatch
