@@ -150,7 +150,7 @@ class Home extends Component {
         return (
 
             <div>
-                <div style={{display:'flex', top: 49, position:'fixed' , minHeight: 'calc(100vh - 49px)', justifyContent: 'center',  }}>
+                <div style={{display:'flex', top: 0, position:'fixed' , minHeight: '100vh', justifyContent: 'center',  }}>
                     <Carousel1/>
                     <HeaderContainer>
                         <OverlayEffect>
