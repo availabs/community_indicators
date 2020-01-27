@@ -131,13 +131,13 @@ const BASE_CONFIG = [
         'B02008_001E', 
         'B02009_001E', 
         'B02011_001E', 
-        'B03002_001E'
+        'B03002_012E'
       ],
       censusKeyLabels:{
         'B02008_001E': "White",
         'B02009_001E': "Black or African American",
         'B02011_001E': "Asian",
-        'B03002_001E': "Hispanic or Latino"
+        'B03002_012E': "Hispanic or Latino"
       },
       layout: {
         w:12,
