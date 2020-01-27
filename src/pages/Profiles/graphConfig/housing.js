@@ -179,7 +179,7 @@ const BASE_CONFIG = [
      {
       title: "Homeowners 65 and Older",
       type:"CensusStatBox",
-      censusKeys:['"B25007_009E", "B25007_010E", "B25007_011E"'],
+      censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
       showCompareYear: true,
       showColors: false,
       layout:{
