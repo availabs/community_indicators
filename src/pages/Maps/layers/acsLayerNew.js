@@ -415,6 +415,10 @@ const CENSUS_FILTER_CONFIG = [
   { name: "Bike/Ped as a Percent of Total Commuters",
     censusKeys: ["B08006_014E", "B08006_015E"],
     divisorKeys: ["B23025_001E"]
+  },
+
+  { name: "GINI",
+    censusKeys: ["B19058"],
   }
 
 ].map(processConfig)

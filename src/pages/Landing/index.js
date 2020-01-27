@@ -236,6 +236,13 @@ class Home extends Component {
                                 </SectionBoxMain>
 
                                 <ContentHeader>
+                                    Data Sources
+                                </ContentHeader>
+                                <SectionBoxMain>
+                                    All information currently displayed herein is from the U.S. Census, American Communities Survey, 5-Year Estimates. The Default is set to 2018 and the comparison year is set to 2013. 
+                                </SectionBoxMain>
+                                    
+                                <ContentHeader>
                                     Visitors to Capital Region Indicators can:
                                 </ContentHeader>
                                 <SectionBoxMain>
