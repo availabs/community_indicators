@@ -96,6 +96,7 @@ class Carousel1 extends React.Component {
                   infiniteLoop
                   dynamicHeight={false}
                   showThumbs={false}
+                  showStatus={false}
                   showIndicators={false}
                   style={{width: '100%', height: '100%',}}>
                     <div>
