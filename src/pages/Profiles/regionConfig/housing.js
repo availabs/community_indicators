@@ -16,7 +16,21 @@ const BASE_CONFIG = [
          w:3,
          h:4
       },
+
    },
+   //  {
+   //    title: "Total Housing Units",
+   //    type:"CensusLineChart",
+   //    sumType: 'sum',
+   //    showCompare: true,
+   //    censusKeys:["B25002_001E"],
+   //    groupBy: "geoids",
+   //    layout:{
+   //       w:9,
+   //       h:8
+   //    },
+
+   // },
    {
       title: "Occupied Housing Units",
       type:"CensusStatBox",
@@ -103,6 +117,85 @@ const BASE_CONFIG = [
 
       }
     },
+
+         {
+      title: "Percent Homeowners 65 and Older",
+      type:"CensusStatBox",
+      sumType: 'pct',
+      censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
+      divisorKey: 'B25007_001E',
+      valueSuffix: '%',
+      showCompareYear: true,
+      showColors: false,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:6,
+         x:0
+      }
+   },
+
+    {
+       
+      title:"Percent Homeowners 65 and Older",
+      type: "CensusBarChart",
+      censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
+      divisorKey: 'B25007_001E',
+      groupBy: "geoids",
+      layout:{
+         w:9,
+         h:12,
+
+      }
+    },
+    //  {  
+    //   title:"Percent Homeowners 65 and Older",
+    //   type: "CensusBarChart",
+    //   sumType:'sum',
+    //   groupBy:'geoids',
+    //   censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
+    //    layout:{
+    //      w:9,
+    //      h:12,
+    //   },
+    // },
+
+     {
+      title: "Homeowners 65 and Older",
+      type:"CensusStatBox",
+      censusKeys:['"B25007_009E", "B25007_010E", "B25007_011E"'],
+      showCompareYear: true,
+      showColors: false,
+      layout:{
+         w:3,
+         h:6,
+      },
+   },
+
+      {
+      type:"CensusStatBox",
+      title:'Number of Mortgages with Monthly Owner Costs Above 30%',
+      censusKeys:["B25091_008E", "B25091_009E", "B25091_010E", "B25091_011E", "B25091_019E", "B25091_020E", "B25091_021E", "B25091_022E"],
+      showCompareYear: true,
+      invertColors: true,
+      layout:{
+         w:3,
+         h:9,
+         x:0
+      }
+   },
+
+      {
+      type:"CensusLineChart",
+      title:'Number of Mortgages with Monthly Owner Costs Above 30%',
+      censusKeys:["B25091_008E", "B25091_009E", "B25091_010E", "B25091_011E", "B25091_019E", "B25091_020E", "B25091_021E", "B25091_022E"],
+      showCompareYear: true,
+      invertColors: true,
+      layout:{
+         w:9,
+         h:9,
+      }
+   },
 
 
 ]

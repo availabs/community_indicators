@@ -387,6 +387,11 @@ const CENSUS_FILTER_CONFIG = [
     divisorKeys: ['B25002_001E']
   },
 
+  {   name: "Percent Homeowners 65 and Older",
+      censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
+      divisorKey: 'B25007_001E',
+  },
+
   { name: "Percent Health Care Coverage",
     censusKeys: ["B18135_001E"],
     divisorKeys: ["B01003_001E"]
@@ -415,6 +420,10 @@ const CENSUS_FILTER_CONFIG = [
   { name: "Bike/Ped as a Percent of Total Commuters",
     censusKeys: ["B08006_014E", "B08006_015E"],
     divisorKeys: ["B23025_001E"]
+  },
+
+  { name: "GINI Index",
+    censusKeys: ["B19058"],
   }
 
 ].map(processConfig)
