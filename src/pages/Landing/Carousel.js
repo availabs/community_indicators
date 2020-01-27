@@ -63,9 +63,9 @@ let OverlayEffect = styled.div`
  let RImg = styled.div `
     img {
       max-height:100vh;
-      object-fit:cover;  
-    }    
-    
+      object-fit:cover;
+    }
+
 
  `
 
@@ -74,10 +74,10 @@ class Carousel1 extends React.Component {
     render() {
         return (
 
-            <div 
+            <div
                 style={{
-                    position:'relative', 
-                    topMargin:0, 
+                    position:'relative',
+                    marginTop:0,
                     zIndex:0,
                     width: '100%',
                     height: '100%',
@@ -90,27 +90,33 @@ class Carousel1 extends React.Component {
                     justifyContent:'center',
                     alignItems: 'center',
                 }}>
-                <Carousel autoPlay={true} interval={10000} transitionTime={1250} infiniteLoop dynamicHeight={true} showThumbs={false} style={{width: '100vw',
-                    height: '100vh',}}>
+                <Carousel autoPlay={true}
+                  interval={10000}
+                  transitionTime={1250}
+                  infiniteLoop
+                  dynamicHeight={false}
+                  showThumbs={false}
+                  showIndicators={false}
+                  style={{width: '100%', height: '100%',}}>
                     <div>
                         <RImg> <img src="/Indicators/empire-plaza.jpg" /> </RImg>
-                       
+
                     </div>
                     <div>
                         <RImg> <img src="/Indicators/Albany2.jpg" /> </RImg>
-                       
+
                     </div>
                     <div>
                         <RImg> <img src="/Indicators/Knott.jpg" /> </RImg>
-                        
+
                     </div>
                     <div>
                         <RImg> <img  src="/Indicators/Waterfall.jpg" /> </RImg>
-                        
+
                     </div>
                     <div>
                         <RImg> <img  src="/Indicators/IndianLadder.jpg" /> </RImg>
-                       
+
                     </div>
                 </Carousel>
             </div>
@@ -118,5 +124,5 @@ class Carousel1 extends React.Component {
         );
     }
 }
- 
+
 export default Carousel1

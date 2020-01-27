@@ -150,10 +150,10 @@ class Home extends Component {
         return (
 
             <div>
-                <div style={{display:'flex' , top:0 , backgroundAttachment: 'fixed' , position:'fixed' , minHeight: '100vh', justifyContent: 'center',  }}>
+                <div style={{display:'flex' , top:49 , backgroundAttachment: 'fixed' , position:'fixed' , minHeight: 'calc(100vh - 49px)', justifyContent: 'center',  }}>
                     <Carousel1/>
                     <HeaderContainer>
-                        <OverlayEffect>   
+                        <OverlayEffect>
                              <LandingHeader>
                                 <p>Using Data to Inform Action</p>
                                 <p>In the Greater Capital Region</p>
@@ -166,32 +166,32 @@ class Home extends Component {
                      <ContentContainer>
                          <div className="row">
                             <div className="col-12">
-                              <div className="element-wrapper">                          
+                              <div className="element-wrapper">
 
                                  <ContentHeader>
                                      Mission and Purpose
                                  </ContentHeader>
                                  <SectionBoxMain>
                                     <p>Capital Region Indicators is a joint initiative of the&nbsp;
-                                    <IA href="https://cdrpc.org/" target="blank">Capital District Regional Planning Commission (CDRPC)</IA>,&nbsp;  
+                                    <IA href="https://cdrpc.org/" target="blank">Capital District Regional Planning Commission (CDRPC)</IA>,&nbsp;
                                     <IA href="https://capitalregionchamber.com/" target="blank">Capital Region Chamber</IA>,&nbsp;
                                     <IA href="https://www.cfgcr.org/" target="blank"> The Community Foundation for the Greater Capital Region </IA> and&nbsp;
                                     <IA href="https://www.cdtcmpo.org/index.php" target="blank"> the Capital District Transportation Committee </IA>.&nbsp;
-                                    This initiative seeks to help a wide variety of public and private organizations better understand the communities of New York’s Capital Region.  Using the best available information, the website serves as a common source for data and interactive visualizations that will inform community members on critical topics related to the economic and social health, as well as progress of our region.  
+                                    This initiative seeks to help a wide variety of public and private organizations better understand the communities of New York’s Capital Region.  Using the best available information, the website serves as a common source for data and interactive visualizations that will inform community members on critical topics related to the economic and social health, as well as progress of our region.
                                     </p>
-                                    <p>The purpose of NY’s Capital Region Indicators is to: 
+                                    <p>The purpose of NY’s Capital Region Indicators is to:
                                       <ul>
                                         <li>Provide high quality, reliable, objective and up-to-date data</li>
                                         <li>Spur discussion about and build consensus around our region’s key indicators</li>
                                         <li>Help better understand changes in our communities’ well-being over time to better target investments to address chronic and emerging challenges and community needs</li>
-                                        <li>Provide information relevant to community and regional planning</li> 
+                                        <li>Provide information relevant to community and regional planning</li>
                                         <li>Serve as a key resource for data needed for grant applications and reports developed by public and private organizations</li>
                                       </ul>
                                     </p>
                                     <p>
-                                        The site was custom-designed by 
-                                        <IA href="https://availabs.org/" target="blank">the Albany Visualization and Informatics Lab (AVAIL)</IA> located in the Geography and Planning Department at the University at Albany, State University of New York, and is maintained by 
-                                        &nbsp;<IA href="https://cdrpc.org/" target="blank">CDRPC</IA>. 
+                                        The site was custom-designed by
+                                        <IA href="https://availabs.org/" target="blank">the Albany Visualization and Informatics Lab (AVAIL)</IA> located in the Geography and Planning Department at the University at Albany, State University of New York, and is maintained by
+                                        &nbsp;<IA href="https://cdrpc.org/" target="blank">CDRPC</IA>.
                                     </p>
                                 </SectionBoxMain>
 
@@ -226,7 +226,7 @@ class Home extends Component {
                                     </div>
                                   </div>
 
-                                </SectionBoxMain>   
+                                </SectionBoxMain>
 
                                 <ContentHeader>
                                     How You Can Use Capital Region Indicators:
@@ -239,9 +239,9 @@ class Home extends Component {
                                     Data Sources
                                 </ContentHeader>
                                 <SectionBoxMain>
-                                    All information currently displayed herein is from the U.S. Census, American Communities Survey, 5-Year Estimates. The Default is set to 2018 and the comparison year is set to 2013. 
+                                    All information currently displayed herein is from the U.S. Census, American Communities Survey, 5-Year Estimates. The Default is set to 2018 and the comparison year is set to 2013.
                                 </SectionBoxMain>
-                                    
+
                                 <ContentHeader>
                                     Visitors to Capital Region Indicators can:
                                 </ContentHeader>
@@ -258,12 +258,12 @@ class Home extends Component {
 
                                 <ContentHeader>
                                    Contact
-                                 </ContentHeader>  
+                                 </ContentHeader>
                                  <SectionBoxMain>
-                                    This website is maintained by the Capital District Regional Planning Commission. For questions, please contact <IA href="mailto:indicators@cdrpc.org">indicators@cdrpc.org</IA> or 518-453-0850. 
+                                    This website is maintained by the Capital District Regional Planning Commission. For questions, please contact <IA href="mailto:indicators@cdrpc.org">indicators@cdrpc.org</IA> or 518-453-0850.
                                  </SectionBoxMain>
                                 <ContentHeader>
-                                    Terms of Use: 
+                                    Terms of Use:
                                 </ContentHeader>
                                 <SectionBoxMain>
                                     <p>Information on this site is provided on an "as is" and "as available" basis. Capital Region Indicators makes every effort to ensure, but does not guarantee, the accuracy or completeness of the information on the Capital Region Indicators website. Our goal is to keep this information timely and accurate. If errors are brought to our attention, we will try to verify such errors and if found to be incorrect to endeavor to correct them. Capital Region Indicators may add, change, improve, or update the information of the website in its sole discretion without notice.</p>
@@ -272,11 +272,11 @@ class Home extends Component {
                                     <p>For site security purpose and to ensure that the Capital Region Indicators website remains available to all users, it employs software programs to monitor network traffic to identify unauthorized attempts to upload or change information, or otherwise cause damage and to detect other possible security breaches.</p>
                                 </SectionBoxMain>
 
- 
+
                                </div>
                             </div>
                         </div>
-                    </ContentContainer>             
+                    </ContentContainer>
                 </PageContainer>
             </div>
 
