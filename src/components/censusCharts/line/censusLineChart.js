@@ -134,18 +134,30 @@ class CensusLineChart extends React.Component {
 
         const lineData = this.lineData();
 
-        const getLegendLabel = line =>
-          this.props.compareGeoid && this.props.showCompare ?
-            get(this.props.geoGraph, [line.geoid, "name"], line.geoid) :
-          line.censusKey in this.props.censusKeyLabels ?
-            this.props.censusKeyLabels[line.censusKey] :
-          getCensusKeyLabel(line.censusKey, this.props.acs, this.props.removeLeading);
+        const getGeoName = g => get(this.props.geoGraph, [g, "name"], g),
+          getCensusLabel = c =>
+            c in this.props.censusKeyLabels ?
+              this.props.censusKeyLabels[c] :
+            getCensusKeyLabel(c, this.props.acs, this.props.removeLeading);
 
-        const showLegend = (this.props.showLegend && this.props.showCompare && this.props.compareGeoid) ||
-          (this.props.showLegend && !this.props.showCompare)
+        const getLegendLabel = line =>
+          this.props.compareGeoid && this.props.showCompare && this.props.censusKeys.length > 1 ?
+            `(${ getGeoName(line.geoid) }) ${ getCensusLabel(line.censusKey) }` :
+          (this.props.compareGeoid && this.props.showCompare) || (this.props.showCompare && this.props.censusKeys.length === 1) ?
+            getGeoName(line.geoid) :
+            getCensusLabel(line.censusKey); // DEFAULT
+
+        // const showLegend = (this.props.showLegend && this.props.showCompare && this.props.compareGeoid) ||
+        //   (this.props.showLegend && !this.props.showCompare)
+        const showLegend = this.props.showLegend;
 
         const showDescription = Boolean(this.props.description.length),
           descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;
+
+        const legendWidth =
+          this.props.compareGeoid &&
+          this.props.showCompare &&
+          this.props.censusKeys.length > 1 ? this.props.legendWidth * 1.5 : this.props.legendWidth
 
         return(
             <div style={ { width: "100%", height: '100%' } }
@@ -174,7 +186,7 @@ class CensusLineChart extends React.Component {
                     data={ lineData }
                     margin={{
                             "top": this.props.marginTop,
-                          "right": showLegend ? this.props.legendWidth : 20,
+                          "right": showLegend ? legendWidth : 20,
                             "bottom": 30 + descriptionHeight,
                             "left": this.props.marginLeft
                     }}
@@ -195,7 +207,7 @@ class CensusLineChart extends React.Component {
                     dotBorderColor="#f2f4f8"
                     enableDotLabel={false}
                     layers={ [
-                      showLegend ? LegendFactory(lineData, this.props.legendWidth, this.props.colors, getLegendLabel, yFormat) : null,
+                      showLegend ? LegendFactory(lineData, this.props.colors, getLegendLabel) : null,
                       showDescription ? DescriptionFactory(this.props.description) : null,
                       'grid', 'axes', 'lines', 'dots', 'slices'
                     ] }
@@ -275,7 +287,7 @@ const DescriptionFactory = lines =>
     </g>
   )
 
-const LegendFactory = (data, width, colors, getLegendLabel, yFormat) =>
+const LegendFactory = (data, colors, getLegendLabel) =>
   graph => (
     <g style={ { transform: `translate(${ graph.width }px, -${ graph.margin.top }px)` } }>
       {

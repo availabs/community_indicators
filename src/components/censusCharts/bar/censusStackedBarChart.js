@@ -66,13 +66,17 @@ class HorizontalBarChart extends React.Component {
     )
   }
   getBarData() {
+    const getValue = (g, y, c) => {
+      const v = get(this.props.acsGraph, [g, y, c], -666666666);
+      return v === -666666666 ? 0 : v;
+    }
     const leftVars = this.props.left.keys,
       rightVars = this.props.right.keys;
     return this.props.labels.map((label, i) => {
       const bar = { label };
       this.props.allGeoids.forEach(geoid => {
-        bar[`left-${ geoid }`] = get(this.props.acsGraph, [geoid, this.props.year, leftVars[i]], 0) * -1
-        bar[`right-${ geoid }`] = get(this.props.acsGraph, [geoid, this.props.year, rightVars[i]], 0)
+        bar[`left-${ geoid }`] = getValue(geoid, this.props.year, leftVars[i]) * -1
+        bar[`right-${ geoid }`] = getValue(geoid, this.props.year, rightVars[i])
       })
       return bar;
     })

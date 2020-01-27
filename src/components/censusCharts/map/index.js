@@ -380,12 +380,12 @@ class CensusLayer extends MapLayer {
     geoids.forEach(geoid => {
       colors[geoid] = get(colors, geoid, "#000")
     })
-    const colorKeys = Object.keys(colors);
 
     map.setPaintProperty(this.geolevel, "fill-color",
       ["case",
         ["boolean", ["feature-state", "hover"], false], HOVER_COLOR,
-        ["match", ["to-string", ["get", "geoid"]], colorKeys,
+        ["case",
+          ["has", ["to-string", ["get", "geoid"]], ["literal", colors]],
           ["get", ["to-string", ["get", "geoid"]], ["literal", colors]],
           "#000"
         ]

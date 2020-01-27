@@ -21,7 +21,7 @@ const BASE_CONFIG = [
       censusKeys:["B08006_014E", "B08006_015E"],
       amount:true,
       showCompareYear: true,
-      yearPosition: "block",
+      // yearPosition: "block",
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -32,7 +32,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Bike/Ped as a Percent of Total Commuters',
       sumType: 'pct',
-      yearPosition: "block",
+      // yearPosition: "block",
       showCompareYear: true,
       censusKeys:["B08006_014E", "B08006_015E"],
       divisorKey: "B23025_001E",
@@ -77,7 +77,7 @@ const BASE_CONFIG = [
       title:'Total Public Transportation ',
       censusKeys:["B08006_008E"],
       showCompareYear: true,
-      yearPosition: "block",
+      // yearPosition: "block",
       amount:true,
       maximumFractionDigits: 1,
       layout:{
@@ -94,7 +94,7 @@ const BASE_CONFIG = [
       censusKeys:["B08006_008E"],
       divisorKey: "B23025_001E",
       valueSuffix: '%',
-      yearPosition: "block",
+      // yearPosition: "block",
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -159,7 +159,7 @@ const BASE_CONFIG = [
     layout:{
          w:9,
          h:12,
-         
+
       }
   },
   {
@@ -167,7 +167,7 @@ const BASE_CONFIG = [
       title:'Total No Vehicle Available',
       censusKeys:[ "B08541_002E",],
       showCompareYear: true,
-      yearPosition: "block",
+      // yearPosition: "block",
       amount:true,
       maximumFractionDigits: 1,
       layout:{
@@ -198,7 +198,7 @@ const BASE_CONFIG = [
       title:'Total Worked at Home ',
       censusKeys:[ "B08006_017E"],
       showCompareYear: true,
-      yearPosition: "block",
+      // yearPosition: "block",
       amount:true,
       maximumFractionDigits: 1,
       layout:{
@@ -211,7 +211,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Work at Home as a Percent of Total Commuters',
       sumType: 'pct',
-      yearPosition: "block",
+      // yearPosition: "block",
       showCompareYear: true,
       censusKeys:["B08006_017E"],
       divisorKey: "B23025_001E",

@@ -83,6 +83,9 @@ def main():
 
         county["children"].extend([processChild(*p) for p in places])
 
+    for county in menu:
+        county["children"] = sorted(county["children"], key=lambda d: d["name"])
+
     with open("submenu.json", "w") as out:
         json.dump([menu], out)
 

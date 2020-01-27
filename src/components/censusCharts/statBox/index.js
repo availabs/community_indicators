@@ -29,9 +29,14 @@ class CensusStatBox extends React.Component {
     }
 
     calculateValues(geoids){
+      const getValue = (g, y, c) => {
+        const v = get(this.props.graph, ["acs", g, y, c], -666666666);
+        return v === -666666666 ? 0 : v;
+      }
+
       let value = geoids.reduce((a, c) =>
         a + this.props.censusKeys.reduce((aa, cc) =>
-          aa + get(this.props.graph, ["acs", c, this.props.year, cc], 0)
+          aa + getValue(c, this.props.year, cc)
         , 0)
       , 0)
 
@@ -47,7 +52,7 @@ class CensusStatBox extends React.Component {
             // .reduce((a,b) => a + b )
               let divisorValue = geoids.reduce((a, c) =>
                 a + this.props.divisorKeys.reduce((aa, cc) =>
-                  aa + get(this.props.graph, ["acs", c, this.props.year, cc], 0)
+                  aa + getValue(c, this.props.year, cc)
                 , 0)
               , 0)
 
@@ -67,7 +72,7 @@ class CensusStatBox extends React.Component {
         if(this.props.compareYear) {
           let compareValue = geoids.reduce((a, c) =>
             a + this.props.censusKeys.reduce((aa, cc) =>
-              aa + get(this.props.graph, ["acs", c, this.props.compareYear, cc], 0)
+              aa + getValue(c, this.props.compareYear, cc)
             , 0)
           , 0)
             // let compareValue = geoids
@@ -80,7 +85,7 @@ class CensusStatBox extends React.Component {
                 //   .reduce((a,b) => a + b )
                   let divisorValue = geoids.reduce((a, c) =>
                     a + this.props.divisorKeys.reduce((aa, cc) =>
-                      aa + get(this.props.graph, ["acs", c, this.props.year, cc], 0)
+                      aa + getValue(c, this.props.year, cc)
                     , 0)
                   , 0)
 
@@ -104,14 +109,14 @@ class CensusStatBox extends React.Component {
     }
 
     renderStuff(geoids) {
-        let displayData = this.calculateValues(geoids),
+        let { value, change } = this.calculateValues(geoids),
           growthColors = [this.props.increaseColor, this.props.decreaseColor];
         this.props.invertColors && growthColors.reverse();
         if (!this.props.showColors) {
           growthColors = ["currentColor", "currentColor"];
         }
-this.props.title === "Percent Ages 3-4 Enrolled in School" && console.log("<StatBox::renderStuff>", geoids, displayData)
-        const growthColor = displayData.change ? growthColors[displayData.change >= 0 ? 0 : 1] : "currentColor";
+
+        const growthColor = change ? growthColors[change >= 0 ? 0 : 1] : "currentColor";
       return (
         <div style={ { color: growthColor } }>
           <div style={ {
@@ -129,14 +134,14 @@ this.props.title === "Percent Ages 3-4 Enrolled in School" && console.log("<Stat
                 display: 'block',
                 fontSize: this.props.compareGeoid ? "2rem" : null
               } }>
-              { this.props.valuePrefix }
-              { displayData.value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits}) }
-              { this.props.valueSuffix }
+              { value && this.props.valuePrefix }
+              { value ? value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits}) : "No Data" }
+              { value && this.props.valueSuffix }
             </div>
           </div>
-          { this.props.compareYear &&
+          { this.props.compareYear && change &&
             <div style={ { textAlign: 'center', marginTop: "-10px" } }>
-                { Math.abs(displayData.change)}% {displayData.change >= 0 ? 'Growth' : 'Decline' }
+                { Math.abs(change)}% {change >= 0 ? 'Growth' : 'Decline' }
             </div>
            }
         </div>

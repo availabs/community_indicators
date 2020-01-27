@@ -526,10 +526,11 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     opacity: {
       name: "Opacity",
       type: "slider",
-      value: 1,
+      value: 0.8,
       min: 0,
       max: 1,
       onChange: function(oldValue, newValue) {
+// console.log("SLIDER:", oldValue, newValue)
         this.map && ['counties', 'cousubs', 'tracts', 'blockgroup'].forEach(l => {
           this.map.setPaintProperty(l, "fill-extrusion-opacity", newValue)
         })
