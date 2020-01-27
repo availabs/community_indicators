@@ -6,7 +6,7 @@ import AvlMap from 'AvlMap'
 import styled from 'styled-components'
 import StatBox from 'components/censusCharts/statBox'
 import { Element } from 'react-scroll'
-import Carousel1 from 'components/AvlStuff/Carousel'
+import Carousel1 from './Carousel'
 
 
 

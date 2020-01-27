@@ -393,8 +393,27 @@ const CENSUS_FILTER_CONFIG = [
   },
 
   { name: "Percent Health Care Coverage",
-    censusKeys: ["B18135_001E"],
-    divisorKeys: ["B01003_001E"]
+    censusKeys: [
+        "B27001_004E", 
+          "B27001_007E",
+          "B27001_010E",
+          "B27001_013E",
+          "B27001_016E",
+          "B27001_019E",
+          "B27001_022E",
+          "B27001_025E",
+          "B27001_028E",
+          "B27001_032E", 
+          "B27001_035E",
+          "B27001_038E",
+          "B27001_041E",
+          "B27001_044E",
+          "B27001_047E",
+          "B27001_050E",
+          "B27001_053E",
+          "B27001_056E",
+        ],
+    divisorKeys: ["B27001_001E"]
   },
 
   { name: "Percent of Population with No High School Diploma or Equivalent",
