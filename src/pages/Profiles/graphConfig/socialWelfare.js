@@ -177,7 +177,7 @@ const BASE_CONFIG = [
       {
       type:"CensusStatBox",
       censusKeys:[
-        "B09010_002E",
+        "B09010_002E", 
         ],
         showCompareYear: true,
         invertColors: true,
