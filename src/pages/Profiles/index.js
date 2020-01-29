@@ -87,6 +87,7 @@ class Profile extends React.Component{
       const categories = Object.keys(GRAPH_CONFIG).map(category =>
         this.renderCategory(category, GRAPH_CONFIG[category])
       )
+console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear)
       return(
           <div>
             <ProfileHeader region={ this.props.region }

@@ -25,7 +25,7 @@ class CensusStatBox extends React.Component {
             this.props.years,
             [...this.props.censusKeys, ...this.props.divisorKeys]
           ]
-        )
+        ).then(res => console.log("RES:", res))
     }
 
     calculateValues(geoids){
@@ -182,7 +182,7 @@ class CensusStatBox extends React.Component {
         censusKeys: [],
         geoids: [],
         compareGeoid: null,
-        years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+        years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
         year:'2017',
         compareYear: null,
         maximumFractionDigits: 0,

@@ -102,6 +102,7 @@ class ProfileHeader extends Component {
                                     <StatBox
                                         title={'Population'}
                                         year={ this.props.year }
+                                        years={ this.props.years }
                                         compareYear={ this.props.compareYear }
                                         censusKeys={['B01003_001E']}
                                         geoids={this.props.geoids}
@@ -110,6 +111,7 @@ class ProfileHeader extends Component {
                                     <StatBox
                                         title={'Median Age'}
                                         year={ this.props.year }
+                                        years={ this.props.years }
                                         censusKeys={['B01002_001E']}
                                         geoids={this.props.geoids}
                                         sumType='avg'
@@ -119,6 +121,7 @@ class ProfileHeader extends Component {
                                     <StatBox
                                         title={'Average Median Household Income'}
                                         year={ this.props.year }
+                                        years={ this.props.years }
                                         valuePrefix={'$'}
                                         censusKeys={['B19013_001E']}
                                         geoids={this.props.geoids}
@@ -128,6 +131,7 @@ class ProfileHeader extends Component {
                                     <StatBox
                                         title={'Poverty Rate'}
                                         year={ this.props.year }
+                                        years={ this.props.years }
                                         compareYear={ this.props.compareYear }
                                         censusKeys={['B17001_002E']}
                                         valueSuffix={'%'}
