@@ -89,7 +89,7 @@ class Profile extends React.Component{
       )
       return(
           <div>
-            <ProfileHeader key={ this.props.region }
+            <ProfileHeader region={ this.props.region }
               title={ this.props.region }
               geoids={ REGIONS[this.props.region] }
                 year={ this.props.year }

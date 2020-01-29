@@ -42,21 +42,14 @@ class TractLayer extends MapLayer {
       cancelAnimationFrame(this.animation);
     }
     fetchData() {
-      return falcorChunkerNice(["geo", this.geoids, "blockgroup"])
+      return falcorChunkerNice(["geo", this.geoids, ["blockgroup", "boundingBox"]])
         .then(res => {
           this.blockgroups = this.geoids.reduce((a, c) => {
             a.push(...get(res, ["json", "geo", c, "blockgroup"], []))
             return a;
           }, [])
+
           return falcorChunkerNice(["acs", this.blockgroups, this.year, this.censusKey])
-            .then(() => falcorGraph.call(["geo", "blockgroup", "centroid"], this.blockgroups))
-            .then(res => {
-              const centroid = get(res, ["json", "geo", "blockgroup", "centroid", "coordinates"], null);
-              if (!deepequal(centroid, this.centroid)) {
-                this.centroid = centroid;
-                this.restartAnimation();
-              }
-            });
         })
     }
 
@@ -72,11 +65,7 @@ class TractLayer extends MapLayer {
         const args = {
           bearing: (timestamp * 0.001) % 360,
           duration: this.animationDuration,
-          easing: d => d,
-          zoom: this.geoids.length === 1 ? 10.5 : 8
-        }
-        if (this.centroid) {
-          args.center = [...this.centroid];
+          easing: d => d
         }
         this.map.easeTo({ ...args });
       }
@@ -93,69 +82,58 @@ class TractLayer extends MapLayer {
           return a;
         }, {})
 
-        // let keyDomain = Object.keys(data.acs)
-        //     .filter(d => d !== 'config')
-        //     .reduce((out, curr) => {
-        //         if(data.acs[curr] && this.geom[curr]){
-        //             out[curr] = data.acs[curr]['2016']['B01003_001E'] / (this.geom[curr]);
-        //         }
-        //         return out;
-        //     }, {});
-        //
-        // let popSum = Object.keys(data.acs)
-        //     .filter(d => d !== 'config')
-        //     .reduce((out, curr) => {
-        //         if(data.acs[curr] && this.geom[curr]){
-        //             out += data.acs[curr]['2016']['B01003_001E'];
-        //         }
-        //         return out;
-        //     }, 0);
-        // let areaSum = Object.keys(data.acs)
-        //     .filter(d => d !== 'config')
-        //     .reduce((out, curr) => {
-        //         if(data.acs[curr] && this.geom[curr]){
-        //             out += (this.geom[curr])
-        //         }
-        //         return out;
-        //     }, 0);
+        const geo = get(falcorGraph.getCache(), "geo", {}),
+          bounds = this.geoids.reduce((a, c) => {
+            let b = get(geo, [c, "boundingBox", "value"], null);
+            if (b) {
+              b = b.slice(4, b.length - 1);
+              b = b.split(",").map(b => b.split(" "))
+              return a.extend(b)
+            }
+            return a;
+          }, new mapboxgl.LngLatBounds())
+
+        !bounds.isEmpty() && setTimeout(() => map.fitBounds(bounds, { maxZoom: 10, padding: { top: 0, right: 50, bottom: 75, left: 50 } }), 250)
 
         const values = Object.values(keyDomain).sort((a, b) => a - b),
           min = values[0],
           max = values[values.length - 1];
 
-        map.setPaintProperty(
-            'bg-layer',
-            'fill-extrusion-color',
-            [
-               'interpolate',
-                ['linear'],
-                ["get", ["to-string", ["get", "GEOID"]], ["literal", keyDomain]],
-                min, '#160e23',
-                max, '#55e9ff'
-            ]
-        );
-
-        map.setPaintProperty(
-            'bg-layer',
-            'fill-extrusion-height',
-            [
-                'interpolate',
-                ['linear'],
-                ["get", ["to-string", ["get", "GEOID"]], ["literal", keyDomain]],
-                min, 0,
-                max, 10000
-            ]
-        )
+        if ((min !== undefined) && (max !== undefined)) {
+            map.setPaintProperty(
+                'bg-layer',
+                'fill-extrusion-color',
+                [
+                   'interpolate',
+                    ['linear'],
+                    ["get", ["to-string", ["get", "GEOID"]], ["literal", keyDomain]],
+                    min, '#160e23',
+                    max, '#55e9ff'
+                ]
+            );
+          map.setPaintProperty(
+              'bg-layer',
+              'fill-extrusion-height',
+              [
+                  'interpolate',
+                  ['linear'],
+                  ["get", ["to-string", ["get", "GEOID"]], ["literal", keyDomain]],
+                  min, 0,
+                  max, 10000
+              ]
+          )
+        }
     }
 }
 
 
 
-export default () =>
+export default geoids =>
   new TractLayer("Tracts Layer", {
     active: true,
 
-    geoids: ['36001', '36083', '36093', '36091', '36039', '36021', '36115', '36113'],
+    geoids,
+
     censusKey: "B01003_001E",
     blockgroups: [],
     centroid: null,

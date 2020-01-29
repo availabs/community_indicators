@@ -75,7 +75,7 @@ const RegionToggle = ({ title, toggle }) =>
   </StyledToggle>
 
 class ProfileHeader extends Component {
-  HeaderLayer = HeaderLayerFactory();
+  HeaderLayer = HeaderLayerFactory(this.props.geoids);
 
   componentDidUpdate(oldProps) {
     if (!deepequal(this.props.geoids, this.HeaderLayer.geoids)) {
@@ -145,7 +145,7 @@ class ProfileHeader extends Component {
                         </div>
                     </HeaderContainer>
                     <div style={{width: '100vw', height: '100vh', backgroundColor: '#333', position: 'fixed', top: 0, left: 0}}>
-                        <AvlMap
+                        <AvlMap key={ this.props.region }
                             sidebar={false}
                             scrollZoom={false}
                             style={'mapbox://styles/am3081/cjfxdhwbu06jo2rqn1w0l9x9t'}
