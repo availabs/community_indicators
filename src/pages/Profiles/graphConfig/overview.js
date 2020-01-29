@@ -75,6 +75,9 @@ const BASE_CONFIG = [
           'Ages 85 and over'
         ]
     },
+
+
+
    {
       type:"CensusStatBox",
       title: "Median Household Income",
@@ -174,6 +177,30 @@ const BASE_CONFIG = [
          h:12
       }
    },
+
+       {
+      type: 'CensusLineChart',
+      title: 'Population by Race',
+      censusKeys: [
+        'B02008_001E', 
+        'B02009_001E', 
+        'B02011_001E', 
+        'B03002_012E'
+      ],
+      censusKeyLabels:{
+        'B02008_001E': "White",
+        'B02009_001E': "Black or African American",
+        'B02011_001E': "Asian",
+        'B03002_012E': "Hispanic or Latino"
+      },
+      layout: {
+        w:12,
+        h: 9
+
+      }
+
+
+    },
 
        {
       type: "CensusLineChart",

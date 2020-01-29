@@ -202,26 +202,38 @@ class Home extends Component {
                                     <div className='container' style={{paddingBottom: '20px' , paddingTop: '20px'}}>
                                       <div className='row' >
                                         <div className='col-sm'>
+                                          <a href="https://cdrpc.org/" target="blank"> 
                                           <RImg src="/Indicators/CDRPCLogoMaster.jpg" alt="Logo for the Capital District Regional Planning Commission" className='imageStyle'/>
+                                          </a>
                                         </div>
                                         <div className='col-sm'>
-                                          <RImg src="/Indicators/CapitalRegionChamber.png" alt="Logo for the Capital Region Chamber"className='imageStyle'/>
+                                          <a href="https://capitalregionchamber.com/" target="blank">
+                                                <RImg src="/Indicators/CapitalRegionChamber.png" alt="Logo for the Capital Region Chamber"className='imageStyle'/>
+                                          </a>
                                         </div>
                                         <div className='col-sm'>
-                                        <RImg src="/Indicators/communityFoundation.jpg" alt="Logo for the Community Foundation for the Greater Capital Region" className='imageStyle'/>
+                                            <a href="https://www.cfgcr.org/" target="blank" >
+                                                <RImg src="/Indicators/communityFoundation.gif" alt="Logo for the Community Foundation for the Greater Capital Region" className='imageStyle'/>
+                                            </a>
                                         </div>
                                     </div>
                                    </div>
                                    <div className='container' style={{paddingBottom: '20px' }}>
                                      <div className='row' >
                                         <div className='col-sm'>
-                                          <RImg src="/Indicators/cdtcLogo.png" alt="Logo for the Capital District Transportation Committee" className='imageStyle'/>
+                                            <a href="https://www.cdtcmpo.org/index.php" target="blank">
+                                                <RImg src="/Indicators/cdtcLogo.png" alt="Logo for the Capital District Transportation Committee" className='imageStyle'/>
+                                            </a>
                                         </div>
                                         <div className='col-sm'>
-                                          <RImg2 src="/Indicators/AVAIL.png" alt="Logo for the Albany Visualization and Informatics Laboratory" className='imageStyle'/>
+                                            <a href="https://availabs.org" target="blank" >
+                                                <RImg2 src="/Indicators/AVAIL.png" alt="Logo for the Albany Visualization and Informatics Laboratory" className='imageStyle'/>
+                                            </a>                                        
                                         </div>
                                         <div className='col-sm'>
-                                        <RImg2 src="/Indicators/UAlogo.gif" alt="Logo for the University at Albany, State University of New York" sclassName='imageStyle'/>
+                                            <a href="https://www.albany.edu" target="blank">
+                                                <RImg2 href="https://www.albany.edu" target="blank" src="/Indicators/UAlogo.gif" alt="Logo for the University at Albany, State University of New York" sclassName='imageStyle'/>
+                                            </a>
                                         </div>
                                     </div>
                                   </div>

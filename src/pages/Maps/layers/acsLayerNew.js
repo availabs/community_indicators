@@ -384,12 +384,12 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Percent Vacant Housing Units",
     censusKeys: ["B25002_003E"],
-    divisorKeys: ['B25002_001E']
+    divisorKeys: ['B25002_001E'],
   },
 
   {   name: "Percent Homeowners 65 and Older",
       censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
-      divisorKey: 'B25007_001E',
+      divisorKeys: ['B25007_001E'],
   },
 
   { name: "Percent Health Care Coverage",

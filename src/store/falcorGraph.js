@@ -7,24 +7,24 @@ import { update } from "utils/redux-falcor/components/duck"
 
 //export let host =
 // let host = 'https://graph.availabs.org/'
-let host = 'https://graph.availabs.org/';
-try {
-// To run the API from localhost just add a new file named "useLocalHost.js",
-// with the following single line: export const useLocalHost = 'http://localhost:4444/';
-// You can supply a different port number if required.
+let host = '/';
+// try {
+// // To run the API from localhost just add a new file named "useLocalHost.js",
+// // with the following single line: export const useLocalHost = 'http://localhost:4444/';
+// // You can supply a different port number if required.
 
-// You can easily switch back to using the production API without deleting the "useLocalHost.js" file
-// by changing the file to: export const useLocalHost = false;
+// // You can easily switch back to using the production API without deleting the "useLocalHost.js" file
+// // by changing the file to: export const useLocalHost = false;
 
-// the file "useLocalHost.js" has been added to .gitignore.
-  const { useLocalHost } = require("./useLocalHost");
-  if (useLocalHost) {
-    host = useLocalHost;
-  }
-}
-catch {
-  host = 'https://graph.availabs.org/'
-}
+// // the file "useLocalHost.js" has been added to .gitignore.
+//   const { useLocalHost } = require("./useLocalHost");
+//   if (useLocalHost) {
+//     host = useLocalHost;
+//   }
+// }
+// catch {
+//   host ='/'
+// }
 
 if (process.env.NODE_ENV === 'production') {
   host = 'https://graph.availabs.org/'
