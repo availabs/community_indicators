@@ -154,8 +154,8 @@ const initialState = {
     earliest: 2012,
     active: 2017
   },
-  year: 2017,
-  compareYear: 2012
+  year: 2018,
+  compareYear: 2013
 };
 
 // ------------------------------------
