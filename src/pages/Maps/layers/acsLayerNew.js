@@ -1,5 +1,7 @@
 import React from "react"
 
+import { Link } from "react-router-dom"
+
 import MapLayer from "AvlMap/MapLayer"
 import Animator from "AvlMap/LayerAnimator"
 
@@ -394,7 +396,7 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "Percent Health Care Coverage",
     censusKeys: [
-        "B27001_004E", 
+        "B27001_004E",
           "B27001_007E",
           "B27001_010E",
           "B27001_013E",
@@ -403,7 +405,7 @@ const CENSUS_FILTER_CONFIG = [
           "B27001_022E",
           "B27001_025E",
           "B27001_028E",
-          "B27001_032E", 
+          "B27001_032E",
           "B27001_035E",
           "B27001_038E",
           "B27001_041E",
@@ -506,11 +508,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
         data.push([this.filters.census.value, format(value)])
       }
-      data.push({
-        type: "link",
-        link: "View Profile",
-        href: `/profile/${ geoid }`
-      })
+      data.push([<Link to={ `/profile/${ geoid }` }>View Profile</Link>]);
 
       return data;
     }

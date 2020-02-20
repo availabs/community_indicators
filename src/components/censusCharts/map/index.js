@@ -1,4 +1,5 @@
 import React from "react"
+import { Link } from "react-router-dom"
 
 import mapboxgl from "mapbox-gl"
 
@@ -440,11 +441,7 @@ const LayerFactory = props => {
           const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
           data.push([this.title, format(value)])
         }
-        data.push({
-          type: "link",
-          link: "View Profile",
-          href: `/profile/${ geoid }`
-        })
+        data.push([<Link to={ `/profile/${ geoid }` }>View Profile</Link>])
 
         return data;
       }
