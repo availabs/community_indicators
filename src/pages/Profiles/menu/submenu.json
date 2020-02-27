@@ -40,14 +40,6 @@
                "name": "Green Island town"
             }, 
             {
-               "path": "/profile/3630521", 
-               "name": "Green Island village"
-            }, 
-            {
-               "path": "/profile/3630609", 
-               "name": "Greenville"
-            }, 
-            {
                "path": "/profile/3600131104", 
                "name": "Guilderland town"
             }, 
@@ -62,11 +54,11 @@
             {
                "path": "/profile/3600150672", 
                "name": "New Scotland town"
-            }, 
+            },
             {
                "path": "/profile/3659831", 
                "name": "Preston-Potter Hollow"
-            }, 
+            },  
             {
                "path": "/profile/3660675", 
                "name": "Ravena village"
@@ -80,18 +72,6 @@
                "name": "Rensselaerville town"
             }, 
             {
-               "path": "/profile/3663924", 
-               "name": "Rotterdam"
-            }, 
-            {
-               "path": "/profile/3665508", 
-               "name": "Schenectady city"
-            }, 
-            {
-               "path": "/profile/3675484", 
-               "name": "Troy city"
-            }, 
-            {
                "path": "/profile/3677684", 
                "name": "Voorheesville village"
             }, 
@@ -103,10 +83,6 @@
                "path": "/profile/3600179851", 
                "name": "Westerlo town"
             }, 
-            {
-               "path": "/profile/3680423", 
-               "name": "Westmere"
-            }
          ], 
          "name": "Albany County", 
          "geoid": "36001"
@@ -119,21 +95,13 @@
                "name": "Ancram town"
             }, 
             {
-               "path": "/profile/3602902", 
-               "name": "Athens village"
-            }, 
-            {
                "path": "/profile/3602103287", 
                "name": "Austerlitz town"
             }, 
             {
                "path": "/profile/3602112056", 
                "name": "Canaan town"
-            }, 
-            {
-               "path": "/profile/3613002", 
-               "name": "Catskill village"
-            }, 
+            },  
             {
                "path": "/profile/3602114014", 
                "name": "Chatham town"
@@ -169,14 +137,6 @@
             {
                "path": "/profile/3602118102", 
                "name": "Copake town"
-            }, 
-            {
-               "path": "/profile/3618718", 
-               "name": "Coxsackie village"
-            }, 
-            {
-               "path": "/profile/3622557", 
-               "name": "East Nassau village"
             }, 
             {
                "path": "/profile/3602128068", 
@@ -322,10 +282,6 @@
                "name": "Halcott town"
             }, 
             {
-               "path": "/profile/3635969", 
-               "name": "Hudson city"
-            }, 
-            {
                "path": "/profile/3603936178", 
                "name": "Hunter town"
             }, 
@@ -366,14 +322,6 @@
                "name": "Prattsville town"
             }, 
             {
-               "path": "/profile/3659831", 
-               "name": "Preston-Potter Hollow"
-            }, 
-            {
-               "path": "/profile/3660675", 
-               "name": "Ravena village"
-            }, 
-            {
                "path": "/profile/3673143", 
                "name": "Tannersville village"
             }, 
@@ -392,10 +340,7 @@
       {
          "path": "/profile/36083", 
          "children": [
-            {
-               "path": "/profile/3601000", 
-               "name": "Albany city"
-            }, 
+
             {
                "path": "/profile/3603320", 
                "name": "Averill Park"
@@ -411,10 +356,6 @@
             {
                "path": "/profile/3612870", 
                "name": "Castleton-on-Hudson village"
-            }, 
-            {
-               "path": "/profile/3616749", 
-               "name": "Cohoes city"
             }, 
             {
                "path": "/profile/3622106", 
@@ -433,10 +374,6 @@
                "name": "Grafton town"
             }, 
             {
-               "path": "/profile/3630521", 
-               "name": "Green Island village"
-            }, 
-            {
                "path": "/profile/3631918", 
                "name": "Hampton Manor"
             }, 
@@ -447,14 +384,6 @@
             {
                "path": "/profile/3608335463", 
                "name": "Hoosick town"
-            }, 
-            {
-               "path": "/profile/3646360", 
-               "name": "Mechanicville city"
-            }, 
-            {
-               "path": "/profile/3646536", 
-               "name": "Menands village"
             }, 
             {
                "path": "/profile/3608349517", 
@@ -509,25 +438,13 @@
                "name": "Stephentown town"
             }, 
             {
-               "path": "/profile/3671322", 
-               "name": "Stillwater village"
-            }, 
-            {
                "path": "/profile/3675484", 
                "name": "Troy city"
             }, 
             {
                "path": "/profile/3676672", 
                "name": "Valley Falls village"
-            }, 
-            {
-               "path": "/profile/3678520", 
-               "name": "Waterford village"
-            }, 
-            {
-               "path": "/profile/3678674", 
-               "name": "Watervliet city"
-            }, 
+            },  
             {
                "path": "/profile/3680863", 
                "name": "West Sand Lake"
@@ -560,10 +477,6 @@
                "name": "Clifton Park town"
             }, 
             {
-               "path": "/profile/3616749", 
-               "name": "Cohoes city"
-            }, 
-            {
                "path": "/profile/3609118223", 
                "name": "Corinth town"
             }, 
@@ -580,16 +493,8 @@
                "name": "Day town"
             }, 
             {
-               "path": "/profile/3622084", 
-               "name": "East Glenville"
-            }, 
-            {
                "path": "/profile/3609123591", 
                "name": "Edinburg town"
-            }, 
-            {
-               "path": "/profile/3626770", 
-               "name": "Fort Edward village"
             }, 
             {
                "path": "/profile/3609128112", 
@@ -598,11 +503,7 @@
             {
                "path": "/profile/3628101", 
                "name": "Galway village"
-            }, 
-            {
-               "path": "/profile/3629333", 
-               "name": "Glens Falls city"
-            }, 
+            },  
             {
                "path": "/profile/3609130444", 
                "name": "Greenfield town"
@@ -618,14 +519,6 @@
             {
                "path": "/profile/3609131489", 
                "name": "Halfmoon town"
-            }, 
-            {
-               "path": "/profile/3635980", 
-               "name": "Hudson Falls village"
-            }, 
-            {
-               "path": "/profile/3640651", 
-               "name": "Lake Luzerne"
             }, 
             {
                "path": "/profile/3609144743", 
@@ -688,10 +581,6 @@
                "name": "Stillwater village"
             }, 
             {
-               "path": "/profile/3675484", 
-               "name": "Troy city"
-            }, 
-            {
                "path": "/profile/3677431", 
                "name": "Victory village"
             }, 
@@ -702,10 +591,6 @@
             {
                "path": "/profile/3678520", 
                "name": "Waterford village"
-            }, 
-            {
-               "path": "/profile/3680082", 
-               "name": "West Glens Falls"
             }, 
             {
                "path": "/profile/3609182403", 
@@ -737,10 +622,6 @@
             {
                "path": "/profile/3622084", 
                "name": "East Glenville"
-            }, 
-            {
-               "path": "/profile/3624713", 
-               "name": "Esperance village"
             }, 
             {
                "path": "/profile/3609329366", 
@@ -802,21 +683,13 @@
                "name": "Chestertown"
             }, 
             {
-               "path": "/profile/3618212", 
-               "name": "Corinth village"
-            }, 
-            {
                "path": "/profile/3629338", 
                "name": "Glens Falls North"
             }, 
             {
                "path": "/profile/3629333", 
                "name": "Glens Falls city"
-            }, 
-            {
-               "path": "/profile/3631258", 
-               "name": "Hadley"
-            }, 
+            },  
             {
                "path": "/profile/3611331335", 
                "name": "Hague town"
@@ -824,10 +697,6 @@
             {
                "path": "/profile/3611335639", 
                "name": "Horicon town"
-            }, 
-            {
-               "path": "/profile/3635980", 
-               "name": "Hudson Falls village"
             }, 
             {
                "path": "/profile/3611338715", 
@@ -860,10 +729,6 @@
             {
                "path": "/profile/3611360356", 
                "name": "Queensbury town"
-            }, 
-            {
-               "path": "/profile/3669078", 
-               "name": "South Glens Falls village"
             }, 
             {
                "path": "/profile/3611371641", 
@@ -983,14 +848,6 @@
             {
                "path": "/profile/3611564782", 
                "name": "Salem town"
-            }, 
-            {
-               "path": "/profile/3665750", 
-               "name": "Schuylerville village"
-            }, 
-            {
-               "path": "/profile/3671322", 
-               "name": "Stillwater village"
             }, 
             {
                "path": "/profile/3611581578", 

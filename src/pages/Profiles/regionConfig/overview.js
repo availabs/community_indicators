@@ -14,48 +14,19 @@ const BASE_CONFIG = [
       yearPosition: "block",
       layout:{
          w:3,
-         h:6,
+         h:9,
          
       }
    },
-  
+
     {
       type: 'CensusBarChart',
       title: 'Population by County',
       censusKeys: ['B01003_001E'],
       groupBy: "geoids",
       layout: {
-        
         w:9,
-        h:6
-
-      }
-
-    },
-
-    {
-      type:"CensusStatBox",
-      censusKeys:["B02008_001E"],
-      showCompareYear: true,
-      title: "Population White Alone",
-      yearPosition: "block",
-      layout:{
-         x:0,
-         w:3,
-         h:6,
-         
-      }
-   },
-
-    {
-      type: 'CensusBarChart',
-      title: 'Population White Alone by County',
-      censusKeys: ['B02008_001E'],
-      groupBy: "geoids",
-      layout: {
-        
-        w:9,
-        h:6
+        h: 9
 
       }
 
