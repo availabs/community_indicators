@@ -54,18 +54,10 @@
             {
                "path": "/profile/3600150672", 
                "name": "New Scotland town"
-            },
-            {
-               "path": "/profile/3659831", 
-               "name": "Preston-Potter Hollow"
             },  
             {
                "path": "/profile/3660675", 
                "name": "Ravena village"
-            }, 
-            {
-               "path": "/profile/3661148", 
-               "name": "Rensselaer city"
             }, 
             {
                "path": "/profile/3600161181", 
@@ -115,24 +107,12 @@
                "name": "Claverack town"
             }, 
             {
-               "path": "/profile/3616050", 
-               "name": "Claverack-Red Mills"
-            }, 
-            {
                "path": "/profile/3602116177", 
                "name": "Clermont town"
-            }, 
-            {
-               "path": "/profile/3618113", 
-               "name": "Copake Falls"
-            }, 
+            },  
             {
                "path": "/profile/3618118", 
                "name": "Copake Hamlet"
-            }, 
-            {
-               "path": "/profile/3618124", 
-               "name": "Copake Lake"
             }, 
             {
                "path": "/profile/3602118102", 
@@ -143,17 +123,10 @@
                "name": "Gallatin town"
             }, 
             {
-               "path": "/profile/3628761", 
-               "name": "Germantown"
-            }, 
-            {
                "path": "/profile/3602128772", 
                "name": "Germantown town"
             }, 
-            {
-               "path": "/profile/3628860", 
-               "name": "Ghent"
-            }, 
+
             {
                "path": "/profile/3602128871", 
                "name": "Ghent town"
@@ -182,18 +155,12 @@
                "path": "/profile/3602142917", 
                "name": "Livingston town"
             }, 
-            {
-               "path": "/profile/3643511", 
-               "name": "Lorenz Park"
-            }, 
+
             {
                "path": "/profile/3602150452", 
                "name": "New Lebanon town"
             }, 
-            {
-               "path": "/profile/3651297", 
-               "name": "Niverville"
-            }, 
+
             {
                "path": "/profile/3657639", 
                "name": "Philmont village"
@@ -202,18 +169,12 @@
                "path": "/profile/3602171443", 
                "name": "Stockport town"
             }, 
-            {
-               "path": "/profile/3671718", 
-               "name": "Stottville"
-            }, 
+
             {
                "path": "/profile/3602171850", 
                "name": "Stuyvesant town"
             }, 
-            {
-               "path": "/profile/3673057", 
-               "name": "Taconic Shores"
-            }, 
+
             {
                "path": "/profile/3602173077", 
                "name": "Taghkanic town"
@@ -242,10 +203,6 @@
                "name": "Athens village"
             }, 
             {
-               "path": "/profile/3611638", 
-               "name": "Cairo"
-            }, 
-            {
                "path": "/profile/3603911649", 
                "name": "Cairo town"
             }, 
@@ -270,10 +227,6 @@
                "name": "Durham town"
             }, 
             {
-               "path": "/profile/3630609", 
-               "name": "Greenville"
-            }, 
-            {
                "path": "/profile/3603930620", 
                "name": "Greenville town"
             }, 
@@ -290,17 +243,9 @@
                "name": "Hunter village"
             }, 
             {
-               "path": "/profile/3638451", 
-               "name": "Jefferson Heights"
-            }, 
-            {
                "path": "/profile/3603938638", 
                "name": "Jewett town"
-            }, 
-            {
-               "path": "/profile/3641784", 
-               "name": "Leeds"
-            }, 
+            },
             {
                "path": "/profile/3603942202", 
                "name": "Lexington town"
@@ -308,15 +253,7 @@
             {
                "path": "/profile/3603949935", 
                "name": "New Baltimore town"
-            }, 
-            {
-               "path": "/profile/3656132", 
-               "name": "Palenville"
-            }, 
-            {
-               "path": "/profile/3659740", 
-               "name": "Prattsville"
-            }, 
+            },
             {
                "path": "/profile/3603959751", 
                "name": "Prattsville town"
@@ -324,11 +261,7 @@
             {
                "path": "/profile/3673143", 
                "name": "Tannersville village"
-            }, 
-            {
-               "path": "/profile/3682469", 
-               "name": "Windham"
-            }, 
+            },
             {
                "path": "/profile/3603982480", 
                "name": "Windham town"
@@ -342,10 +275,6 @@
          "children": [
 
             {
-               "path": "/profile/3603320", 
-               "name": "Averill Park"
-            }, 
-            {
                "path": "/profile/3608306189", 
                "name": "Berlin town"
             }, 
@@ -356,11 +285,7 @@
             {
                "path": "/profile/3612870", 
                "name": "Castleton-on-Hudson village"
-            }, 
-            {
-               "path": "/profile/3622106", 
-               "name": "East Greenbush"
-            }, 
+            },  
             {
                "path": "/profile/3608322117", 
                "name": "East Greenbush town"
@@ -372,10 +297,6 @@
             {
                "path": "/profile/3608329674", 
                "name": "Grafton town"
-            }, 
-            {
-               "path": "/profile/3631918", 
-               "name": "Hampton Manor"
             }, 
             {
                "path": "/profile/3635474", 
@@ -404,10 +325,6 @@
             {
                "path": "/profile/3608358398", 
                "name": "Pittstown town"
-            }, 
-            {
-               "path": "/profile/3658794", 
-               "name": "Poestenkill"
             }, 
             {
                "path": "/profile/3608358805", 
@@ -444,14 +361,6 @@
             {
                "path": "/profile/3676672", 
                "name": "Valley Falls village"
-            },  
-            {
-               "path": "/profile/3680863", 
-               "name": "West Sand Lake"
-            }, 
-            {
-               "path": "/profile/3683349", 
-               "name": "Wynantskill"
             }
          ], 
          "name": "Rensselaer County", 
@@ -485,10 +394,6 @@
                "name": "Corinth village"
             }, 
             {
-               "path": "/profile/3618542", 
-               "name": "Country Knolls"
-            }, 
-            {
                "path": "/profile/3609119807", 
                "name": "Day town"
             }, 
@@ -509,10 +414,6 @@
                "name": "Greenfield town"
             }, 
             {
-               "path": "/profile/3631258", 
-               "name": "Hadley"
-            }, 
-            {
                "path": "/profile/3609131269", 
                "name": "Hadley town"
             }, 
@@ -529,20 +430,12 @@
                "name": "Mechanicville city"
             }, 
             {
-               "path": "/profile/3647548", 
-               "name": "Milton"
-            }, 
-            {
                "path": "/profile/3609147537", 
                "name": "Milton town"
             }, 
             {
                "path": "/profile/3609148318", 
                "name": "Moreau town"
-            }, 
-            {
-               "path": "/profile/3651467", 
-               "name": "North Ballston Spa"
             }, 
             {
                "path": "/profile/3609153737", 
@@ -606,34 +499,14 @@
             {
                "path": "/profile/3620082", 
                "name": "Delanson village"
-            }, 
-            {
-               "path": "/profile/3620989", 
-               "name": "Duane Lake"
-            }, 
-            {
-               "path": "/profile/3620995", 
-               "name": "Duanesburg"
-            }, 
+            },   
             {
                "path": "/profile/3609321006", 
                "name": "Duanesburg town"
             }, 
             {
-               "path": "/profile/3622084", 
-               "name": "East Glenville"
-            }, 
-            {
                "path": "/profile/3609329366", 
                "name": "Glenville town"
-            }, 
-            {
-               "path": "/profile/3645573", 
-               "name": "Mariaville Lake"
-            }, 
-            {
-               "path": "/profile/3651262", 
-               "name": "Niskayuna"
             }, 
             {
                "path": "/profile/3609351264", 
@@ -642,11 +515,7 @@
             {
                "path": "/profile/3609359861", 
                "name": "Princetown town"
-            }, 
-            {
-               "path": "/profile/3663924", 
-               "name": "Rotterdam"
-            }, 
+            },  
             {
                "path": "/profile/3609363935", 
                "name": "Rotterdam town"
@@ -667,24 +536,12 @@
          "path": "/profile/36113", 
          "children": [
             {
-               "path": "/profile/3607245", 
-               "name": "Bolton Landing"
-            }, 
-            {
                "path": "/profile/3611307234", 
                "name": "Bolton town"
             }, 
             {
                "path": "/profile/3611315319", 
                "name": "Chester town"
-            }, 
-            {
-               "path": "/profile/3615363", 
-               "name": "Chestertown"
-            }, 
-            {
-               "path": "/profile/3629338", 
-               "name": "Glens Falls North"
             }, 
             {
                "path": "/profile/3629333", 
@@ -709,22 +566,10 @@
             {
                "path": "/profile/3640508", 
                "name": "Lake George village"
-            }, 
-            {
-               "path": "/profile/3640651", 
-               "name": "Lake Luzerne"
-            }, 
+            },  
             {
                "path": "/profile/3611340662", 
                "name": "Lake Luzerne town"
-            }, 
-            {
-               "path": "/profile/3651847", 
-               "name": "North Creek"
-            }, 
-            {
-               "path": "/profile/3659619", 
-               "name": "Pottersville"
             }, 
             {
                "path": "/profile/3611360356", 
@@ -739,16 +584,8 @@
                "name": "Thurman town"
             }, 
             {
-               "path": "/profile/3678289", 
-               "name": "Warrensburg"
-            }, 
-            {
                "path": "/profile/3611378300", 
                "name": "Warrensburg town"
-            }, 
-            {
-               "path": "/profile/3680082", 
-               "name": "West Glens Falls"
             }
          ], 
          "name": "Warren County", 
@@ -842,10 +679,6 @@
                "name": "Putnam town"
             }, 
             {
-               "path": "/profile/3664771", 
-               "name": "Salem"
-            }, 
-            {
                "path": "/profile/3611564782", 
                "name": "Salem town"
             }, 
@@ -860,7 +693,7 @@
             {
                "path": "/profile/3681622", 
                "name": "Whitehall village"
-            }
+            }  
          ], 
          "name": "Washington County", 
          "geoid": "36115"
