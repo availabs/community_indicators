@@ -94,7 +94,7 @@ def main():
         county["children"] = sorted(county["children"], key=lambda d: d["name"])
 
     with open("submenu.json", "w") as out:
-        json.dump([menu], out)
+        json.dump([menu], out, indent=3)
 
     cursor.close()
     conn.close()
