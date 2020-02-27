@@ -40,22 +40,24 @@ def getPlaces(cursor, geoid):
     cursor.execute(sql, [geoid])
     return [p for p in cursor]
 
-def has(cousubNames, placeName):
-    for n in cousubNames:
-        if placeName.lower() in n: return True
+def has(list, name):
+    for n in list:
+        if name.lower() in n: return True
     return False
 
-def processChild(geoid, name, lsad=None):
+def processChild(geoid, name):
+    return {
+        "name": name,
+        "path": "/profile/" + geoid
+    }
+def getName(name, lsad=None):
     switch = {
         '21': " borough",
         '25': " city",
         '43': " town",
         '47': " village"
     }
-    return {
-        "name": name + switch.get(lsad, ""),
-        "path": "/profile/" + geoid
-    }
+    return name + switch.get(lsad, "")
 
 def main():
     conn = psycopg2.connect(mars)
@@ -66,28 +68,33 @@ def main():
     menu = [processCounty(*c) for c in counties]
 
     cousubNames = []
-
-    for county in menu:
-        geoid = county["geoid"]
-
-        cousubs = sorted(getCousubs(cursor, geoid), key=lambda d: d[1])
-        cousubNames.extend([c[1].lower() for c in cousubs])
-
-        county["children"].extend([processChild(*c) for c in cousubs])
+    placeNames = []
 
     for county in menu:
         geoid = county["geoid"]
 
         places = sorted(getPlaces(cursor, geoid), key=lambda d: d[1])
-        places = [p for p in places if not has(cousubNames, p[1])]
+        places = [[p[0], getName(*p[1:])] for p in places]
+        placeNames.extend([p[1].lower() for p in places])
+        # places = [p for p in places if not has(cousubNames, p[1])]
 
         county["children"].extend([processChild(*p) for p in places])
+
+    for county in menu:
+        geoid = county["geoid"]
+
+        cousubs = sorted(getCousubs(cursor, geoid), key=lambda d: d[1])
+        cousubs = [[c[0], getName(*c[1:])] for c in cousubs]
+        cousubs = [c for c in cousubs if not has(placeNames, c[1])]
+        # cousubNames.extend([c[1].lower() for c in cousubs])
+
+        county["children"].extend([processChild(*c) for c in cousubs])
 
     for county in menu:
         county["children"] = sorted(county["children"], key=lambda d: d["name"])
 
     with open("submenu.json", "w") as out:
-        json.dump([menu], out)
+        json.dump([menu], out, indent=3)
 
     cursor.close()
     conn.close()
