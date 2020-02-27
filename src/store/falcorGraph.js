@@ -7,7 +7,7 @@ import { update } from "utils/redux-falcor/components/duck"
 
 //export let host =
 // let host = 'https://graph.availabs.org/'
-let host = '/';
+let host = process.env.NODE_ENV === 'production' ? 'https://graph.availabs.org/' : '/';
 
 try {
   const { useLocalHost } = require("./useLocalHost");
@@ -16,7 +16,7 @@ try {
   }
 }
 catch {
-  host ='/'
+  host = process.env.NODE_ENV === 'production' ? 'https://graph.availabs.org/' : '/';
 }
 
 console.log("API HOST:", host)
