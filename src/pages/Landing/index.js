@@ -169,6 +169,25 @@ class Home extends Component {
                               <div className="element-wrapper">
 
                                  <ContentHeader>
+                                     We Want Your Feedback
+                                 </ContentHeader>
+                                 <SectionBoxMain>
+                                 This website is a work in progress and we are interested in your feedback, and questions. Please email <IA href="mailto:indicators@cdrpc.org">indicators@cdrpc.org</IA> to share your thoughts or ask questions.
+                                 </SectionBoxMain>
+                                 <ContentHeader>
+                                     Using a Smartphone?
+                                 </ContentHeader>
+                                 <SectionBoxMain>
+                                     The site is not currently optimized for smartphone however you can view the menu navigation if your smartphone is rotated to landscape mode. 
+                                 </SectionBoxMain>
+                                 <ContentHeader>
+                                     Suggested Web-Browser
+                                 </ContentHeader>
+                                 <SectionBoxMain>
+                                 Having problems viewing the data?  The site is optimized for Google Chrome and does not work well in Internet Explorer or Edge. If using those platforms, please switch to Chrome or Firefox.
+                                 </SectionBoxMain>
+
+                                 <ContentHeader>
                                      Mission and Purpose
                                  </ContentHeader>
                                  <SectionBoxMain>
