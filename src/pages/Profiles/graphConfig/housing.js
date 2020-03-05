@@ -57,9 +57,9 @@ const BASE_CONFIG = [
    },
 
      {
-      title: "Vacant Housing Units",
+      title: "Vacant Housing Units - Includes For Sale Vacant, Sold Vacant, and Other Vacant",
       type:"CensusStatBox",
-      censusKeys:["B25002_003E"],
+      censusKeys:["B25004_004E", "B25004_005E", "B25004_008E"],
       showCompareYear: true,
       invertColors: true,
       layout:{
@@ -69,7 +69,7 @@ const BASE_CONFIG = [
    },
 
     {
-      title:"Percent Vacant Housing Units",
+      title:"Percent Vacant Housing Units - Includes All Vacancy Types",
       type: "CensusLineChart",
       sumType: 'pct',
       censusKeys:["B25002_003E"],
@@ -82,11 +82,11 @@ const BASE_CONFIG = [
     },
 
    {
-      title: "Percent Vacant Housing Units",
+      title: "Percent Vacant Housing Units - Includes For Sale Vacant, Sold Vacant, and Other Vacant",
       type:"CensusStatBox",
       sumType: 'pct',
 
-      censusKeys:["B25002_003E"],
+      censusKeys:["B25004_004E", "B25004_005E", "B25004_008E"],
       divisorKey: 'B25002_001E',
       valueSuffix: '%',
       showCompareYear: true,
