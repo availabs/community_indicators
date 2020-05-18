@@ -368,6 +368,42 @@ class ACS_Layer extends MapLayer {
 const DEFAULT_CONFIG_INDEX = 0;
 
 const CENSUS_FILTER_CONFIG = [
+  { name: "Percent of Population Over 60",
+    censusKeys:[
+        "B01001_018E",
+        "B01001_019E",
+        "B01001_020E",
+        "B01001_021E",
+        "B01001_022E",
+        "B01001_023E",
+        "B01001_024E",
+        "B01001_025E",
+        "B01001_042E",
+        "B01001_043E",
+        "B01001_044E",
+        "B01001_045E",
+        "B01001_046E",
+        "B01001_047E",
+        "B01001_048E",
+        "B01001_049E",
+      ],
+      divisorKeys: ["B01001_001E"],
+
+  },
+
+  {name: "Percent of Workers in the Hospitality Industries",
+    censusKeys:[
+        "C24030_051E",
+        "C24030_024E"
+        ],
+      divisorKeys: ["C24030_001E"],
+  },
+
+  { name: "Worked at Home as a Percent of Total Commuters",
+      censusKeys:["B08006_017E"],
+      divisorKeys: ["B23025_001E"],
+
+  },
 
   { name: "Total Population",
     censusKeys: ["B01003_001E"]

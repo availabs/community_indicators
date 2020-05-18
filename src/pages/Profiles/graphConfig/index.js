@@ -5,11 +5,13 @@ import Housing from './housing'
 import Economy from "./economy"
 import Health from "./health"
 import Transportation from "./transportation"
+import covid19 from "./covid19"
 
 let ID = 0;
 const getId = () => `profile-${ ++ID }`;
 
 const CONFIG = {
+  'COVID-19': covid19,
   Overview,
   Economy,
   'Social Welfare': SocialWelfare,
