@@ -190,7 +190,6 @@ class CensusLayer extends MapLayer {
     this.falcorCache = {};
     this.active = true;
     this.showAttributesModal = false;
-    this.geolevel = "blockgroup";
     this.zoomToBounds = true;
   }
   onAdd() {
@@ -413,6 +412,7 @@ class CensusLayer extends MapLayer {
 }
 
 const LayerFactory = props => {
+console.log("PROPS:", props)
   return new CensusLayer({
     geoids: [
       ...props.geoids,
@@ -429,8 +429,10 @@ const LayerFactory = props => {
       format: props.format || fnum
     },
 
+    geolevel: get(props, "geolevel", "blockgroup"), //"blockgroup",
+
     popover: {
-      layers: ["blockgroup"],
+      layers: ["blockgroup", "cousubs"],
       dataFunc: function(topFeature, features) {
         const geoid = get(topFeature, ["properties", "geoid"], null),
           county = geoid.slice(0, 5),
@@ -468,7 +470,7 @@ const LayerFactory = props => {
     },
 
     onHover: {
-      layers: ["blockgroup"]
+      layers: ["blockgroup", "cousubs"]
     },
 
     sources: [
@@ -523,6 +525,13 @@ const LayerFactory = props => {
         id: "blockgroup",
         source: "blockgroup",
         'source-layer': "blockgroups",
+        'type': 'fill',
+        filter : ['in', 'geoid', 'none']
+      },
+
+      { 'id': 'cousubs',
+        'source': 'cousubs',
+        'source-layer': 'cousubs',
         'type': 'fill',
         filter : ['in', 'geoid', 'none']
       },

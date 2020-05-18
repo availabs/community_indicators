@@ -247,6 +247,7 @@ const BASE_CONFIG = [
       divisorKey: "B23025_001E",
       sumType: 'pct',
       divisorKey: "B01001_001E",
+      geolevel: "cousubs",
       format: ".1%",
        layout: {
          h: 12,
