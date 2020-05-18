@@ -93,8 +93,7 @@ const BASE_CONFIG = [
       ],
       sumType: 'pct',
       divisorKey: "B01001_001E",
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
+      format: ".1%",
        layout: {
          h: 12,
          w: 9
@@ -138,7 +137,7 @@ const BASE_CONFIG = [
          x:0
       }
    },
-   
+
    {
        type: "CensusMap",
        title: "Percent of Workers in the Hospitality Industries",
@@ -148,8 +147,8 @@ const BASE_CONFIG = [
         ],
       divisorKey: "C24030_001E",
       sumType: 'pct',
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
+      divisorKey: "B01001_001E",
+      format: ".1%",
        layout: {
          h: 12,
          w: 9
@@ -189,7 +188,7 @@ const BASE_CONFIG = [
          x:0
       }
    },
-   
+
    {
        type: "CensusMap",
        title: "Percent of Workers in the Health Care Industries",
@@ -199,8 +198,8 @@ const BASE_CONFIG = [
         ],
       divisorKey: "C24030_001E",
       sumType: 'pct',
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
+      divisorKey: "B01001_001E",
+      format: ".1%",
        layout: {
          h: 12,
          w: 9
@@ -240,21 +239,21 @@ const BASE_CONFIG = [
          x:0
       }
    },
-   
+
    {
        type: "CensusMap",
        title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
       censusKeys:["B08006_017E"],
       divisorKey: "B23025_001E",
       sumType: 'pct',
-      valueSuffix: '%',
-      maximumFractionDigits: 2,
+      divisorKey: "B01001_001E",
+      format: ".1%",
        layout: {
          h: 12,
          w: 9
        }
      },
-     
+
 
   {
       type:"CensusStatBox",

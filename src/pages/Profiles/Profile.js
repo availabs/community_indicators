@@ -133,7 +133,7 @@ class Profile extends React.Component{
     }
 
     searchNav(type, compareId) {
-      console.log('set compreId', compareId, this.props)
+// console.log('set compreId', compareId, this.props)
       if(type === 'add') {
         this.props.history.push(`/profile/${this.props.geoid}/compare/${compareId}`)
       } else if (type === 'remove') {
@@ -162,7 +162,7 @@ class Profile extends React.Component{
         const categories = Object.keys(GRAPH_CONFIG).map((category, i) =>
             this.renderCategory(category, GRAPH_CONFIG[category], i)
         )
-console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear, YEARS)
+// console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear, YEARS)
         return (
             <div>
                 <ProfileHeader geoids={ [this.props.geoid] }

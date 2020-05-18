@@ -194,6 +194,7 @@ class CensusLayer extends MapLayer {
     this.zoomToBounds = true;
   }
   onAdd() {
+// console.log("ON ADD:", this);
     register(this, REDUX_UPDATE, ["graph"]);
 
     return this.fetchData();
@@ -295,7 +296,7 @@ class CensusLayer extends MapLayer {
           return a;
         }, []);
       return falcorChunkerNiceWithUpdate(
-        ["acs", subGeoids, this.year, this.censusKeys],
+        ["acs", subGeoids, this.year, [...this.censusKeys, ...this.divisorKeys]],
         ["geo", subGeoids, "boundingBox"],
         ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "name"]
       )
@@ -356,11 +357,13 @@ class CensusLayer extends MapLayer {
       }, 0);
       const divisor = this.divisorKeys.reduce((aa, cc) => {
         const v = get(this.falcorCache, ["acs", c, this.year, cc], -666666666);
+// console.log("??????", c, this.year, cc, v)
         if (v != -666666666) {
           aa += v;
         }
         return aa;
       }, 0)
+// console.log("DIVISOR:", divisor, this.divisorKeys, this.falcorCache)
       if (divisor !== 0) {
         value /= divisor;
       }
