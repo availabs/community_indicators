@@ -214,7 +214,7 @@ const BASE_CONFIG = [
       // yearPosition: "block",
       showCompareYear: true,
       censusKeys:["B08006_017E"],
-      divisorKey: "B23025_001E",
+      divisorKey: "B08006_001E",
       valueSuffix: '%',
       maximumFractionDigits: 1,
       layout:{

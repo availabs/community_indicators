@@ -30,8 +30,8 @@ const BASE_CONFIG = [
       title: "Population 60 Years and Older",
       showColors: false,
       layout:{
-         w:3,
-         h:6
+         w:6,
+         h:4
       }
    },
    {
@@ -65,9 +65,8 @@ const BASE_CONFIG = [
       showColors: false,
       demographics:true,
       layout:{
-         w:3,
-         h:6,
-         x: 0
+         w:6,
+         h:4,
       }
    },
      {
@@ -96,29 +95,30 @@ const BASE_CONFIG = [
       format: ".1%",
        layout: {
          h: 12,
-         w: 9
+         w: 12,
+         x: 0
        }
      },
 
-   {
-        type: 'CensusStackedBarChart',
-        broadCensusKey: 'B01001',
-        showCompareGeoid: false,
-        left: { key: "Male", slice: [17, 25], color: maleColor },
-        right: { key: "Female", slice: [41, 49], color: femaleColor },
-        layout: { h: 12 },
-        marginLeft: 115,
-        labels: [
-          'Ages 60-61',
-          'Ages 62-64',
-          'Ages 65-66',
-          'Ages 67-69',
-          'Ages 70-74',
-          'Ages 75-79',
-          'Ages 80-84',
-          'Ages 85 and over'
-        ]
-    },
+   // {
+   //      type: 'CensusStackedBarChart',
+   //      broadCensusKey: 'B01001',
+   //      showCompareGeoid: false,
+   //      left: { key: "Male", slice: [17, 25], color: maleColor },
+   //      right: { key: "Female", slice: [41, 49], color: femaleColor },
+   //      layout: { h: 12 },
+   //      marginLeft: 115,
+   //      labels: [
+   //        'Ages 60-61',
+   //        'Ages 62-64',
+   //        'Ages 65-66',
+   //        'Ages 67-69',
+   //        'Ages 70-74',
+   //        'Ages 75-79',
+   //        'Ages 80-84',
+   //        'Ages 85 and over'
+   //      ]
+   //  },
 
 
 
@@ -132,29 +132,12 @@ const BASE_CONFIG = [
       ],
       showColors: false,
       layout:{
-         w:3,
-         h:6,
+         w:6,
+         h:4,
          x:0
       }
    },
-
    {
-       type: "CensusMap",
-       title: "Percent of Workers in the Hospitality Industries",
-      censusKeys:[
-        "C24030_051E",
-        "C24030_024E"
-        ],
-      divisorKey: "C24030_001E",
-      sumType: 'pct',
-      divisorKey: "B01001_001E",
-      format: ".1%",
-       layout: {
-         h: 12,
-         w: 9
-       }
-     },
-     {
       type:"CensusStatBox",
       title:'Percent of Workers in the Hospitality Industries',
       sumType: 'pct',
@@ -168,11 +151,26 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       showColors: false,
       layout:{
-         w:3,
-         h:6,
-         x:0
+         w:6,
+         h:4,
       }
    },
+
+   {
+       type: "CensusMap",
+       title: "Percent of Workers in the Hospitality Industries",
+      censusKeys:[
+        "C24030_051E",
+        "C24030_024E"
+        ],
+      divisorKey: "C24030_001E",
+      sumType: 'pct',
+      format: ".1%",
+       layout: {
+         h: 12,
+         w: 12
+       }
+     },
    {
       type:"CensusStatBox",
       title: "Number of Workers in the Health Care Industries",
@@ -183,28 +181,11 @@ const BASE_CONFIG = [
         ],
       showColors: false,
       layout:{
-         w:3,
-         h:6,
+         w:6,
+         h:4,
          x:0
       }
    },
-
-   {
-       type: "CensusMap",
-       title: "Percent of Workers in the Health Care Industries",
-      censusKeys:[
-      "C24030_023E",
-      "C24030_050E"
-        ],
-      divisorKey: "C24030_001E",
-      sumType: 'pct',
-      divisorKey: "B01001_001E",
-      format: ".1%",
-       layout: {
-         h: 12,
-         w: 9
-       }
-     },
      {
       type:"CensusStatBox",
       title:'Percent of Workers in the Health Care Industries',
@@ -219,11 +200,26 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       showColors: false,
       layout:{
-         w:3,
-         h:6,
-         x:0
+         w:6,
+         h:4,
       }
    },
+   {
+       type: "CensusMap",
+       title: "Percent of Workers in the Health Care Industries",
+      censusKeys:[
+      "C24030_023E",
+      "C24030_050E"
+        ],
+      divisorKey: "C24030_001E",
+      sumType: 'pct',
+      format: ".1%",
+       layout: {
+         h: 12,
+         w: 12
+       }
+     },
+
   {
       type:"CensusStatBox",
       title:'Commuters Who Reported Working From Home Before COVID-19',
@@ -234,27 +230,11 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       showColors: false,
       layout:{
-         w:3,
-         h:6,
+         w:6,
+         h:4,
          x:0
       }
    },
-
-   {
-       type: "CensusMap",
-       title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
-      censusKeys:["B08006_017E"],
-      divisorKey: "B23025_001E",
-      sumType: 'pct',
-      divisorKey: "B01001_001E",
-      format: ".1%",
-       layout: {
-         h: 12,
-         w: 9
-       }
-     },
-
-
   {
       type:"CensusStatBox",
       title:'Percent of Commuters Who Reported Working From Home Before COVID-19',
@@ -262,16 +242,27 @@ const BASE_CONFIG = [
       // yearPosition: "block",
       showCompareYear: true,
       censusKeys:["B08006_017E"],
-      divisorKey: "B23025_001E",
+      divisorKey: "B08006_001E",
       valueSuffix: '%',
       maximumFractionDigits: 1,
       showColors: false,
       layout:{
-         w:3,
-         h:6,
-         x:0
+         w:6,
+         h:4,
       }
    },
+      {
+       type: "CensusMap",
+       title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
+      censusKeys:["B08006_017E"],
+      divisorKey: "B08006_001E",
+      sumType: 'pct',
+      format: ".1%",
+       layout: {
+         h: 12,
+         w: 12
+       }
+     },
 ]
 
 export default configLoader(BASE_CONFIG)
