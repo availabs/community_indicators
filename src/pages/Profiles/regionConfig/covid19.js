@@ -282,7 +282,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       censusKeys:["B08006_017E"],
       showCompareYear: true,
-      title: "Population in the Work From Home Industries",
+      title: "Commuters Who Reported Working From Home Before COVID-19",
       showColors: false,
       layout:{
          w:6,
@@ -292,7 +292,7 @@ const BASE_CONFIG = [
            {
       id:"2",
       type:"CensusStatBox",
-      title: "Percent of Workers in the Work From Home Industries",
+      title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
       showCompareYear: true,
       showColors: false,
       censusKeys:["B08006_017E"],
@@ -310,7 +310,7 @@ const BASE_CONFIG = [
 
       {
        type: "CensusBarChart",
-       title: "Percent of Workers in the Work From Home Industries by County",
+       title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
       censusKeys:["B08006_017E"],
       divisorKeys: ["B23025_001E"],
       groupBy: 'geoids',
@@ -324,7 +324,7 @@ const BASE_CONFIG = [
      },
   {
        type: "CensusMap",
-       title: "Percent of Workers in the Work From Home Industries",
+       title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
       censusKeys:["B08006_017E"],
       divisorKeys: ["B23025_001E"],
       sumType: 'pct',

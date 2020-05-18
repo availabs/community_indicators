@@ -227,7 +227,7 @@ const BASE_CONFIG = [
    },
   {
       type:"CensusStatBox",
-      title:'Total Worked at Home ',
+      title:'Commuters Who Reported Working From Home Before COVID-19',
       censusKeys:[ "B08006_017E"],
       showCompareYear: true,
       // yearPosition: "block",
@@ -243,7 +243,7 @@ const BASE_CONFIG = [
    
    {
        type: "CensusMap",
-       title: "Worked at Home as a Percent of Total Commuters",
+       title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
       censusKeys:["B08006_017E"],
       divisorKey: "B23025_001E",
       sumType: 'pct',
@@ -258,7 +258,7 @@ const BASE_CONFIG = [
 
   {
       type:"CensusStatBox",
-      title:'Work at Home as a Percent of Total Commuters',
+      title:'Percent of Commuters Who Reported Working From Home Before COVID-19',
       sumType: 'pct',
       // yearPosition: "block",
       showCompareYear: true,
