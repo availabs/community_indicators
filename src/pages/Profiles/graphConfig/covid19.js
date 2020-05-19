@@ -120,7 +120,57 @@ const BASE_CONFIG = [
    //      ]
    //  },
 
+// Health Care Section
+   {
+      type:"CensusStatBox",
+      title: "Number of Workers in the Health Care Industries",
+      showCompareYear: true,
+      censusKeys:[
+      "C24030_023E",
+      "C24030_050E"
+        ],
+      showColors: false,
+      layout:{
+         w:6,
+         h:4,
+         x:0
+      }
+   },
+     {
+      type:"CensusStatBox",
+      title:'Percent of Workers in the Health Care Industries',
+      sumType: 'pct',
+      censusKeys:[
+      "C24030_023E",
+      "C24030_050E"
+        ],
+      divisorKey: "C24030_001E",
+      showCompareYear: true,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      showColors: false,
+      layout:{
+         w:6,
+         h:4,
+      }
+   },
+   {
+       type: "CensusMap",
+       title: "Percent of Workers in the Health Care Industries",
+      censusKeys:[
+      "C24030_023E",
+      "C24030_050E"
+        ],
+      divisorKey: "C24030_001E",
+      sumType: 'pct',
+      format: ".1%",
+       layout: {
+         h: 12,
+         w: 12
+       }
+     },
 
+    // Hospitality Section
 
    {
       type:"CensusStatBox",
@@ -171,55 +221,7 @@ const BASE_CONFIG = [
          w: 12
        }
      },
-   {
-      type:"CensusStatBox",
-      title: "Number of Workers in the Health Care Industries",
-      showCompareYear: true,
-      censusKeys:[
-      "C24030_023E",
-      "C24030_050E"
-        ],
-      showColors: false,
-      layout:{
-         w:6,
-         h:4,
-         x:0
-      }
-   },
-     {
-      type:"CensusStatBox",
-      title:'Percent of Workers in the Health Care Industries',
-      sumType: 'pct',
-      censusKeys:[
-      "C24030_023E",
-      "C24030_050E"
-        ],
-      divisorKey: "C24030_001E",
-      showCompareYear: true,
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
-      showColors: false,
-      layout:{
-         w:6,
-         h:4,
-      }
-   },
-   {
-       type: "CensusMap",
-       title: "Percent of Workers in the Health Care Industries",
-      censusKeys:[
-      "C24030_023E",
-      "C24030_050E"
-        ],
-      divisorKey: "C24030_001E",
-      sumType: 'pct',
-      format: ".1%",
-       layout: {
-         h: 12,
-         w: 12
-       }
-     },
-
+// Worked From Home Section
   {
       type:"CensusStatBox",
       title:'Commuters Who Reported Working From Home Before COVID-19',
@@ -266,18 +268,18 @@ const BASE_CONFIG = [
       //       w: 9
       //     }
       //   },
-      {
-       type: "CensusMap",
-       title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
-      censusKeys:["B08006_017E"],
-      divisorKey: "B08006_001E",
-         geolevel: "cousubs",
-      format: ".1%",
-       layout: {
-         h: 12,
-         w: 12
-       }
-     },
+     //  {
+     //   type: "CensusMap",
+     //   title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
+     //  censusKeys:["B08006_017E"],
+     //  divisorKey: "B08006_001E",
+     //     geolevel: "cousubs",
+     //  format: ".1%",
+     //   layout: {
+     //     h: 12,
+     //     w: 12
+     //   }
+     // },
 ]
 
 export default configLoader(BASE_CONFIG)
