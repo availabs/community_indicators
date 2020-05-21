@@ -6,6 +6,15 @@ import {
 
 const BASE_CONFIG = [
 
+    {
+          type: "TextBox",
+          header: "Population 60 Years and Older",
+          body: "Population over the age of 60 years old is the highest risk age bracket.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+        },
    {
       type:"CensusStatBox",
       censusKeys:[
@@ -122,6 +131,15 @@ const BASE_CONFIG = [
 
 // Health Care Section
    {
+          type: "TextBox",
+          header: "Number of Workers in the Health Care Industries",
+          body: "Workers in the health care industries are at higher risk of contracting and spreading the virus.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+        },
+   {
       type:"CensusStatBox",
       title: "Number of Workers in the Health Care Industries",
       showCompareYear: true,
@@ -173,8 +191,17 @@ const BASE_CONFIG = [
     // Hospitality Section
 
    {
+          type: "TextBox",
+          header: "Job Risk",
+          body: "Workers in the hospitality and leisure industries are at higher risk of job loss.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+        },
+    {
       type:"CensusStatBox",
-      title: "Number of Workers in the Hospitality Industries",
+      title: "Number of Workers in the Hospitality and Leisure Industries",
       showCompareYear: true,
       censusKeys:[
       "C24030_051E",
@@ -189,7 +216,7 @@ const BASE_CONFIG = [
    },
    {
       type:"CensusStatBox",
-      title:'Percent of Workers in the Hospitality Industries',
+      title:'Percent of Workers in the Hospitality and Leisure Industries',
       sumType: 'pct',
       censusKeys:[
       "C24030_051E",
@@ -208,7 +235,7 @@ const BASE_CONFIG = [
 
    {
        type: "CensusMap",
-       title: "Percent of Workers in the Hospitality Industries",
+       title: "Percent of Workers in the Hospitality and Leisure Industries",
       censusKeys:[
         "C24030_051E",
         "C24030_024E"
@@ -222,6 +249,15 @@ const BASE_CONFIG = [
        }
      },
 // Worked From Home Section
+  {
+          type: "TextBox",
+          header: "Commuters Who Reported Working From Home Before COVID-19",
+          body: "Workers who reported working from home before COVID-19 are a positive indicator of communities at lower risk of transmission.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+  },
   {
       type:"CensusStatBox",
       title:'Commuters Who Reported Working From Home Before COVID-19',

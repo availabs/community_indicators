@@ -7,6 +7,15 @@ import {
 const BASE_CONFIG = [
 
     {
+          type: "TextBox",
+          header: "Population 60 Years and Older",
+          body: "Population over the age of 60 years old is the highest risk age bracket.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+    },
+    {
       type:"CensusStatBox",
       censusKeys:[
         "B01001_018E",
@@ -136,6 +145,15 @@ const BASE_CONFIG = [
 //HEALTHCARE SECTION
 
     {
+          type: "TextBox",
+          header: "Number of Workers in the Health Care Industries",
+          body: "Workers in the health care industries are at higher risk of contracting and spreading the virus.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+    },
+    {
       type:"CensusStatBox",
       censusKeys:[
       "C24030_023E",
@@ -207,6 +225,15 @@ const BASE_CONFIG = [
      },
 //HOSPITALITY SECTION
 
+    {
+          type: "TextBox",
+          header: "Job Risk",
+          body: "Workers in the hospitality and leisure industries are at higher risk of job loss.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+    },
     {
       type:"CensusStatBox",
       censusKeys:[
@@ -280,6 +307,15 @@ const BASE_CONFIG = [
 
 //WORK FROM HOME SECTION
 
+    {
+          type: "TextBox",
+          header: "Commuters Who Reported Working From Home Before COVID-19",
+          body: "Workers who reported working from home before COVID-19 are a positive indicator of communities at lower risk of transmission.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+  },
     {
       type:"CensusStatBox",
       censusKeys:["B08006_017E"],
