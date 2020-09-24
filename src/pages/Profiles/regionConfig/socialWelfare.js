@@ -22,7 +22,7 @@ const BASE_CONFIG = [
          w:3,
          h:8,
          x: 0
-      }
+      },
    },
 
     {
@@ -34,7 +34,10 @@ const BASE_CONFIG = [
       layout:{
          w:9,
          h:8,
-      }
+      },
+      labels: [
+      'Income in the past 12 months below poverty level'
+      ]
     },
 
    {
@@ -60,7 +63,7 @@ const BASE_CONFIG = [
         ],
         showCompareYear: true,
         invertColors: true,
-      title: "Households that Received Food Stamps/SNAP in the Past 12 Months",
+      title: "Households that Received Food Stamps/SNAP",
       yearPosition: "block",
       layout:{
          w:3,
@@ -70,7 +73,7 @@ const BASE_CONFIG = [
    },
 
        {
-      title: "Percent of Households that Received Food Stamps/SNAP in the Past 12 Months",
+      title: "Percent of Households that Received Food Stamps/SNAP",
       type: "CensusBarChart",
       censusKeys: ["B22001_002E"],
       divisorKeys: ["B22001_001E"],

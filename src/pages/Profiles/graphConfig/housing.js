@@ -130,7 +130,8 @@ const BASE_CONFIG = [
     layout:{
          w:9,
          h:9,
-      }
+      },
+    legendWidth: 325,
   },
 
 
@@ -203,6 +204,7 @@ const BASE_CONFIG = [
 
   { "type":"CensusStackedBarChart",
     "broadCensusKey": "B25091",
+    title: 'Homeowner Cost by % of Monthly Income',
     showCompareGeoid: false,
     orientation: 'horizontal',
     marginLeft: 140,
