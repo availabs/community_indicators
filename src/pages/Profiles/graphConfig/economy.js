@@ -10,7 +10,7 @@ const BASE_CONFIG = [
           header: "ECONOMY",
           body: "The economic security of individuals and families is essential to achieving the values of American society. For complex reasons, this financial security is beyond the means of many in our community.",
           layout: {
-            h: 3,
+            h: 5,
             w: 12
              }
         },
@@ -123,7 +123,7 @@ const BASE_CONFIG = [
       body: "",
       link: "http://www.upstatecreative.org/",
       layout: {
-            h: 3,
+            h: 5,
             w: 12
              }
     },
@@ -135,7 +135,7 @@ const BASE_CONFIG = [
       body: "CEG’s Capital Region Economic Scorecards are a quarterly feature of the organization’s newsletter, The CEG Indicator, and are oﬀered exclusively to our investors. These scorecards track 30 mostly local economic indicators to provide our investors with insights into the health of the region’s economy and the direction in which it is headed. There are ﬁve scorecards: Quarterly Performance Overview; Economic Conditions, Manufacturing, Consumer and Transportation.",
       link: "http://go.ceg.org/l/189672/2019-07-24/l2gpl6",
       layout: {
-            h: 5,
+            h: 7,
             w: 12
              }
     }
