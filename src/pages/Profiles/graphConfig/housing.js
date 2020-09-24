@@ -319,19 +319,17 @@ const BASE_CONFIG = [
       "B25087_019E"
     ]
   },
-
- {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "US Census Building Permits Survey" },
-          { type: "subheader", value: "Data Downloads" },
-          { type: "body", value: "This page provides data on the number of new housing units authorized by building permits. Data are available monthly, year- to- date, and annually at the national, state, selected metropolitan area, county and place levels. The data are from the Building Permits Survey." },
-          { type: "link", value: "https://www.census.gov/construction/bps/" }
-        ]
-      ]
+{
+      type: "TextBox",
+      header: "US Census Building Permits Survey",
+      subheader: "Data Downloads",
+      body: "This page provides data on the number of new housing units authorized by building permits. Data are available monthly, year- to- date, and annually at the national, state, selected metropolitan area, county and place levels. The data are from the Building Permits Survey.",
+      link: "https://www.census.gov/construction/bps/",
+      layout: {
+            h: 7,
+            w: 12
+             }
     }
-
 ]
 
 export default configLoader(BASE_CONFIG);
