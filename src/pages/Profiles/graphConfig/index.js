@@ -11,7 +11,7 @@ let ID = 0;
 const getId = () => `profile-${ ++ID }`;
 
 const CONFIG = {
-  'COVID-19': covid19,
+  // 'COVID-19': covid19,
   Overview,
   Economy,
   'Social Welfare': SocialWelfare,
