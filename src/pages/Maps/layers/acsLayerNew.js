@@ -404,7 +404,7 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "GINI Index",
     censusKeys: ["B19058"],
-  }
+  },
 
 //---------------------------------------------- HEALTH ----------------------------------------------
   { name: "Percent Health Care Coverage",
