@@ -130,7 +130,8 @@ const BASE_CONFIG = [
     layout:{
          w:9,
          h:9,
-      }
+      },
+    legendWidth: 325,
   },
 
 
@@ -201,13 +202,35 @@ const BASE_CONFIG = [
       }
    },
 
-  { "type":"CensusStackedBarChart",
-    "broadCensusKey": "B25091",
+  { type:"CensusStackedBarChart",
+    title: 'Homeowner Cost by % of Monthly Income',
     showCompareGeoid: false,
     orientation: 'horizontal',
     marginLeft: 140,
-    left: { key: "With Mortgage", slice: [0, 9] },
-    right: { key: "Without Mortgage", slice: [9, 18] },
+    left: { key: "With Mortgage", 
+      keys: [
+        'B25091_003E',
+        'B25091_004E',
+        'B25091_005E',
+        'B25091_006E',
+        'B25091_007E',
+        'B25091_008E',
+        'B25091_009E',
+        'B25091_010E',
+        'B25091_011E',
+      ]},
+    right: { key: "Without Mortgage",
+      keys: [
+        'B25091_014E',
+        'B25091_015E',
+        'B25091_016E',
+        'B25091_017E',
+        'B25091_018E',
+        'B25091_019E',
+        'B25091_020E',
+        'B25091_021E',
+        'B25091_022E',
+      ]},
     labels: [
       'Less than 10.0 percent',
       '10.0 to 14.9 percent',
@@ -296,19 +319,17 @@ const BASE_CONFIG = [
       "B25087_019E"
     ]
   },
-
- {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "US Census Building Permits Survey" },
-          { type: "subheader", value: "Data Downloads" },
-          { type: "body", value: "This page provides data on the number of new housing units authorized by building permits. Data are available monthly, year- to- date, and annually at the national, state, selected metropolitan area, county and place levels. The data are from the Building Permits Survey." },
-          { type: "link", value: "https://www.census.gov/construction/bps/" }
-        ]
-      ]
+{
+      type: "TextBox",
+      header: "US Census Building Permits Survey",
+      subheader: "Data Downloads",
+      body: "This page provides data on the number of new housing units authorized by building permits. Data are available monthly, year- to- date, and annually at the national, state, selected metropolitan area, county and place levels. The data are from the Building Permits Survey.",
+      link: "https://www.census.gov/construction/bps/",
+      layout: {
+            h: 7,
+            w: 12
+             }
     }
-
 ]
 
 export default configLoader(BASE_CONFIG);

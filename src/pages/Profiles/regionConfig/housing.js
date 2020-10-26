@@ -83,7 +83,7 @@ const BASE_CONFIG = [
       invertColors: true,
       layout:{
          w:3,
-         h:4,
+         h:6,
       },
    },
 
@@ -100,7 +100,7 @@ const BASE_CONFIG = [
       maximumFractionDigits: 1,
       layout:{
          w:3,
-         h:4,
+         h:6,
          x:0
       }
    },
@@ -113,7 +113,7 @@ const BASE_CONFIG = [
       groupBy: "geoids",
       layout:{
          w:9,
-         h:8,
+         h:12,
 
       }
     },
@@ -189,6 +189,19 @@ const BASE_CONFIG = [
       type:"CensusLineChart",
       title:'Number of Mortgages with Monthly Owner Costs Above 30%',
       censusKeys:["B25091_008E", "B25091_009E", "B25091_010E", "B25091_011E", "B25091_019E", "B25091_020E", "B25091_021E", "B25091_022E"],
+      labels: [
+                'Units with a mortgage 30% to 34.9%',
+                'Units with a mortgage 35% to 39.9%',
+                'Units with a mortgage 40% to 44.5%',
+                'Units with a mortgage 45% to 49.9%',
+                'Units with a mortgage 50% or More',
+                'Units without a mortgage 30% to 34.9%',
+                'Units without a mortgage 35% to 39.9%',
+                'Units without a mortgage 40% to 44.5%',
+                'Units without a mortgage 45% to 49.9%',
+                'Units without a mortgage 50% or More',
+              ],
+      legendWidth: 350,
       showCompareYear: true,
       invertColors: true,
       layout:{

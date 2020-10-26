@@ -268,7 +268,7 @@ const BASE_CONFIG = [
       body: "Map of Food Insecure Areas (nearest grocery store is within 1 and 10 miles.",
       link: "https://map.feedingamerica.org/",
       layout: {
-            h: 3,
+            h: 5,
             w: 12
              }
 
@@ -280,7 +280,7 @@ const BASE_CONFIG = [
       body: "Information on OCFS regulated child care programs, which includes program overview information and violation history.",
       link: "https://data.ny.gov/Human-Services/Child-Care-Regulated-Programs/cb42-qumz/data",
       layout: {
-            h: 3,
+            h: 5,
             w: 12
              }
     },
@@ -291,7 +291,7 @@ const BASE_CONFIG = [
       body: "Criminal justice data by county from New York State Division of Criminal Justice Services including Violent Crimes, Domestic Violence Victims, Arrests, Dispositions, Youth Justice Data, and more",
       link: "https://www.criminaljustice.ny.gov/crimnet/ojsa/stats.htm",
       layout: {
-            h: 3,
+            h: 5,
             w: 12
              }
     }

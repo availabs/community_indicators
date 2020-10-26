@@ -23,7 +23,7 @@ const BASE_CONFIG = [
       showCompareYear: true,
       showColors: false,
       censusKeys:["B01002_001E"],
-      maximumFractionDigits: 1,
+      maximumFractionDigits: 0,
       demographics:true,
       layout:{
          w:3,

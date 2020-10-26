@@ -368,29 +368,13 @@ class ACS_Layer extends MapLayer {
 const DEFAULT_CONFIG_INDEX = 0;
 
 const CENSUS_FILTER_CONFIG = [
-  { name: "Percent of Population Over 60",
-    censusKeys:[
-        "B01001_018E",
-        "B01001_019E",
-        "B01001_020E",
-        "B01001_021E",
-        "B01001_022E",
-        "B01001_023E",
-        "B01001_024E",
-        "B01001_025E",
-        "B01001_042E",
-        "B01001_043E",
-        "B01001_044E",
-        "B01001_045E",
-        "B01001_046E",
-        "B01001_047E",
-        "B01001_048E",
-        "B01001_049E",
-      ],
-      divisorKeys: ["B01001_001E"],
 
+//---------------------------------------------- OVERVIEW ----------------------------------------------
+  { name: "Total Population",
+    censusKeys: ["B01003_001E"]
   },
 
+//---------------------------------------------- ECONOMY ----------------------------------------------
   {name: "Percent of Workers in the Hospitality Industries",
     censusKeys:[
         "C24030_051E",
@@ -405,31 +389,24 @@ const CENSUS_FILTER_CONFIG = [
 
   },
 
-  { name: "Total Population",
-    censusKeys: ["B01003_001E"]
-  },
+//---------------------------------------------- SOCIAL WELFARE ----------------------------------------------
 
-  { name: "Median Household Income",
-    censusKeys: ["B19013_001E"],
-    format: fmoney
 
-  },
+  { name: "Median Earnings - Less than high school graduate",
+    censusKeys: ['B20004_002E'],
+    format: "$,d"
+  },  
 
   { name: "Percent Poverty Rate",
     censusKeys: ["B17001_002E"],
     divisorKeys: ["B17001_001E"]
   },
 
-  { name: "Percent Vacant Housing Units",
-    censusKeys: ["B25002_003E"],
-    divisorKeys: ['B25002_001E'],
+  { name: "GINI Index",
+    censusKeys: ["B19058"],
   },
 
-  {   name: "Percent Homeowners 65 and Older",
-      censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
-      divisorKeys: ['B25007_001E'],
-  },
-
+//---------------------------------------------- HEALTH ----------------------------------------------
   { name: "Percent Health Care Coverage",
     censusKeys: [
         "B27001_004E",
@@ -454,16 +431,34 @@ const CENSUS_FILTER_CONFIG = [
     divisorKeys: ["B27001_001E"]
   },
 
+  { name: "Percent of Population Over 60",
+    censusKeys:[
+        "B01001_018E",
+        "B01001_019E",
+        "B01001_020E",
+        "B01001_021E",
+        "B01001_022E",
+        "B01001_023E",
+        "B01001_024E",
+        "B01001_025E",
+        "B01001_042E",
+        "B01001_043E",
+        "B01001_044E",
+        "B01001_045E",
+        "B01001_046E",
+        "B01001_047E",
+        "B01001_048E",
+        "B01001_049E",
+      ],
+      divisorKeys: ["B01001_001E"],
+
+  },
+
+//---------------------------------------------- EDUCATION ----------------------------------------------
   { name: "Percent of Population with No High School Diploma or Equivalent",
     censusKeys: ['B15003_002E...B15003_016E'],
     divisorKeys: ['B01003_001E']
   },
-
-  { name: "Median Earnings - Less than high school graduate",
-    censusKeys: ['B20004_002E'],
-    format: "$,d"
-  },
-
 
   { name: "Total Ages 5-19 Not Enrolled in School",
     censusKeys:["B14003_023E...B14003_026E", "B14003_051E...B14003_054E"],
@@ -474,14 +469,23 @@ const CENSUS_FILTER_CONFIG = [
     divisorKeys: ['B14003_004E', 'B14003_013E', 'B14003_022E', 'B14003_032E', 'B14003_041E', 'B14003_050E']
   },
 
+//---------------------------------------------- HOUSING ----------------------------------------------
+  { name: "Percent Vacant Housing Units",
+    censusKeys: ["B25002_003E"],
+    divisorKeys: ['B25002_001E'],
+  },
+
+  {   name: "Percent Homeowners 65 and Older",
+      censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
+      divisorKeys: ['B25007_001E'],
+  },
+//---------------------------------------------- TRANSPORTATION ----------------------------------------------
   { name: "Bike/Ped as a Percent of Total Commuters",
     censusKeys: ["B08006_014E", "B08006_015E"],
     divisorKeys: ["B23025_001E"]
   },
 
-  { name: "GINI Index",
-    censusKeys: ["B19058"],
-  }
+//------------------------------------- End of New Organization Progress --------------------------------------
 
 ].map(processConfig)
 

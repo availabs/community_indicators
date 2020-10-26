@@ -6,6 +6,15 @@ import {
 
 const BASE_CONFIG = [
 
+    {
+          type: "TextBox",
+          header: "Population 60 Years and Older",
+          body: "Population over the age of 60 years old is the highest risk age bracket.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+        },
    {
       type:"CensusStatBox",
       censusKeys:[
@@ -120,57 +129,16 @@ const BASE_CONFIG = [
    //      ]
    //  },
 
-
-
+// Health Care Section
    {
-      type:"CensusStatBox",
-      title: "Number of Workers in the Hospitality Industries",
-      showCompareYear: true,
-      censusKeys:[
-      "C24030_051E",
-      "C24030_024E"
-      ],
-      showColors: false,
-      layout:{
-         w:6,
-         h:4,
-         x:0
-      }
-   },
-   {
-      type:"CensusStatBox",
-      title:'Percent of Workers in the Hospitality Industries',
-      sumType: 'pct',
-      censusKeys:[
-      "C24030_051E",
-      "C24030_024E"
-      ],
-      divisorKey: "C24030_001E",
-      showCompareYear: true,
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
-      showColors: false,
-      layout:{
-         w:6,
-         h:4,
-      }
-   },
-
-   {
-       type: "CensusMap",
-       title: "Percent of Workers in the Hospitality Industries",
-      censusKeys:[
-        "C24030_051E",
-        "C24030_024E"
-        ],
-      divisorKey: "C24030_001E",
-      sumType: 'pct',
-      format: ".1%",
-       layout: {
-         h: 12,
-         w: 12
-       }
-     },
+          type: "TextBox",
+          header: "Number of Workers in the Health Care Industries",
+          body: "Workers in the health care industries are at higher risk of contracting and spreading the virus.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+        },
    {
       type:"CensusStatBox",
       title: "Number of Workers in the Health Care Industries",
@@ -220,6 +188,76 @@ const BASE_CONFIG = [
        }
      },
 
+    // Hospitality Section
+
+   {
+          type: "TextBox",
+          header: "Job Risk",
+          body: "Workers in the hospitality and leisure industries are at higher risk of job loss.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+        },
+    {
+      type:"CensusStatBox",
+      title: "Number of Workers in the Hospitality and Leisure Industries",
+      showCompareYear: true,
+      censusKeys:[
+      "C24030_051E",
+      "C24030_024E"
+      ],
+      showColors: false,
+      layout:{
+         w:6,
+         h:4,
+         x:0
+      }
+   },
+   {
+      type:"CensusStatBox",
+      title:'Percent of Workers in the Hospitality and Leisure Industries',
+      sumType: 'pct',
+      censusKeys:[
+      "C24030_051E",
+      "C24030_024E"
+      ],
+      divisorKey: "C24030_001E",
+      showCompareYear: true,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      showColors: false,
+      layout:{
+         w:6,
+         h:4,
+      }
+   },
+
+   {
+       type: "CensusMap",
+       title: "Percent of Workers in the Hospitality and Leisure Industries",
+      censusKeys:[
+        "C24030_051E",
+        "C24030_024E"
+        ],
+      divisorKey: "C24030_001E",
+      sumType: 'pct',
+      format: ".1%",
+       layout: {
+         h: 12,
+         w: 12
+       }
+     },
+// Worked From Home Section
+  {
+          type: "TextBox",
+          header: "Commuters Who Reported Working From Home Before COVID-19",
+          body: "Workers who reported working from home before COVID-19 are a positive indicator of communities at lower risk of transmission.",
+          layout: {
+            h: 3,
+            w: 12
+             }
+  },
   {
       type:"CensusStatBox",
       title:'Commuters Who Reported Working From Home Before COVID-19',
@@ -266,18 +304,18 @@ const BASE_CONFIG = [
       //       w: 9
       //     }
       //   },
-      {
-       type: "CensusMap",
-       title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
-      censusKeys:["B08006_017E"],
-      divisorKey: "B08006_001E",
-         geolevel: "cousubs",
-      format: ".1%",
-       layout: {
-         h: 12,
-         w: 12
-       }
-     },
+     //  {
+     //   type: "CensusMap",
+     //   title: "Percent of Commuters Who Reported Working From Home Before COVID-19",
+     //  censusKeys:["B08006_017E"],
+     //  divisorKey: "B08006_001E",
+     //     geolevel: "cousubs",
+     //  format: ".1%",
+     //   layout: {
+     //     h: 12,
+     //     w: 12
+     //   }
+     // },
 ]
 
 export default configLoader(BASE_CONFIG)

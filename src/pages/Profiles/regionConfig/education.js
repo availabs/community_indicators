@@ -104,7 +104,7 @@ const BASE_CONFIG = [
       amount:true,
       yearPosition: "block",
       showCompareYear: true,
-      showColors: false,
+      invertColors: true,
       maximumFractionDigits: 1,
       layout:{
          w:3,
@@ -118,7 +118,7 @@ const BASE_CONFIG = [
       censusKeys:['B15003_019E','B15003_020E'],
       amount:true,
       yearPosition: "block",
-      showColors: false,
+      invertColors: true,
       showCompareYear: true,
       maximumFractionDigits: 1,
       layout:{

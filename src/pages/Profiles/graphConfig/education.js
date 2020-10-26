@@ -291,19 +291,17 @@ const BASE_CONFIG = [
             "Graduate or professional degree",
           ]
         },
-
- {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "ELSi from the National Center for Education Statistics" },
-          { type: "subheader", value: "Data Downloads" },
-          { type: "body", value: "The Elementary/Secondary Information System (ElSi) is an NCES web application that allows users to quickly view public and private school data and create custom tables and charts using data from the Common Core of Data (CCD) and Private School Survey (PSS). ElSi utilizes variables that are frequently requested by users for producing tables. It is a fast, easy way to obtain basic statistical data on U.S. schools. When generating custom tables, ElSi allows the user to choose row variables, column variables and filters to refine the data included in tables produced. Data includes School Attendance Rates Kindergarten Readiness, Absenteeism K-3, Dropouts, Grade 3 Pass Rates, Grade 3 Reading, Public High School Graduation Rates, Participation in Free Lunch, and more." },
-          { type: "link", value: "https://nces.ed.gov/ccd/elsi/" }
-        ]
-      ]
+  {
+      type: "TextBox",
+      header: "ELSi from the National Center for Education Statistics",
+      subheader: "Data Downloads",
+      body: "The Elementary/Secondary Information System (ElSi) is an NCES web application that allows users to quickly view public and private school data and create custom tables and charts using data from the Common Core of Data (CCD) and Private School Survey (PSS). ElSi utilizes variables that are frequently requested by users for producing tables. It is a fast, easy way to obtain basic statistical data on U.S. schools. When generating custom tables, ElSi allows the user to choose row variables, column variables and filters to refine the data included in tables produced. Data includes School Attendance Rates Kindergarten Readiness, Absenteeism K-3, Dropouts, Grade 3 Pass Rates, Grade 3 Reading, Public High School Graduation Rates, Participation in Free Lunch, and more.",
+      link: "https://nces.ed.gov/ccd/elsi/",
+      layout: {
+            h: 8,
+            w: 12
+             }
     }
-
 ]
 
 export default configLoader(BASE_CONFIG)

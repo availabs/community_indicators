@@ -12,7 +12,7 @@ const BASE_CONFIG = [
           header: "HEALTH",
           body: "This section takes a population-based approach to our region's health by exploring access to health care, and will one day include indicators measuring the prevalence of selected diseases, mortality rates and behavioral health.",
           layout: {
-            h: 3,
+            h: 5,
             w: 12
              }
         },
@@ -111,26 +111,40 @@ const BASE_CONFIG = [
       "B18135_033E",
       "B18135_034E"
       ],
+    censusKeyLabels: {
+      "B18135_004E" : '< 19 years, w/ disability, Total health insurance coverage',
+      "B18135_005E" : '< 19 years, w/ disability, Private health insurance coverage',
+      "B18135_006E" : '< 19 years, w/ disability, Public health insurance coverage',
+      "B18135_007E" : '< 19 years, w/ disability, No health insurance coverage',
+      "B18135_009E" : '< 19 years, No disability, Total insurance coverage',
+      "B18135_010E" : '< 19 years, No disability, Private health insurance coverage',
+      "B18135_011E" : '< 19 years, No disability, Public health insurance coverage',
+      "B18135_012E" : '< 19 years, No disability, No health insurance coverage',
+      "B18135_015E" : '19-64 years, w/ disability, Total health insurance coverage',
+      "B18135_016E" : '19-64 years, w/ disability, Private health insurance coverage',
+      "B18135_017E" : '19-64 years, w/ disability, Public health insurance coverage',
+      "B18135_018E" : '19-64 years, w/ disability, No health insurance coverage',
+      "B18135_020E" : '19-64 years, No disability, Total health insurance coverage',
+      "B18135_021E" : '19-64 years, No disability, Private health insurance coverage',
+      "B18135_022E" : '19-64 years, No disability, Public health insurance coverage',
+      "B18135_023E" : '19-64 years, No disability, No health insurance coverage',
+      "B18135_026E" : '65+, w/ disability, Total health insurance coverage',
+      "B18135_027E" : '65+, w/ disability, Private health insurance coverage',
+      "B18135_028E" : '65+, w/ disability, Public health insurance coverage',
+      "B18135_029E" : '65+, w/ disability, No health insurance coverage',
+      "B18135_031E" : '65+, No disability, Total health insurance coverage',
+      "B18135_032E" : '65+, No disability, Private health insurance coverage',
+      "B18135_033E" : '65+, No disability, Public health insurance coverage',
+      "B18135_034E" : '65+, No disability, No health insurance coverage',
+    },
     orientation: "horizontal",
-    marginLeft: 550,
+    marginLeft: 350,
     layout: { 
       w: 9, 
       h: 12,
       
     }
   },
-
-  {
-      type: "ProfileFooter",
-      data: [
-        [
-          { type: "header", value: "New York State Community Health Indicator Reports (CHIRS)" },
-          { type: "subheader", value: "Data, Reports, and Visualizations" },
-          { type: "body", value: "The New York State Community Health Indicator Reports (CHIRS) were developed in 2012, and are annually updated to consolidate and provide information regarding health indicators in the County Health Assessment Indicators (CHAI) for all communities in New York. Data previously provided in these reports have now been incorporated into the CHIRS Dashboard and are displayed in enhanced, more interactive data views. The CHIRS Dashboard tracks about 350 indicators organized by 15 health topics, and is updated annually to include the most recent year of data available for these indicators. Additionally, each of 62 counties in NYS has their own dashboard which allows for comparison of each county's data in relationship to that county's region and NYS totals, and includes at-a-glance comparisons of the two most recent data points. Visualizations include tables, maps, charts, and graphs at the state and county levels. This dashboard is a key resource for assessing county trends and can assist in tracking intervention progress." },
-          { type: "link", value: "https://www.health.ny.gov/statistics/chac/indicators/" }
-        ]
-      ]
-    },
 
     {
       type:"CensusStatBox",
@@ -173,8 +187,17 @@ const BASE_CONFIG = [
           '75 years and over, non-veteran',
         ]
     },
-
-
+{
+      type: "TextBox",
+      header: "New York State Community Health Indicator Reports (CHIRS)",
+      subheader: "Data, Reports, and Visualizations",
+      body: "The New York State Community Health Indicator Reports (CHIRS) were developed in 2012, and are annually updated to consolidate and provide information regarding health indicators in the County Health Assessment Indicators (CHAI) for all communities in New York. Data previously provided in these reports have now been incorporated into the CHIRS Dashboard and are displayed in enhanced, more interactive data views. The CHIRS Dashboard tracks about 350 indicators organized by 15 health topics, and is updated annually to include the most recent year of data available for these indicators. Additionally, each of 62 counties in NYS has their own dashboard which allows for comparison of each county's data in relationship to that county's region and NYS totals, and includes at-a-glance comparisons of the two most recent data points. Visualizations include tables, maps, charts, and graphs at the state and county levels. This dashboard is a key resource for assessing county trends and can assist in tracking intervention progress.",
+      link: "https://www.health.ny.gov/statistics/chac/indicators/",
+      layout: {
+            h: 9,
+            w: 12
+             }
+    },
 ]
 
 export default configLoader(BASE_CONFIG);
