@@ -200,7 +200,7 @@ class Profile extends React.Component{
                             }
                         </ul>
                     </div>
-                    <div className='container'>
+                    <div className='container' style={ { padding: 0 } }>
                         {categories}
                     </div>
                 </div>

@@ -52,8 +52,10 @@ class CensusBarChart extends React.Component {
     groupMode: "grouped",
     groupBy: "censusKeys",
     censusKeys: [],
+    subtractKeys: [],
     divisorKeys: [],
     censusKeysMoE: [],
+    subtractKeysMoE: [],
     divisorKeysMoE: [],
     censusKeyLabels: {},
     showOptions: true,
@@ -76,10 +78,10 @@ class CensusBarChart extends React.Component {
     )
   }
   processDataForViewing() {
-  const fmt = format(this.props.yFormat),
-    getKeyName = key => key in this.props.censusKeyLabels ?
-      this.props.censusKeyLabels[key] :
-      getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
+    const fmt = format(this.props.yFormat),
+      getKeyName = key => key in this.props.censusKeyLabels ?
+        this.props.censusKeyLabels[key] :
+        getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
 
     if (this.props.divisorKeys.length && this.props.groupBy === "geoids") {
       const data = [],
@@ -89,7 +91,11 @@ class CensusBarChart extends React.Component {
         keys.push(`census key ${ i + 1 }`, `census label ${ i + 1 }`);
       })
 
-      keys.push("sum")
+      keys.push("sum");
+
+      this.props.subtractKeys.forEach((k, i) => {
+        keys.push(`subtract key ${ i + 1 }`, `census label ${ i + 1 }`);
+      })
 
       this.props.divisorKeys.forEach((k, i) => {
         keys.push(`divisor key ${ i + 1 }`, `divisor label ${ i + 1 }`);
@@ -107,24 +113,36 @@ class CensusBarChart extends React.Component {
           row[`census label ${ i + 1 }`] = getKeyName(k);
         })
         row["sum"] = this.props.censusKeys.reduce((a, c) => {
-          const value = get(this.props.acsGraph, [geoid, row.year, c], -666666666)
+          const value = get(this.props.acsGraph, [geoid, row.year, c], -666666666);
           if (value !== -666666666) {
             a += value;
           }
           return a;
-        }, 0)
+        }, 0);
+
+        this.props.subtractKeys.forEach((k, i) => {
+          row[`subtract key ${ i + 1 }`] = k;
+          row[`census label ${ i + 1 }`] = getKeyName(k);
+        })
+        row["sum"] -= this.props.subtractKeys.reduce((a, c) => {
+          const value = get(this.props.acsGraph, [geoid, row.year, c], -666666666);
+          if (value !== -666666666) {
+            a += value;
+          }
+          return a;
+        }, 0);
 
         this.props.divisorKeys.forEach((k, i) => {
           row[`divisor key ${ i + 1 }`] = k;
           row[`divisor label ${ i + 1 }`] = getKeyName(k);
         })
         row["divisor"] = this.props.divisorKeys.reduce((a, c) => {
-          const value = get(this.props.acsGraph, [geoid, row.year, c], -666666666)
+          const value = get(this.props.acsGraph, [geoid, row.year, c], -666666666);
           if (value !== -666666666) {
             a += value;
           }
           return a;
-        }, 0)
+        }, 0);
 
         row["value"] = row["sum"] / (row["divisor"] === 0 ? 1 : row["divisor"]);
 
@@ -293,8 +311,9 @@ const groupByCensusKeys = (state, props) =>
 const groupByGeoids = (state, props) =>
   [...props.geoids, props.compareGeoid].filter(geoid => Boolean(geoid))
     .reduce((a, c) => {
-      const divisorKeys = get(props, "divisorKeys", []);
-      if (divisorKeys.length) {
+      const divisorKeys = get(props, "divisorKeys", []),
+        subtractKeys = get(props, "subtractKeys", []);
+      if (divisorKeys.length || subtractKeys.length) {
         const value = props.censusKeys.reduce((aa, cc, ii) => {
           const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
@@ -303,6 +322,16 @@ const groupByGeoids = (state, props) =>
           }
           return aa;
         }, 0)
+        const sub = props.subtractKeys.reduce((aa, cc, ii) => {
+          const year = get(props, "year", 2017),
+            value = +get(state, ["graph", "acs", c, year, cc], 0);
+          if (value !== -666666666) {
+            aa += value;
+          }
+          return aa;
+        }, 0)
+        value -= sub;
+        
         const divisor = props.divisorKeys.reduce((aa, cc, ii) => {
           const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);

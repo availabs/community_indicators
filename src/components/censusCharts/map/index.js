@@ -37,7 +37,9 @@ class CensusMap extends React.Component {
   static defaultProps = {
     showOptions: true,
     censusKeys: [],
+    subtractKeys: [],
     divisorKeys: [],
+    geolevel: "blockgroup",
     year: 2017,
     geoids: [],
     compareGeoid: null,
@@ -45,13 +47,14 @@ class CensusMap extends React.Component {
     description: ""
   }
   censusLayer = LayerFactory(this.props);
+
   processDataForViewing() {
     const cousubs = this.censusLayer.geoids.reduce((a, c) => {
       a.push(...get(this.censusLayer, ["falcorCache", "geo", c, "cousubs", "value"], []));
       return a;
     }, [])
     const bgsInCousubs = cousubs.reduce((a, c) => {
-      a[c] = get(this.censusLayer, ["falcorCache", "geo", c, "blockgroup", "value"], []);
+      a[c] = get(this.censusLayer, ["falcorCache", "geo", c, this.props.geolevel, "value"], []);
       return a;
     }, {})
 
@@ -62,13 +65,16 @@ class CensusMap extends React.Component {
             bgsInCousubs[cc].includes(c) ? get(this.censusLayer, ["falcorCache", "geo", cc, "name"], aa) : aa
           , "Unknown Cousub"),
           county: get(this.censusLayer, ["falcorCache", "geo", c.slice(0, 5), "name"], "Unknown County"),
-          blockgroup: c,
+          "geo level": this.props.geolevel,
+          geoid: c,
           [this.props.title]: get(this.censusLayer, ["geoData", c], "no data")
         })
         return a;
       }, [])
 
-    return { data, keys: ["county", "cousub", "blockgroup", this.props.title] };
+    return { data,
+      keys: ["county", "cousub", "geo level", "geoid", this.props.title]
+    };
   }
   saveImage() {
     const canvas = d3selection.select(`#${ this.props.id } canvas.mapboxgl-canvas`).node(),
@@ -148,9 +154,11 @@ class CensusMap extends React.Component {
                 geoids: [...this.props.geoids],
                 compareGeoid: this.props.compareGeoid,
                 censusKeys: [...this.props.censusKeys],
+                subtractKeys: [...this.props.subtractKeys],
                 divisorKeys: [...this.props.divisorKeys],
                 format: this.props.format,
-                year: this.props.year
+                year: this.props.year,
+                geolevel: this.props.geolevel
               } }/>
           }
         </div>
@@ -226,12 +234,17 @@ class CensusLayer extends MapLayer {
 
     if (bounds.isEmpty()) return false;
 
+    const tr = this.map.transform,
+      nw = tr.project(bounds.getNorthWest()),
+      se = tr.project(bounds.getSouthEast()),
+      size = se.sub(nw);
+
     const options = {
       padding: {
-        top: 50,
-        right: 400,
-        bottom: 50,
-        left: 10
+        top: Math.min(50, tr.height * 0.05),
+        right: Math.min(50, tr.width * 0.05),
+        bottom: Math.min(50, tr.height * 0.05),
+        left: Math.min(50, tr.width * 0.05)
       },
       bearing: 0,
       pitch: 0
@@ -241,11 +254,6 @@ class CensusLayer extends MapLayer {
       (options.padding.left - options.padding.right) * 0.5,
       (options.padding.top - options.padding.bottom) * 0.5
     ];
-
-    const tr = this.map.transform,
-      nw = tr.project(bounds.getNorthWest()),
-      se = tr.project(bounds.getSouthEast()),
-      size = se.sub(nw);
 
     const scaleX = (tr.width - (options.padding.left + options.padding.right)) / size.x,
       scaleY = (tr.height - (options.padding.top + options.padding.bottom)) / size.y;
@@ -295,7 +303,9 @@ class CensusLayer extends MapLayer {
           return a;
         }, []);
       return falcorChunkerNiceWithUpdate(
-        ["acs", subGeoids, this.year, [...this.censusKeys, ...this.divisorKeys]],
+        ["acs", subGeoids, this.year,
+          [...this.censusKeys, ...this.divisorKeys, ...this.subtractKeys]
+        ],
         ["geo", subGeoids, "boundingBox"],
         ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "name"]
       )
@@ -354,6 +364,13 @@ class CensusLayer extends MapLayer {
         }
         return aa;
       }, 0);
+      value -= this.subtractKeys.reduce((aa, cc) => {
+        const v = get(this.falcorCache, ["acs", c, this.year, cc], -666666666);
+        if (v !== -666666666) {
+          aa += v;
+        }
+        return aa;
+      }, 0)
       const divisor = this.divisorKeys.reduce((aa, cc) => {
         const v = get(this.falcorCache, ["acs", c, this.year, cc], -666666666);
 // console.log("??????", c, this.year, cc, v)
@@ -412,7 +429,6 @@ class CensusLayer extends MapLayer {
 }
 
 const LayerFactory = props => {
-console.log("PROPS:", props)
   return new CensusLayer({
     geoids: [
       ...props.geoids,
@@ -420,6 +436,7 @@ console.log("PROPS:", props)
     ].filter(Boolean) || [],
     year: props.year || 2017,
     censusKeys: props.censusKeys || [],
+    subtractKeys: props.subtractKeys || [],
     divisorKeys: props.divisorKeys || [],
 
     legend: {

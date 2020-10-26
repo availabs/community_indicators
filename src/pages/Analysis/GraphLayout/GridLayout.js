@@ -44,8 +44,9 @@ class GridLayout extends React.Component {
       return (
         <ReactGridLayout
           rowHeight={ 30 }
-          breakpoints={ { lg: 1260, md: 1170, sm: 940, xs: 700, xxs: 520 } }
-          cols={ { lg: 12, md: 12, sm: 6, xs: 3, xxs: 3 } }>
+          breakpoints={ { lg: 1280, md: 1190, sm: 960, xs: 720, xxs: 540 } }
+          cols={ { lg: 12, md: 12, sm: 12, xs: 12, xxs: 3 } }
+          containerPadding={ [0, 10] }>
 
           { this.loadComps() }
 

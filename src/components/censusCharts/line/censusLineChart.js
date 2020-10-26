@@ -23,12 +23,19 @@ class CensusLineChart extends React.Component {
         return falcorGraph.get(
             ['acs', geoids,
               this.props.years,
-              [...this.props.divisorKeys, ...this.props.censusKeys,
-                ...this.props.divisorKeysMoE, ...this.props.censusKeysMoE
+              [...this.props.divisorKeys, ...this.props.divisorKeysMoE,
+                ...this.props.censusKeys, ...this.props.censusKeysMoE,
+                ...this.props.subtractKeys, ...this.props.subtractKeysMoE
               ]
             ],
             ["geo", geoids, "name"],
-            ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
+            ["acs", "meta",
+              [...this.props.censusKeys,
+                ...this.props.divisorKeys,
+                ...this.props.subtractKeys
+              ],
+              "label"
+            ]
         )
         // .then(data =>{
         //     console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
@@ -44,6 +51,21 @@ class CensusLineChart extends React.Component {
               "title": this.props.title,
               "data" : this.props.years.map(year => {
                   let value = get(this.props, `acs[${ geoid }][${ year }][${ censusKey }]`, 0)
+
+                  let sub = 0;
+
+                  if (this.props.censusKeys.length === 1) {
+                    sub = this.props.subtractKeys.reduce((a, c) => {
+                      const v = get(this.props, ["acs", geoid, year, c], -666666666);
+                      return v === -666666666 ? a : a + v;
+                    }, 0)
+                  }
+                  else {
+                    sub = get(this.props, `acs[${ geoid }][${year}][${this.props.subtractKeys[index]}]`, 0);
+                  }
+                  if (!isNaN(sub)) {
+                    value -= +sub;
+                  }
 
                   if(this.props.sumType === 'pct') {
                       const divisor = get(this.props, `acs[${ geoid }][${year}][${this.props.divisorKeys[index]}]`, 1);
@@ -85,6 +107,14 @@ class CensusLineChart extends React.Component {
           row["census label"] = getKeyName(key);
           let value = get(this.props, ['acs', geoid, year, key], 0);
 
+          if (this.props.censusKeys.length === 1) {
+            const subtractKey = this.props.subtractKeys[i],
+              sub = get(this.props, ["acs", geoid, year, subtractKey], 0);
+            value -= sub;
+            row["subtract key"] = subtractKey;
+            row["subtract label"] = getKeyName(subtractKey)
+          }
+
           if (this.props.sumType === 'pct') {
             const divisorKey = this.props.divisorKeys[i],
               divisor = get(this.props, ['acs', geoid, year, divisorKey], 1);
@@ -109,6 +139,10 @@ class CensusLineChart extends React.Component {
     processDataForViewing() {
       const data = this.getTableData(this.props.geoids[0]),
         keys = ["geoid", "name", "year", "census key", "census label"];
+
+      if (this.props.censusKeys.length === 1) {
+        keys.push("subtract key", "subtract label");
+      }
 
       if (this.props.sumType === "pct") {
         keys.push("divisor key", "divisor label");
@@ -236,8 +270,10 @@ class CensusLineChart extends React.Component {
 
     static defaultProps = {
         censusKeys: [],
+        subtractKeys: [],
         divisorKeys: [],
         censusKeysMoE: [],
+        subtractKeysMoE: [],
         divisorKeysMoE: [],
         geoids: ['36001'],
         colorRange:['#047bf8','#6610f2','#6f42c1','#e83e8c','#e65252','#fd7e14','#fbe4a0','#24b314','#20c997','#5bc0de'],

@@ -30,7 +30,7 @@ const SidebarContainer = styled.div`
   color: ${ props => props.theme.textColor };
   width: ${ props => props.width }px;
   transition: width ${ TRANSITION_TIME }ms;
-  left: 20px;
+  left: 10px;
   top: 100px;
   position: absolute;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
@@ -60,7 +60,7 @@ const SidebarContainer = styled.div`
 class Sidebar extends React.Component {
   timeout = null;
   state = {
-    open: true,
+    open: window.innerWidth >= 1750,
     transitioning: false
   }
   componentWillUnmount() {
@@ -71,9 +71,10 @@ class Sidebar extends React.Component {
     this.timeout = setTimeout(() => this.setState({ transitioning: false }), TRANSITION_TIME);
   }
   render() {
-    const years = this.props.years.slice().reverse();
-    return (
-      <SidebarContainer width={ this.state.open ? 250 : 1 }>
+    const years = this.props.years.slice().reverse(),
+      maxWidth = 200;
+    return window.innerWidth < 600 ? null : (
+      <SidebarContainer width={ this.state.open ? maxWidth : 1 }>
         <Toggle onClick={ () => this.toggle() }
           doRotate={
             (this.state.open && !this.state.transitioning) ||
@@ -82,7 +83,7 @@ class Sidebar extends React.Component {
           <ArrowRight height="12px"/>
         </Toggle>
         <ContentCollapser isOpen={ this.state.open && !this.state.transitioning }>
-          <div style={ { width: "250px", padding: "15px" } }>
+          <div style={ { width: `${ maxWidth }px`, padding: "10px" } }>
 
             { !this.props.regionToggle ? null :
               <div style={ { marginBottom: "10px" } }>

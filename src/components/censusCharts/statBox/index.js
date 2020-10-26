@@ -8,14 +8,40 @@ import get from 'lodash.get'
 import styled from "styled-components"
 
 const YearDiv = styled.div`
-  position: ${ props => props.position === "block" ? "static" : "absolute" };
-  text-align: ${ props => props.position === "block" ? "center" : "left" };
-  bottom: ${ props => props.position.includes("bottom") ? "10px" : "auto" };
-  left: ${ props => props.position.includes("left") ? "20px" : "auto" };
-  right: ${ props => props.position.includes("right") ? "20px" : "auto" };
+  position: absolute;
+  text-align: left;
+  bottom: 10px;
+  left: 20px;
+`
+
+const ValueContainer = styled.div`
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  > div {
+    justify-content: center;
+  }
+  > div:last-child {
+    justify-content: flex-start;
+  }
 `
 
 class CensusStatBox extends React.Component {
+  state = {
+    loading: true
+  }
+  MOUNTED = false;
+  componentDidMount() {
+    this.MOUNTED = true;
+  }
+  componentWillUnmount() {
+    this.MOUNTED = false;
+  }
+  setState(...args) {
+    this.MOUNTED && super.setState(...args);
+  }
     fetchFalcorDeps(){
         return this.props.falcor.get(
           ['acs',
@@ -23,9 +49,12 @@ class CensusStatBox extends React.Component {
               this.props.compareGeoid
             ].filter(Boolean),
             this.props.years,
-            [...this.props.censusKeys, ...this.props.divisorKeys]
+            [...this.props.censusKeys,
+              ...this.props.divisorKeys,
+              ...this.props.subtractKeys
+            ]
           ]
-        )//.then(res => console.log("RES:", res))
+        ).then(() => this.setState({ loading: false }))
     }
 
     calculateValues(geoids){
@@ -39,6 +68,13 @@ class CensusStatBox extends React.Component {
           aa + getValue(c, this.props.year, cc)
         , 0)
       , 0)
+      const sub = geoids.reduce((a, c) =>
+        a + this.props.subtractKeys.reduce((aa, cc) =>
+          aa + getValue(c, this.props.year, cc)
+        , 0)
+      , 0)
+
+      value -= sub;
 
         // let value = geoids
         //     .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.year}.${this.props.censusKey}`, 0))
@@ -75,6 +111,12 @@ class CensusStatBox extends React.Component {
               aa + getValue(c, this.props.compareYear, cc)
             , 0)
           , 0)
+          let sub = geoids.reduce((a, c) =>
+            a + this.props.subtractKeys.reduce((aa, cc) =>
+              aa + getValue(c, this.props.compareYear, cc)
+            , 0)
+          , 0)
+          compareValue -= sub;
             // let compareValue = geoids
             //     .map(geoid => get(this.props.graph, `acs.${geoid}.${this.props.compareYear}.${this.props.censusKey}`, 0))
             //     .reduce((a,b) => a + b )
@@ -108,7 +150,7 @@ class CensusStatBox extends React.Component {
         }
     }
 
-    renderStuff(geoids) {
+    renderStuff(geoids, compareStuff) {
         let { value, change } = this.calculateValues(geoids),
           growthColors = [this.props.increaseColor, this.props.decreaseColor];
         this.props.invertColors && growthColors.reverse();
@@ -116,33 +158,43 @@ class CensusStatBox extends React.Component {
           growthColors = ["currentColor", "currentColor"];
         }
 
+
+
         const growthColor = change ? growthColors[change >= 0 ? 0 : 1] : "currentColor";
-      return (
-        <div style={ { color: growthColor } }>
+      return compareStuff && !value ? null : (
+        <div style={ {
+            color: growthColor,
+            flexGrow: 1,
+            display: "flex",
+            flexDirection: "column",
+            // justifyContent: "center",
+            alignItems: "center"
+          } }>
           <div style={ {
             display: "flex",
             justifyContent: "center",
-            alignItems: "flex-end"
+            alignItems: "center"
           } }>
             { this.props.compareGeoid &&
-              <div style={ { marginRight: "10px", marginBottom: "6px" } }>
+              <div style={ { marginRight: "10px" } }>
                 <Geoname geoids={ geoids }/>
               </div>
             }
             <div className='value'
               style={ {
                 display: 'block',
-                fontSize: this.props.compareGeoid ? "2rem" : null
+                fontSize: !value ? "1rem" : this.props.compareGeoid ? "2rem" : "2.5rem",
+                textAlign: "center"
               } }>
               { value && this.props.valuePrefix }
-              { value ? value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits}) : "No Data" }
+              { value ? value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits}) : "This census data variable is not available at this geography." }
               { value && this.props.valueSuffix }
             </div>
           </div>
-          { this.props.compareYear && change &&
+          { this.props.compareYear && change ?
             <div style={ { textAlign: 'center', marginTop: "-10px" } }>
                 { Math.abs(change)}% {change >= 0 ? 'Growth' : 'Decline' }
-            </div>
+            </div> : null
            }
         </div>
       )
@@ -150,28 +202,45 @@ class CensusStatBox extends React.Component {
 
     render(){
 // console.log("GEOIDS:", this.props.geoids)
-        return(
+        return this.state.loading ?
+          <div style={ {
+              height: "100%", width: "100%",
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              fontSize: "2rem",
+              fontWeight: "bold"
+            } }>
+            Loading...
+          </div>
+        : (
           <div style={ { height: "100%", position: "relative" } }>
             <div className='el-tablo'
               style={ {
                 padding: "10px",
-                position: "relative"
+                position: "relative",
+                height: "100%",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
+                alignItems: "center"
               } }>
-              <div className='title' style={{fontSize: '1.2em', textAlign: 'center'}}>
+              <div className='title' style={{fontSize: '1.2em', textAlign: 'center', flexGrow: 0 }}>
                   {this.props.title}
               </div>
-              <div>
+              <ValueContainer>
                 { this.renderStuff(this.props.geoids) }
                 {
                   !this.props.compareGeoid ? null :
-                  this.renderStuff([this.props.compareGeoid])
+                  this.renderStuff([this.props.compareGeoid], true)
                 }
-              </div>
+              </ValueContainer>
             </div>
-            { this.props.compareYear && (this.props.yearPosition !== "none") &&
+            { this.props.compareYear && (this.props.yearPosition !== "none") ?
               <YearDiv position={ this.props.yearPosition }>
                  <b>{ this.props.year }</b> vs <b>{ this.props.compareYear }</b>
-              </YearDiv>
+              </YearDiv> : null
             }
           </div>
         )
@@ -186,6 +255,7 @@ class CensusStatBox extends React.Component {
         year:'2017',
         compareYear: null,
         maximumFractionDigits: 0,
+        subtractKeys: [],
         divisorKeys: [],
         yearPosition: "bottom-left",
         increaseColor: "#090",

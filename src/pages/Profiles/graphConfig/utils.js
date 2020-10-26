@@ -54,6 +54,10 @@ const expandKeyRange = key => {
 }
 
 export const configLoader = BASE_CONFIG => {
+  const useCompact = window.innerWidth < 992;
+if (window.innerWidth < 992) {
+  console.log("USE COMPACT!!!!!!")
+}
 
   let x = 0, y = 0;
 
@@ -83,10 +87,10 @@ export const configLoader = BASE_CONFIG => {
       config["right"].keys = config.censusKeys.slice(...config["right"].slice);
     }
 
-    if (config["censusKey"]) {
+    if (config["censusKey"] && !config.censusKeys) {
       config.censusKeys = [config.censusKey];
     }
-    if (config["divisorKey"]) {
+    if (config["divisorKey"] && !config.divisorKeys) {
       config.divisorKeys = [config.divisorKey];
     }
 
@@ -95,6 +99,9 @@ export const configLoader = BASE_CONFIG => {
     }
     if (config["divisorKeys"]) {
       config.divisorKeys = expandKeys(config.divisorKeys);
+    }
+    if (config["subtractKeys"]) {
+      config.subtractKeys = expandKeys(config.subtractKeys);
     }
 
     if (config["censusKeys"]) {
@@ -115,6 +122,15 @@ export const configLoader = BASE_CONFIG => {
         return a;
       }, [])
     }
+    if (config["subtractKeys"]) {
+      config.subtractKeysMoE = config.subtractKeys.reduce((a, c) => {
+        const regex = /(.+)E$/;
+        if (regex.test(c)) {
+          a.push(c.replace(regex, (match, p1) => p1 + "M"))
+        }
+        return a;
+      }, [])
+    }
 
     if (config["divisorKeys"] && !config["yFormat"]) {
       config.yFormat = ",.1%";
@@ -122,33 +138,42 @@ export const configLoader = BASE_CONFIG => {
 
     const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
 
-    // ensure max width of 12
-    layout.w = Math.min(12, layout.w);
-
-    if (layout.x !== undefined) {
-      x = layout.x;
+    if (useCompact) {
+      layout.x = 0;
+      layout.w = 3;
+      layout.y = y;
+      layout.h = config.type === "CensusStatBox" ? 4 : layout.h;
+      config.layout = layout;
+      y += layout.h;
     }
-    else if ((x + layout.w) > 12) {
-      x = 0;
-    }
+    else {
+      layout.w = Math.min(12, layout.w);
 
-    if (layout.y !== undefined) {
-      y = layout.y;
-    }
-    const rect = new Rect(x, y, layout.w, layout.h);
+      if (layout.x !== undefined) {
+        x = layout.x;
+      }
+      else if ((x + layout.w) > 12) {
+        x = 0;
+      }
 
-    while (isIntersecting(rect, rects)) {
-      rect.translateY(1);
-    }
+      if (layout.y !== undefined) {
+        y = layout.y;
+      }
+      const rect = new Rect(x, y, layout.w, layout.h);
 
-    if (layout.y === undefined) {
-      applyGravity(rect, rects);
-    }
-    rects.push(rect);
+      while (isIntersecting(rect, rects)) {
+        rect.translateY(1);
+      }
 
-    config.layout = rect.getLayout();
-    x += rect.w;
-    y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
+      if (layout.y === undefined) {
+        applyGravity(rect, rects);
+      }
+      rects.push(rect);
+
+      config.layout = rect.getLayout();
+      x += rect.w;
+      y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
+    }
 
     return config;
   })

@@ -182,9 +182,9 @@ const BASE_CONFIG = [
       type: 'CensusLineChart',
       title: 'Population by Race',
       censusKeys: [
-        'B02008_001E', 
-        'B02009_001E', 
-        'B02011_001E', 
+        'B02008_001E',
+        'B02009_001E',
+        'B02011_001E',
         'B03002_012E'
       ],
       censusKeyLabels:{

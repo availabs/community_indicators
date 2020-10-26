@@ -23,7 +23,7 @@ import Sidebar from "./Sidebar"
 import { YEARS } from "./graphConfig/utils"
 
 // const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
-console.log("MENUS:", subMenus)
+// console.log("MENUS:", subMenus)
 const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]
@@ -119,7 +119,7 @@ console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear)
                   }
                 </ul>
               </div>
-              <div className='container'>
+              <div className='container' style={ { padding: 0, margin: 0 } }>
                   {categories}
               </div>
             </div>
