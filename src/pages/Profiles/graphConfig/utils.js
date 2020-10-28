@@ -53,17 +53,19 @@ const expandKeyRange = key => {
   return [start];
 }
 
+let ID = -1;
+const getId = () => `profile-${ ++ID }`;
+
 export const configLoader = BASE_CONFIG => {
   const useCompact = window.innerWidth < 992;
-if (window.innerWidth < 992) {
-  console.log("USE COMPACT!!!!!!")
-}
 
   let x = 0, y = 0;
 
   const rects = [new Rect(0, -1, 12, 1)] // <-- this is the "ground" rect
 
-  return BASE_CONFIG.map((config, index) => {
+  return BASE_CONFIG.map((baseConfig, index) => {
+    const config = JSON.parse(JSON.stringify(baseConfig));
+
     if (config.type === "ProfileFooter" || config.type === "ProfileHeader") return config;
 
     if (config["broadCensusKey"]) {
@@ -174,10 +176,18 @@ if (window.innerWidth < 992) {
       x += rect.w;
       y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
     }
+    config.id = getId();
 
     return config;
   })
 }
+
+export const processBaseConfig = BASE_GRAPH_CONFIG =>
+  Object.keys(BASE_GRAPH_CONFIG)
+    .reduce((a, c) => {
+      a[c] = configLoader(BASE_GRAPH_CONFIG[c]);
+      return a;
+    }, {})
 
 const isIntersecting = (rect, others) =>
   others.reduce((a, c) => a || c.intersects(rect), false)

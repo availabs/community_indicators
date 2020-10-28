@@ -210,7 +210,7 @@ class CensusBarChart extends React.Component {
       // : this.props.divisorKeys.length ? "Value"
       : get(this.props.geoGraph, [key, "name"], key);
 
-    const showLegend = this.props.showLegend &&
+    const showLegend = this.props.showLegend && !this.props.useCompact &&
       (this.props.groupBy === "censusKeys" && this.props.compareGeoid);
 
     const showDescription = Boolean(this.props.description.length),
@@ -331,7 +331,7 @@ const groupByGeoids = (state, props) =>
           return aa;
         }, 0)
         value -= sub;
-        
+
         const divisor = props.divisorKeys.reduce((aa, cc, ii) => {
           const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);

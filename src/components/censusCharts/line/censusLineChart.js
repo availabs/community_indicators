@@ -183,7 +183,7 @@ class CensusLineChart extends React.Component {
 
         // const showLegend = (this.props.showLegend && this.props.showCompare && this.props.compareGeoid) ||
         //   (this.props.showLegend && !this.props.showCompare)
-        const showLegend = this.props.showLegend;
+        const showLegend = this.props.showLegend && !this.props.useCompact;
 
         const showDescription = Boolean(this.props.description.length),
           descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;

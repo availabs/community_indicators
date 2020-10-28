@@ -11,7 +11,9 @@ import subMenus from "./submenu"
 import Profiles from './Profile'
 import ShareEmbed from "./ShareEmbed"
 import ProfileHeader from './components/ProfileHeader'
-import GRAPH_CONFIG from './regionConfig'
+
+import { processBaseConfig } from "./graphConfig/utils"
+import BASE_GRAPH_CONFIG from './regionConfig'
 
 import { setYear, setCompareYear } from "store/modules/user"
 import { falcorChunkerNice } from "store/falcorGraph"
@@ -22,9 +24,13 @@ import Sidebar from "./Sidebar"
 
 import { YEARS } from "./graphConfig/utils"
 
+import { NavBar } from "./Profile"
+
+import debounce from "lodash.debounce"
+
 // const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
 // console.log("MENUS:", subMenus)
-const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
+const ALL_CENSUS_KEYS = Object.values(BASE_GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]
   , [])
@@ -35,6 +41,29 @@ const REGIONS = {
 }
 
 class Profile extends React.Component{
+  constructor(props) {
+      super(props);
+      this.renderCategory = this.renderCategory.bind(this);
+      // this.searchNav = this.searchNav.bind(this);
+
+      this.state = {
+        GRAPH_CONFIG: processBaseConfig(BASE_GRAPH_CONFIG)
+      }
+      this._loadConfig = this._loadConfig.bind(this);
+      this.loadConfig = debounce(this._loadConfig, 250);
+
+  }
+  componentDidMount() {
+    window.addEventListener("resize", this.loadConfig);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.loadConfig);
+  }
+  _loadConfig() {
+    this.setState({
+      GRAPH_CONFIG: processBaseConfig(BASE_GRAPH_CONFIG)
+    })
+  }
 
   fetchFalcorDeps() {
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"])
@@ -84,10 +113,9 @@ class Profile extends React.Component{
     }
 
   render() {
-      const categories = Object.keys(GRAPH_CONFIG).map(category =>
-        this.renderCategory(category, GRAPH_CONFIG[category])
+      const categories = Object.keys(this.state.GRAPH_CONFIG).map(category =>
+        this.renderCategory(category, this.state.GRAPH_CONFIG[category])
       )
-console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear)
       return(
           <div>
             <ProfileHeader region={ this.props.region }
@@ -104,20 +132,9 @@ console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear)
                     setGeoid={ geoid => this.setGeoid(geoid) }
                     setYear={ year => this.props.setYear(year) }
                     setCompareYear={ compareYear => this.props.setCompareYear(compareYear) }/>
-                <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
-                  {
-                    Object.keys(GRAPH_CONFIG).map(category => {
-                      return (
-                        <li className="nav-item" style={{flex: '1 1'}} key={ category }>
-                          <Link style={{textAlign: 'center'}} activeClass="active" spy={true} offset={-90} className="nav-link" to={category}>
-                            {category.toUpperCase()}
-                          </Link>
-                        </li>
 
-                      )
-                    })
-                  }
-                </ul>
+                <NavBar GRAPH_CONFIG={ this.state.GRAPH_CONFIG }/>
+
               </div>
               <div className='container' style={ { padding: 0, margin: 0 } }>
                   {categories}

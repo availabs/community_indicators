@@ -2,34 +2,26 @@ import React from 'react'
 import CensusCharts from 'components/censusCharts/'
 import TrackVisibility from 'react-on-screen';
 
-export default ({ graph, ...rest }) => {
-    const graphType = graph.type.split(' ').join(''),
-        Graph = CensusCharts[graphType] || CensusCharts['NA']
-    return (
-        <TrackVisibility partialVisibility style={ { height: '100%' } }>
-        	<GraphHider Graph={ Graph } { ...rest } graph={ graph }/>
-        </TrackVisibility>
+export default props => {
+  const Graph = CensusCharts[props.type] || CensusCharts['NA'],
+    useCompact = window.innerWidth < 992;
+  return (
+    <TrackVisibility partialVisibility style={ { height: '100%' } }>
+    	<Hider keepVisible={ props.type === "CensusMap" }>
+        <Graph key={ props.graphId } useCompact={ useCompact } { ...props }/>
+      </Hider>
+    </TrackVisibility>
 	)
 }
 
-class GraphHider extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state={
-            show: Boolean(props.isVisible)
-        }
+const Hider = ({ isVisible, keepVisible, children }) => {
+  const [show, setShow] = React.useState(isVisible);
+  React.useEffect(() => {
+    if (isVisible) {
+      setShow(true);
     }
-
-    componentDidUpdate(prevProps, prevState) {
-    	if(this.props.isVisible && !this.state.show) {
-    		this.setState({show:true})
-    	}
-    }
-
-    render () {
-    	const { isVisible, Graph, graph, ...rest } = this.props;
-    	return (rest.type === "CensusMap" ? this.state.show : isVisible) ?
-		    <Graph { ...rest } { ...graph } /> :
-		    <div>Loading...</div>
-    }
+  }, [isVisible])
+  return (keepVisible ? show : isVisible) ?
+    <>{ children }</> :
+    <div>Loading...</div>
 }

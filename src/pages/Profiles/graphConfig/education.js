@@ -1,12 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "./utils"
 
-const year = 2017;
-
-const BASE_CONFIG = [
+export default [
 
       {
           type: "TextBox",
@@ -18,7 +15,7 @@ const BASE_CONFIG = [
              }
         },
 
-     
+
 
        {
             type:"CensusStatBox",
@@ -274,7 +271,7 @@ const BASE_CONFIG = [
           type: "CensusStackedBarChart",
           showCompareGeoid: false,
           yFormat: "$,d",
-          marginLeft: 310,
+          marginLeft: 200,
           left: {
             key: "Male", color: maleColor,
             keys: ["B20004_008E...B20004_012E"]
@@ -303,5 +300,3 @@ const BASE_CONFIG = [
              }
     }
 ]
-
-export default configLoader(BASE_CONFIG)

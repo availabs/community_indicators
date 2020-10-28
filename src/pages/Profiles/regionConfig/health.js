@@ -1,15 +1,14 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const BASE_CONFIG = [
+export default [
      {
       type:"CensusStatBox",
       title:'Covered by Health Insurance',
       censusKeys:[
-          "B27001_004E", 
+          "B27001_004E",
           "B27001_007E",
           "B27001_010E",
           "B27001_013E",
@@ -18,7 +17,7 @@ const BASE_CONFIG = [
           "B27001_022E",
           "B27001_025E",
           "B27001_028E",
-          "B27001_032E", 
+          "B27001_032E",
           "B27001_035E",
           "B27001_038E",
           "B27001_041E",
@@ -42,7 +41,7 @@ const BASE_CONFIG = [
       sumType: 'pct',
       yearPosition: "block",
       censusKeys:[
-          "B27001_004E", 
+          "B27001_004E",
           "B27001_007E",
           "B27001_010E",
           "B27001_013E",
@@ -51,7 +50,7 @@ const BASE_CONFIG = [
           "B27001_022E",
           "B27001_025E",
           "B27001_028E",
-          "B27001_032E", 
+          "B27001_032E",
           "B27001_035E",
           "B27001_038E",
           "B27001_041E",
@@ -76,7 +75,7 @@ const BASE_CONFIG = [
       title:'Percent Health Coverage',
       type: "CensusBarChart",
       censusKeys:[
-          "B27001_004E", 
+          "B27001_004E",
           "B27001_007E",
           "B27001_010E",
           "B27001_013E",
@@ -85,7 +84,7 @@ const BASE_CONFIG = [
           "B27001_022E",
           "B27001_025E",
           "B27001_028E",
-          "B27001_032E", 
+          "B27001_032E",
           "B27001_035E",
           "B27001_038E",
           "B27001_041E",
@@ -130,5 +129,3 @@ const BASE_CONFIG = [
    },
 
 ]
-
-export default configLoader(BASE_CONFIG);

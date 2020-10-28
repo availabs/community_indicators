@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const BASE_CONFIG = [
+export default [
 
    {
       type:"CensusStatBox",
@@ -15,7 +14,7 @@ const BASE_CONFIG = [
       layout:{
          w:3,
          h:9,
-         
+
       }
    },
 
@@ -41,7 +40,7 @@ const BASE_CONFIG = [
    //    layout:{
    //       w:3,
    //       h:9,
-         
+
    //    }
    // },
 
@@ -128,9 +127,9 @@ const BASE_CONFIG = [
       type: 'CensusBarChart',
       title: 'Population by Race by County',
       censusKeys: [
-        'B02008_001E', 
-        'B02009_001E', 
-        'B02011_001E', 
+        'B02008_001E',
+        'B02009_001E',
+        'B02011_001E',
         'B03002_012E'
       ],
       censusKeyLabels:{
@@ -176,5 +175,3 @@ const BASE_CONFIG = [
    // },
 
 ]
-
-export default configLoader(BASE_CONFIG)

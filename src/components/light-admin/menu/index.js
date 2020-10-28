@@ -41,7 +41,9 @@ class Menu extends Component {
       zIndex: 999,
       position: 'fixed',
       top: 0,
-      width: '100vw'
+      display: "flex",
+      width: "100%",
+      flexWrap: "wrap"
     }
     // console.log('menuProps', currentPath, dynamicStyle)
   	let userMenu = this.props.user && !!this.props.user.authed

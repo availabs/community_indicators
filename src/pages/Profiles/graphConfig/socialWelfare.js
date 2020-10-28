@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "./utils"
 
-const BASE_CONFIG = [
+export default [
     {
           type: "TextBox",
           header: "SOCIAL WELFARE",
@@ -177,7 +176,7 @@ const BASE_CONFIG = [
       {
       type:"CensusStatBox",
       censusKeys:[
-        "B09010_002E", 
+        "B09010_002E",
         ],
         showCompareYear: true,
         invertColors: true,
@@ -195,7 +194,7 @@ const BASE_CONFIG = [
       title: "Receipt of Food Stamps/SNAP by Race",
       marginLeft: 75,
       showCompare: false,
-      marginLeft: 300,
+      marginLeft: 250,
       orientation: 'horizontal',
       layout: { h: 12 },
       censusKeys: [
@@ -256,7 +255,7 @@ const BASE_CONFIG = [
           // 'C16001_077E',
         ],
         orientation: 'horizontal',
-        marginLeft: 500,
+        marginLeft: 400,
         sorted: true,
         layout: { h: 12 }
     },
@@ -297,5 +296,3 @@ const BASE_CONFIG = [
     }
 
 ]
-
-export default configLoader(BASE_CONFIG);

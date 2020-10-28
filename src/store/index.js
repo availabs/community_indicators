@@ -1,5 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
-import { routerReducer, routerMiddleware } from 'react-router-redux'
+import { routerReducer, routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
 import { reducer as graph } from 'utils/redux-falcor';
 
 import user from './modules/user'
@@ -10,7 +10,7 @@ import {AvlInTheMiddle} from "AvlMap/ReduxMiddleware"
 
 import messages from "./modules/messages"
 
-import createHistory from 'history/createBrowserHistory'
+import { createBrowserHistory } from 'history'
 import thunk from 'redux-thunk'
 
 // if (process.env.NODE_ENV === 'development') {
@@ -21,7 +21,7 @@ import thunk from 'redux-thunk'
 //   }
 // }
 
-const history = createHistory()
+const history = createBrowserHistory()
 
 // Build the middleware for intercepting and dispatching navigation actions
 const middleware = [
@@ -29,7 +29,6 @@ const middleware = [
 	thunk,
 	AvlInTheMiddle
 ]
-
 
 const store = createStore(
   combineReducers({

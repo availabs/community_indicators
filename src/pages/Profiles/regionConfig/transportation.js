@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const BASE_CONFIG = [
+export default [
  {
       type:"CensusStatBox",
       title:'Total Bike/Ped ',
@@ -17,7 +16,7 @@ const BASE_CONFIG = [
          w:3,
          h:4
       }
-   }, 
+   },
 
       {
       title:'Bike/Ped as a Percent of Total Commuters',
@@ -125,5 +124,3 @@ const BASE_CONFIG = [
     }
   },
 ]
-
-export default configLoader(BASE_CONFIG);

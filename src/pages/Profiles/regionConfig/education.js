@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const BASE_CONFIG = [
+export default [
 
          {
       type:"CensusStatBox",
@@ -173,5 +172,3 @@ const BASE_CONFIG = [
   },
 
 ]
-
-export default configLoader(BASE_CONFIG);

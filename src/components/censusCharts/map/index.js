@@ -7,6 +7,9 @@ import AvlMap from "AvlMap"
 import MapLayer from "AvlMap/MapLayer"
 import { register, unregister } from "AvlMap/ReduxMiddleware"
 
+// import store from "store"
+// import { push } from 'react-router-redux'
+
 import { UPDATE as REDUX_UPDATE } from 'utils/redux-falcor'
 
 import Title from "../ComponentTitle"
@@ -168,6 +171,7 @@ class CensusMap extends React.Component {
             preserveDrawingBuffer={ true }
             id={ this.props.id }
             layers={ [this.censusLayer] }
+            forceCompact={ true }
             layerProps={ {
               [this.censusLayer.name]: {
                 title: this.props.title,
@@ -241,7 +245,7 @@ class CensusLayer extends MapLayer {
 
     const options = {
       padding: {
-        top: Math.min(50, tr.height * 0.05),
+        top: 50,
         right: Math.min(50, tr.width * 0.05),
         bottom: Math.min(50, tr.height * 0.05),
         left: Math.min(50, tr.width * 0.05)
@@ -287,14 +291,17 @@ class CensusLayer extends MapLayer {
     }, []);
 
     return falcorChunkerNiceWithUpdate(
-      ["geo", counties, "name"],
+      ["geo", counties, ["name", "cousubs"]],
       ["geo", this.geoids, ["cousubs", this.geolevel, "boundingBox", "name"]]
     )
     .then(() => {
-      const cousubs = this.geoids.reduce((a, c) => {
-        a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
-        return a;
-      }, [])
+      const cousubs = this.geoids
+        .filter(geoid => geoid.length !== 7)
+        .map(geoid => geoid.slice(0, 5))
+        .reduce((a, c) => {
+          a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
+          return a;
+        }, []);
       return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", this.geolevel]])
     })
     .then(() => {
@@ -311,36 +318,35 @@ class CensusLayer extends MapLayer {
       )
     })
   }
+  getAllCousubs() {
+    return this.geoids
+      .filter(geoid => geoid.length !== 7)
+      .map(geoid => geoid.slice(0, 5))
+      .reduce((a, c) => {
+        a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
+        return a;
+      }, []);
+  }
   render(map) {
     const geoids = this.getGeoids();
 
     map.setFilter(this.geolevel, ["in", "geoid", ...geoids]);
 
-    const cousubs = this.geoids.reduce((a, c) => {
-      if (c.length === 5) {
-        const d = get(this.falcorCache, ["geo", c, "cousubs", "value"], []);
-        a.push(...d);
-      }
-      else if (c.length === 10) {
-        a.push(c);
-      }
-      return a;
-    }, [])
-    if (cousubs.length > 0) {
-      map.setFilter("cousubs-symbol", ["in", "geoid", ...cousubs]);
-      map.setFilter("cousubs-line", ["in", "geoid", ...cousubs]);
-      const nameMap = cousubs.reduce((a, c) => {
-        a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
-        return a;
-      }, {})
-      map.setLayoutProperty("cousubs-symbol", "text-field",
-        ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
-      )
-    }
-    else {
-      map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
-      map.setFilter("cousubs-line", ["in", "geoid", "none"]);
-    }
+    // const cousubs = this.geoids.reduce((a, c) => {
+    //   if (c.length === 5) {
+    //     const d = get(this.falcorCache, ["geo", c, "cousubs", "value"], []);
+    //     a.push(...d);
+    //   }
+    //   else if (c.length === 10) {
+    //     a.push(c);
+    //   }
+    //   return a;
+    // }, [])
+    // if (cousubs.length > 0) {
+    //   map.setFilter("cousubs-line", ["in", "geoid", ...cousubs]);
+    // }
+    // else {
+    // }
 
     if ((this.geoids.length === 1) && (this.geoids[0].length === 7)) {
       const geoid = this.geoids[0];
@@ -348,11 +354,27 @@ class CensusLayer extends MapLayer {
       map.setFilter("places-symbol", ["in", "geoid", geoid]);
       const name = get(this.falcorCache, ["geo", geoid, "name"], "");
       map.setLayoutProperty("places-symbol", "text-field", name);
+
+      map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
+      map.setFilter("cousubs-line", ["in", "geoid", "none"]);
     }
     else {
       map.setFilter("places-line", ["in", "geoid", "none"]);
       map.setFilter("places-symbol", ["in", "geoid", "none"]);
+
+      const allCousubs = this.getAllCousubs(),
+        nameMap = allCousubs.reduce((a, c) => {
+console.log("?????????", get(this.falcorCache, ["geo", c]))
+          a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
+          return a;
+        }, {});
+console.log("ALL COUSUBS:", allCousubs)
+      map.setLayoutProperty("cousubs-symbol", "text-field",
+        ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
+      )
+      map.setFilter("cousubs-symbol", ["in", "geoid", ...allCousubs]);
     }
+
 
     this.zoomToBounds && this.resetView() && (this.zoomToBounds = false);
 
@@ -448,6 +470,15 @@ const LayerFactory = props => {
 
     geolevel: get(props, "geolevel", "blockgroup"), //"blockgroup",
 
+    // onClick: {
+    //   layers: ["blockgroup", "cousubs"],
+    //   dataFunc: function(features) {
+    //     console.log("CLICKED??????", get(features, [0, "properties", "geoid"]))
+    //     const geoid = get(features, [0, "properties", "geoid"]);
+    //     geoid && store.dispatch(push("/profile/" + geoid))
+    //   }
+    // },
+
     popover: {
       layers: ["blockgroup", "cousubs"],
       dataFunc: function(topFeature, features) {
@@ -463,7 +494,6 @@ const LayerFactory = props => {
           const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
           data.push([this.title, format(value)])
         }
-        data.push([<Link to={ `/profile/${ geoid }` }>View Profile</Link>])
 
         return data;
       }
@@ -543,14 +573,32 @@ const LayerFactory = props => {
         source: "blockgroup",
         'source-layer': "blockgroups",
         'type': 'fill',
-        filter : ['in', 'geoid', 'none']
+        filter : ['in', 'geoid', 'none'],
+        paint: {
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            6, 1.0,
+            12, 0.33
+          ]
+        }
       },
 
       { 'id': 'cousubs',
         'source': 'cousubs',
         'source-layer': 'cousubs',
         'type': 'fill',
-        filter : ['in', 'geoid', 'none']
+        filter : ['in', 'geoid', 'none'],
+        paint: {
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            10, 1.0,
+            20, 0.5
+          ]
+        }
       },
 
       { 'id': 'cousubs-line',

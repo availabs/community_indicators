@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "./utils"
 
-const BASE_CONFIG = [
+export default [
   {
           type: "TextBox",
           header: "ECONOMY",
@@ -32,7 +31,7 @@ const BASE_CONFIG = [
       }
    },
 
- 
+
   {
     type: "CensusBarChart",
     title: "Employment Status for the Population 16 Years and Over",
@@ -61,7 +60,7 @@ const BASE_CONFIG = [
          h:9
       }
    },
- 
+
   {
     type: "CensusStackedBarChart",
     title: "Labor Force Participation",
@@ -115,7 +114,7 @@ const BASE_CONFIG = [
       }
 
   },
-  
+
     {
       type: "TextBox",
       header: "Upstate Alliance for the Creative Economy",
@@ -140,5 +139,3 @@ const BASE_CONFIG = [
              }
     }
 ]
-
-export default configLoader(BASE_CONFIG);

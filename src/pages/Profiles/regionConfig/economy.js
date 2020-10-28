@@ -1,12 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const year = 2017;
-
-const BASE_CONFIG = [
+export default [
   {
       type:"CensusStatBox",
       title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
@@ -65,5 +62,3 @@ const BASE_CONFIG = [
       }
     },
 ]
-
-export default configLoader(BASE_CONFIG);

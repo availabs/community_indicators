@@ -130,7 +130,7 @@ class CensusPieGraph extends React.Component {
                 .data(d => pieMaker(d.pie))
                 .join(
                   enter => enter.append("path").attr("d", arc),
-                  update => update.call(update => update.transition().attr("d", arc)),
+                  update => update.call(update => update.attr("d", arc)),
                   exit => exit.remove()
                 )
                   .on("mousemove", (d, i) => {

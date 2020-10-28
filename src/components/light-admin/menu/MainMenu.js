@@ -165,7 +165,7 @@ class MainMenu extends Component {
 
   render () {
     return (
-      <ul className="main-menu">
+      <ul className="main-menu" style={ { flexWrap: "wrap" } }>
         {this.renderMenus(this.props.menus)}
         {/*
         <li

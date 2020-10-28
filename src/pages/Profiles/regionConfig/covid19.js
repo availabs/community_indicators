@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const BASE_CONFIG = [
+export default [
 
     {
           type: "TextBox",
@@ -374,7 +373,5 @@ const BASE_CONFIG = [
          w: 12
        }
      },
-   
-]
 
-export default configLoader(BASE_CONFIG)
+]

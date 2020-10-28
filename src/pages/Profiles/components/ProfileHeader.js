@@ -86,6 +86,7 @@ class ProfileHeader extends Component {
     render () {
         return (
                 <div>
+                
                     <HeaderContainer >
                         <div style={{height: 400}}>
                             <LandingHeader canToggle={ Boolean(this.props.regionToggle) }
@@ -148,7 +149,8 @@ class ProfileHeader extends Component {
                             </div>
                         </div>
                     </HeaderContainer>
-                    <div style={{width: '100vw', height: '100vh', backgroundColor: '#333', position: 'fixed', top: 0, left: 0}}>
+
+                    <div style={{width: '100%', height: '100vh', backgroundColor: '#333', position: 'fixed', top: 0, left: 0}}>
                         <AvlMap key={ this.props.region }
                             sidebar={false}
                             scrollZoom={false}

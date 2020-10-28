@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const BASE_CONFIG = [
+export default [
 
    {
       title: "Total Housing Units",
@@ -136,7 +135,7 @@ const BASE_CONFIG = [
    },
 
     {
-       
+
       title:"Percent Homeowners 65 and Older",
       type: "CensusBarChart",
       censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
@@ -148,7 +147,7 @@ const BASE_CONFIG = [
 
       }
     },
-    //  {  
+    //  {
     //   title:"Percent Homeowners 65 and Older",
     //   type: "CensusBarChart",
     //   sumType:'sum',
@@ -212,5 +211,3 @@ const BASE_CONFIG = [
 
 
 ]
-
-export default configLoader(BASE_CONFIG);

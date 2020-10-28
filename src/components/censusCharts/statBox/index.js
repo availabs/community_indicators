@@ -141,7 +141,7 @@ class CensusStatBox extends React.Component {
             change = (((value - compareValue) / compareValue) * 100)
             // console.log('comparevalue', this.props.compareYear)
 
-            change = isNaN(change) ? '' : change.toFixed(2)
+            change = isNaN(change) ? 0 : +change.toFixed(2);
         }
 
         return {
@@ -154,13 +154,16 @@ class CensusStatBox extends React.Component {
         let { value, change } = this.calculateValues(geoids),
           growthColors = [this.props.increaseColor, this.props.decreaseColor];
         this.props.invertColors && growthColors.reverse();
+
         if (!this.props.showColors) {
           growthColors = ["currentColor", "currentColor"];
         }
+        else if (change && (Math.abs(change) < this.props.colorThresholdPercent)) {
+          growthColors = ["currentColor", "currentColor"];
+        }
 
+        const growthColor = change ? growthColors[change > 0 ? 0 : 1] : "currentColor";
 
-
-        const growthColor = change ? growthColors[change >= 0 ? 0 : 1] : "currentColor";
       return compareStuff && !value ? null : (
         <div style={ {
             color: growthColor,
@@ -261,7 +264,8 @@ class CensusStatBox extends React.Component {
         increaseColor: "#090",
         decreaseColor: "#900",
         invertColors: false,
-        showColors: true
+        showColors: true,
+        colorThresholdPercent: 1
     }
 }
 

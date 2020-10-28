@@ -1,12 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "../graphConfig/utils"
 
-const year = 2017;
-
-const BASE_CONFIG = [
+export default [
      {
       type:"CensusStatBox",
       title:'Poverty Rate',
@@ -139,5 +136,3 @@ const BASE_CONFIG = [
     },
 
 ]
-
-export default configLoader(BASE_CONFIG);

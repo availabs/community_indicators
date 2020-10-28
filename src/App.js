@@ -16,6 +16,8 @@ import './App.css';
 
 import Messages from "./components/messages"
 
+import AvlMap from "AvlMap"
+
 class App extends Component {
   constructor(props) {
     super(props)
@@ -40,7 +42,6 @@ class App extends Component {
     if (location[1] === 'profile') {
       activeGeoid = location[2]
     }
-    console.log('app render props',this.props, activeGeoid, location)
 
     return (
       <ThemeProvider theme={theme}>

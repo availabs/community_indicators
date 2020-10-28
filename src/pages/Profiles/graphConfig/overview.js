@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "./utils"
 
-const BASE_CONFIG = [
+export default [
 
    {
       type:"CensusStatBox",
@@ -37,7 +36,8 @@ const BASE_CONFIG = [
        censusKeys: ["B01003_001E"],
        layout: {
          h: 12,
-         w: 9
+         w: 9,
+         x: 3
        }
      },
 
@@ -300,5 +300,3 @@ const BASE_CONFIG = [
       }
      }
 ]
-
-export default configLoader(BASE_CONFIG)

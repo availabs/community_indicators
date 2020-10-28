@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "./utils"
 
-const BASE_CONFIG = [
+export default [
   // { "type":"CensusMultiStackedLineChart",
   //   "censusKey":["B25004"],
   //   "VacantHousing":true,
@@ -114,7 +113,7 @@ const BASE_CONFIG = [
       }
    },
 
-   { 
+   {
     type: "CensusLineChart",
     title: "Vacancy Status",
     showCompare: false,
@@ -207,7 +206,7 @@ const BASE_CONFIG = [
     showCompareGeoid: false,
     orientation: 'horizontal',
     marginLeft: 140,
-    left: { key: "With Mortgage", 
+    left: { key: "With Mortgage",
       keys: [
         'B25091_003E',
         'B25091_004E',
@@ -247,7 +246,7 @@ const BASE_CONFIG = [
       h:9,
     }
   },
- 
+
   { type: "CensusStackedBarChart",
     title: "Tenure by Household Income in the Past 12 Months",
     showCompareGeoid: false,
@@ -331,5 +330,3 @@ const BASE_CONFIG = [
              }
     }
 ]
-
-export default configLoader(BASE_CONFIG);

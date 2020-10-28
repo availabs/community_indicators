@@ -7,9 +7,6 @@ import Health from "./health"
 import Transportation from "./transportation"
 import covid19 from "./covid19"
 
-let ID = 0;
-const getId = () => `profile-${ ++ID }`;
-
 const CONFIG = {
   // 'COVID-19': covid19,
   Overview,
@@ -18,22 +15,13 @@ const CONFIG = {
   Health,
   Education,
   Housing,
-  Transportation,
-  
-  
+  Transportation
 }
-
-export default Object.keys(CONFIG).reduce((a, k) => ({
-  ...a,
-  [k]: CONFIG[k].map(c => {
-    const id = getId();
-    return {
-      ...c,
-      id,
-      layout: {
-        ...c.layout,
-        i: id
-      }
-    }
-  })
-}), {})
+export default Object.keys(CONFIG)
+  .reduce((a, c) => {
+    a[c] = CONFIG[c].map((config, i) => {
+      config.graphId = `${ c }-${ i }`;
+      return config;
+    })
+    return a;
+  }, {})

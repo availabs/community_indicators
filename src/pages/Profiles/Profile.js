@@ -13,16 +13,17 @@ import { setYear, setCompareYear } from "store/modules/user"
 
 import OptionsModal from "components/censusCharts/OptionsModal"
 
-import GRAPH_CONFIG from './graphConfig'
+import { processBaseConfig } from "./graphConfig/utils"
+import BASE_GRAPH_CONFIG from './graphConfig'
 
 import Sidebar from "./Sidebar"
 
-import styled from "styled-components"
 import get from "lodash.get"
+import debounce from "lodash.debounce"
 
 import { YEARS } from "./graphConfig/utils"
 
-const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
+const ALL_CENSUS_KEYS = Object.values(BASE_GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a,
       ...c.reduce((a, c) =>
@@ -34,59 +35,31 @@ const ALL_CENSUS_KEYS = Object.values(GRAPH_CONFIG)
     ]
   , [])
 
-const Footer = styled.div`
-  position: relative;
-  box-shadow: 2px 2px 4px 0 rgba(0, 0, 0, 0.2),
-              -1px -1px 2px 0 rgba(0, 0, 0, 0.1);
-  padding: 10px 20px;
-  margin-bottom: 10px;
-  border-radius: 4px;
-`
-const Header = styled.div`
-  font-size: 1.5rem;
-`
-const SubHeader = styled.div`
-  font-size: 0.75rem;
-  margin-top: -7px;
-  margin-bottom: 5px;
-`
-const Body = styled.div`
-  font-size: 1rem;
-`
-const Href = styled.a`
-  font-size: 1rem;
-  position: absolute;
-  top: 10px;
-  right: 20px;
-`
-
 // const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
 
-const GetFooter = ({ type, value }) =>
-  type === "header" ? <Header>{ value }</Header> :
-  type === "subheader" ? <SubHeader>{ value }</SubHeader> :
-  type === "body" ? <Body>{ value }</Body> :
-  type === "link" ? <Href target="_blank" className="btn btn-sm btn-success" href={ value }>Link</Href> :
-  null
-
-const ProfileFooter = ({ data }) =>
-  <div>
-    {
-      data.map((d, i) =>
-        <Footer key={ i }>
-          { d.map((d, i) => <GetFooter key={ i } { ...d }/>) }
-        </Footer>
-      )
-    }
-  </div>
-
-
-
-class Profile extends React.Component{
+class Profile extends React.Component {
   constructor(props) {
       super(props);
       this.renderCategory = this.renderCategory.bind(this);
-      this.searchNav = this.searchNav.bind(this);
+      // this.searchNav = this.searchNav.bind(this);
+
+      this.state = {
+        GRAPH_CONFIG: processBaseConfig(BASE_GRAPH_CONFIG)
+      }
+      this._loadConfig = this._loadConfig.bind(this);
+      this.loadConfig = debounce(this._loadConfig, 250);
+
+  }
+  componentDidMount() {
+    window.addEventListener("resize", this.loadConfig);
+  }
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.loadConfig);
+  }
+  _loadConfig() {
+    this.setState({
+      GRAPH_CONFIG: processBaseConfig(BASE_GRAPH_CONFIG)
+    })
   }
 
   fetchFalcorDeps() {
@@ -110,10 +83,7 @@ class Profile extends React.Component{
                       isOpen={1}
                       title={''}
                       graphs={
-                        configData.filter(d =>
-                          (d.type !== "ProfileFooter") && (d.type !== "ProfileHeader")
-                        )
-                        .map(d => {
+                        configData.map(d => {
                           const data = {
                             ...d,
                             year: this.props.year,
@@ -132,14 +102,14 @@ class Profile extends React.Component{
         )
     }
 
-    searchNav(type, compareId) {
-// console.log('set compreId', compareId, this.props)
-      if(type === 'add') {
-        this.props.history.push(`/profile/${this.props.geoid}/compare/${compareId}`)
-      } else if (type === 'remove') {
-        this.props.history.push(`/profile/${this.props.geoid}`)
-      }
-    }
+//     searchNav(type, compareId) {
+// // console.log('set compreId', compareId, this.props)
+//       if(type === 'add') {
+//         this.props.history.push(`/profile/${this.props.geoid}/compare/${compareId}`)
+//       } else if (type === 'remove') {
+//         this.props.history.push(`/profile/${this.props.geoid}`)
+//       }
+//     }
 
     setGeoid(geoid) {
       if (this.props.compareGeoid === null) {
@@ -159,8 +129,8 @@ class Profile extends React.Component{
     }
 
     render() {
-        const categories = Object.keys(GRAPH_CONFIG).map((category, i) =>
-            this.renderCategory(category, GRAPH_CONFIG[category], i)
+        const categories = Object.keys(this.state.GRAPH_CONFIG).map((category, i) =>
+            this.renderCategory(category, this.state.GRAPH_CONFIG[category], i)
         )
 // console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear, YEARS)
         return (
@@ -181,24 +151,9 @@ class Profile extends React.Component{
                           setYear={ year => this.props.setYear(year) }
                           setCompareYear={ compareYear => this.props.setCompareYear(compareYear) }
                           setCompareGeoid={ compareGeoid => this.setCompareGeoid(compareGeoid)}/>
-                        <ul className="nav nav-tabs upper " style={{flexWrap: 'nowrap', flex: '1 1', display:'flex'}}>
 
-                            {/*<li className="nav-item" style={{flex: '1 1'}} key={ 'search' }>
-                              <SearchCompare onChange={this.searchNav} compare={this.props.compareGeoid} />
-                            </li>*/}
-                            {
-                                Object.keys(GRAPH_CONFIG).map(category => {
-                                    return (
-                                        <li className="nav-item" style={{flex: '1 1'}} key={ category }>
-                                            <Link style={{textAlign: 'center'}} activeClass="active" spy={true} offset={-90} className="nav-link" to={category}>
-                                                {category.toUpperCase()}
-                                            </Link>
-                                        </li>
+                        <NavBar GRAPH_CONFIG={ this.state.GRAPH_CONFIG }/>
 
-                                    )
-                                })
-                            }
-                        </ul>
                     </div>
                     <div className='container' style={ { padding: 0 } }>
                         {categories}
@@ -209,6 +164,45 @@ class Profile extends React.Component{
 
         )
     }
+}
+
+export const NavBar = ({ GRAPH_CONFIG, ...props }) => {
+  const [ref, setRef] = React.useState(null),
+    [hide, setHide] = React.useState(0);
+
+  const onResize = React.useCallback(e => {
+    if (ref) {
+      setHide(ref.scrollWidth > ref.clientWidth);
+    }
+  }, [ref])
+  React.useEffect(() => {
+    window.addEventListener("resize", onResize);
+    return () => {
+      window.removeEventListener("resize", onResize);
+    }
+  }, [onResize]);
+
+  React.useEffect(() => {
+    if (ref) {
+      setHide(ref.scrollWidth > ref.clientWidth);
+    }
+  }, [ref, hide])
+  return (
+    <ul className="nav nav-tabs upper" ref={ setRef }
+      style={ { flexWrap: 'nowrap', flex: '1 1', display: 'flex', overflow: "hidden", height: hide ? "0px" : "auto" } }>
+      {
+        Object.keys(GRAPH_CONFIG).map(category =>
+          <li className="nav-item" style={ { flex: '1 1', marginBottom: "2px" } } key={ category }>
+            <Link style={ { textAlign: 'center' } }
+              activeClass="active" spy={ true } offset={ -90 }
+              className="nav-link" to={ category }>
+              { category.toUpperCase() }
+            </Link>
+          </li>
+        )
+      }
+    </ul>
+  )
 }
 
 const mapStateToProps = (state, ownProps) => ({

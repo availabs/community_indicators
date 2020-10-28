@@ -149,9 +149,9 @@ class SaveImageTab extends React.Component {
     this.setState({ fileName });
   }
   onSave() {
-    if (typeof this.props.image === "function") {
-      return this.props.image(`${ this.state.fileName }.png`);
-    }
+    // if (typeof this.props.image === "function") {
+    //   return this.props.image(`${ this.state.fileName }.png`);
+    // }
     const svg = d3selection.select(`#${ this.props.image }`).select("svg").node(),
       options={ backgroundColor: "#fff" },
       fileName = `${ this.state.fileName }.png`;

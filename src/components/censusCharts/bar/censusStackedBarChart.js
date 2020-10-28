@@ -28,13 +28,20 @@ const TooltipContainer = styled.div`
   }
 `
 
-const Tooltip = ({ color, value, label, geoid }) =>
-  <TooltipContainer>
-    <div style={ { width: "15px", height: "15px", background: color, marginRight: "5px" } }/>
+const Tooltip = ({ color, colors, left, right, above, below, label, geoid, leftProps, rightProps }) =>
+  <div>
     <div><GeoName geoids={ [geoid] }/></div>
-    <div style={ { marginRight: "5px", fontWeight: "bold" } }>{ label }</div>
-    <div>{ value }</div>
-  </TooltipContainer>
+    <TooltipContainer>
+      <div style={ { width: "15px", height: "15px", background: colors[left], marginRight: "5px" } }/>
+      <div style={ { marginRight: "5px", fontWeight: "bold" } }>{ label } { leftProps.key }:</div>
+      <div>{ below }</div>
+    </TooltipContainer>
+    <TooltipContainer>
+      <div style={ { width: "15px", height: "15px", background: colors[right], marginRight: "5px" } }/>
+      <div style={ { marginRight: "5px", fontWeight: "bold" } }>{ label } { rightProps.key }:</div>
+      <div>{ above }</div>
+    </TooltipContainer>
+  </div>
 
 class HorizontalBarChart extends React.Component {
   static defaultProps = {
@@ -75,8 +82,12 @@ class HorizontalBarChart extends React.Component {
     return this.props.labels.map((label, i) => {
       const bar = { label };
       this.props.allGeoids.forEach(geoid => {
-        bar[`left-${ geoid }`] = getValue(geoid, this.props.year, leftVars[i]) * -1
-        bar[`right-${ geoid }`] = getValue(geoid, this.props.year, rightVars[i])
+        bar[`left-${ geoid }`] = getValue(geoid, this.props.year, leftVars[i]) * -1;
+        bar[`right-${ geoid }`] = getValue(geoid, this.props.year, rightVars[i]);
+        bar.below = bar[`left-${ geoid }`];
+        bar.above = bar[`right-${ geoid }`];
+        bar.left = `left-${ geoid }`;
+        bar.right = `right-${ geoid }`;
       })
       return bar;
     })
@@ -209,10 +220,12 @@ class HorizontalBarChart extends React.Component {
               'grid', 'axes', 'bars', 'markers', 'annotations',
               StackedLegendFactory(this.props.left, this.props.right, getColors)
             ].slice(showDescription ? 0 : 1) }
-            tooltip={ ({ color, indexValue, value, id, ...rest }) => (
-                <Tooltip
-                  value={ fmt(Math.abs(value)) }
-                  color={ color }
+            tooltip={ ({ color, indexValue, value, id, data, ...rest }) => (
+                <Tooltip colors={ colors } { ...data }
+                  leftProps={ this.props.left }
+                  rightProps={ this.props.right }
+                  above={ fmt(Math.abs(data.above)) }
+                  below={ fmt(Math.abs(data.below)) }
                   geoid={ id.split("-")[1] }
                   label={ `${ indexValue }` }/>
               )

@@ -1,10 +1,9 @@
 import {
-  configLoader,
   maleColor,
   femaleColor
 } from "./utils"
 
-const BASE_CONFIG = [
+export default [
   {
           type: "TextBox",
           header: "TRANSPORTATION",
@@ -316,7 +315,7 @@ const BASE_CONFIG = [
     "B08134_036E",
     "B08134_037E",
     "B08134_038E",
-    "B08134_039E",    
+    "B08134_039E",
     "B08134_062E",
     "B08134_063E",
     "B08134_064E",
@@ -458,5 +457,3 @@ const BASE_CONFIG = [
   },
 
 ]
-
-export default configLoader(BASE_CONFIG);
