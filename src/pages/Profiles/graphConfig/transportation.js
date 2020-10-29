@@ -48,6 +48,7 @@ export default [
   {
     type: "CensusBarChart",
     title: "Means of Transportation to Work",
+    hideWhenCompact: true,
     censusKeys: [
       "B08006_002E",
       "B08006_003E",
@@ -104,6 +105,7 @@ export default [
 
   {
     title: "Means of Transportation to Work by Sex",
+    hideWhenCompact: true,
     type: "CensusStackedBarChart",
     showCompareGeoid: false,
     marginLeft: 340,
@@ -289,6 +291,7 @@ export default [
   {
     type: "CensusBarChart",
     title: "Travel Time to Work by Mode",
+    hideWhenCompact: true,
     censusKeys: [
     "B08134_012E",
     "B08134_013E",

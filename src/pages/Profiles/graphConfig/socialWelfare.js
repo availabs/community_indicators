@@ -228,6 +228,7 @@ export default [
     {
         type: 'CensusBarChart',
         title: "Language Spoken at Home by Ability to Speak English",
+        hideWhenCompact: true,
         censusKeys: [
           'C16001_005E',
           'C16001_008E',

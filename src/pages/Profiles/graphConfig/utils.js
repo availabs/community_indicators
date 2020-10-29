@@ -63,8 +63,10 @@ export const configLoader = BASE_CONFIG => {
 
   const rects = [new Rect(0, -1, 12, 1)] // <-- this is the "ground" rect
 
-  return BASE_CONFIG.map((baseConfig, index) => {
+  return BASE_CONFIG.reduce((accum, baseConfig, index) => {
     const config = JSON.parse(JSON.stringify(baseConfig));
+
+    if (config.hideWhenCompact && useCompact) return accum;
 
     if (config.type === "ProfileFooter" || config.type === "ProfileHeader") return config;
 
@@ -178,8 +180,9 @@ export const configLoader = BASE_CONFIG => {
     }
     config.id = getId();
 
-    return config;
-  })
+    accum.push(config);
+    return accum;
+  }, [])
 }
 
 export const processBaseConfig = BASE_GRAPH_CONFIG =>
