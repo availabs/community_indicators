@@ -6,7 +6,7 @@ import Menu from 'components/light-admin/menu'
 import BreadcrumbBar from 'components/light-admin/breadcrumb-bar'
 import ContentContainer from 'components/light-admin/containers/ContentContainer'
 
-const DefaultLayout = ({component: Component, ...rest}) => {
+const DefaultLayout = ({component: Component, activeGeoid, ...rest}) => {
   if ( rest.isAuthenticating ) {
     return (
       <Route {...rest} render={matchProps => (
@@ -32,21 +32,21 @@ const DefaultLayout = ({component: Component, ...rest}) => {
     />
   ) : (
     rest.useLayout === false ?
-      <Route { ...rest } render={ matchProps => (
+      <Route { ...rest }>
         <div style={ { height: "100vh" } }>
-          <Component {...matchProps} {...rest}/>
+          <Component {...rest}/>
         </div>
-      )}/>
+      </Route>
     :
-      <Route {...rest} render={matchProps => (
+      <Route {...rest}>
         <div className="layout-w">
           { rest.menuSettings.display === 'none' ? '' : <Menu {...rest} /> }
           <BreadcrumbBar layout={rest.breadcrumbs} match={rest.computedMatch}/>
           <ContentContainer>
-            <Component {...matchProps} {...rest}/>
+            <Component{...rest}/>
           </ContentContainer>
         </div>
-      )} />
+      </Route>
   )
 }
 

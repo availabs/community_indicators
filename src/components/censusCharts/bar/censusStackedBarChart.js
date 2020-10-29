@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 
+import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
+
 import { ResponsiveBar } from '@nivo/bar'
 import { getColorRange } from 'constants/color-ranges'
 
@@ -43,7 +45,7 @@ const Tooltip = ({ color, colors, left, right, above, below, label, geoid, leftP
     </TooltipContainer>
   </div>
 
-class HorizontalBarChart extends React.Component {
+class StackedBarChart extends ChartBase {
   static defaultProps = {
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
     year: 2017,
@@ -59,10 +61,7 @@ class HorizontalBarChart extends React.Component {
 
   container = React.createRef();
 
-  state = {
-    year: this.props.years[this.props.years.length - 1]
-  }
-  fetchFalcorDeps() {
+  getFalcorDeps() {
     return this.props.falcor.get(
         ['acs', this.props.allGeoids, this.props.years,
           [...this.props.censusKeys,
@@ -70,7 +69,7 @@ class HorizontalBarChart extends React.Component {
         ],
         ["geo", this.props.allGeoids, "name"],
         ["acs", "meta", this.props.censusKeys, "label"]
-    )
+    );
   }
   getBarData() {
     const getValue = (g, y, c) => {
@@ -174,10 +173,15 @@ class HorizontalBarChart extends React.Component {
     const showDescription = Boolean(this.props.description.length),
       descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;
 
+    const barData = this.getBarData();
+
     return (
-      <div style={ { width: "100%", height: "100%" } }
+      <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>
+
+        <LoadingIndicator { ...this.state }/>
+
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }><Title title={ this.props.title }/></div>
           { !this.props.showOptions ? null :
@@ -196,8 +200,9 @@ class HorizontalBarChart extends React.Component {
               } }/>
           }
         </div>
-        <div style={ { height: "calc(100% - 30px)" } } id={ this.props.id }>
-          <ResponsiveBar data={ this.getBarData() }
+        <div style={ { height: "calc(100% - 30px)", position: "relative" } } id={ this.props.id }>
+
+          <ResponsiveBar data={ barData }
             colors={ ({ id }) => getColors(id) }
             indexBy="label"
             keys={ keys }
@@ -239,10 +244,10 @@ class HorizontalBarChart extends React.Component {
 const mapStateToProps = (state, props) => ({
   acsGraph: get(state, ["graph", "acs"], {}),
   geoGraph: get(state, ["graph", "geo"], {}),
-  allGeoids: [...props.geoids, get(props, "showCompareGeoid", true) && props.compareGeoid].filter(geoid => Boolean(geoid))
+  allGeoids: [...props.geoids, get(props, "showCompareGeoid", true) && props.compareGeoid].filter(Boolean)
 })
 
-export default connect(mapStateToProps, null)(reduxFalcor(HorizontalBarChart));
+export default connect(mapStateToProps, null)(reduxFalcor(StackedBarChart));
 
 const DescriptionFactory = lines =>
   graph => (

@@ -16,6 +16,8 @@ import Title from "../ComponentTitle"
 import GeoName from 'components/censusCharts/geoname'
 import CensusLabel, { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
 
+import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
+
 import { getColorRange } from 'constants/color-ranges'
 const DEFAULT_COLORS = getColorRange(12, "Set3")
 
@@ -28,7 +30,7 @@ const d3 = {
 
 const DEFAULT_MARGIN = 10;
 
-class CensusPieGraph extends React.Component {
+class CensusPieGraph extends ChartBase {
   static defaultProps = {
     year: 2017,
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
@@ -50,14 +52,21 @@ class CensusPieGraph extends React.Component {
     .sort(null)
     .sortValues(null);
 
-    state = {
+  constructor(...args) {
+    super(...args);
+
+    this.state = {
+      ...this.state,
       hoverData: null
     }
+  }
 
   componentDidMount() {
+    super.componentDidMount();
     this.makeSomePie();
   }
   componentDidUpdate(oldProps, oldState) {
+    super.componentDidUpdate(oldProps, oldState);
     this.makeSomePie();
   }
   makeSomePie() {
@@ -161,7 +170,7 @@ class CensusPieGraph extends React.Component {
 
       })
   }
-  fetchFalcorDeps() {
+  getFalcorDeps() {
     return this.props.falcor.get(
       ['acs', this.props.allGeoids, this.props.years,
         [...this.props.censusKeys,
@@ -266,9 +275,12 @@ class CensusPieGraph extends React.Component {
     } = this.state.hoverData || { pos: [] }
 
     return (
-      <div style={ { width: "100%", height: "100%" } }
+      <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>
+
+        <LoadingIndicator { ...this.state }/>
+
         <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
           <Title title={ this.props.title }/>
           { !this.props.showOptions ? null :

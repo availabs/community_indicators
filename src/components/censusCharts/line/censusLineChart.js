@@ -8,17 +8,19 @@ import Title from "../ComponentTitle"
 import GeoName from 'components/censusCharts/geoname'
 import CensusLabel, { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
 
+import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
+
 import get from 'lodash.get'
 
 import { format } from "d3-format"
 
 import { getColorRange } from "constants/color-ranges"
 
-class CensusLineChart extends React.Component {
+class CensusLineChart extends ChartBase {
 
   container = React.createRef();
 
-    fetchFalcorDeps () {
+    getFalcorDeps () {
       const geoids = [...this.props.geoids, this.props.compareGeoid].filter(geoid => Boolean(geoid));
         return falcorGraph.get(
             ['acs', geoids,
@@ -37,9 +39,6 @@ class CensusLineChart extends React.Component {
               "label"
             ]
         )
-        // .then(data =>{
-        //     console.log('testing test data', ['acs',this.props.geoid,this.props.years,[...this.props.divisorKeys, ...this.props.censusKeys]], data)
-        // })
     }
 
     processGeoid(geoid) {
@@ -194,9 +193,12 @@ class CensusLineChart extends React.Component {
           this.props.censusKeys.length > 1 ? this.props.legendWidth * 1.5 : this.props.legendWidth
 
         return(
-            <div style={ { width: "100%", height: '100%' } }
+            <div style={ { width: "100%", height: '100%', position: "relative" } }
               id={ this.props.id }
               ref={ this.container }>
+
+              <LoadingIndicator { ...this.state }/>
+
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
                 <Title title={ title }/>
                 { !this.props.showOptions ? null :
@@ -233,7 +235,7 @@ class CensusLineChart extends React.Component {
                             "min": 'auto',
                             "max": 'auto'
                     }}
-                    colors={ this.props.colors }
+                    colors={ this.props.colors.slice(0, lineData.length) }
                     curve={this.props.curve}
                     dotSize={5}
                     dotColor={ { from: "color" } }

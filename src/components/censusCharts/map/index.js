@@ -1,14 +1,11 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, withRouter } from "react-router-dom"
 
 import mapboxgl from "mapbox-gl"
 
 import AvlMap from "AvlMap"
 import MapLayer from "AvlMap/MapLayer"
 import { register, unregister } from "AvlMap/ReduxMiddleware"
-
-// import store from "store"
-// import { push } from 'react-router-redux'
 
 import { UPDATE as REDUX_UPDATE } from 'utils/redux-falcor'
 
@@ -167,7 +164,7 @@ class CensusMap extends React.Component {
         </div>
         <div style={ { height: "calc(100% - 35px)", width: "100%" } }>
           <AvlMap sidebar={ false }
-            style={ "mapbox://styles/am3081/ck3971lrq00g71co3ud6ye42i" }
+            // style={ "mapbox://styles/am3081/ck3971lrq00g71co3ud6ye42i" }
             preserveDrawingBuffer={ true }
             id={ this.props.id }
             layers={ [this.censusLayer] }
@@ -188,7 +185,7 @@ class CensusMap extends React.Component {
   }
 }
 
-export default CensusMap
+export default withRouter(CensusMap)
 
 const COUNTIES = [
   '36001', '36083', '36093', '36091',
@@ -364,11 +361,9 @@ class CensusLayer extends MapLayer {
 
       const allCousubs = this.getAllCousubs(),
         nameMap = allCousubs.reduce((a, c) => {
-console.log("?????????", get(this.falcorCache, ["geo", c]))
           a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
           return a;
         }, {});
-console.log("ALL COUSUBS:", allCousubs)
       map.setLayoutProperty("cousubs-symbol", "text-field",
         ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
       )
@@ -461,6 +456,9 @@ const LayerFactory = props => {
     subtractKeys: props.subtractKeys || [],
     divisorKeys: props.divisorKeys || [],
 
+    setGeoid: props.setGeoid,
+    test: JSON.stringify(props),
+
     legend: {
       type: "quantile",
       domain: [],
@@ -470,14 +468,13 @@ const LayerFactory = props => {
 
     geolevel: get(props, "geolevel", "blockgroup"), //"blockgroup",
 
-    // onClick: {
-    //   layers: ["blockgroup", "cousubs"],
-    //   dataFunc: function(features) {
-    //     console.log("CLICKED??????", get(features, [0, "properties", "geoid"]))
-    //     const geoid = get(features, [0, "properties", "geoid"]);
-    //     geoid && store.dispatch(push("/profile/" + geoid))
-    //   }
-    // },
+    onClick: {
+      layers: ["blockgroup", "cousubs"],
+      dataFunc: function(features) {
+        const geoid = get(features, [0, "properties", "geoid"]);
+        geoid && this.setGeoid(geoid);
+      }
+    },
 
     popover: {
       layers: ["blockgroup", "cousubs"],
@@ -494,6 +491,7 @@ const LayerFactory = props => {
           const format = (typeof this.legend.format === "function") ? this.legend.format : d3format(this.legend.format);
           data.push([this.title, format(value)])
         }
+        data.push(["Click to open profile."])
 
         return data;
       }

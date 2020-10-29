@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import GeoName from 'components/censusCharts/geoname'
 
 import styled from "styled-components"
+import get from "lodash.get"
 
 const ChildUL = styled.ul`
   ${ props => props.theme.panelDropdownScrollBar };
@@ -53,11 +54,12 @@ class MainMenu extends Component {
       })
       .map((menu, index) => {
 // console.log('<MainMenu>',menu)
-        let topMenu = menu.path ? menu.path.split('/')[1] : ''
-        let currentTop = this.props.path ? this.props.path.split('/')[1] : ' '
-        let isActive = topMenu === currentTop
-          ? 'active'
-          : ''
+        let topMenu = menu.path ? menu.path.split('/')[1] : 'no-menu-path';
+
+        let path = Array.isArray(this.props.path) ? this.props.path[0] : this.props.path,
+          currentTop = path ? path.split('/')[1] : 'no-path',
+          isActive = topMenu === currentTop ? 'active' : '';
+
         if (!menu.subMenus) {
             return (
               <li

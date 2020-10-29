@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { reduxFalcor} from "utils/redux-falcor";
 
+import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
+
 import { ResponsiveBar } from '@nivo/bar'
 import { getColorRange } from 'constants/color-ranges'
 
@@ -39,7 +41,7 @@ const Tooltip = ({ color, value, label, id, removeLeading }) =>
     <div>{ value }</div>
   </TooltipContainer>
 
-class CensusBarChart extends React.Component {
+class CensusBarChart extends ChartBase {
   static defaultProps = {
     year: 2017,
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
@@ -66,7 +68,7 @@ class CensusBarChart extends React.Component {
 
   container = React.createRef();
 
-  fetchFalcorDeps() {
+  getFalcorDeps() {
     return this.props.falcor.get(
         ['acs', this.props.allGeoids, this.props.years,
           [...this.props.censusKeys, ...this.props.divisorKeys,
@@ -217,9 +219,12 @@ class CensusBarChart extends React.Component {
       descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
 
     return (
-      <div style={ { width: "100%", height: "100%" } }
+      <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>
+
+        <LoadingIndicator { ...this.state }/>
+
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>
             <Title title={ this.props.title }/>

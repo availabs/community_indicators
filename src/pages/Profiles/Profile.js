@@ -8,6 +8,7 @@ import ProfileHeader from './components/ProfileHeader'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 import { falcorChunkerNice } from "store/falcorGraph"
 import SearchCompare from './components/SearchCompare'
+import { withRouter } from "react-router-dom"
 
 import { setYear, setCompareYear } from "store/modules/user"
 
@@ -82,6 +83,7 @@ class Profile extends React.Component {
                       minifiedWidth={1}
                       isOpen={1}
                       title={''}
+                      setGeoid={ geoid => this.setGeoid(geoid) }
                       graphs={
                         configData.map(d => {
                           const data = {
@@ -118,6 +120,7 @@ class Profile extends React.Component {
       else {
         this.props.history.push(`/profile/${ geoid }/compare/${ this.props.compareGeoid }`)
       }
+      this.forceUpdate();
     }
     setCompareGeoid(compareGeoid) {
       if (compareGeoid === null) {
@@ -126,13 +129,13 @@ class Profile extends React.Component {
       else {
         this.props.history.push(`/profile/${this.props.geoid}/compare/${compareGeoid}`)
       }
+      this.forceUpdate();
     }
 
     render() {
         const categories = Object.keys(this.state.GRAPH_CONFIG).map((category, i) =>
             this.renderCategory(category, this.state.GRAPH_CONFIG[category], i)
         )
-// console.log(this.props.year, "< YEAR | COMPARE YEAR >", this.props.compareYear, YEARS)
         return (
             <div>
                 <ProfileHeader geoids={ [this.props.geoid] }
@@ -221,11 +224,11 @@ const mapDispatchToProps = {
   setCompareYear
 };
 
-const component = connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Profile));
+const component = withRouter(connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Profile)));
 
 export default [
   {
-      path: '/profile/:geoid',
+      path: ['/profile/:geoid', '/profile/:geoid/compare/:compare'],
       exact: true,
       name: 'Profile',
       mainNav: false,
@@ -238,18 +241,18 @@ export default [
       auth: false,
       component
   },
-  {
-      path: '/profile/:geoid/compare/:compare',
-      exact: true,
-      name: 'Profile',
-      mainNav: false,
-      menuSettings: {
-          image: 'none',
-          'scheme': 'color-scheme-dark',
-          style: 'color-style-default'
-      },
-      // subMenus,
-      auth: false,
-      component
-  }
+  // {
+  //     path: '/profile/:geoid/compare/:compare',
+  //     exact: true,
+  //     name: 'Profile',
+  //     mainNav: false,
+  //     menuSettings: {
+  //         image: 'none',
+  //         'scheme': 'color-scheme-dark',
+  //         style: 'color-style-default'
+  //     },
+  //     // subMenus,
+  //     auth: false,
+  //     component: withRouter(component)
+  // }
 ]

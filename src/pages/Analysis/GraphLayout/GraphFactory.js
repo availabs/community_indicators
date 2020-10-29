@@ -23,5 +23,9 @@ const Hider = ({ isVisible, keepVisible, children }) => {
   }, [isVisible])
   return (keepVisible ? show : isVisible) ?
     <>{ children }</> :
-    <div>Loading...</div>
+    <div style={ {
+      fontWeight: "bold",
+      display: "flex",
+      justifyContent: "center"
+    } }>Please scroll your page...</div>
 }

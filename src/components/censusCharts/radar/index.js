@@ -17,10 +17,12 @@ import styled from "styled-components"
 import GeoName from 'components/censusCharts/geoname'
 import CensusLabel, { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
 
+import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
+
 import { getColorRange } from 'constants/color-ranges'
 const COLORS = [...getColorRange(12, "Set3").slice(3), ...getColorRange(12, "Set3").slice(0, 3)]
 
-class RadarGraph extends React.Component {
+class RadarGraph extends ChartBase {
   static defaultProps = {
     year: 2017,
     years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
@@ -37,7 +39,7 @@ class RadarGraph extends React.Component {
 
   container = React.createRef();
 
-  fetchFalcorDeps() {
+  getFalcorDeps() {
     return this.props.falcor.get(
       ['acs', this.props.allGeoids, this.props.years,
         [...this.props.censusKeys, ...this.props.censusKeysMoE]
@@ -77,9 +79,11 @@ class RadarGraph extends React.Component {
     };
   }
   componentDidMount() {
+    super.componentDidMount();
     this.renderDescription();
   }
-  componentDidUpdate() {
+  componentDidUpdate(...args) {
+    super.componentDidUpdate(...args);
     this.renderDescription();
   }
   renderDescription() {
@@ -131,9 +135,11 @@ class RadarGraph extends React.Component {
       descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
 
     return (
-      <div style={ { width: "100%", height: "100%" } }
+      <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>
+
+        <LoadingIndicator { ...this.state }/>
 
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>

@@ -4,6 +4,8 @@ import { reduxFalcor} from "utils/redux-falcor";
 
 import Geoname from "../geoname"
 
+import ChartBase, { LoadingIndicator } from "../ChartBase"
+
 import get from 'lodash.get'
 import styled from "styled-components"
 
@@ -28,33 +30,20 @@ const ValueContainer = styled.div`
   }
 `
 
-class CensusStatBox extends React.Component {
-  state = {
-    loading: true
-  }
-  MOUNTED = false;
-  componentDidMount() {
-    this.MOUNTED = true;
-  }
-  componentWillUnmount() {
-    this.MOUNTED = false;
-  }
-  setState(...args) {
-    this.MOUNTED && super.setState(...args);
-  }
-    fetchFalcorDeps(){
-        return this.props.falcor.get(
-          ['acs',
-            [...this.props.geoids,
-              this.props.compareGeoid
-            ].filter(Boolean),
-            this.props.years,
-            [...this.props.censusKeys,
-              ...this.props.divisorKeys,
-              ...this.props.subtractKeys
-            ]
+class CensusStatBox extends ChartBase {
+    getFalcorDeps() {
+      return this.props.falcor.get(
+        ['acs',
+          [...this.props.geoids,
+            this.props.compareGeoid
+          ].filter(Boolean),
+          this.props.years,
+          [...this.props.censusKeys,
+            ...this.props.divisorKeys,
+            ...this.props.subtractKeys
           ]
-        ).then(() => this.setState({ loading: false }))
+        ]
+      )
     }
 
     calculateValues(geoids){
@@ -170,9 +159,10 @@ class CensusStatBox extends React.Component {
             flexGrow: 1,
             display: "flex",
             flexDirection: "column",
-            // justifyContent: "center",
+            justifyContent: "center",
             alignItems: "center"
           } }>
+
           <div style={ {
             display: "flex",
             justifyContent: "center",
@@ -194,6 +184,7 @@ class CensusStatBox extends React.Component {
               { value && this.props.valueSuffix }
             </div>
           </div>
+
           { this.props.compareYear && change ?
             <div style={ { textAlign: 'center', marginTop: "-10px" } }>
                 { Math.abs(change)}% {change >= 0 ? 'Growth' : 'Decline' }
@@ -203,21 +194,8 @@ class CensusStatBox extends React.Component {
       )
     }
 
-    render(){
-// console.log("GEOIDS:", this.props.geoids)
-        return this.state.loading ?
-          <div style={ {
-              height: "100%", width: "100%",
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "2rem",
-              fontWeight: "bold"
-            } }>
-            Loading...
-          </div>
-        : (
+    render() {
+      return this.state.loading ? <LoadingIndicator /> : (
           <div style={ { height: "100%", position: "relative" } }>
             <div className='el-tablo'
               style={ {
@@ -265,7 +243,9 @@ class CensusStatBox extends React.Component {
         decreaseColor: "#900",
         invertColors: false,
         showColors: true,
-        colorThresholdPercent: 1
+        colorThresholdPercent: 1,
+        id: "CensusStatBox",
+        type: "CensusStatBox"
     }
 }
 

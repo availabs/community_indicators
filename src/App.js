@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Switch } from 'react-router-dom';
+import { Switch, BrowserRouter } from 'react-router-dom';
 
 import { login } from './store/modules/user';
 
@@ -37,36 +37,31 @@ class App extends Component {
   }
 
   render() {
-    let activeGeoid = null
-    let location = this.props.router.location.pathname.split('/')
-    if (location[1] === 'profile') {
-      activeGeoid = location[2]
-    }
 
     return (
       <ThemeProvider theme={theme}>
         <div className="all-wrapper solid-bg-all">
-          <Switch>
-          {
-          	Routes.map((route,i) => {
-              return (
-    	    			<Layout
-                  activeGeoid = {activeGeoid}
-                  key = {i}
-                  { ...route }
-                  isAuthenticating = { this.state.isAuthenticating }
-                  authed = { this.props.user.authed }
-                  router = {this.props.router}
-                  user = {this.props.user}
-                  menuSettings = { route.menuSettings ?  route.menuSettings  : {} }
-                  routes={route.routes}
-    	    				menus = { Routes }
-                  breadcrumbs = {route.breadcrumbs}
-    	    			/>
-    	    		)
-  	    	  })
-          }
-          </Switch>
+          <BrowserRouter>
+            <Switch>
+            {
+            	Routes.map((route,i) => {
+                return (
+      	    			<Layout key = { i }
+                    { ...route }
+                    isAuthenticating = { this.state.isAuthenticating }
+                    authed = { this.props.user.authed }
+                    router = {this.props.router}
+                    user = {this.props.user}
+                    menuSettings = { route.menuSettings ?  route.menuSettings  : {} }
+                    routes={route.routes}
+      	    				menus = { Routes }
+                    breadcrumbs = {route.breadcrumbs}
+      	    			/>
+      	    		)
+    	    	  })
+            }
+            </Switch>
+          </BrowserRouter>
           <Messages />
         </div>
       </ThemeProvider>
@@ -78,8 +73,7 @@ class App extends Component {
 
 const mapStateToProps = state => {
   return {
-    user: state.user,
-    router: state.router
+    user: state.user
   };
 };
 

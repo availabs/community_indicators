@@ -26,6 +26,7 @@ let HeaderContainer = styled.div`
  `
 
 let LandingHeader = styled.h1`
+    flex-grow: 0;
     color: #efefef;
     font-size: 5em;
     font-weight: 500;
@@ -54,6 +55,8 @@ let LandingHeader = styled.h1`
 `
 
 let StatContainer = styled.div`
+    flex-grow: 1;
+    position: relative;
     max-width: 520px;
     margin: 0 auto;
     color: #efefef;
@@ -86,9 +89,12 @@ class ProfileHeader extends Component {
     render () {
         return (
                 <div>
-                
+
                     <HeaderContainer >
-                        <div style={{height: 400}}>
+                        <div style={{
+                            height: 400, display: "flex", flexDirection: "column",
+                            justifyContent: "center"
+                          }}>
                             <LandingHeader canToggle={ Boolean(this.props.regionToggle) }
                               onClick={ Boolean(this.props.regionToggle) ? this.props.regionToggle : null }>
                                 <span className="fa fa-hand-o-up"/>
@@ -98,55 +104,58 @@ class ProfileHeader extends Component {
                                     : <GeoName geoids={this.props.geoids} />
                                 }
                             </LandingHeader>
-                            <div className='container'>
-                                <StatContainer>
-                                    <StatBox
-                                        title={'Population'}
-                                        year={ this.props.year }
-                                        years={ this.props.years }
-                                        compareYear={ this.props.compareYear }
-                                        censusKeys={['B01003_001E']}
-                                        geoids={this.props.geoids}
-                                        yearPosition="none"
-                                    />
-                                    <StatBox
-                                        title={'Median Age'}
-                                        year={ this.props.year }
-                                        years={ this.props.years }
-                                        censusKeys={['B01002_001E']}
-                                        geoids={this.props.geoids}
-                                        sumType='avg'
-                                        maximumFractionDigits={1}
-                                        yearPosition="none"
-                                    />
-                                    <StatBox
-                                        title={'Average Median Household Income'}
-                                        year={ this.props.year }
-                                        years={ this.props.years }
-                                        valuePrefix={'$'}
-                                        censusKeys={['B19013_001E']}
-                                        geoids={this.props.geoids}
-                                        sumType='avg'
-                                        yearPosition="none"
-                                                                            />
-                                    <StatBox
-                                        title={'Poverty Rate'}
-                                        year={ this.props.year }
-                                        years={ this.props.years }
-                                        compareYear={ this.props.compareYear }
-                                        censusKeys={['B17001_002E']}
-                                        valueSuffix={'%'}
-                                        maximumFractionDigits={1}
-                                        sumType='pct'
-                                        divisorKeys={['B17001_001E']}
-                                        yearPosition="none"
-                                        invertColors={ true }
-                                        geoids={this.props.geoids}
-                                    />
 
-                                </StatContainer>
+                            <StatContainer>
+                                <div style={ { position: "relative" } }>
+                                  <StatBox
+                                    title={'Population'}
+                                    year={ this.props.year }
+                                    years={ this.props.years }
+                                    compareYear={ this.props.compareYear }
+                                    censusKeys={['B01003_001E']}
+                                    geoids={this.props.geoids}
+                                    yearPosition="none"/>
+                                </div>
+                                <div style={ { position: "relative" } }>
+                                  <StatBox
+                                    title={'Median Age'}
+                                    year={ this.props.year }
+                                    years={ this.props.years }
+                                    censusKeys={['B01002_001E']}
+                                    geoids={this.props.geoids}
+                                    sumType='avg'
+                                    maximumFractionDigits={1}
+                                    yearPosition="none"/>
+                                </div>
+                                <div style={ { position: "relative" } }>
+                                  <StatBox
+                                    title={'Average Median Household Income'}
+                                    year={ this.props.year }
+                                    years={ this.props.years }
+                                    valuePrefix={'$'}
+                                    censusKeys={['B19013_001E']}
+                                    geoids={this.props.geoids}
+                                    sumType='avg'
+                                    yearPosition="none"/>
+                                </div>
+                                <div style={ { position: "relative" } }>
+                                  <StatBox
+                                    title={'Poverty Rate'}
+                                    year={ this.props.year }
+                                    years={ this.props.years }
+                                    compareYear={ this.props.compareYear }
+                                    censusKeys={['B17001_002E']}
+                                    valueSuffix={'%'}
+                                    maximumFractionDigits={1}
+                                    sumType='pct'
+                                    divisorKeys={['B17001_001E']}
+                                    yearPosition="none"
+                                    invertColors={ true }
+                                    geoids={this.props.geoids}/>
+                                </div>
 
-                            </div>
+                            </StatContainer>
+
                         </div>
                     </HeaderContainer>
 

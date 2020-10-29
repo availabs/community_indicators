@@ -7,7 +7,7 @@ const ReactGridLayout = WidthProvider(Responsive);
 
 class GridLayout extends React.Component {
     loadComps() {
-      const { graphs, geoid, compareGeoid, geoids } = this.props;
+      const { graphs, geoid, compareGeoid, geoids, ...props } = this.props;
       return graphs.map(({ layout, id, showBorder = true, ...rest }) => {
         const newLayout = {
           x: layout.x,
@@ -29,7 +29,7 @@ class GridLayout extends React.Component {
             } }>
             <GraphFactory
               layout={ newLayout }
-              { ...rest }
+              { ...props } { ...rest }
               geoid={ [geoid] }
               geoids={ geoids ? geoids : [geoid] }
               compareGeoid={ compareGeoid }
