@@ -38,15 +38,24 @@ const SidebarContainer = styled.div`
  const ContentCollapser = styled.div`
   overflow: ${ props => props.isOpen ? "visible" : "hidden" };
  `
+ const ToggleContainer = styled.div`
+   position: absolute;
+   top: 0px;
+   bottom: 0px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   transition: right ${ TRANSITION_TIME }ms;
+   right: -${ props => props.open ? 15 : 10}px;
+   z-index: 100;
+ `
  const Toggle = styled.div`
   width: 20px;
-  height: 20px;
+  height: 80px;
+  border-radius: 2px;
   background-color: ${ props => props.theme.sideBarCloseBtnBgd };
   transition: background-color 0.15s;
   color: ${ props => props.theme.sideBarCloseBtnColor };
-  position: absolute;
-  right: -10px;
-  top: 10px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -75,13 +84,15 @@ class Sidebar extends React.Component {
       maxWidth = 200;
     return window.innerWidth < 600 ? null : (
       <SidebarContainer width={ this.state.open ? maxWidth : 1 }>
-        <Toggle onClick={ () => this.toggle() }
-          doRotate={
-            (this.state.open && !this.state.transitioning) ||
-            (!this.state.open && this.state.transitioning)
-          }>
-          <ArrowRight height="12px"/>
-        </Toggle>
+        <ToggleContainer open={ this.state.open }>
+          <Toggle onClick={ () => this.toggle() }
+            doRotate={
+              (this.state.open && !this.state.transitioning) ||
+              (!this.state.open && this.state.transitioning)
+            }>
+            <ArrowRight height="12px"/>
+          </Toggle>
+        </ToggleContainer>
         <ContentCollapser isOpen={ this.state.open && !this.state.transitioning }>
           <div style={ { width: `${ maxWidth }px`, padding: "10px" } }>
 

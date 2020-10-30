@@ -297,6 +297,7 @@ export default [
  { type: "CensusBarChart",
     title: "Mortgate Status and Selected Monthly Owner Costs",
     orientation: "horizontal",
+    hideWhenCompact: true,
     marginLeft: 260,
     censusKeys: [
       "B25087_003E",

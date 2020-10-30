@@ -228,6 +228,7 @@ export default [
           type: "CensusStackedBarChart",
           showCompareGeoid: false,
           marginLeft: 310,
+          hideWhenCompact: true,
           layout: { h: 12 },
           left: {
             key: "Male", color: maleColor,

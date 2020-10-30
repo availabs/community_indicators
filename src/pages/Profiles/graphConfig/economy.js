@@ -39,6 +39,7 @@ export default [
     marginLeft: 250,
     legendPosition: "bottom-right",
     censusKeys: ["B23025_001E...B23025_007E"],
+    hideWhenCompact: true,
     layout:{
          w:9,
          h:9
@@ -108,6 +109,7 @@ export default [
     yFormat: "$,d",
     censusKeys: ["B24031_001E...B24031_027E"],
     removeLeading: 1,
+    hideWhenCompact: true,
     layout:{
          w:12,
          h:17,

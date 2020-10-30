@@ -21,7 +21,7 @@ const BASE_CONFIG = [
       type:"CensusStatBox",
       title:'Covered by Health Insurance',
       censusKeys:[
-          "B27001_004E", 
+          "B27001_004E",
           "B27001_007E",
           "B27001_010E",
           "B27001_013E",
@@ -30,7 +30,7 @@ const BASE_CONFIG = [
           "B27001_022E",
           "B27001_025E",
           "B27001_028E",
-          "B27001_032E", 
+          "B27001_032E",
           "B27001_035E",
           "B27001_038E",
           "B27001_041E",
@@ -52,7 +52,7 @@ const BASE_CONFIG = [
       title:'Percent Health Coverage',
       sumType: 'pct',
       censusKeys:[
-          "B27001_004E", 
+          "B27001_004E",
           "B27001_007E",
           "B27001_010E",
           "B27001_013E",
@@ -61,7 +61,7 @@ const BASE_CONFIG = [
           "B27001_022E",
           "B27001_025E",
           "B27001_028E",
-          "B27001_032E", 
+          "B27001_032E",
           "B27001_035E",
           "B27001_038E",
           "B27001_041E",
@@ -79,12 +79,13 @@ const BASE_CONFIG = [
       layout:{
          w:3,
          h:6,
-         x: 0 
+         x: 0
       }
    },
   {
     type: "CensusBarChart",
     title: "Age by Disability Status by Health Insurance Coverage Status",
+    hideWhenCompact: true,
     censusKeys: [
       "B18135_004E",
       "B18135_005E",
@@ -139,10 +140,10 @@ const BASE_CONFIG = [
     },
     orientation: "horizontal",
     marginLeft: 350,
-    layout: { 
-      w: 9, 
+    layout: {
+      w: 9,
       h: 12,
-      
+
     }
   },
 
