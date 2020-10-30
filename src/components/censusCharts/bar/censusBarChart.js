@@ -319,25 +319,25 @@ const groupByGeoids = (state, props) =>
       const divisorKeys = get(props, "divisorKeys", []),
         subtractKeys = get(props, "subtractKeys", []);
       if (divisorKeys.length || subtractKeys.length) {
-        const value = props.censusKeys.reduce((aa, cc, ii) => {
+        let value = props.censusKeys.reduce((aa, cc, ii) => {
           const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
           if (value !== -666666666) {
             aa += value;
           }
           return aa;
-        }, 0)
-        const sub = props.subtractKeys.reduce((aa, cc, ii) => {
+        }, 0);
+        const sub = subtractKeys.reduce((aa, cc, ii) => {
           const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
           if (value !== -666666666) {
             aa += value;
           }
           return aa;
-        }, 0)
+        }, 0);
         value -= sub;
 
-        const divisor = props.divisorKeys.reduce((aa, cc, ii) => {
+        const divisor = divisorKeys.reduce((aa, cc, ii) => {
           const year = get(props, "year", 2017),
             value = +get(state, ["graph", "acs", c, year, cc], 0);
           if (value !== -666666666) {

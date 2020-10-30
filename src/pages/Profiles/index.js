@@ -136,7 +136,7 @@ class Profile extends React.Component{
                 <NavBar GRAPH_CONFIG={ this.state.GRAPH_CONFIG }/>
 
               </div>
-              <div className='container' style={ { padding: 0, margin: 0 } }>
+              <div className='container' style={ { padding: 0 } }>
                   {categories}
               </div>
             </div>
