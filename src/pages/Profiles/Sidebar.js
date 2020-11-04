@@ -3,6 +3,7 @@ import React from "react"
 import styled from "styled-components"
 
 import ItemSelector from "components/common/item-selector/item-selector"
+import GroupedSelector from "components/common/item-selector/grouped-selector"
 import { ArrowRight } from 'components/common/icons';
 
 import SubMenu from "./submenu"
@@ -22,6 +23,19 @@ const geoOptions = SubMenu[0].reduce((a, c) => {
   })
   return a;
 }, [])
+console.log("geoOptions", geoOptions);
+
+const groupedItems = SubMenu[0].map(group => ({
+  name: group.name,
+  options: [
+    { name: group.name, value: regex.exec(group.path)[1] },
+    ...group.children.map(child => ({
+      name: child.name,
+      value: regex.exec(child.path)[1]
+    }))
+  ]
+}))
+console.log("groupedItems", groupedItems);
 
 const TRANSITION_TIME = 500;
 
@@ -108,12 +122,11 @@ class Sidebar extends React.Component {
 
             <div>Geography</div>
             <div style={ { position: "relative" } }>
-              <ItemSelector
+              <GroupedSelector
                 placeholder="Select an geography..."
                 selectedItems={ geoOptions.reduce((a, c) => c.value === this.props.geoid ? c : a, null) }
                 multiSelect={ false }
-                searchable={ true }
-                options={ geoOptions }
+                options={ groupedItems }
                 onChange={ d => this.props.setGeoid(d.value) }
                 displayOption={ d => d.name }
                 getOptionValue={ d => d }/>
@@ -147,12 +160,20 @@ class Sidebar extends React.Component {
               <>
                 <div style={ { marginTop: "10px" } }>Compare Geography</div>
                 <div style={ { position: "relative" } }>
-                  <ItemSelector erasable={ true }
+                  <GroupedSelector erasable={ true }
                     selectedItems={ geoOptions.reduce((a, c) => c.value === this.props.compareGeoid ? c : a, null) }
                     placeholder="Select a geography..."
                     multiSelect={ false }
-                    searchable={ true }
-                    options={ geoOptions.filter(d => d.value !== this.props.geoid) }
+                    options={
+                      groupedItems.map(group =>
+                        ({ ...group,
+                          options: group.options.filter( o =>
+                            // (o.value !== this.props.compareGeoid) &&
+                            (o.value !== this.props.geoid)
+                          )
+                        })
+                      )
+                    }
                     onChange={ d => this.props.setCompareGeoid(d === null ? d : d.value) }
                     displayOption={ d => d.name }
                     getOptionValue={ d => d }/>

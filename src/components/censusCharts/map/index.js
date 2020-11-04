@@ -243,9 +243,9 @@ class CensusLayer extends MapLayer {
     const options = {
       padding: {
         top: 50,
-        right: Math.min(50, tr.width * 0.05),
-        bottom: Math.min(50, tr.height * 0.05),
-        left: Math.min(50, tr.width * 0.05)
+        right: Math.min(50, tr.width * 0.075),
+        bottom: Math.min(50, tr.height * 0.075),
+        left: Math.min(50, tr.width * 0.075)
       },
       bearing: 0,
       pitch: 0

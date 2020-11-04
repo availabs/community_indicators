@@ -39,7 +39,7 @@ import DropdownList, {ListItem} from './dropdown-list';
  * @param {*} item
  * @returns {array} boom! much array. very indexed. so useful.
  */
-function _toArray(item) {
+export function _toArray(item) {
   if (Array.isArray(item)) {
     return item;
   }
@@ -51,7 +51,7 @@ function _toArray(item) {
   return [item];
 }
 
-const StyledDropdownSelect = styled.div`
+export const StyledDropdownSelect = styled.div`
   ${props =>
     props.inputTheme === 'secondary'
       ? props.theme.secondaryInput
@@ -62,7 +62,7 @@ const StyledDropdownSelect = styled.div`
   }
 `;
 
-const DropdownSelectValue = styled.span`
+export const DropdownSelectValue = styled.span`
   color: ${props =>
     !props.hasValue
       ? props.theme.selectColorPlaceHolder
@@ -70,12 +70,12 @@ const DropdownSelectValue = styled.span`
   overflow: hidden;
 `;
 
-const DropdownSelectErase = styled.div`
+export const DropdownSelectErase = styled.div`
   margin-left: 6px;
   display: flex;
 `;
 
-const DropdownWrapper = styled.div`
+export const DropdownWrapper = styled.div`
   background: ${props => props.theme.dropdownBgd};
   border: 0;
   width: 100%;
@@ -88,7 +88,7 @@ const DropdownWrapper = styled.div`
   margin-bottom: ${props => (props.placement === 'top' ? '4px' : 'auto')};
 `;
 
-class ItemSelector extends Component {
+export class ItemSelector extends Component {
   static propTypes = {
     // required properties
     selectedItems: PropTypes.oneOfType([
@@ -190,7 +190,7 @@ class ItemSelector extends Component {
     );
 
     //console.log('item', item, getValue)
-    
+
 
     const previousSelected = _toArray(this.props.selectedItems);
 

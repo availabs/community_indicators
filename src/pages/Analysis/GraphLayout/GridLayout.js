@@ -3,6 +3,8 @@ import React from 'react'
 import { WidthProvider, Responsive } from 'react-grid-layout'
 import GraphFactory from './GraphFactory'
 
+import "./graph.css"
+
 const ReactGridLayout = WidthProvider(Responsive);
 
 class GridLayout extends React.Component {
@@ -18,7 +20,7 @@ class GridLayout extends React.Component {
           static: true
         }
         return (
-          <div key={ id }
+          <div key={ id } className="ci-graph"
             data-grid={ newLayout }
             style={ {
               backgroundColor: 'none',
