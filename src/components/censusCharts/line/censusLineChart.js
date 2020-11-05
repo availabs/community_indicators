@@ -48,8 +48,10 @@ class CensusLineChart extends ChartBase {
               geoid,
               censusKey,
               "title": this.props.title,
-              "data" : this.props.years.map(year => {
-                  let value = get(this.props, `acs[${ geoid }][${ year }][${ censusKey }]`, 0)
+              "data" : this.props.years.reduce((accum, year) => {
+                  let value = get(this.props, `acs[${ geoid }][${ year }][${ censusKey }]`, -666666666);
+
+                  if (value === -666666666) return accum;
 
                   let sub = 0;
 
@@ -62,22 +64,24 @@ class CensusLineChart extends ChartBase {
                   else {
                     sub = get(this.props, `acs[${ geoid }][${year}][${this.props.subtractKeys[index]}]`, 0);
                   }
+
                   if (!isNaN(sub)) {
                     value -= +sub;
                   }
 
-                  if(this.props.sumType === 'pct') {
+                  if (this.props.sumType === 'pct') {
                       const divisor = get(this.props, `acs[${ geoid }][${year}][${this.props.divisorKeys[index]}]`, 1);
                       if ((divisor !== null) && !isNaN(divisor)) {
                         value = value / divisor;
                       }
                   }
 
-                  return {
+                  accum.push({
                       x: +year,
                       y: value
-                  }
-              }).filter(({ y }) => y !== -666666666)
+                  })
+                  return accum;
+              }, [])
           }
       })
     }
@@ -165,7 +169,8 @@ class CensusLineChart extends ChartBase {
             key in this.props.censusKeyLabels ? this.props.censusKeyLabels[key] :
             getCensusKeyLabel(key, this.props.acs, this.props.removeLeading);
 
-        const lineData = this.lineData();
+        const lineData = this.lineData(),
+          hasData = lineData.reduce((a, c) => a || Boolean(get(c, ["data", "length"], 0)), false);
 
         const getGeoName = g => get(this.props.geoGraph, [g, "name"], g),
           getCensusLabel = c =>
@@ -192,7 +197,7 @@ class CensusLineChart extends ChartBase {
           this.props.showCompare &&
           this.props.censusKeys.length > 1 ? this.props.legendWidth * 1.5 : this.props.legendWidth
 
-        return(
+        return !this.state.loading && !hasData ? <NoData { ...this.state }/> : (
             <div style={ { width: "100%", height: '100%', position: "relative" } }
               id={ this.props.id }
               ref={ this.container }>

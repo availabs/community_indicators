@@ -274,7 +274,7 @@ class CensusPieGraph extends ChartBase {
       color
     } = this.state.hoverData || { pos: [] }
 
-    return (
+    return !this.state.loading && !this.props.pieData.length ? <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>
@@ -359,7 +359,7 @@ const getPieData = (state, props) =>
         }
         return a;
       }, [])
-    }))
+    })).filter(({ pie }) => Boolean(pie.length))
 
 const HoverComp = styled.div`
   position: absolute;

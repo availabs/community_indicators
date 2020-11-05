@@ -163,8 +163,8 @@ const BASE_CONFIG = [
         type:'CensusStackedBarChart',
         broadCensusKey: 'B21001',
         showCompareGeoid: false,
-        left: { key: "Male", slice: [5, 20], color: maleColor },
-        right: { key: "Female", slice: [23, 38], color: femaleColor },
+        left: { key: "Male", slice: [6, 21], color: maleColor },
+        right: { key: "Female", slice: [24, 39], color: femaleColor },
         marginLeft: 175,
         layout:{
          w:9,

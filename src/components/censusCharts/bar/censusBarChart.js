@@ -218,7 +218,7 @@ class CensusBarChart extends ChartBase {
     const showDescription = Boolean(this.props.description.length),
       descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
 
-    return (
+    return !this.state.loading && !this.props.barData.length ? <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>

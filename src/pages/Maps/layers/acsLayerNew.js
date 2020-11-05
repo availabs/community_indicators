@@ -630,6 +630,14 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     }
   },
 
+  infoBoxes: {
+    controls: {
+      title: () => null,
+      comp: () => <div>TESTING</div>,
+      show: true
+    }
+  },
+
   // infoBoxes: {
   //   test: {
   //     title: "TEST INFO BOX",

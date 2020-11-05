@@ -19,7 +19,7 @@ export const LoadingIndicator = ({ loading = true }) =>
     Loading...
   </div>
 
-export const NoData = () =>
+export const NoData = ({ noDataMessage }) =>
   <div style={ {
       height: "100%", width: "100%",
       display: "flex",
@@ -28,19 +28,23 @@ export const NoData = () =>
       fontSize: "1.5rem",
       fontWeight: "bold"
     } }>
-    This census data variable is not available at this geography.
+    { noDataMessage }
   </div>
 
 export default class ChartBase extends React.Component {
     constructor(...args) {
       super(...args);
-      this.state = { loading: false };
+      this.state = {
+        loading: false,
+        noDataMessage: "Initializing, please wait..."
+      };
       this._fetchFalcorDeps = this._fetchFalcorDeps.bind(this);
       this.debounced = debounce(this._fetchFalcorDeps, 750, { leading: true });
     }
     MOUNTED = false;
     componentDidMount() {
       this.MOUNTED = true;
+      setTimeout(() => this.setState({ noDataMessage: "This census data variable is not available at this geography." }), 125);
     }
     componentWillUnmount() {
       this.MOUNTED = false;

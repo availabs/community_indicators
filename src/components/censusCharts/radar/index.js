@@ -134,7 +134,11 @@ class RadarGraph extends ChartBase {
     const showDescription = Boolean(this.props.description.length),
       descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
 
-    return (
+    const hasData = this.props.radarData.reduce((a, c) =>
+      a || this.props.allGeoids.reduce((aa, cc) => aa || c[cc], false)
+    , false)
+
+    return !this.state.loading && !hasData ? <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>
@@ -208,8 +212,9 @@ const mapStateToProps = (state, props) => ({
 
 export default connect(mapStateToProps, null)(reduxFalcor(RadarGraph));
 
-const getRadarData = (state, props) =>
-  get(props, "censusKeys", []).reduce((a, c) => {
+const getRadarData = (state, props) => {
+  const allGeoids = [...props.geoids, props.compareGeoid].filter(Boolean);
+  return get(props, "censusKeys", []).reduce((a, c) => {
     const getLabel = key =>
       get(props, ["censusKeyLabels", key],
         getCensusKeyLabel(key,
@@ -221,11 +226,13 @@ const getRadarData = (state, props) =>
     const axis = {
       censusKey: getLabel(c)
     };
-    [...props.geoids, props.compareGeoid].filter(Boolean)
-      .forEach(g => {
-        const v = get(state, ["graph", "acs", g, y, c], -666666666);
-        axis[get(state, ["graph", "geo", g, "name"], g)] = v === -666666666 ? 0 : v;
-      })
+    allGeoids.forEach(g => {
+      const v = get(state, ["graph", "acs", g, y, c], -666666666),
+        name = get(state, ["graph", "geo", g, "name"], g);
+      axis[name] = v === -666666666 ? 0 : v;
+      axis[g] = Boolean(axis[name]);
+    })
     a.push(axis);
     return a;
   }, [])
+}

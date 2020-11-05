@@ -11,6 +11,7 @@ import Routes from './routes'
 
 import { ThemeProvider }  from 'styled-components';
 import theme from 'components/common/themes/light_new'
+// import theme from 'components/common/themes/dark'
 
 import './App.css';
 
