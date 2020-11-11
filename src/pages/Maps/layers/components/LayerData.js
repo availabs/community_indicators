@@ -9,11 +9,12 @@ export default ({ layer }) => {
     .map(geoid => ({
       "geography": get(layer.falcorCache, ["geo", geoid, "name"], geoid),
       [layer.filters.census.value]: layer.geoData[geoid],
+      year: layer.filters.year.value,
       geoid
     }));
 
   const keys = [
-    "geography", "geoid", layer.filters.census.value
+    "geography", "geoid", "year", layer.filters.census.value
   ]
   return (
     <div>
