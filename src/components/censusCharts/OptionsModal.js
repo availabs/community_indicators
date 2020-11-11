@@ -24,9 +24,19 @@ class OptionsModal extends React.Component {
               title={ this.props.tableTitle }/>
           </div>
         )
-      case "save-image":
-        return <SaveImageTab image={ this.props.image }
+      case "save-image": {
+        let image = "", href = "";
+        if (this.props.showModal) {
+          if (typeof this.props.image === "function") {
+            href = this.props.image();
+          }
+          else {
+            image = this.props.image;
+          }
+        }
+        return <SaveImageTab image={ image } href={ href }
                   title={ this.props.tableTitle }/>;
+      }
       case "share-embed":
         return <ShareEmbedTab embed={ this.props.embed }
                   layout={ this.props.layout }/>
@@ -149,16 +159,12 @@ class SaveImageTab extends React.Component {
     this.setState({ fileName });
   }
   onSave() {
-    // if (typeof this.props.image === "function") {
-    //   return this.props.image(`${ this.state.fileName }.png`);
-    // }
     const svg = d3selection.select(`#${ this.props.image }`).select("svg").node(),
       options={ backgroundColor: "#fff" },
       fileName = `${ this.state.fileName }.png`;
     Boolean(svg) && saveSvgAsPng(svg, fileName, options);
   }
   render() {
-    const renderAnchor = (typeof this.props.image === "function");
     return (
       <div style={ { display: "flex" } }>
         <div style={ { width: "75%", padding: "4px 2px" } }>
@@ -172,10 +178,10 @@ class SaveImageTab extends React.Component {
           </div>
         </div>
         <div style={ { width: "25%", padding: "4px 2px", display: "flex" } }>
-          { renderAnchor ?
+          { Boolean(this.props.href) ?
               <a className="btn btn-primary btn-block"
                 download={ this.state.fileName }
-                href={ this.props.image() }>
+                href={ this.props.href }>
                 <div style={ { display: "flex", justifyContent: "center", alignItems: "center", height: "100%" } }>
                   <span className="fa fa-download mr-2"/>Save as .png
                 </div>

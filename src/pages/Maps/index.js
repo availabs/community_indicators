@@ -1,6 +1,8 @@
 import React from 'react';
 import Logo from "components/mitigate-ny/Logo"
 
+import { withRouter } from "react-router-dom"
+
 import AvlMap, { DEFAULT_STYLES } from "AvlMap"
 
 import buildingsLayer from "./layers/buildingsLayer"
@@ -16,19 +18,23 @@ const SidebarHeader = ({}) =>
 
 class MapPage extends React.Component {
   CensusLayer = censusLayerFactory({ active: false });
-  ACS_Layer = acsLayerFactory({ active: true });
+  ACS_Layer = acsLayerFactory({ active: true, props: this.props });
   render() {
     return (
       <div style={ { height: '100vh', paddingTop: "49px" } }>
-        <AvlMap layers={ [
-            this.ACS_Layer,
-            this.CensusLayer
-          ] }
+        <AvlMap id="haz-mit-avl-map"
+          preserveDrawingBuffer={ true }
+          layers={ [this.ACS_Layer, this.CensusLayer] }
           header={ SidebarHeader }
           { ...this.ACS_Layer.baseMapSettings }
           header={ false }
           style="mapbox://styles/am3081/ck3uimjaa0p6u1cqmndfy4nmr"
-          sidebarPages={ ["layers"] }/>
+          sidebarPages={ ["layers"] }
+          layerProps={ {
+            [this.ACS_Layer.name]: {
+              history: this.props.history
+            }
+          } }/>
       </div>
     )
   }
@@ -46,5 +52,5 @@ export default {
     },
     name: 'Maps',
 	auth: false,
-	component: MapPage
+	component: withRouter(MapPage)
 }
