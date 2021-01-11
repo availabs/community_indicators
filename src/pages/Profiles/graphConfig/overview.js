@@ -231,7 +231,6 @@ export default [
         "B19301D_001E",
         "B19301E_001E",
         "B19301F_001E",
-        "B19301G_001E",
         "B19301H_001E",
         "B19301I_001E"
       ],
@@ -242,7 +241,6 @@ export default [
         "B19301D_001E": "Asian",
         "B19301E_001E": "Native Hawaiian and Other Pacific Islander",
         "B19301F_001E": "Some Other Race Alone",
-        "B19301G_001E": "Two or More Races",
         "B19301H_001E": "White Alone, Not Hispanic or Latino",
         "B19301I_001E": "Hispanic or Latino"
       }

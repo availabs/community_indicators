@@ -88,7 +88,7 @@ export default [
 
   {
       type:"CensusStatBox",
-      title: "Per Capital Income",
+      title: "Per Capita Income",
       valuePrefix:'$',
       sumType: 'avg',
       censusKeys:["B19301_001E"],
@@ -125,7 +125,7 @@ export default [
 
     {
       type: 'CensusBarChart',
-      title: 'Population by Race by County',
+      title: 'Population by Race and Ethnicity by County',
       censusKeys: [
         'B02008_001E',
         'B02009_001E',

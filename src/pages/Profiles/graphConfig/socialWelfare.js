@@ -7,7 +7,7 @@ export default [
     {
           type: "TextBox",
           header: "SOCIAL WELFARE",
-          body: "This section covers issues related to fabric of our community",
+          body: "Metrics related to the individual and collective social well-being of the Capital Region and it’s communities.",
           layout: {
             h: 3,
             w: 12
@@ -43,7 +43,7 @@ export default [
 
   {
       type: "CensusBarChart",
-      title: "Median Household Income by Race",
+      title: "Median Household Income by Race and Ethnicity",
       censusKeys: [
         "B19013A_001E",
         "B19013B_001E",
@@ -91,7 +91,7 @@ export default [
 
       {
     type: "CensusLineChart",
-    title: "Median Household Income by Race",
+    title: "Median Household Income by Race and Ethnicity",
     censusKeys: [
       "B19013A_001E",
       "B19013B_001E",
@@ -191,7 +191,7 @@ export default [
     {
 
       type: "CensusBarChart",
-      title: "Receipt of Food Stamps/SNAP by Race",
+      title: "Receipt of Food Stamps/SNAP by Race and Ethnicity",
       marginLeft: 75,
       showCompare: false,
       marginLeft: 250,
@@ -238,7 +238,7 @@ export default [
           'C16001_020E',
           'C16001_023E',
           // 'C16001_095E',
-          'C16001_030E',
+          'C16001_029E',
           'C16001_035E',
           'C16001_038E',
           // 'C16001_041E',
@@ -265,8 +265,8 @@ export default [
       type: "TextBox",
       header: "Food Access Research Atlas by the United States Department of Agriculture",
       subheader: "Data Visualization",
-      body: "Map of Food Insecure Areas (nearest grocery store is within 1 and 10 miles.",
-      link: "https://map.feedingamerica.org/",
+      body: "Map of Food Insecure Areas",
+      link: "https://www.ers.usda.gov/data-products/food-access-research-atlas/go-to-the-atlas/",
       layout: {
             h: 5,
             w: 12

@@ -160,17 +160,28 @@ const BASE_CONFIG = [
       }
    },
     {
-        type:'CensusStackedBarChart',
-        broadCensusKey: 'B21001',
-        showCompareGeoid: false,
-        left: { key: "Male", slice: [6, 21], color: maleColor },
-        right: { key: "Female", slice: [24, 39], color: femaleColor },
-        marginLeft: 175,
-        layout:{
-         w:9,
-         h:9,
+      type: "CensusStackedBarChart",
+      title: "Civilian Population 18 Years and Over",
+      showCompareGeoid: false,
+      orientation: "horizontal",
+      marginLeft: 175,
+      layout:{
+           w:9,
+           h:9
+        },
+      left: {
+        key: "Male", color: maleColor,
+        keys: [
+          "B21001_007E...B21001_021E",
+        ]
       },
-        labels: [
+      right: {
+        key: "Female", color: femaleColor,
+        keys: [
+          "B21001_025E...B21001_039E"
+        ]
+      },
+      labels: [
           'Total 18-34',
           '18-34 years, veteran',
           '18-34 years, non-veteran',
