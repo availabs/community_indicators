@@ -180,7 +180,7 @@ export default [
 
        {
       type: 'CensusLineChart',
-      title: 'Population by Race',
+      title: 'Population by Race and Ethnicity',
       marginLeft: 75,
       censusKeys: [
         'B02008_001E',
@@ -222,7 +222,7 @@ export default [
     },
     {
       type: "CensusRadarGraph",
-      title: "Per Capita Income",
+      title: "Per Capita Income By Race and Ethnicity",
       format: "$,d",
       censusKeys: [
         "B19301A_001E",

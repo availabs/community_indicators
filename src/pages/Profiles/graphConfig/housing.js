@@ -46,6 +46,7 @@ export default [
       type:"CensusLineChart",
       sumType: 'sum',
       showCompare: true,
+      marginLeft: 100,
       censusKeys:["B25002_001E"],
       groupBy: "geoids",
       layout:{
