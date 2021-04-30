@@ -11,12 +11,12 @@ class GeoName extends React.Component{
     }
 
     render(){
-        // console.log('teest 123', this.props.geo, this.props.geoids[0], get(this.props `geo[${this.props.geoids[0]}].name`, ''), this.props.geo[this.props.geoids[0]]name)
         return(
             <>
               {
-                this.props.geoids.map(geoid => get(this.props, `geo[${geoid}].name`, '')
-                  .toUpperCase()).join(' ')
+                this.props.geoids.map(geoid =>
+                  String(get(this.props, `geo[${ geoid }].name`, ''))
+                    .toUpperCase()).join(' ')
               }
             </>
         )
@@ -28,9 +28,10 @@ class GeoName extends React.Component{
     }
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, props) => {
     return {
-        geo: state.graph.geo || {} // so componentWillReceiveProps will get called.
+        geo: state.graph.geo || {}, // so componentWillReceiveProps will get called.
+        geoids: [...get(props, "geoids", []), props.geoid].filter(Boolean)
     };
 };
 export default connect(mapStateToProps, null)(reduxFalcor(GeoName))

@@ -227,7 +227,7 @@ class CensusBarChart extends ChartBase {
 
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>
-            <Title title={ this.props.title }/>
+            <Title { ...this.props } multi/>
           </div>
           { !this.props.showOptions ? null :
             <Options tableTitle={ this.props.title }
@@ -245,7 +245,7 @@ class CensusBarChart extends ChartBase {
           }
         </div>
         <div style={ { height: `calc(100% - 30px)`, position: "relative" } }>
-          <ResponsiveBar indexBy={ "id" }
+          <ResponsiveBar indexBy="id"
             keys={ this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.divisorKeys.length ? ["value"] : this.props.censusKeys }
             data={ this.props.barData }
             margin={ {

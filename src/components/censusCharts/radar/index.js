@@ -147,7 +147,7 @@ class RadarGraph extends ChartBase {
 
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>
-            <Title title={ this.props.title }/>
+            <Title { ...this.props } multi/>
           </div>
           { !this.props.showOptions ? null :
             <Options tableTitle={ this.props.title }

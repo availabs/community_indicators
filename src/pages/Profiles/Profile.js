@@ -38,15 +38,17 @@ const ALL_CENSUS_KEYS = Object.values(BASE_GRAPH_CONFIG)
 
 // const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
 
+const otherRegex = /unsd|zcta/
+
 class Profile extends React.Component {
   constructor(props) {
       super(props);
       this.renderCategory = this.renderCategory.bind(this);
-      // this.searchNav = this.searchNav.bind(this);
 
       this.state = {
-        GRAPH_CONFIG: processBaseConfig(BASE_GRAPH_CONFIG)
+        GRAPH_CONFIG: this.processConfig()
       }
+      this.processConfig = this.processConfig.bind(this);
       this._loadConfig = this._loadConfig.bind(this);
       this.loadConfig = debounce(this._loadConfig, 250);
 
@@ -57,15 +59,35 @@ class Profile extends React.Component {
   componentWillUnmount() {
     window.removeEventListener("resize", this.loadConfig);
   }
+  componentDidUpdate(oldProps) {
+    if (oldProps.geoid !== this.props.geoid) {
+      this._loadConfig();
+    }
+  }
+  processConfig() {
+    const CONFIG = { ...BASE_GRAPH_CONFIG };
+    // if (otherRegex.test(this.props.geoid)) {
+    //   delete CONFIG.Links;
+    // }
+    return processBaseConfig(CONFIG, this.props);
+  }
   _loadConfig() {
-    this.setState({
-      GRAPH_CONFIG: processBaseConfig(BASE_GRAPH_CONFIG)
-    })
+    this.setState({ GRAPH_CONFIG: this.processConfig() });
   }
 
   fetchFalcorDeps() {
+    const geoids = [this.props.geoid, this.props.compareGeoid].filter(Boolean);
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"])
-      .then(() => this.props.falcor.get(["geo", [this.props.geoid, this.props.compareGeoid].filter(Boolean), "name"]));
+      .then(() => {
+        return this.props.falcor.get(
+          ["geo", geoids, "name"]
+        )
+      })
+      .then(() => {
+        return this.props.falcor.get(
+          ["geo", geoids, ["zcta", "unsd"]]
+        )
+      });
   }
 
   renderCategory(name, configData, i) {
@@ -133,9 +155,10 @@ class Profile extends React.Component {
     }
 
     render() {
-        const categories = Object.keys(this.state.GRAPH_CONFIG).map((category, i) =>
-            this.renderCategory(category, this.state.GRAPH_CONFIG[category], i)
-        )
+        const categories = Object.keys(this.state.GRAPH_CONFIG)
+          .map((category, i) =>
+              this.renderCategory(category, this.state.GRAPH_CONFIG[category], i)
+          )
         return (
             <div>
                 <ProfileHeader geoids={ [this.props.geoid] }
@@ -158,7 +181,7 @@ class Profile extends React.Component {
                         <NavBar GRAPH_CONFIG={ this.state.GRAPH_CONFIG }/>
 
                     </div>
-                    <div className='container' style={ { padding: 0 } }>
+                    <div className='container' style={ { paddingBottom: "10rem" } }>
                         {categories}
                     </div>
                 </div>
@@ -192,11 +215,13 @@ export const NavBar = ({ GRAPH_CONFIG, ...props }) => {
   }, [ref, hide])
   return (
     <ul className="nav nav-tabs upper" ref={ setRef }
-      style={ { flexWrap: 'nowrap', flex: '1 1', display: 'flex', overflow: "hidden", height: hide ? "0px" : "auto" } }>
-      {
-        Object.keys(GRAPH_CONFIG).map(category =>
-          <li className="nav-item" style={ { flex: '1 1', marginBottom: "2px" } } key={ category }>
-            <Link style={ { textAlign: 'center' } }
+      style={ {
+        flexWrap: 'nowrap', flex: '1 1', display: 'flex',
+        overflow: "hidden", height: hide ? "0px" : "auto"
+      } }>
+      { Object.keys(GRAPH_CONFIG).map(category =>
+          <li className="nav-item" style={ { flex: '1 1', margin: "0px 0px 2px 0px" } } key={ category }>
+            <Link style={ { textAlign: 'center', padding: "0.5rem 1rem", margin: "0rem" } }
               activeClass="active" spy={ true } offset={ -90 }
               className="nav-link" to={ category }>
               { category.toUpperCase() }

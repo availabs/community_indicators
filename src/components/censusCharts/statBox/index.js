@@ -9,6 +9,8 @@ import ChartBase, { LoadingIndicator } from "../ChartBase"
 import get from 'lodash.get'
 import styled from "styled-components"
 
+import Title from "../ComponentTitle"
+
 const YearDiv = styled.div`
   position: absolute;
   text-align: left;
@@ -207,9 +209,7 @@ class CensusStatBox extends ChartBase {
                 justifyContent: "center",
                 alignItems: "center"
               } }>
-              <div className='title' style={{fontSize: '1.2em', textAlign: 'center', flexGrow: 0 }}>
-                  {this.props.title}
-              </div>
+              <Title { ...this.props } center className='title'/>
               <ValueContainer>
                 { this.renderStuff(this.props.geoids) }
                 {

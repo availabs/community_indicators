@@ -23,7 +23,7 @@ const geoOptions = SubMenu[0].reduce((a, c) => {
   })
   return a;
 }, [])
-console.log("geoOptions", geoOptions);
+// console.log("geoOptions", geoOptions);
 
 const groupedItems = SubMenu[0].map(group => ({
   name: group.name,
@@ -35,7 +35,7 @@ const groupedItems = SubMenu[0].map(group => ({
     }))
   ]
 }))
-console.log("groupedItems", groupedItems);
+// console.log("groupedItems", groupedItems);
 
 const TRANSITION_TIME = 500;
 
@@ -80,6 +80,8 @@ const SidebarContainer = styled.div`
   }
  `
 
+ const otherRegex = /unsd|zcta/
+
 class Sidebar extends React.Component {
   timeout = null;
   state = {
@@ -120,17 +122,21 @@ class Sidebar extends React.Component {
               </div>
             }
 
-            <div>Geography</div>
-            <div style={ { position: "relative" } }>
-              <GroupedSelector
-                placeholder="Select an geography..."
-                selectedItems={ geoOptions.reduce((a, c) => c.value === this.props.geoid ? c : a, null) }
-                multiSelect={ false }
-                options={ groupedItems }
-                onChange={ d => this.props.setGeoid(d.value) }
-                displayOption={ d => d.name }
-                getOptionValue={ d => d }/>
-            </div>
+            { otherRegex.test(this.props.geoid) ? null :
+              <>
+                <div>Geography</div>
+                <div style={ { position: "relative" } }>
+                  <GroupedSelector
+                    placeholder="Select an geography..."
+                    selectedItems={ geoOptions.reduce((a, c) => c.value === this.props.geoid ? c : a, null) }
+                    multiSelect={ false }
+                    options={ groupedItems }
+                    onChange={ d => this.props.setGeoid(d.value) }
+                    displayOption={ d => d.name }
+                    getOptionValue={ d => d }/>
+                </div>
+              </>
+            }
 
             <div style={ { marginTop: "10px" } }>Current Year</div>
             <div style={ { position: "relative" } }>
@@ -156,7 +162,7 @@ class Sidebar extends React.Component {
                 getOptionValue={ d => d }/>
             </div>
 
-            { !this.props.setCompareGeoid ? null :
+            { !this.props.setCompareGeoid || otherRegex.test(this.props.geoid) ? null :
               <>
                 <div style={ { marginTop: "10px" } }>Compare Geography</div>
                 <div style={ { position: "relative" } }>

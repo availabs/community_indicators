@@ -5,6 +5,33 @@ import {
 
 export default [
 
+    { type: "CensusTreemap",
+      title: "Testing Treemap",
+      showForGeoidLength: 5,
+      layout:{
+         w: 12,
+         h: 12,
+         x: 0
+      },
+      tree: {
+        title: "Industry",
+        children: [
+          { title: "Agriculture, forestry, fishing and hunting, and mining",
+            censusKey: "C24050_002E"
+          },
+          { title: "Construction",
+            censusKey: "C24050_003E"
+          },
+          { title: "Manufacturing",
+            censusKey: "C24050_004E"
+          },
+          { title: "Wholesale Trade",
+            censusKey: "C24050_005E"
+          }
+        ]
+      }
+    },
+
    {
       type:"CensusStatBox",
       censusKeys:["B01003_001E"],
