@@ -11,6 +11,7 @@ import CensusRadarGraph from "./radar"
 import CensusTreemap from "./treemap"
 import ZCTAList from "./links/ZCTAList"
 import UNSDList from "./links/UNSDList"
+import QCEWStackedBarChart from "./qcew/QCEWStackedBarChart"
 
 const NA = ({ type }) =>
   <div style={ {
@@ -33,5 +34,6 @@ export default {
   CensusRadarGraph,
   ZCTAList,
   UNSDList,
+  QCEWStackedBarChart,
   NA
 }

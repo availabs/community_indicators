@@ -4,14 +4,30 @@ import {
 } from "./utils"
 
 export default [
+    { type: "QCEWStackedBarChart",
+      title: "QCEW Stacked Bar Chart",
+      
+// THESWE ARE THE AVAILABLE DATA TYPES:
+// ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
+      dataType: "annual_avg_emplvl",
 
+// THE PROPERTY BELOW WILL CAUSE THIS COMPONENT TO BE HIDDEN FOR NON-COUNTIES.
+// MAKE SURE ANY COMPONENT THAT USES THIS IS WIDTH 12!!!
+      showForGeoidLength: 5,
+
+// USE THE PROPERTY BELOW TO SHOW ALL YEARS OF DATA FOR THE NON-REGIONAL PROFILE PAGES.
+      showAllYears: true,
+
+      layout: {
+        w: 12,
+        h: 12
+      }
+    },
     { type: "CensusTreemap",
       title: "Testing Treemap",
-      showForGeoidLength: 5,
       layout:{
          w: 12,
-         h: 12,
-         x: 0
+         h: 12
       },
       tree: {
         title: "Industry",

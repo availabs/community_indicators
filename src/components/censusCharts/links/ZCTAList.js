@@ -11,7 +11,6 @@ import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
 import GeoName from "../geoname"
 
 class ZCTAList extends ChartBase {
-
   getFalcorDeps() {
     return this.props.falcor.get(
       ["geo", this.props.geoids, ["zcta"]]
