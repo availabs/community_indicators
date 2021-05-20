@@ -22,7 +22,7 @@ import Sidebar from "./Sidebar"
 import get from "lodash.get"
 import debounce from "lodash.debounce"
 
-import { YEARS } from "./graphConfig/utils"
+import { ACS_DATA_YEARS } from "./graphConfig/utils"
 
 const ALL_CENSUS_KEYS = Object.values(BASE_GRAPH_CONFIG)
   .reduce((a, c) =>
@@ -35,8 +35,6 @@ const ALL_CENSUS_KEYS = Object.values(BASE_GRAPH_CONFIG)
       , [])
     ]
   , [])
-
-// const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
 
 const otherRegex = /unsd|zcta/
 
@@ -80,12 +78,7 @@ class Profile extends React.Component {
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"])
       .then(() => {
         return this.props.falcor.get(
-          ["geo", geoids, "name"]
-        )
-      })
-      .then(() => {
-        return this.props.falcor.get(
-          ["geo", geoids, ["zcta", "unsd"]]
+          ["geo", geoids, ["name", "zcta", "unsd"]]
         )
       });
   }
@@ -111,7 +104,7 @@ class Profile extends React.Component {
                           const data = {
                             ...d,
                             year: this.props.year,
-                            years: YEARS
+                            years: ACS_DATA_YEARS
                           };
                           if (data.showCompareYear) {
                             data.compareYear = this.props.compareYear;
@@ -164,13 +157,13 @@ class Profile extends React.Component {
                 <ProfileHeader geoids={ [this.props.geoid] }
                   year={ this.props.year }
                   compareYear={ this.props.compareYear }
-                  years={ YEARS }/>
+                  years={ ACS_DATA_YEARS }/>
                 <div className='content-w' style={{ width: '100%', marginTop: '95vh', position: 'relative', zIndex: 4}}>
                     <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
                         <Sidebar
                           year={ this.props.year }
                           compareYear={ this.props.compareYear }
-                          years={ YEARS }
+                          years={ ACS_DATA_YEARS }
                           geoid={ this.props.geoid }
                           setGeoid={ geoid => this.setGeoid(geoid) }
                           compareGeoid={ this.props.compareGeoid }
@@ -221,7 +214,7 @@ export const NavBar = ({ GRAPH_CONFIG, ...props }) => {
       } }>
       { Object.keys(GRAPH_CONFIG).map(category =>
           <li className="nav-item" style={ { flex: '1 1', margin: "0px 0px 2px 0px" } } key={ category }>
-            <Link style={ { textAlign: 'center', padding: "0.5rem 1rem", margin: "0rem" } }
+            <Link style={ { textAlign: 'center', padding: "0.5rem 1rem calc(0.5rem - 2px) 1rem", margin: "0rem" } }
               activeClass="active" spy={ true } offset={ -90 }
               className="nav-link" to={ category }>
               { category.toUpperCase() }
@@ -236,7 +229,6 @@ export const NavBar = ({ GRAPH_CONFIG, ...props }) => {
 const mapStateToProps = (state, ownProps) => ({
   geoGraph: state.graph.geo,
   router: state.router,
-  years: state.user.years,
   geoid: get(ownProps, ["match", "params", "geoid"], "36"),
   compareGeoid: get(ownProps, ["match", "params", "compare"], null),
   user: state.user,

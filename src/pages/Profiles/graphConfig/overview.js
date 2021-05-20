@@ -4,25 +4,72 @@ import {
 } from "./utils"
 
 export default [
-    { type: "QCEWStackedBarChart",
-      title: "QCEW Stacked Bar Chart",
-      
+    { type: "QCEWStatBox",
+      title: "Annual Average Employment Level",
+
 // THESWE ARE THE AVAILABLE DATA TYPES:
 // ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
       dataType: "annual_avg_emplvl",
 
 // THE PROPERTY BELOW WILL CAUSE THIS COMPONENT TO BE HIDDEN FOR NON-COUNTIES.
-// MAKE SURE ANY COMPONENT THAT USES THIS IS WIDTH 12!!!
+// MAKE SURE ANY COMPONENTS THAT USE THIS HAVE A COMBINED WIDTH OF 12!!!
+// THIS WILL ENSURE AN ENTIRE LINE IS HIDDEN.
+      showForGeoidLength: 5,
+      showCompareYear: true,
+
+// USE THE PROPERTY BELOW TO SHOW ALL YEARS OF DATA FOR THE NON-REGIONAL PROFILE PAGES.
+      showAllYears: true,
+
+      layout: {
+        w: 3,
+        h: 6
+      }
+    },
+    { type: "QCEWStatBox",
+      valuePrefix: "$",
+      format: "fnum",
+      title: "Total Annual Wages",
+
+// THESWE ARE THE AVAILABLE DATA TYPES:
+// ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
+      dataType: "total_annual_wages",
+
+// THE PROPERTY BELOW WILL CAUSE THIS COMPONENT TO BE HIDDEN FOR NON-COUNTIES.
+// MAKE SURE ANY COMPONENTS THAT USE THIS HAVE A COMBINED WIDTH OF 12!!!
+// THIS WILL ENSURE AN ENTIRE LINE IS HIDDEN.
+      showForGeoidLength: 5,
+      showCompareYear: true,
+
+// USE THE PROPERTY BELOW TO SHOW ALL YEARS OF DATA FOR THE NON-REGIONAL PROFILE PAGES.
+      showAllYears: true,
+
+      layout: {
+        x: 0,
+        w: 3,
+        h: 6
+      }
+    },
+    { type: "QCEWStackedBarChart",
+      title: "Annual Average Employment Level",
+
+// THESWE ARE THE AVAILABLE DATA TYPES:
+// ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
+      dataType: "annual_avg_emplvl",
+
+// THE PROPERTY BELOW WILL CAUSE THIS COMPONENT TO BE HIDDEN FOR NON-COUNTIES.
+// MAKE SURE ANY COMPONENTS THAT USE THIS HAVE A COMBINED WIDTH OF 12!!!
+// THIS WILL ENSURE AN ENTIRE LINE IS HIDDEN.
       showForGeoidLength: 5,
 
 // USE THE PROPERTY BELOW TO SHOW ALL YEARS OF DATA FOR THE NON-REGIONAL PROFILE PAGES.
       showAllYears: true,
 
       layout: {
-        w: 12,
+        w: 9,
         h: 12
       }
     },
+
     { type: "CensusTreemap",
       title: "Testing Treemap",
       layout:{

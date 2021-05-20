@@ -400,8 +400,6 @@ class CensusLayer extends MapLayer {
           return a;
         }, {});
 
-console.log("COUSBS:", allCousubs, this.falcorCache)
-
       map.setLayoutProperty("cousubs-symbol", "text-field",
         ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
       )

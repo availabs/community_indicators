@@ -12,6 +12,7 @@ import CensusTreemap from "./treemap"
 import ZCTAList from "./links/ZCTAList"
 import UNSDList from "./links/UNSDList"
 import QCEWStackedBarChart from "./qcew/QCEWStackedBarChart"
+import QCEWStatBox from "./qcew/QCEWStatBox"
 
 const NA = ({ type }) =>
   <div style={ {
@@ -35,5 +36,6 @@ export default {
   ZCTAList,
   UNSDList,
   QCEWStackedBarChart,
+  QCEWStatBox,
   NA
 }

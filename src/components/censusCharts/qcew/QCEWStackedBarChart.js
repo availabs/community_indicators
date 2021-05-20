@@ -15,7 +15,9 @@ import Options from '../Options'
 import Title from "../ComponentTitle"
 
 import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
-import GeoName from "../geoname"
+
+import { fnum } from "utils/sheldusUtils"
+
 import { getColorRange } from 'constants/color-ranges'
 
 const r1 = getColorRange(9, "Set1"),
@@ -33,7 +35,6 @@ const NAICS = [
   '51','52','53','54','55','56',
   '61','62','71','72','81'
 ]
-const QCEW_YEARS = [2014, 2015, 2016, 2017, 2018]
 
 const TooltipContainer = styled.div`
   display: flex;
@@ -57,12 +58,30 @@ const Tooltip = ({ color, value, label, id, removeLeading }) =>
 
 class QCEWStackedBarChart extends ChartBase {
   static defaultProps = {
+    geoids: [],
+    year: 2019,
+    years: [2014, 2015, 2016, 2017, 2018, 2019],
+    dataType: "annual_avg_emplvl",
     yFormat: ",d",
     marginLeft: 75,
     marginRight: 300,
     marginTop: 10,
-    showAllYears: false
+    showAllYears: false,
+    showOptions: true,
+    title: ""
   }
+
+  container = React.createRef();
+
+  getGeoName = geoid => get(this.props.geoGraph, [geoid, "name"], geoid);
+  getNaicsTitle = (naics, trim = false) => {
+    const title = get(this.naicsMap, [naics, "title"], naics);
+    if (!trim) return title;
+
+    const max = 40;
+    return title.length > max ? title.slice(0, max).trim() + "..." : title;
+  }
+  getValue = (geoid, year, code) => get(this.props, ["qcewGraph", "annual", geoid, year, code, this.props.dataType], 0)
 
   componentDidMount() {
     super.componentDidMount();
@@ -70,26 +89,37 @@ class QCEWStackedBarChart extends ChartBase {
       .then(res => res.json())
       .then(res => { this.naicsMap = res; });
   }
-
   getFalcorDeps() {
-    const years = this.props.showAllYears ? QCEW_YEARS : this.props.year;
+    const years = this.props.showAllYears ? this.props.years : this.props.year;
     return this.props.falcor.get(
       ["qcew", "annual", this.props.geoids, years, NAICS, this.props.dataType],
       ['geo', this.props.geoids, 'name']
     )
   }
+  processDataForViewing() {
+    const years = this.props.showAllYears ? this.props.years : [this.props.year];
+
+    const data = [];
+    years.forEach(year => {
+      NAICS.forEach(code => {
+        this.props.geoids.forEach(geoid => {
+          data.push({
+            geoid,
+            name: this.getGeoName(geoid),
+            year,
+            "naics code": code,
+            "naics label": this.getNaicsTitle(code),
+            "data type": this.props.dataType,
+            value: this.getValue(geoid, year, code)
+          })
+        })
+      })
+    })
+    return { data, keys: ["geoid", "name", "year", "naics code", "naics label", "data type", "value"] };
+  }
   render() {
 
-    const fmt = format(this.props.yFormat);
-
-    const getGeoName = geoid => get(this.props.geoGraph, [geoid, "name"], geoid),
-      getNaicsTitle = (naics, trim = false) => {
-        const title = get(this.naicsMap, [naics, "title"], naics);
-        if (!trim) return title;
-
-        const max = 40;
-        return title.length > max ? title.slice(0, max).trim() + "..." : title;
-      }
+    const fmt = this.props.yFormat === "fnum" ? fnum : format(this.props.yFormat);
 
     return !this.state.loading && !this.props.data.length ? <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }
@@ -118,8 +148,8 @@ class QCEWStackedBarChart extends ChartBase {
               embedProps={ {
                 id: this.props.id,
                 geoids: [...this.props.geoids],
-                compareGeoid: this.props.compareGeoid,
-                showCompareGeoid: this.props.showCompareGeoid,
+                // compareGeoid: this.props.compareGeoid,
+                // showCompareGeoid: this.props.showCompareGeoid,
                 year: this.props.year
               } }/>
           }
@@ -137,7 +167,7 @@ class QCEWStackedBarChart extends ChartBase {
               left: this.props.marginLeft
             } }
             layers={ [
-              LegendFactory(getNaicsTitle),
+              LegendFactory(this.getNaicsTitle),
               'grid', 'axes', 'bars', 'markers', 'annotations'
             ] }
             labelSkipWidth={ 100 }
@@ -145,17 +175,17 @@ class QCEWStackedBarChart extends ChartBase {
             labelFormat={ fmt }
             tooltip={
               ({ color, indexValue, value, id }) => (
-                <Tooltip id={ getNaicsTitle(id) }
+                <Tooltip id={ this.getNaicsTitle(id) }
                   value={ fmt(value) }
                   color={ color }
-                  label={ getGeoName(indexValue) }/>
+                  label={ this.getGeoName(indexValue) }/>
               )
             }
             axisLeft={ {
               format: fmt
             } }
             axisBottom={ {
-              format: getGeoName
+              format: this.getGeoName
             } }/>
         </div>
       </div>
@@ -165,6 +195,7 @@ class QCEWStackedBarChart extends ChartBase {
 
 const mapStateToProps = (state, props) => ({
   data: getQCEWData(state, props),
+  years: props.years.filter(y => +y >= 2014),
   qcewGraph: get(state, ["graph", "qcew"], {}),
   geoGraph: get(state, ["graph", "geo"], {}),
   allGeoids: [...props.geoids, props.compareGeoid].filter(Boolean)
@@ -175,12 +206,13 @@ export default connect(mapStateToProps)(reduxFalcor(QCEWStackedBarChart));
 const getQCEWData = (state, props) => {
   if (props.showAllYears) {
     const { dataType, geoids: [geoid] } = props;
-    return QCEW_YEARS.map(year => {
-      return NAICS.reduce((a, c) => {
-        a[c] = get(state, ["graph", "qcew", "annual", geoid, year, c, dataType], 0)
-        return a;
-      }, { key: year });
-    });
+    return props.years.filter(y => +y >= 2014)
+      .map(year => {
+        return NAICS.reduce((a, c) => {
+          a[c] = get(state, ["graph", "qcew", "annual", geoid, year, c, dataType], 0)
+          return a;
+        }, { key: String(year) });
+      });
   }
   const { year, dataType } = props;
   return props.geoids.map(geoid => {
