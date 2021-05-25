@@ -418,7 +418,8 @@ const CENSUS_FILTER_CONFIG = [
 
   { name: "GINI Index",
     censusKeys: ["B19083_001E"],
-    group: "Social Welfare"
+    group: "Social Welfare",
+    // format: "%,d",
   },
 
 //---------------------------------------------- HEALTH ----------------------------------------------
