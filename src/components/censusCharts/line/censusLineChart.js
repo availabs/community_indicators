@@ -205,7 +205,7 @@ class CensusLineChart extends ChartBase {
               <LoadingIndicator { ...this.state }/>
 
               <div style={ { height: "30px", maxWidth: "calc(100% - 285px)" } }>
-                <Title title={ title }/>
+                <Title { ...this.props } multi/>
                 { !this.props.showOptions ? null :
                   <Options tableTitle={ this.props.title }
                     processDataForViewing={ this.processDataForViewing.bind(this) }

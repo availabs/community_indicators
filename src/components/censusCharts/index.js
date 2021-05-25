@@ -8,24 +8,34 @@ import CensusStatBox from "./statBox/index.js"
 import TextBox from "./TextBox"
 import CensusMap from "./map"
 import CensusRadarGraph from "./radar"
+import CensusTreemap from "./treemap"
+import ZCTAList from "./links/ZCTAList"
+import UNSDList from "./links/UNSDList"
+import QCEWStackedBarChart from "./qcew/QCEWStackedBarChart"
+import QCEWStatBox from "./qcew/QCEWStatBox"
 
-const NA = ({ type, state, routes }) =>
-  <div>
-  { type } Not Implmented
-  <div>state:<br />{ JSON.stringify(state) }</div>
+const NA = ({ type }) =>
+  <div style={ {
+      width: "100%", height: "100%",
+      display: "flex", justifyContent: "center", alignItems: "center",
+      fontSize: "1.5rem", fontWeight: "bold"
+    } }>
+    { type } Not Implmented
   </div>
 
-const NE = ((props) => (<div>{props.type} Doesn't Exist</div>))
-
 export default {
-    CensusBarChart,
-    CensusStackedBarChart,
-    CensusLineChart,
-    CensusPieChart,
-    CensusStatBox,
-    TextBox,
-    CensusMap,
-    CensusRadarGraph,
-    NE,
-    NA
+  CensusTreemap,
+  CensusBarChart,
+  CensusStackedBarChart,
+  CensusLineChart,
+  CensusPieChart,
+  CensusStatBox,
+  TextBox,
+  CensusMap,
+  CensusRadarGraph,
+  ZCTAList,
+  UNSDList,
+  QCEWStackedBarChart,
+  QCEWStatBox,
+  NA
 }

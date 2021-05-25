@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import MapLayer from "AvlMap/MapLayer"
 import Animator from "AvlMap/LayerAnimator"
 
+import styled from "styled-components"
 import get from "lodash.get"
 import deepequal from "deep-equal"
 import { extent } from "d3-array";
@@ -22,6 +23,8 @@ import { fnum, fmoney } from "utils/sheldusUtils"
 
 import OptionsBox from "./infoboxes/OptionsBox"
 import OptionsModal from "./modals/OptionsModal"
+
+import { Button } from "components/common/styled-components"
 
 // ORANGES: ["#feedde", "#fdd0a2", "#fdae6b", "#fd8d3c", "#f16913", "#d94801", "#8c2d04"]
 const HOVER_COLOR = "#f16913";
@@ -181,6 +184,35 @@ class ACS_Layer extends MapLayer {
       a.push(...get(this.falcorCache, ["geo", c, geolevel, "value"], []));
       return a;
     }, []);
+  }
+  selectGeoid(geoid) {
+    if (!geoid) return;
+
+    if (this.selectedGeoids.includes(geoid)) return;
+
+    this.infoBoxes.selectedGeoids.show = true;
+
+    if (this.selectedGeoids.length === 2) {
+      this.selectedGeoids = [this.selectedGeoids[1], geoid];
+    }
+    else {
+      this.selectedGeoids.push(geoid);
+    }
+    this.forceUpdate();
+  }
+  removeSelectedGeoid(geoid) {
+    this.selectedGeoids = this.selectedGeoids.filter(g => g !== geoid);
+    this.infoBoxes.selectedGeoids.show = Boolean(this.selectedGeoids.length);
+    this.forceUpdate();
+  }
+  viewProfile() {
+    const [g1, g2] = this.selectedGeoids,
+      url = `/profile/${ g1 }${ g2 ? `/compare/${ g2 }` : "" }`;
+
+    this.infoBoxes.selectedGeoids.show = false;
+    this.selectedGeoids = [];
+
+    this.history.push(url);
   }
   fetchData() {
     const geolevel = this.filters.geolevel.value,
@@ -513,10 +545,78 @@ const CENSUS_FILTER_CONFIG = [
 
 ].map(processConfig);
 
+const Close = styled.span`
+  text-align: right;
+  cursor: pointer;
+  color: currentColor;
+  &:hover {
+    color: #b00;
+  }
+`
+
+const Geoid = ({ geoid, remove, compare = false }) => {
+  return !geoid ? null : (
+    <div style={ { width: "100%", display: "flex", marginBottom: "0.25rem" } }>
+      <div style={ { width: "46%", textAlign: "right", paddingRight: "0.5rem" } }>
+        { compare ? "Compare " : "" }GEOID:
+      </div>
+      <div style={ { width: "46%", paddingLeft: "0.5rem" } }>
+        { geoid }
+      </div>
+      <div style={ { width: "8%" } }>
+        <Close className="fa fa-times"
+          onClick={ e => remove(geoid) }/>
+      </div>
+    </div>
+  )
+}
+const LinkButton = styled(Link)`
+  text-decoration: none;
+  ${ Button } {
+    text-decoration: none;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+  ${ Button }:hover {
+    text-decoration: none;
+  }
+`
+
+const SelectedGeoids = ({ layer }) => {
+  const [g1, g2] = layer.selectedGeoids;
+  const remove = React.useMemo(() => {
+    return layer.removeSelectedGeoid.bind(layer);
+  }, [layer]);
+  const href = React.useMemo(() => {
+    return `/profile/${ g1 }${ g2 ? `/compare/${ g2 }` : "" }`;
+  }, [g1, g2]);
+  return (
+    <div style={ {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      fontSize: "1rem"
+    } }>
+      <Geoid geoid={ g1 } remove={ remove }/>
+      <Geoid geoid={ g2 } remove={ remove } compare/>
+      <div>
+        <LinkButton to={ href }>
+          <Button>
+            { g2 ? "Compare" : "View" } Profile{ g2 ? "s" : "" }
+          </Button>
+        </LinkButton>
+      </div>
+    </div>
+  )
+}
+
 export default (options = {}) => new ACS_Layer("ACS Layer", {
   ...options,
 
   version: 2.0, // ONLY SET THIS IF YOU KNOW WHAT IT MEANS!!!
+
+  selectedGeoids: [],
 
   falcorCache: {},
   geoData: {},
@@ -540,11 +640,10 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
   onClick: {
     layers: ["counties", "cousubs", "tracts", "blockgroup"],
-    dataFunc: function(features) {
+    dataFunc: function(features, point, lngLat, layer, e) {
       const geoid = get(features, [0, "properties", "geoid"]);
-      // geoid && this.setGeoid(geoid);
-      this.history.push("/profile/" + geoid);
-      console.log("GEOID:", geoid, this.history)
+      this.selectGeoid(geoid);
+      // this.history.push("/profile/" + geoid);
     }
   },
 
@@ -583,7 +682,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         data.push([this.filters.census.value, format(value)])
       }
       // data.push([<Link to={ `/profile/${ geoid }` }>View Profile</Link>]);
-      data.push(["Click to open profile."]);
+      data.push(["Click to view in profile."]);
 
       return data;
     }
@@ -651,6 +750,12 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   },
 
   infoBoxes: {
+    selectedGeoids: {
+      title: null,
+      closable: false,
+      comp: SelectedGeoids,
+      show: false
+    },
     controls: {
       title: () => null,
       closable: false,

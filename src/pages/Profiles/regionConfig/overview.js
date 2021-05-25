@@ -4,6 +4,16 @@ import {
 } from "../graphConfig/utils"
 
 export default [
+    { type: "QCEWStackedBarChart",
+      title: "QCEW Stacked Bar Chart",
+// THESWE ARE THE AVAILABLE DATA TYPES:
+// ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
+      dataType: "annual_avg_emplvl",
+      layout: {
+        w: 12,
+        h: 12
+      }
+    },
 
    {
       type:"CensusStatBox",

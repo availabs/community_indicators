@@ -183,7 +183,9 @@ class StackedBarChart extends ChartBase {
         <LoadingIndicator { ...this.state }/>
 
         <div style={ { height: "30px" } }>
-          <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }><Title title={ this.props.title }/></div>
+          <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>
+            <Title { ...this.props } multi/>
+          </div>
           { !this.props.showOptions ? null :
             <Options tableTitle={ this.props.title }
               processDataForViewing={ this.processDataForViewing.bind(this) }

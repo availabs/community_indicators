@@ -149,13 +149,8 @@ const initialState = {
   authLevel: 0,
   authed: false,
   attempts: 0,
-  years: {
-    latest: 2017,
-    earliest: 2012,
-    active: 2017
-  },
-  year: 2018,
-  compareYear: 2013
+  year: 2019,
+  compareYear: 2014
 };
 
 // ------------------------------------

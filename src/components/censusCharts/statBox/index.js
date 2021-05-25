@@ -9,6 +9,8 @@ import ChartBase, { LoadingIndicator } from "../ChartBase"
 import get from 'lodash.get'
 import styled from "styled-components"
 
+import Title from "../ComponentTitle"
+
 const YearDiv = styled.div`
   position: absolute;
   text-align: left;
@@ -187,7 +189,7 @@ class CensusStatBox extends ChartBase {
 
           { this.props.compareYear && change ?
             <div style={ { textAlign: 'center', marginTop: "-10px" } }>
-                { Math.abs(change)}% {change >= 0 ? 'Growth' : 'Decline' }
+                { Math.abs(change) }% {change >= 0 ? 'Growth' : 'Decline' }
             </div> : null
            }
         </div>
@@ -195,6 +197,7 @@ class CensusStatBox extends ChartBase {
     }
 
     render() {
+
       return this.state.loading ? <LoadingIndicator /> : (
           <div style={ { height: "100%", position: "relative" } }>
             <div className='el-tablo'
@@ -207,9 +210,7 @@ class CensusStatBox extends ChartBase {
                 justifyContent: "center",
                 alignItems: "center"
               } }>
-              <div className='title' style={{fontSize: '1.2em', textAlign: 'center', flexGrow: 0 }}>
-                  {this.props.title}
-              </div>
+              <Title { ...this.props } center className='title'/>
               <ValueContainer>
                 { this.renderStuff(this.props.geoids) }
                 {

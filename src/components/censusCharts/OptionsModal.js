@@ -34,8 +34,12 @@ class OptionsModal extends React.Component {
             image = this.props.image;
           }
         }
-        return <SaveImageTab image={ image } href={ href }
-                  title={ this.props.tableTitle }/>;
+        return (
+          <SaveImageTab { ...this.props }
+            image={ image } href={ href }
+            title={ this.props.tableTitle }
+            show={ this.props.showModal }/>
+        );
       }
       case "share-embed":
         return <ShareEmbedTab embed={ this.props.embed }
@@ -67,7 +71,9 @@ const mapStateToProps = state => ({
   embed: state.options.embed,
   layout: state.options.layout,
   tableTitle: state.options.tableTitle,
-  saveImage: state.options.saveImage
+  saveImage: state.options.saveImage,
+  year: state.user.year,
+  compareYear: state.user.compareYear
 })
 const mapDispatchToProps = {
   setOptionsModalPage,
@@ -150,49 +156,109 @@ class SaveImageTab extends React.Component {
   state = {
     fileName: this.props.title
   }
+  mountImage() {
+    const div = d3selection.select(`#div-${ this.props.image }`);
+    div.selectAll("*").remove();
+
+    if (this.props.image) {
+      const svg = d3selection.select(`#${ this.props.image }`).select("svg").node().cloneNode(true);
+      if (!svg) return;
+
+      const height = +svg.getAttribute("height"),
+        width = +svg.getAttribute("width");
+
+      const newSvg = div.append("svg")
+        .attr("id", "svg-to-save")
+        .attr("height", height + 80)
+        .attr("width", width + 20)
+        .style("background-color", "#fff");
+      const g = newSvg.append("g")
+        .style("transform", "translate(10px, 10px)");
+      g.append("text")
+        .attr("y", 20)
+        .style("font-size", "1.2rem")
+        .style("font-family", "sans-serif")
+        .text(this.props.title);
+      g.append("text")
+        .attr("y", height + 55)
+        .style("font-size", "1.2rem")
+        .style("font-family", "sans-serif")
+        .text(`US Census ${ this.props.year } American Community Survey 5-Year Estimates`);
+      const appendTo = g.append("g")
+          .style("transform", "translateY(30px)");
+
+      appendTo.node().append(svg);
+    }
+    else if (this.props.href) {
+      div.node().append(this.props.href);
+    };
+  }
+  componentDidMount() {
+    this.mountImage();
+  }
   componentDidUpdate(oldProps) {
     if (this.props.title !== this.state.fileName) {
-      this.setState({ fileName: this.props.title })
+      this.setState({ fileName: this.props.title });
+    }
+    if (this.props.show && !oldProps.show) {
+      this.mountImage();
     }
   }
   onChange(fileName) {
     this.setState({ fileName });
   }
   onSave() {
-    const svg = d3selection.select(`#${ this.props.image }`).select("svg").node(),
-      options={ backgroundColor: "#fff" },
+    const svg = d3selection.select(`#svg-to-save`).node();
+    if (!svg) return;
+
+    const options={ backgroundColor: "#fff" },
       fileName = `${ this.state.fileName }.png`;
-    Boolean(svg) && saveSvgAsPng(svg, fileName, options);
+
+    // const newSvg = document.createElement("svg"),
+    //   height = +svg.getAttribute("height"),
+    //   width = svg.getAttribute("width");
+    //
+    // newSvg.setAttribute("height", height + 20);
+    // newSvg.setAttribute("width", width);
+    // newSvg.append(svg);
+    //
+    // const div =d3selection.select(`#ic-${ this.props.image }`)
+    //   .append(newSvg)
+
+    saveSvgAsPng(svg, fileName, options);
   }
   render() {
     return (
-      <div style={ { display: "flex" } }>
-        <div style={ { width: "75%", padding: "4px 2px" } }>
-          <div className="input-group">
-            <input type="text" className="form-control"
-              onChange={ e => this.onChange(e.target.value) }
-              value={ this.state.fileName }/>
-            <div className="input-group-append">
-              <span className="input-group-text">.png</span>
+      <div style={ { display: "flex", flexDirection: "column" } }>
+        <div style={ { display: "flex" } }>
+          <div style={ { width: "75%", padding: "4px 2px" } }>
+            <div className="input-group">
+              <input type="text" className="form-control"
+                onChange={ e => this.onChange(e.target.value) }
+                value={ this.state.fileName }/>
+              <div className="input-group-append">
+                <span className="input-group-text">.png</span>
+              </div>
             </div>
           </div>
-        </div>
-        <div style={ { width: "25%", padding: "4px 2px", display: "flex" } }>
-          { Boolean(this.props.href) ?
-              <a className="btn btn-primary btn-block"
-                download={ this.state.fileName }
-                href={ this.props.href }>
-                <div style={ { display: "flex", justifyContent: "center", alignItems: "center", height: "100%" } }>
+          <div style={ { width: "25%", padding: "4px 2px", display: "flex" } }>
+            { Boolean(this.props.href) ?
+                <a className="btn btn-primary btn-block"
+                  download={ this.state.fileName }
+                  href={ this.props.href.toDataURL() }>
+                  <div style={ { display: "flex", justifyContent: "center", alignItems: "center", height: "100%" } }>
+                    <span className="fa fa-download mr-2"/>Save as .png
+                  </div>
+                </a>
+              :
+                <button className="btn btn-primary btn-block"
+                  onClick={ e => this.onSave() }>
                   <span className="fa fa-download mr-2"/>Save as .png
-                </div>
-              </a>
-            :
-              <button className="btn btn-primary btn-block"
-                onClick={ e => this.onSave() }>
-                <span className="fa fa-download mr-2"/>Save as .png
-              </button>
-          }
+                </button>
+            }
+          </div>
         </div>
+        <div style={ { marginTop: "10px" } } id={ `div-${ this.props.image }` }/>
       </div>
     )
   }

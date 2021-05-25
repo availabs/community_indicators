@@ -7,6 +7,8 @@ import Health from "./health"
 import Transportation from "./transportation"
 import covid19 from "./covid19"
 
+import Links from "./links"
+
 const CONFIG = {
   // 'COVID-19': covid19,
   Overview,
@@ -15,7 +17,8 @@ const CONFIG = {
   Health,
   Education,
   Housing,
-  Transportation
+  Transportation,
+  Links
 }
 export default Object.keys(CONFIG)
   .reduce((a, c) => {

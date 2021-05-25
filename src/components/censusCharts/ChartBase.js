@@ -39,7 +39,7 @@ export default class ChartBase extends React.Component {
         noDataMessage: "Initializing, please wait..."
       };
       this._fetchFalcorDeps = this._fetchFalcorDeps.bind(this);
-      this.debounced = debounce(this._fetchFalcorDeps, 750, { leading: true });
+      this.debounced = debounce(this._fetchFalcorDeps, 250);
     }
     MOUNTED = false;
     componentDidMount() {
@@ -56,11 +56,8 @@ export default class ChartBase extends React.Component {
     startTimeout = null;
     stopTimeout = null;
 
-    startLoading() {
-      clearTimeout(this.startTimeout);
-      this.startTimeout = setTimeout(() => this.setState({ loading: true }), this.state.loading ? 250 : 50);
-    }
     getFalcorDeps() {
+// console.log("<ChartBase::getFalcorDeps>", this.props.type)
       return Promise.resolve();
     }
     _fetchFalcorDeps() {
@@ -69,8 +66,13 @@ export default class ChartBase extends React.Component {
         .then(() => this.stopLoading());
     }
     fetchFalcorDeps() {
+// console.log("<ChartBase::fetchFalcorDeps>", this.props.type)
       return Promise.resolve(this.debounced());
     };
+    startLoading() {
+      clearTimeout(this.startTimeout);
+      this.startTimeout = setTimeout(() => this.setState({ loading: true }), this.state.loading ? 250 : 50);
+    }
     stopLoading() {
       clearTimeout(this.startTimeout);
       clearTimeout(this.stopTimeout);

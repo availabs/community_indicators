@@ -22,14 +22,14 @@ import OptionsModal from "components/censusCharts/OptionsModal"
 
 import Sidebar from "./Sidebar"
 
-import { YEARS } from "./graphConfig/utils"
+import { ACS_DATA_YEARS } from "./graphConfig/utils"
 
 import { NavBar } from "./Profile"
 
+import get from "lodash.get"
 import debounce from "lodash.debounce"
 
-// const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017]
-// console.log("MENUS:", subMenus)
+
 const ALL_CENSUS_KEYS = Object.values(BASE_GRAPH_CONFIG)
   .reduce((a, c) =>
     [...a, ...c.reduce((a, c) => [...a, ...(c.censusKey ? [c.censusKey] : c.censusKeys ? c.censusKeys : [])], [])]
@@ -67,7 +67,11 @@ class Profile extends React.Component{
 
   fetchFalcorDeps() {
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"])
-      .then(() => this.props.falcor.get(["geo", [this.props.geoid, this.props.compareGeoid].filter(Boolean), "name"]));
+      .then(() =>
+        this.props.falcor.get(
+          ["geo", [this.props.geoid, this.props.compareGeoid].filter(Boolean), "name"]
+        )
+      );
   }
 
 
@@ -93,7 +97,7 @@ class Profile extends React.Component{
                   const data = {
                     ...d,
                     year: this.props.year,
-                    years: YEARS
+                    years: ACS_DATA_YEARS
                   };
                   if (data.showCompareYear) {
                     data.compareYear = this.props.compareYear;
@@ -126,7 +130,7 @@ class Profile extends React.Component{
 
             <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
               <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
-                  <Sidebar years={ YEARS }
+                  <Sidebar years={ ACS_DATA_YEARS }
                     year={ this.props.year }
                     compareYear={ this.props.compareYear }
                     setGeoid={ geoid => this.setGeoid(geoid) }

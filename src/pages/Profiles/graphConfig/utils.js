@@ -1,12 +1,14 @@
 import CENSUS_CONFIG from "./censusConfig"
 
+import get from "lodash.get"
+
 const DEFAULT_LAYOUT = {
   w: 12,
   h: 9,
   static: true
 }
 
-export const YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018]
+export const ACS_DATA_YEARS = [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019]
 
 export const maleColor = '#ff9999';
 export const femaleColor = '#b3b3ff';
@@ -18,8 +20,8 @@ const ALPHABET = [
   "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"
 ]
 
-const expandKeys = keys =>
-  keys.reduce((a, c) => [...a, ...expandKeyRange(c)], [])
+const expandKeys = keys => keys.reduce((a, c) => [...a, ...expandKeyRange(c)], []);
+
 const expandKeyRange = key => {
   const split = key.split("...");
   if (split.length === 1) return split;
@@ -56,139 +58,162 @@ const expandKeyRange = key => {
 let ID = -1;
 const getId = () => `profile-${ ++ID }`;
 
-export const configLoader = BASE_CONFIG => {
+const processTreemap = node => {
+  const children = get(node, "children", []);
+
+  if (!children.length) {
+    return [get(node, "censusKey")].filter(Boolean);
+  }
+  return children.reduce((a, c) => {
+    a.push(...processTreemap(c));
+    return a;
+  }, []);
+}
+
+export const configLoader = (BASE_CONFIG, props) => {
+
+  const geoidLength = get(props, ["geoid", "length"], 0);
+
   const useCompact = window.innerWidth < 992;
 
   let x = 0, y = 0;
 
   const rects = [new Rect(0, -1, 12, 1)] // <-- this is the "ground" rect
 
-  return BASE_CONFIG.reduce((accum, baseConfig, index) => {
-    const config = JSON.parse(JSON.stringify(baseConfig));
+  return BASE_CONFIG
+    .filter(({ showForGeoidLength = geoidLength, hideWhenCompact = false }) => {
+      return (showForGeoidLength === geoidLength) || (hideWhenCompact && useCompact);
+    })
+    .reduce((accum, baseConfig, index) => {
+      const config = JSON.parse(JSON.stringify(baseConfig));
 
-    if (config.hideWhenCompact && useCompact) return accum;
+      // if (config.hideWhenCompact && useCompact) return accum;
 
-    if (config.type === "ProfileFooter" || config.type === "ProfileHeader") return config;
+      if (config.type === "ProfileFooter" || config.type === "ProfileHeader") return config;
 
-    if (config["broadCensusKey"]) {
-      const bk = CENSUS_CONFIG[config["broadCensusKey"]];
-      config.censusKeys = bk.variables.map(v => v.value);
-      // config.getKeyName = key => bk.variables.reduce((a, c) => c.value === key ? c.name : a, key)
-      config.name = bk.name;
-      config.title = bk.name;
-    }
+      if (config["broadCensusKey"]) {
+        const bk = CENSUS_CONFIG[config["broadCensusKey"]];
+        config.censusKeys = bk.variables.map(v => v.value);
+        // config.getKeyName = key => bk.variables.reduce((a, c) => c.value === key ? c.name : a, key)
+        config.name = bk.name;
+        config.title = bk.name;
+      }
 
-    if (config["left"] && config["left"].keys &&
-        config["right"] && config["right"].keys) {
-      config["left"].keys =  expandKeys(config["left"].keys);
-      config["right"].keys =  expandKeys(config["right"].keys);
-      config["censusKeys"] = [...config["left"].keys, ...config["right"].keys];
-    }
-    if (config["left"] && config["left"].slice && config.censusKeys) {
-      config["left"].keys = config.censusKeys.slice(...config["left"].slice);
-    }
-    if (config["right"] && config["right"].slice && config.censusKeys) {
-      config["right"].keys = config.censusKeys.slice(...config["right"].slice);
-    }
+      if (config["left"] && config["left"].keys && config["right"] && config["right"].keys) {
+        config["left"].keys =  expandKeys(config["left"].keys);
+        config["right"].keys =  expandKeys(config["right"].keys);
+        config["censusKeys"] = [...config["left"].keys, ...config["right"].keys];
+      }
+      if (config["left"] && config["left"].slice && config.censusKeys) {
+        config["left"].keys = config.censusKeys.slice(...config["left"].slice);
+      }
+      if (config["right"] && config["right"].slice && config.censusKeys) {
+        config["right"].keys = config.censusKeys.slice(...config["right"].slice);
+      }
 
-    if (config["censusKey"] && !config.censusKeys) {
-      config.censusKeys = [config.censusKey];
-    }
-    if (config["divisorKey"] && !config.divisorKeys) {
-      config.divisorKeys = [config.divisorKey];
-    }
+      if (config["censusKey"] && !config.censusKeys) {
+        config.censusKeys = [config.censusKey];
+      }
+      if (config["divisorKey"] && !config.divisorKeys) {
+        config.divisorKeys = [config.divisorKey];
+      }
 
-    if (config["censusKeys"]) {
-      config.censusKeys = expandKeys(config.censusKeys);
-    }
-    if (config["divisorKeys"]) {
-      config.divisorKeys = expandKeys(config.divisorKeys);
-    }
-    if (config["subtractKeys"]) {
-      config.subtractKeys = expandKeys(config.subtractKeys);
-    }
+      if (config.type === "CensusTreemap") {
+        config.censusKeys = processTreemap(config.tree);
+  // console.log("CensusTreemap", config.censusKeys);
+      }
 
-    if (config["censusKeys"]) {
-      config.censusKeysMoE = config.censusKeys.reduce((a, c) => {
-        const regex = /(.+)E$/;
-        if (regex.test(c)) {
-          a.push(c.replace(regex, (match, p1) => p1 + "M"))
+      if (config["censusKeys"]) {
+        config.censusKeys = expandKeys(config.censusKeys);
+      }
+      if (config["divisorKeys"]) {
+        config.divisorKeys = expandKeys(config.divisorKeys);
+      }
+      if (config["subtractKeys"]) {
+        config.subtractKeys = expandKeys(config.subtractKeys);
+      }
+
+      if (config["censusKeys"]) {
+        config.censusKeysMoE = config.censusKeys.reduce((a, c) => {
+          const regex = /(.+)E$/;
+          if (regex.test(c)) {
+            a.push(c.replace(regex, (match, p1) => p1 + "M"))
+          }
+          return a;
+        }, [])
+      }
+      if (config["divisorKeys"]) {
+        config.divisorKeysMoE = config.divisorKeys.reduce((a, c) => {
+          const regex = /(.+)E$/;
+          if (regex.test(c)) {
+            a.push(c.replace(regex, (match, p1) => p1 + "M"))
+          }
+          return a;
+        }, [])
+      }
+      if (config["subtractKeys"]) {
+        config.subtractKeysMoE = config.subtractKeys.reduce((a, c) => {
+          const regex = /(.+)E$/;
+          if (regex.test(c)) {
+            a.push(c.replace(regex, (match, p1) => p1 + "M"))
+          }
+          return a;
+        }, [])
+      }
+
+      if (config["divisorKeys"] && !config["yFormat"]) {
+        config.yFormat = ",.1%";
+      }
+
+      const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
+
+      if (useCompact) {
+        layout.x = 0;
+        layout.w = 3;
+        layout.y = y;
+        layout.h = config.type === "CensusStatBox" ? 4 : layout.h;
+        config.layout = layout;
+        y += layout.h;
+      }
+      else {
+        layout.w = Math.min(12, layout.w);
+
+        if (layout.x !== undefined) {
+          x = layout.x;
         }
-        return a;
-      }, [])
-    }
-    if (config["divisorKeys"]) {
-      config.divisorKeysMoE = config.divisorKeys.reduce((a, c) => {
-        const regex = /(.+)E$/;
-        if (regex.test(c)) {
-          a.push(c.replace(regex, (match, p1) => p1 + "M"))
+        else if ((x + layout.w) > 12) {
+          x = 0;
         }
-        return a;
-      }, [])
-    }
-    if (config["subtractKeys"]) {
-      config.subtractKeysMoE = config.subtractKeys.reduce((a, c) => {
-        const regex = /(.+)E$/;
-        if (regex.test(c)) {
-          a.push(c.replace(regex, (match, p1) => p1 + "M"))
+
+        if (layout.y !== undefined) {
+          y = layout.y;
         }
-        return a;
-      }, [])
-    }
+        const rect = new Rect(x, y, layout.w, layout.h);
 
-    if (config["divisorKeys"] && !config["yFormat"]) {
-      config.yFormat = ",.1%";
-    }
+        while (isIntersecting(rect, rects)) {
+          rect.translateY(1);
+        }
 
-    const layout = Object.assign({}, DEFAULT_LAYOUT, config.layout)
+        if (layout.y === undefined) {
+          applyGravity(rect, rects);
+        }
+        rects.push(rect);
 
-    if (useCompact) {
-      layout.x = 0;
-      layout.w = 3;
-      layout.y = y;
-      layout.h = config.type === "CensusStatBox" ? 4 : layout.h;
-      config.layout = layout;
-      y += layout.h;
-    }
-    else {
-      layout.w = Math.min(12, layout.w);
-
-      if (layout.x !== undefined) {
-        x = layout.x;
+        config.layout = rect.getLayout();
+        x += rect.w;
+        y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
       }
-      else if ((x + layout.w) > 12) {
-        x = 0;
-      }
+      config.id = getId();
 
-      if (layout.y !== undefined) {
-        y = layout.y;
-      }
-      const rect = new Rect(x, y, layout.w, layout.h);
-
-      while (isIntersecting(rect, rects)) {
-        rect.translateY(1);
-      }
-
-      if (layout.y === undefined) {
-        applyGravity(rect, rects);
-      }
-      rects.push(rect);
-
-      config.layout = rect.getLayout();
-      x += rect.w;
-      y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
-    }
-    config.id = getId();
-
-    accum.push(config);
-    return accum;
-  }, [])
+      accum.push(config);
+      return accum;
+    }, [])
 }
 
-export const processBaseConfig = BASE_GRAPH_CONFIG =>
+export const processBaseConfig = (BASE_GRAPH_CONFIG, props) =>
   Object.keys(BASE_GRAPH_CONFIG)
     .reduce((a, c) => {
-      a[c] = configLoader(BASE_GRAPH_CONFIG[c]);
+      a[c] = configLoader(BASE_GRAPH_CONFIG[c], props);
       return a;
     }, {})
 

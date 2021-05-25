@@ -25,12 +25,14 @@ import { falcorGraph, falcorChunkerNiceWithUpdate } from "store/falcorGraph";
 
 import LightTheme from "components/common/themes/light_new"
 
+import { makeCensusFormula } from "../makeCensusFormula"
+
 import { getColorRange } from "constants/color-ranges"
 const NUM_COLORS = 8;
 const LEGEND_COLOR_RANGE = getColorRange(NUM_COLORS, "Oranges").slice(0, NUM_COLORS - 1);
 
 // blues = ["#eff3ff", "#c6dbef", "#9ecae1", "#6baed6", "#4292c6", "#2171b5", "#084594"]
-const BORDER_COLOR = "#4292c6"
+const BORDER_COLOR = "#3282b6"//"#4292c6"
 const HOVER_COLOR = "#6baed6";
 
 class CensusMap extends React.Component {
@@ -67,43 +69,50 @@ class CensusMap extends React.Component {
           county: get(this.censusLayer, ["falcorCache", "geo", c.slice(0, 5), "name"], "Unknown County"),
           "geo level": this.props.geolevel,
           geoid: c,
+          "census keys": makeCensusFormula(this.props),
           [this.props.title]: get(this.censusLayer, ["geoData", c], "no data")
         })
         return a;
       }, [])
 
     return { data,
-      keys: ["county", "cousub", "geo level", "geoid", this.props.title]
+      keys: ["county", "cousub", "geo level", "geoid", "census keys", this.props.title]
     };
   }
   saveImage() {
     const canvas = d3selection.select(`#${ this.props.id } canvas.mapboxgl-canvas`).node(),
       newCanvas = document.createElement("canvas");
 
-    newCanvas.width = canvas.width;
-    newCanvas.height = canvas.height;
+    newCanvas.width = +canvas.width + 20;
+    newCanvas.height = +canvas.height + 80;
 
     const context = newCanvas.getContext("2d")
-    context.drawImage(canvas, 0, 0);
 
-    let x = canvas.width - 20 - 360,
-      y = 20;
+    context.fillStyle = "#fff";
+    context.fillRect(0, 0, +canvas.width + 20, +canvas.height + 80);
 
-    context.fillStyle = LightTheme.sidePanelBg;
-    context.fillRect(x, y, 360, 70);
+    context.drawImage(canvas, 10, 40);
 
-    x += 10;
-    y += 10;
+    const legendWidth = 400;
+
+    let x = 10, y = 30;
+    context.font = "1.2rem sans-serif";
+    context.fillStyle = "currentColor";
+    context.fillText(this.props.title, 10, 30);
+    context.fillText(`US Census ${ this.props.year } American Community Survey 5-Year Estimates`, 10, +canvas.height + 65);
+
+    x = +newCanvas.width - legendWidth - 10;
+    y = 40;
 
     context.fillStyle = LightTheme.sidePanelHeaderBg;
-    context.fillRect(x, y, 340, 50);
+    context.fillRect(x, y, legendWidth, 35);
 
-    x += 10;
-    y += 10;
-    const w = 320 / this.censusLayer.legend.range.length;
+    x += 5;
+    y += 5;
+    const w = (legendWidth - 10) / this.censusLayer.legend.range.length;
     this.censusLayer.legend.range.forEach((c, i) => {
       context.fillStyle = c;
-      context.fillRect(x + i * w, y, w, 20);
+      context.fillRect(x + i * w, y, w, 10);
     })
 
     let scale;
@@ -125,8 +134,7 @@ class CensusMap extends React.Component {
       this.censusLayer.legend.format :
       d3format(this.censusLayer.legend.format);
 
-    x += 3;
-    y += 33;
+    y += 23;
     context.fillStyle = LightTheme.textColor;
     context.font = "12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif";
     context.textAlign = "right";
@@ -135,13 +143,13 @@ class CensusMap extends React.Component {
       context.fillText(text, x + w + i * w, y);
     })
 
-    return newCanvas.toDataURL();//canvas.toDataURL();
+    return newCanvas;//.toDataURL();//canvas.toDataURL();
   }
   render() {
     return (
       <div style={ { width: "100%", height: "100%", overflow: "hidden", borderRadius: "4px" } }>
         <div style={ { height: "30px", maxWidth: "calc(100% - 285px)", marginBottom: "5px" } }>
-          <Title title={ this.props.title }/>
+          <Title { ...this.props }/>
           { !this.props.showOptions ? null :
             <Options tableTitle={ this.props.title }
               processDataForViewing={ () => this.processDataForViewing() }
@@ -282,43 +290,70 @@ class CensusLayer extends MapLayer {
     }, new mapboxgl.LngLatBounds())
   }
   fetchData() {
+    const regex = /unsd|zcta/;
     const counties = this.geoids.reduce((a, c) => {
-      c.length !== 7 && a.push(c.slice(0, 5));
+      c.length !== 7 && !regex.test(c) && a.push(c.slice(0, 5));
       return a;
     }, []);
 
-    return falcorChunkerNiceWithUpdate(
+// console.log("counties", counties)
+    const requests = [
       ["geo", counties, ["name", "cousubs"]],
       ["geo", this.geoids, ["cousubs", this.geolevel, "boundingBox", "name"]]
-    )
-    .then(() => {
-      const cousubs = this.geoids
-        .filter(geoid => geoid.length !== 7)
-        .map(geoid => geoid.slice(0, 5))
-        .reduce((a, c) => {
-          a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
-          return a;
-        }, []);
-      return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", this.geolevel]])
-    })
-    .then(() => {
-      const subGeoids = this.geoids.reduce((a, c) => {
-          a.push(...get(this.falcorCache, ["geo", c, this.geolevel, "value"], []))
-          return a;
-        }, []);
-      return falcorChunkerNiceWithUpdate(
-        ["acs", subGeoids, this.year,
-          [...this.censusKeys, ...this.divisorKeys, ...this.subtractKeys]
-        ],
-        ["geo", subGeoids, "boundingBox"],
-        ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "name"]
-      )
-    })
+    ]
+
+    const getGeoms = this.geoids.reduce((a, c) => {
+      return a || regex.test(c);
+    }, false)
+    if (getGeoms) {
+      requests.push(["geo", this.geoids.filter(geoid => regex.test(geoid)), "geom"])
+    }
+
+    return falcorChunkerNiceWithUpdate(...requests)
+      .then(() => {
+        const cousubs = this.getAllCousubs();
+
+        return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", this.geolevel]])
+      })
+      .then(() => {
+        const subGeoids = this.geoids.reduce((a, c) => {
+            a.push(...get(this.falcorCache, ["geo", c, this.geolevel, "value"], []))
+            return a;
+          }, []);
+
+  // console.log("subGeoids", subGeoids)
+        return falcorChunkerNiceWithUpdate(
+          ["acs", subGeoids, this.year,
+            [...this.censusKeys, ...this.divisorKeys, ...this.subtractKeys]
+          ],
+          ["geo", subGeoids, "boundingBox"],
+          ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "name"]
+        )
+      })
+      .then(() => {
+        if (getGeoms) {
+          this.map.getSource("geojson-geom")
+            .setData({
+              type: "FeatureCollection",
+              features: this.geoids
+                .filter(geoid => regex.test(geoid))
+                .map(geoid => {
+                  return {
+                    properties: { geoid },
+                    geometry: JSON.parse(get(this.falcorCache, ["geo", geoid, "geom", "value"]))
+                  }
+                })
+            })
+        }
+      })
   }
   getAllCousubs() {
+    const regex = /zcta|unsd/
     return this.geoids
       .filter(geoid => geoid.length !== 7)
-      .map(geoid => geoid.slice(0, 5))
+      .map(geoid => {
+        return regex.test(geoid) ? geoid : geoid.slice(0, 5)
+      })
       .reduce((a, c) => {
         a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
         return a;
@@ -364,6 +399,7 @@ class CensusLayer extends MapLayer {
           a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
           return a;
         }, {});
+
       map.setLayoutProperty("cousubs-symbol", "text-field",
         ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
       )
@@ -537,18 +573,22 @@ const LayerFactory = props => {
       //     'url': 'mapbox://am3081.2x2v9z60'
       //   },
       // },
-      {
-        id: "blockgroup",
+      { id: "blockgroup",
         source: {
             'type': "vector",
             'url': 'mapbox://am3081.52dbm7po'
         }
       },
-      {
-        id: "places",
+      { id: "places",
         source: {
           type: "vector",
           url: "mapbox://am3081.6u9e7oi9"
+        }
+      },
+      { id: "geojson-geom",
+        source: {
+          type: "geojson",
+          data: { type: "FeatureCollection", features: [] }
         }
       }
     ],
@@ -566,6 +606,7 @@ const LayerFactory = props => {
       //   'type': 'fill',
       //   filter : ['in', 'geoid', 'none']
       // },
+
       {
         id: "blockgroup",
         source: "blockgroup",
@@ -649,7 +690,16 @@ const LayerFactory = props => {
         paint: {
           "text-color": "#000"
         }
-      }
+      },
+      { id: "geojson-geom",
+        source: "geojson-geom",
+        type: "line",
+        // filter : ['in', 'geoid', 'none'],
+        paint: {
+          "line-color": BORDER_COLOR,
+          "line-width": 2
+        }
+      },
     ]
   })
 }
