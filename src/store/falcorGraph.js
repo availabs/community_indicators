@@ -5,8 +5,8 @@ import HttpDataSource from 'falcor-http-datasource'
 import store from "store"
 import { update } from "utils/redux-falcor/components/duck"
 
-// let host = 'https://graph.availabs.org/'
-let host = "http://localhost:4444/"
+let host = 'https://graph.availabs.org/'
+// let host = "http://localhost:4444/"
 
 console.log("API HOST:", host)
 

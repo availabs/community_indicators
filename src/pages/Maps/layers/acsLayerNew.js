@@ -913,7 +913,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       type: 'line',
       filter : ['in', 'geoid', 'none'],
       paint: {
-        "line-color": "#b00",
+        "line-color": "#ddd",
         "line-width": 1
       }
     },
