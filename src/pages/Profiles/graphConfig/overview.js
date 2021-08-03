@@ -6,30 +6,30 @@ import {
 export default [
    
 
-    // { type: "CensusTreemap",
-    //   title: "Testing Treemap",
-    //   layout:{
-    //      w: 12,
-    //      h: 12
-    //   },
-    //   tree: {
-    //     title: "Industry",
-    //     children: [
-    //       { title: "Agriculture, forestry, fishing and hunting, and mining",
-    //         censusKey: "C24050_002E"
-    //       },
-    //       { title: "Construction",
-    //         censusKey: "C24050_003E"
-    //       },
-    //       { title: "Manufacturing",
-    //         censusKey: "C24050_004E"
-    //       },
-    //       { title: "Wholesale Trade",
-    //         censusKey: "C24050_005E"
-    //       }
-    //     ]
-    //   }
-    // },
+    { type: "CensusTreemap",
+      title: "Testing Treemap",
+      layout:{
+         w: 12,
+         h: 12
+      },
+      tree: {
+        title: "Agriculture, forestry, fishing and hunting, and mining",
+        children: [
+          { title: "Agriculture, forestry, fishing and hunting, and mining",
+            censusKey: "S2401_C01_019E"
+          },
+          { title: "Construction",
+            censusKey: "S2401_C01_018E"
+          },
+          { title: "Manufacturing",
+            censusKey: "S2401_C01_017E"
+          },
+          { title: "Wholesale Trade",
+            censusKey: "S2401_C01_016E"
+          }
+        ]
+      }
+    },
 
    {
       type:"CensusStatBox",
