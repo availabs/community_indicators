@@ -411,6 +411,41 @@ let currentGroup = null;
 const CENSUS_FILTER_CONFIG = [
 
 //---------------------------------------------- OVERVIEW ----------------------------------------------
+//  { name: "Population 25 Years And Over with an Associate's degree",
+//    censusKeys: ["B15003_021E"],
+//    group: "Overview"
+//    type: "DotDensity"
+//  },
+//
+//  { name: "Civilian Employed Population 16 Years And Over by Industry",
+//    censusKeys: [
+//      "C24050_002E",
+//      "C24050_012E",
+//      "C24050_001E",
+//      "C24050_003E",
+//      "C24050_011E",
+//      "C24050_009E",
+//      "C24050_008E",
+//      "C24050_004E",
+//      "C24050_013E",
+//      ],
+//    censusKeyLabels: {
+//      "C24050_002E" : 'Agriculture, forestry, fishing and hunting, and mining',
+//      "C24050_012E" : 'Arts, entertainment, and recreation, and accommodation and food service',
+//      "C24050_001E" : 'Civilian Employed Population 16 Years And Over',
+//      "C24050_003E" : 'Construction',
+//      "C24050_011E" : 'Educational services, and health care and social assistance',
+//      "C24050_009E" : 'Finance and insurance, and real estate and rental and leasing',
+//      "C24050_008E" : 'Information',
+//      "C24050_004E" : 'Manufacturing',
+//      "C24050_013E" : 'Other services, except public administration',
+//      },
+//    group: "Overview"
+//    type: "DotDensity"
+//  },
+//
+
+
   { name: "Total Population",
     censusKeys: ["B01003_001E"],
     group: "Overview"
