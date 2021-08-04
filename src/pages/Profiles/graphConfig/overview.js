@@ -7,7 +7,7 @@ export default [
 
 
     { type: "CensusTreemap",
-      title: "Testing Treemap",
+      title: "Occupations",
       layout:{
          w: 12,
          h: 12
@@ -37,8 +37,8 @@ export default [
               { title: "Manufacturing",
                 censusKey: "S2403_C01_006E"
               },
-            ]
-          },,
+            ],
+          },
           { title: "Trade",
             children: [
               { title: "Wholesale trade",
