@@ -31,7 +31,7 @@ const main = async () => {
     WHERE substring(geoid from 1 for 5) = ANY($1)
     GROUP BY 1, 2
   `
-  const res = await client.query(sql, [['36001']])//,'36083','36093','36091','36039','36021','36115','36113']]);
+  const res = await client.query(sql, [['36001','36083','36093','36091','36039','36021','36115','36113']]);
 
   const rows = res.rows.map(row => ({
     geoid: row.geoid,
@@ -39,16 +39,13 @@ const main = async () => {
     bbox: row.bbox.slice(4, -1).split(/[ ,]/).map(c => +c)
   }))
 
-  const byCounty = d3groups(rows, r => getCounty(r.geoid), r => getTract(r.geoid));
+  const byCounty = d3groups(rows, r => getCounty(r.geoid));
 
   const allData = [];
 
   for (const [county, tracts] of byCounty) {
-    for (const [tract, bgs] of tracts) {
-console.log(county, tract, bgs)
-      const data = await fetch(getAcsUrl(county, tract));
-      allData.push(...data.slice(1));
-    }
+    const data = await fetch(getAcsUrl(county));
+    allData.push(...data.slice(1));
   }
 
   const bgPopMap = allData.reduce((a, c) => {
@@ -64,8 +61,6 @@ console.log(county, tract, bgs)
   for (const row of rows) {
     const { geoid, geom, bbox } = row;
     const pop = bgPopMap.get(geoid);
-
-console.log(geoid, pop)
 
     const lngLatSet = new Set();
 
@@ -122,13 +117,13 @@ const getCounty = geoid => geoid.slice(2, 5);
 const getTract = geoid => geoid.slice(5, 11);
 const getBlockgroup = geoid => geoid.slice(11);
 
-const getAcsUrl = (county, tract) =>
+const getAcsUrl = (county) =>
   "https://api.census.gov/data/" +
 	`${ acsYear }/acs/acs5?` +
 	`key=${ CensusApiKey }` +
 	`&get=B01003_001E` +
   `&for=block+group:*` +
-  `&in=state:36+county:${ county }+tract:${ tract }`;
+  `&in=state:36+county:${ county }+tract:*`;
 
 const fetch = url => {
   return new Promise((resolve, reject) => {

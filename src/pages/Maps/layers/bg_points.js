@@ -1,13 +1,29 @@
 import React from "react"
 
 // import { Link } from "react-router-dom"
+import get from "lodash.get"
 
 import MapLayer from "AvlMap/MapLayer"
+
+import { falcorGraph, falcorChunkerNice } from "store/falcorGraph";
+
+const GREATER_COUNTIES = ['36001','36083','36093','36091','36039','36021','36115','36113'];
 
 class BgPointsLayer extends MapLayer {
   name = "Dot Density";
   active = true;
   version = 2.0; // ONLY SET THIS IF YOU KNOW WHAT IT MEANS!!!
+  onAdd(map) {
+    return falcorGraph.get(
+      ["geo", GREATER_COUNTIES, "blockgroup"]
+    )
+    .then(res => {
+      const bgs = GREATER_COUNTIES.reduce((a, c) => {
+        return a.concat(get(res, ["json", "geo", c, "blockgroup"], []));
+      }, []);
+console.log("BGs:", bgs)
+    })
+  }
   popover = {
     layers: ["bg_points"],
     dataFunc: function(topFeature, features) {

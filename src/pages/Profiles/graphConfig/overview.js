@@ -38,7 +38,7 @@ export default [
                 censusKey: "S2403_C01_006E"
               },
             ]
-          },,
+          },
           { title: "Trade",
             children: [
               { title: "Wholesale trade",
