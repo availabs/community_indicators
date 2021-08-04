@@ -13,18 +13,21 @@ import censusLayerFactory from "./layers/censusLayer.js"
 // import acsLayerFactory from './layers/acsLayer.js'
 import acsLayerFactory from "./layers/acsLayerNew"
 
+import bgPointsLayerFactory from "./layers/bg_points"
+
 const SidebarHeader = ({}) =>
   <div style={ { paddingLeft: "50px" } }><Logo width={ 200 }/></div>
 
 class MapPage extends React.Component {
   CensusLayer = censusLayerFactory({ active: false });
-  ACS_Layer = acsLayerFactory({ active: true, props: this.props });
+  ACS_Layer = acsLayerFactory({ active: false, props: this.props });
+  BG_Points = bgPointsLayerFactory();
   render() {
     return (
       <div style={ { height: '100vh', paddingTop: "49px" } }>
         <AvlMap id="haz-mit-avl-map"
           preserveDrawingBuffer={ true }
-          layers={ [this.ACS_Layer, this.CensusLayer] }
+          layers={ [this.BG_Points, this.ACS_Layer, this.CensusLayer] }
           header={ SidebarHeader }
           { ...this.ACS_Layer.baseMapSettings }
           header={ false }

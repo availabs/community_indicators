@@ -12,6 +12,8 @@ import Profiles from './Profile'
 import ShareEmbed from "./ShareEmbed"
 import ProfileHeader from './components/ProfileHeader'
 
+import ProfileTester from "./ProfileTester"
+
 import { processBaseConfig } from "./graphConfig/utils"
 import BASE_GRAPH_CONFIG from './regionConfig'
 
@@ -199,6 +201,17 @@ export default [
         auth:false,
         subMenus: subMenus,
         component: Factory("Greater Capital Region")
+    },
+    { path: "/profile-tester",
+      mainNav: false,
+      exact: true,
+      auth: false,
+      menuSettings:{
+          image: 'none',
+          scheme: 'color-scheme-dark',
+          style: 'color-style-default'
+      },
+      component: ProfileTester
     },
     ...Profiles,
     ShareEmbed

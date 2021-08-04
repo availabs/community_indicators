@@ -21,6 +21,11 @@ yarn-debug.log*
 yarn-error.log*
 
 user.json
+config.py
+*.config.json
+*.config.mjs
+config.mjs
+config.js
 
 /src/store/config.js
 
