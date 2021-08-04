@@ -186,12 +186,7 @@ const getTreeData = (state, props) => {
   const walkTree = (node, geoid, year, isRoot = false) => {
     if (node.children) {
       node.children.forEach((n, i) => {
-        if (isRoot) {
-          n.color = DEFAULT_COLORS[i % DEFAULT_COLORS.length];
-        }
-        else {
-          n.color = node.color;
-        }
+        n.color = n.color || (isRoot ? DEFAULT_COLORS[i % DEFAULT_COLORS.length] : node.color);
         walkTree(n, geoid, year);
       });
     }

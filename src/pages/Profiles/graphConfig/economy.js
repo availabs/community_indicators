@@ -79,6 +79,247 @@ export default [
       }
     },
 
+   { type: "CensusTreemap",
+      title: "Industries by civilian employed population 16 years and over",
+      layout:{
+         w: 12,
+         h: 12
+      },
+      tree: {
+        title: "Industries by Occupation",
+        children: [
+          { title: "Agriculture, forestry, fishing and hunting, and mining",
+            children: [
+              { title: "Agriculture, forestry, fishing and hunting",
+                censusKey: "S2403_C01_003E"
+              },
+              { title: "Mining, quarrying, and oil and gas extraction",
+                censusKey: "S2403_C01_004E"
+              },
+            ],
+          },
+          { title: "Construction",
+            children: [
+              { title: "Construction",
+                censusKey: "S2403_C01_005E"
+              },
+            ],
+          },
+          { title: "Manufacturing",
+            children: [
+              { title: "Manufacturing",
+                censusKey: "S2403_C01_006E"
+              },
+            ],
+          },
+          { title: "Trade",
+            children: [
+              { title: "Wholesale trade",
+                censusKey: "S2403_C01_007E"
+              },
+              { title: "Retail trade",
+                censusKey: "S2403_C01_008E"
+              },
+            ],
+          },
+          { title: "Transportation and warehousing, and utilities",
+            children: [
+              { title: "Transportation and warehousing",
+                censusKey: "S2403_C01_010E"
+              },
+              { title: "Utilities",
+                censusKey: "S2403_C01_011E"
+              },
+            ],
+          },
+          { title: "Information",
+            children: [
+              { title: "Information",
+                censusKey: "S2403_C01_012E"
+              },
+            ],
+          },
+          { title: "Finance and insurance, and real estate and rental and leasing",
+            children: [
+              { title: "Finance and insurance",
+                censusKey: "S2403_C01_014E"
+              },
+              { title: "Real estate and rental and leasing",
+                censusKey: "S2403_C01_015E"
+              },
+            ]
+          },
+          { title: "Professional, scientific, and management, and administrative and waste management services",
+            children: [
+              { title: "Professional, scientific, and technical services",
+                censusKey: "S2403_C01_017E"
+              },
+              { title: "Management of companies and enterprises",
+                censusKey: "S2403_C01_018E"
+              },
+              { title: "Administrative and support and waste management services",
+                censusKey: "S2403_C01_019E"
+              },
+            ],
+          },
+          { title: "Educational services, and health care and social assistance",
+            children: [
+              { title: "Educational services",
+                censusKey: "S2403_C01_021E"
+              },
+              { title: "Health care and social assistance",
+                censusKey: "S2403_C01_022E"
+              },
+            ],
+          },
+          { title: "Arts, entertainment, and recreation, and accommodation and food services",
+            children: [
+              { title: "Arts, entertainment, and recreation",
+                censusKey: "S2403_C01_024E"
+              },
+              { title: "Accommodation and food services",
+                censusKey: "S2403_C01_025E"
+              },
+            ],
+          },
+          { title: "Other services",
+            children: [
+              { title: "Other services, except public administration",
+                censusKey: "S2403_C01_026E"
+              },
+              { title: "Public administration",
+                censusKey: "S2403_C01_027E"
+              },
+            ]
+          },
+        ],
+      },
+    },
+
+   { type: "CensusTreemap",
+      title: "Occupations by civilian employed population 16 years and over",
+      layout:{
+         w: 12,
+         h: 12
+      },
+      tree: {
+        title: "Occupations",
+        children: [
+          { title: "Management, business, science, and arts occupations",
+            children: [
+              { title: "Management, business, and financial occupations",
+                censusKey: "S2401_C01_003E"
+              },
+              { title: "Management occupations",
+                censusKey: "S2401_C01_004E"
+              },
+              { title: "Business and financial operations occupations",
+                censusKey: "S2401_C01_005E"
+              },
+              { title: "Computer, engineering, and science occupations",
+                censusKey: "S2401_C01_006E"
+              },
+              { title: "Computer and mathematical occupations",
+                censusKey: "S2401_C01_007E"
+              },
+              { title: "Architecture and engineering occupations",
+                censusKey: "S2401_C01_008E"
+              },
+              { title: "Life, physical, and social science occupations",
+                censusKey: "S2401_C01_009E"
+              },
+              { title: "Education, legal, community service, arts, and media occupations",
+                censusKey: "S2401_C01_010E"
+              },
+              { title: "Community and social service occupations",
+                censusKey: "S2401_C01_011E"
+              },
+              { title: "Legal occupations",
+                censusKey: "S2401_C01_012E"
+              },
+              { title: "Educational instruction, and library occupations",
+                censusKey: "S2401_C01_013E"
+              },
+              { title: "Arts, design, entertainment, sports, and media occupations",
+                censusKey: "S2401_C01_014E"
+              },
+              { title: "Healthcare practitioners and technical occupations",
+                censusKey: "S2401_C01_015E"
+              },
+              { title: "Health diagnosing and treating practitioners and other technical occupations",
+                censusKey: "S2401_C01_016E"
+              },
+              { title: "Health technologists and technicians",
+                censusKey: "S2401_C01_017E"
+              },
+            ],
+          },
+          { title: "Service Occupation",
+            children: [
+              { title: "Healthcare support occupations",
+                censusKey: "S2401_C01_019E"
+              },
+              { title: "Protective service occupations",
+                censusKey: "S2401_C01_020E"
+              },
+              { title: "Firefighting and prevention, and other protective service workers including supervisors",
+                censusKey: "S2401_C01_021E"
+              },
+              { title: "Law enforcement workers including supervisors",
+                censusKey: "S2401_C01_022E"
+              },
+              { title: "Food preparation and serving related occupations",
+                censusKey: "S2401_C01_023E"
+              },
+              { title: "Building and grounds cleaning and maintenance occupations",
+                censusKey: "S2401_C01_024E"
+              },
+              { title: "Personal care and service occupations",
+                censusKey: "S2401_C01_025E"
+              },
+            ],
+          },
+          { title: "Sales and Office Occupations",
+            children: [
+              { title: "Sales and related occupations",
+                censusKey: "S2401_C01_027E"
+              },
+              { title: "Office and administrative support occupations",
+                censusKey: "S2401_C01_028E"
+              },
+            ],
+          },
+          { title: "Natural resources, construction, and maintenance occupations",
+            children: [
+              { title: "Farming, fishing, and forestry occupations",
+                censusKey: "S2401_C01_030E"
+              },
+              { title: "Construction and extraction occupations",
+                censusKey: "S2401_C01_031E"
+              },
+              { title: "Installation, maintenance, and repair occupations",
+                censusKey: "S2401_C01_032E"
+              },
+            ],
+          },
+          
+          { title: "Production, transportation, and material moving occupations",
+            children: [
+              { title: "Production occupations",
+                censusKey: "S2401_C01_034E"
+              },
+              { title: "Transportation occupations",
+                censusKey: "S2401_C01_035E"
+              },
+              { title: "Material moving occupations",
+                censusKey: "S2401_C01_036E"
+              },
+            ]
+          },
+        ],
+      },
+    },  
+
   {
       type:"CensusStatBox",
       title:'Percent of Population Over 16 Years-old, Not in Labor Force',
@@ -94,6 +335,8 @@ export default [
          h:9
       }
    },
+
+
 
 
   {
