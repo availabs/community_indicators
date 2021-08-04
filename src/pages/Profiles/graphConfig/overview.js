@@ -23,14 +23,14 @@ export default [
               { title: "Mining, quarrying, and oil and gas extraction",
                 censusKey: "S2403_C01_004E"
               },
-            ]
+            ],
           },
           { title: "Construction",
             children: [
               { title: "Construction",
                 censusKey: "S2403_C01_005E"
               },
-            ]
+            ],
           },
           { title: "Manufacturing",
             children: [
@@ -38,20 +38,16 @@ export default [
                 censusKey: "S2403_C01_006E"
               },
             ]
-          },
-          { title: "Wholesale trade",
+          },,
+          { title: "Trade",
             children: [
               { title: "Wholesale trade",
                 censusKey: "S2403_C01_007E"
               },
-            ]
-          },
-          { title: "Retail trade",
-            children: [
-              { title: "Retail",
+              { title: "Retail trade",
                 censusKey: "S2403_C01_008E"
               },
-            ]
+            ],
           },
           { title: "Transportation and warehousing, and utilities",
             children: [
@@ -61,9 +57,69 @@ export default [
               { title: "Utilities",
                 censusKey: "S2403_C01_011E"
               },
+            ],
+          },
+          { title: "Information",
+            children: [
+              { title: "Information",
+                censusKey: "S2403_C01_012E"
+              },
+            ],
+          },
+          { title: "Finance and insurance, and real estate and rental and leasing",
+            children: [
+              { title: "Finance and insurance",
+                censusKey: "S2403_C01_014E"
+              },
+              { title: "Real estate and rental and leasing",
+                censusKey: "S2403_C01_015E"
+              },
             ]
-          }
-        ]
+          },
+          { title: "Professional, scientific, and management, and administrative and waste management services",
+            children: [
+              { title: "Professional, scientific, and technical services",
+                censusKey: "S2403_C01_017E"
+              },
+              { title: "Management of companies and enterprises",
+                censusKey: "S2403_C01_018E"
+              },
+              { title: "Administrative and support and waste management services",
+                censusKey: "S2403_C01_019E"
+              },
+            ],
+          },
+          { title: "Educational services, and health care and social assistance",
+            children: [
+              { title: "Educational services",
+                censusKey: "S2403_C01_021E"
+              },
+              { title: "Health care and social assistance",
+                censusKey: "S2403_C01_022E"
+              },
+            ],
+          },
+          { title: "Arts, entertainment, and recreation, and accommodation and food services",
+            children: [
+              { title: "Arts, entertainment, and recreation",
+                censusKey: "S2403_C01_024E"
+              },
+              { title: "Accommodation and food services",
+                censusKey: "S2403_C01_025E"
+              },
+            ],
+          },
+          { title: "Other services",
+            children: [
+              { title: "Other services, except public administration",
+                censusKey: "S2403_C01_026E"
+              },
+              { title: "Public administration",
+                censusKey: "S2403_C01_027E"
+              },
+            ]
+          },
+        ],
       },
     },
 
