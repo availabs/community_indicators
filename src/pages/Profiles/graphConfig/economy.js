@@ -13,6 +13,89 @@ export default [
             w: 12
              }
         },
+
+   {
+      type:"CensusStatBox",
+      title:'Percent of Population Over 16 Years-old, Not in Labor Force',
+      sumType: 'pct',
+      censusKeys:["B23025_007E"],
+      divisorKey: "B23025_001E",
+      showCompareYear: true,
+      invertColors: true,
+      valueSuffix: '%',
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:9
+      }
+   },
+   {
+    type: "CensusBarChart",
+    title: "Employment Status for the Population 16 Years and Over",
+    orientation: "horizontal",
+    marginLeft: 250,
+    legendPosition: "bottom-right",
+    censusKeys: ["B23025_001E...B23025_007E"],
+    hideWhenCompact: true,
+    layout:{
+         w:9,
+         h:9
+      }
+  },
+
+  {
+      type:"CensusStatBox",
+      title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
+      sumType: 'pct',
+      censusKeys:["B23025_005E"],
+      divisorKey: "B23025_001E",
+      showCompareYear: true,
+      valueSuffix: '%',
+      invertColors: true,
+      maximumFractionDigits: 1,
+      layout:{
+         w:3,
+         h:9
+      }
+   },
+
+  {
+    type: "CensusStackedBarChart",
+    title: "Labor Force Participation",
+    showCompareGeoid: false,
+    orientation: "horizontal",
+    marginLeft: 275,
+    layout:{
+         w:9,
+         h:9
+      },
+    left: {
+      key: "Male", color: maleColor,
+      keys: [
+        "C23002A_004E...C23002A_009E",
+        "C23002A_011E...C23002A_014E"
+      ]
+    },
+    right: {
+      key: "Female", color: femaleColor,
+      keys: [
+        "C23002A_017E...C23002A_022E",
+        "C23002A_024E...C23002A_027E"
+      ]
+    },
+    labels: [
+      "16 to 64 years In labor force",
+      "16 to 64 years In labor force In Armed Forces",
+      "16 to 64 years In labor force Civilian",
+      "16 to 64 years In labor force Civilian Employed",
+      "16 to 64 years In labor force Civilian Unemployed",
+      "16 to 64 years Not in labor force",
+      "65 years and over In labor force",
+      "65 years and over In labor force Employed",
+      "65 years and over In labor force Unemployed",
+      "65 years and over Not in labor force"
+    ]
+  },       
  { type: "QCEWStatBox",
       title: "Annual Average Employment Level",
 
@@ -89,6 +172,7 @@ export default [
         title: "Industries by Occupation",
         children: [
           { title: "Agriculture, forestry, fishing and hunting, and mining",
+            color: "#e41a1c",
             children: [
               { title: "Agriculture, forestry, fishing and hunting",
                 censusKey: "S2403_C01_003E"
@@ -99,6 +183,7 @@ export default [
             ],
           },
           { title: "Construction",
+            color: "#377eb8",
             children: [
               { title: "Construction",
                 censusKey: "S2403_C01_005E"
@@ -106,33 +191,43 @@ export default [
             ],
           },
           { title: "Manufacturing",
+            color: "#ffffb3",
             children: [
               { title: "Manufacturing",
                 censusKey: "S2403_C01_006E"
               },
             ],
           },
-          { title: "Trade",
+          { title: "Wholesale trade",
+            color: "#4daf4a",
             children: [
               { title: "Wholesale trade",
                 censusKey: "S2403_C01_007E"
               },
+            ],
+          },
+           { title: "Retail trade",
+            color: "#bebada",
+            children: [
               { title: "Retail trade",
                 censusKey: "S2403_C01_008E"
               },
             ],
           },
           { title: "Transportation and warehousing, and utilities",
+            color: "#984ea3",
             children: [
               { title: "Transportation and warehousing",
                 censusKey: "S2403_C01_010E"
               },
               { title: "Utilities",
+                color: "#8dd3c7",
                 censusKey: "S2403_C01_011E"
               },
             ],
           },
           { title: "Information",
+            color: "#fb8072",
             children: [
               { title: "Information",
                 censusKey: "S2403_C01_012E"
@@ -140,8 +235,10 @@ export default [
             ],
           },
           { title: "Finance and insurance, and real estate and rental and leasing",
+            color: "#80b1d3",
             children: [
               { title: "Finance and insurance",
+                color: "#ff7f00",
                 censusKey: "S2403_C01_014E"
               },
               { title: "Real estate and rental and leasing",
@@ -150,39 +247,47 @@ export default [
             ]
           },
           { title: "Professional, scientific, and management, and administrative and waste management services",
+            color: "#ffff33",
             children: [
               { title: "Professional, scientific, and technical services",
                 censusKey: "S2403_C01_017E"
               },
               { title: "Management of companies and enterprises",
+                color: "#fdb462",
                 censusKey: "S2403_C01_018E"
               },
               { title: "Administrative and support and waste management services",
+                color: "#a65628",
                 censusKey: "S2403_C01_019E"
               },
             ],
           },
           { title: "Educational services, and health care and social assistance",
+            color: "#b3de69",
             children: [
               { title: "Educational services",
                 censusKey: "S2403_C01_021E"
               },
               { title: "Health care and social assistance",
+                color: "#f781bf",
                 censusKey: "S2403_C01_022E"
               },
             ],
           },
           { title: "Arts, entertainment, and recreation, and accommodation and food services",
+            color: "#fccde5",
             children: [
               { title: "Arts, entertainment, and recreation",
                 censusKey: "S2403_C01_024E"
               },
               { title: "Accommodation and food services",
+                color: "#999999",
                 censusKey: "S2403_C01_025E"
               },
             ],
           },
           { title: "Other services",
+            color: "#d9d9d9",
             children: [
               { title: "Other services, except public administration",
                 censusKey: "S2403_C01_026E"
@@ -194,9 +299,26 @@ export default [
           },
         ],
       },
-    },
+    }, 
 
-   { type: "CensusTreemap",
+  {
+    type: "CensusBarChart",
+    title: "Industry by Median Earnings",
+    orientation: "horizontal",
+    layout: { h: 12 },
+    marginLeft: 480,
+    yFormat: "$,d",
+    censusKeys: ["B24031_001E...B24031_027E"],
+    removeLeading: 1,
+    hideWhenCompact: true,
+    layout:{
+         w:12,
+         h:17,
+      }
+
+  },
+
+  { type: "CensusTreemap",
       title: "Occupations by civilian employed population 16 years and over",
       layout:{
          w: 12,
@@ -319,110 +441,6 @@ export default [
         ],
       },
     },  
-
-  {
-      type:"CensusStatBox",
-      title:'Percent of Population Over 16 Years-old, Not in Labor Force',
-      sumType: 'pct',
-      censusKeys:["B23025_007E"],
-      divisorKey: "B23025_001E",
-      showCompareYear: true,
-      invertColors: true,
-      valueSuffix: '%',
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:9
-      }
-   },
-
-
-
-
-  {
-    type: "CensusBarChart",
-    title: "Employment Status for the Population 16 Years and Over",
-    orientation: "horizontal",
-    marginLeft: 250,
-    legendPosition: "bottom-right",
-    censusKeys: ["B23025_001E...B23025_007E"],
-    hideWhenCompact: true,
-    layout:{
-         w:9,
-         h:9
-      }
-  },
-
-  {
-      type:"CensusStatBox",
-      title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
-      sumType: 'pct',
-      censusKeys:["B23025_005E"],
-      divisorKey: "B23025_001E",
-      showCompareYear: true,
-      valueSuffix: '%',
-      invertColors: true,
-      maximumFractionDigits: 1,
-      layout:{
-         w:3,
-         h:9
-      }
-   },
-
-  {
-    type: "CensusStackedBarChart",
-    title: "Labor Force Participation",
-    showCompareGeoid: false,
-    orientation: "horizontal",
-    marginLeft: 275,
-    layout:{
-         w:9,
-         h:9
-      },
-    left: {
-      key: "Male", color: maleColor,
-      keys: [
-        "C23002A_004E...C23002A_009E",
-        "C23002A_011E...C23002A_014E"
-      ]
-    },
-    right: {
-      key: "Female", color: femaleColor,
-      keys: [
-        "C23002A_017E...C23002A_022E",
-        "C23002A_024E...C23002A_027E"
-      ]
-    },
-    labels: [
-      "16 to 64 years In labor force",
-      "16 to 64 years In labor force In Armed Forces",
-      "16 to 64 years In labor force Civilian",
-      "16 to 64 years In labor force Civilian Employed",
-      "16 to 64 years In labor force Civilian Unemployed",
-      "16 to 64 years Not in labor force",
-      "65 years and over In labor force",
-      "65 years and over In labor force Employed",
-      "65 years and over In labor force Unemployed",
-      "65 years and over Not in labor force"
-    ]
-  },
-
-  {
-    type: "CensusBarChart",
-    title: "Industry by Median Earnings",
-    orientation: "horizontal",
-    layout: { h: 12 },
-    marginLeft: 480,
-    yFormat: "$,d",
-    censusKeys: ["B24031_001E...B24031_027E"],
-    removeLeading: 1,
-    hideWhenCompact: true,
-    layout:{
-         w:12,
-         h:17,
-      }
-
-  },
 
     {
       type: "TextBox",
