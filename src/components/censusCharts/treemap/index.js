@@ -139,7 +139,7 @@ class CensusTreemap extends ChartBase {
                     margin={ { top: 2, right: 2, bottom: 2, left: 2 } }
                     identity="title"
                     value="value"
-                    colors={ DEFAULT_COLORS }
+                    colors={ ({ color }) => color }
                     labelTextColor="currentColor"
                     borderColor="currentColor"
                     borderWidth={ 4 }/>
@@ -183,10 +183,16 @@ const getCensusKeyLabels = (state, props) => {
 const getTreeData = (state, props) => {
   const allGeoids = [...get(props, "geoids", []), props.compareGeoid].filter(Boolean);
 
-  const walkTree = (node, geoid, year) => {
+  const walkTree = (node, geoid, year, isRoot = false) => {
     if (node.children) {
-      node.children.forEach(node => {
-        walkTree(node, geoid, year);
+      node.children.forEach((n, i) => {
+        if (isRoot) {
+          n.color = DEFAULT_COLORS[i % DEFAULT_COLORS.length];
+        }
+        else {
+          n.color = node.color;
+        }
+        walkTree(n, geoid, year);
       });
     }
     else {
@@ -204,7 +210,7 @@ const getTreeData = (state, props) => {
   return allGeoids.map(geoid => {
     return {
       geoid,
-      data: walkTree(JSON.parse(JSON.stringify(props.tree)), geoid, props.year)
+      data: walkTree(JSON.parse(JSON.stringify(props.tree)), geoid, props.year, true)
     };
   }).slice(0, 1)
 }

@@ -4,7 +4,7 @@ import {
 } from "./utils"
 
 export default [
-   
+
 
     { type: "CensusTreemap",
       title: "Testing Treemap",
@@ -13,58 +13,57 @@ export default [
          h: 12
       },
       tree: {
-        title: "Agriculture, forestry, fishing and hunting, and mining",
+        title: "Occupations",
         children: [
-          { title: "Agriculture, forestry, fishing and hunting",
-            censusKey: "S2403_C01_003E"
+          { title: "Agriculture, forestry, fishing and hunting, and mining",
+            children: [
+              { title: "Agriculture, forestry, fishing and hunting",
+                censusKey: "S2403_C01_003E"
+              },
+              { title: "Mining, quarrying, and oil and gas extraction",
+                censusKey: "S2403_C01_004E"
+              },
+            ]
           },
-          { title: "Mining, quarrying, and oil and gas extraction",
-            censusKey: "S2403_C01_004E"
-          },
-        ],
-      },
-      tree: {
-        title: "Construction",
-        children: [
           { title: "Construction",
-            censusKey: "S2403_C01_005E"
+            children: [
+              { title: "Construction",
+                censusKey: "S2403_C01_005E"
+              },
+            ]
           },
-        ],
-      },
-      tree: {
-        title: "Manufacturing",
-        children: [
           { title: "Manufacturing",
-            censusKey: "S2403_C01_006E"
+            children: [
+              { title: "Manufacturing",
+                censusKey: "S2403_C01_006E"
+              },
+            ]
           },
-        ],
-      },
-      tree: { 
-        title: "Wholesale trade",
-        children: [
           { title: "Wholesale trade",
-            censusKey: "S2403_C01_007E"
+            children: [
+              { title: "Wholesale trade",
+                censusKey: "S2403_C01_007E"
+              },
+            ]
           },
-        ],
-      },
-      tree: {
-        title: "Retail trade",
-        children: [
-          { title: "Retail",
-            censusKey: "S2403_C01_008E"
+          { title: "Retail trade",
+            children: [
+              { title: "Retail",
+                censusKey: "S2403_C01_008E"
+              },
+            ]
           },
-        ],
-      },
-      tree: {
-        title: "Transportation and warehousing, and utilities",
-        children: [
-          { title: "Transportation and warehousing",
-            censusKey: "S2403_C01_010E"
-          },
-          { title: "Utilities",
-            censusKey: "S2403_C01_011E"
-          },  
-        ],
+          { title: "Transportation and warehousing, and utilities",
+            children: [
+              { title: "Transportation and warehousing",
+                censusKey: "S2403_C01_010E"
+              },
+              { title: "Utilities",
+                censusKey: "S2403_C01_011E"
+              },
+            ]
+          }
+        ]
       },
     },
 
