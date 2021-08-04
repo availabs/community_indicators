@@ -208,7 +208,7 @@ class Home extends Component {
                                       </ul>
                                     </p>
                                     <p>
-                                        The site was custom-designed by
+                                        The site was custom-designed by 
                                         <IA href="https://availabs.org/" target="blank">the Albany Visualization and Informatics Lab (AVAIL)</IA> located in the Geography and Planning Department at the University at Albany, State University of New York, and is maintained by
                                         &nbsp;<IA href="https://cdrpc.org/" target="blank">CDRPC</IA>.
                                     </p>
@@ -264,6 +264,15 @@ class Home extends Component {
                                 </ContentHeader>
                                 <SectionBoxMain>
                                     The information available on Capital Region Indicators can be used for a wide range of purposes, be it to drive conversation, encourage collaboration around an issue, assist with research projects, inspire charitable efforts or inform the general public.
+                                </SectionBoxMain>
+
+                                <ContentHeader>
+                                    Tutorials:
+                                </ContentHeader>
+                                <SectionBoxMain>
+                                    <ul>
+                                        <li><IA href="https://youtu.be/LNI9XaC0sOc" target="blank">How to Use the Capital Region Indicators Dashboard for the Consolidated Funding Application (CFA) or Other Grant Applications - YouTube</IA></li>
+                                    </ul>
                                 </SectionBoxMain>
 
                                 <ContentHeader>

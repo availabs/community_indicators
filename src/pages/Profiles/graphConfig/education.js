@@ -155,13 +155,13 @@ export default [
 
          {
           type:"CensusStatBox",
-          title: "Percent of Population with No High School Diploma or Equivalent",
+          title: "Percent of Population 25 and Over with No High School Diploma or Equivalent",
           sumType: 'pct',
-          divisorKey: "B23025_001E",
+          // divisorKey: "B23025_001E",
           valueSuffix: '%',
           maximumFractionDigits: 1,
           censusKeys:['B15003_002E...B15003_016E'],
-          divisorKeys:['B01003_001E'],
+          divisorKeys:['B15003_001E'],
           showCompareYear: true,
           invertColors: true,
           layout:{
