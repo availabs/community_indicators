@@ -591,65 +591,66 @@ const CENSUS_FILTER_CONFIG = [
     group: "Economy"
   },
 
-      { name: "Percent Finance and insurance, and real estate and rental and leasing",
+  { name: "Percent Finance and insurance, and real estate and rental and leasing",
     censusKeys: ['C24050_009E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Information",
+  { name: "Percent Information",
     censusKeys: ['C24050_008E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
+  },
 
-          { name: "Percent Manufacturing",
+  { name: "Percent Manufacturing",
     censusKeys: ['C24050_004E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Other services, except public administration",
+  { name: "Percent Other services, except public administration",
     censusKeys: ['C24050_013E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Professional, scientific, and management, and administrative and waste management services",
+  { name: "Percent Professional, scientific, and management, and administrative and waste management services",
     censusKeys: ['C24050_010E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Public administration",
+   { name: "Percent Public administration",
     censusKeys: ['C24050_014E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Retail trade",
+   { name: "Percent Retail trade",
     censusKeys: ['C24050_006E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
-
-          { name: "Percent Transportation and warehousing, and utilities",
+  },
+  { name: "Percent Transportation and warehousing, and utilities",
     censusKeys: ['C24050_007E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Wholesale trade",
+  { name: "Percent Wholesale trade",
     censusKeys: ['C24050_005E'],
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Population 16 years and over in the labor force",
+  { name: "Percent Population 16 years and over in the labor force",
     censusKeys: ['B23025_002E'],
     divisorKeys: ['B23025_001E'],
     group: "Economy"
   },
 
-      { name: "Percent Worked in county of residence",
+  { name: "Percent Worked in county of residence",
     censusKeys: ['B08016_002E'],
     divisorKeys: ['B08016_001E'],
     group: "Economy"
@@ -678,7 +679,7 @@ const CENSUS_FILTER_CONFIG = [
 
 // Choropleths
 
-      { name: "Percent country entered 2000 to 2009",
+  { name: "Percent country entered 2000 to 2009",
     censusKeys: ['B05005_009E'],
     divisorKeys: ['B05005_001E'],
     group: "Social Welfare"
