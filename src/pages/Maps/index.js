@@ -19,7 +19,7 @@ const SidebarHeader = ({}) =>
   <div style={ { paddingLeft: "50px" } }><Logo width={ 200 }/></div>
 
 class MapPage extends React.Component {
-  CensusLayer = censusLayerFactory({ active: false });
+  // CensusLayer = censusLayerFactory({ active: false });
   ACS_Layer = acsLayerFactory({ active: false, props: this.props });
   BG_Points = bgPointsLayerFactory();
   render() {
@@ -27,7 +27,7 @@ class MapPage extends React.Component {
       <div style={ { height: '100vh', paddingTop: "49px" } }>
         <AvlMap id="haz-mit-avl-map"
           preserveDrawingBuffer={ true }
-          layers={ [this.BG_Points, this.ACS_Layer, this.CensusLayer] }
+          layers={ [this.BG_Points, this.ACS_Layer] }
           header={ SidebarHeader }
           { ...this.ACS_Layer.baseMapSettings }
           header={ false }
