@@ -650,8 +650,14 @@ const CENSUS_FILTER_CONFIG = [
   },
 
   { name: "Percent Worked in county of residence",
-    censusKeys: ['B08016_002E'],
-    divisorKeys: ['B08016_001E'],
+    censusKeys: ['B08130_003E'],
+    divisorKeys: ['B08130_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Worked outside county of residence",
+    censusKeys: ['B08130_004E'],
+    divisorKeys: ['B08130_001E'],
     group: "Economy"
   },
 
@@ -690,11 +696,12 @@ const CENSUS_FILTER_CONFIG = [
     group: "Social Welfare"
   },
 
+/* duplicate above?
       { name: "Gini Index of Inequality",
     censusKeys: ['B19083_001E'],
     group: "Social Welfare"
   },
-
+*/
       { name: "Median household income",
     censusKeys: ['B19013_001E'],
     group: "Social Welfare"
@@ -721,6 +728,12 @@ const CENSUS_FILTER_CONFIG = [
         { name: "Percent Households receiving welfare",
     censusKeys: ['B09010_002E'],
     divisorKeys: ['B09010_001E'],
+    group: "Social Welfare"
+  },
+
+          { name: "Percent Limited English speaking households",
+    censusKeys: ['C16002_004E', 'C16002_007E', 'C16002_010E', 'C16002_013E'],
+    divisorKeys: ['C16002_001E'],
     group: "Social Welfare"
   },
 
@@ -1031,6 +1044,12 @@ const CENSUS_FILTER_CONFIG = [
  { name: "Percent Worked at home",
     censusKeys: ['B08006_017E'],
     divisorKeys: ['B080011_001E'],
+    group: "Transportation"
+  },
+
+   { name: "Percent workers no vehicle available",
+    censusKeys: ['B08014_002E'],
+    divisorKeys: ['B08014_001E'],
     group: "Transportation"
   },
 
