@@ -302,7 +302,7 @@ export default [
               },
             ],
           },
-          
+
           { title: "Production, transportation, and material moving occupations",
             children: [
               { title: "Production occupations",
@@ -318,7 +318,7 @@ export default [
           },
         ],
       },
-    },  
+    },
 
   {
       type:"CensusStatBox",

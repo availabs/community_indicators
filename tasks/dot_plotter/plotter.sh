@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LAYER='bg_points'
+LAYER='tract_points'
 YEAR='2019'
 
 NAME="$LAYER"_"$YEAR"

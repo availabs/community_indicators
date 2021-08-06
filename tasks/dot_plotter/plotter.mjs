@@ -7,7 +7,7 @@ import { rollup as d3rollup, groups as d3groups } from "d3-array"
 
 import * as turf from "@turf/turf"
 
-import { MarsConfig, CensusApiKey } from "./config.mjs"
+import { PlutoConfig, CensusApiKey } from "./config.mjs"
 
 const args = process.argv.slice(2);
 
@@ -21,17 +21,35 @@ const [outFile, acsYear] = args.reduce((a, c, i) => {
   return a;
 }, [null, null]);
 
+const Counties = [
+  '36001', '36083', '36093', '36091',
+  '36039', '36021', '36115', '36113'
+]
+
 const main = async () => {
-  const client = new pg.Client(MarsConfig);
+  const client = new pg.Client(PlutoConfig);
   await client.connect();
 
+console.log("STARTING QUERY")
+console.time("FINISHED QUERY")
+
   const sql = `
-    SELECT geoid, ST_AsGeoJSON(geom) AS geom, ST_Extent(geom) AS bbox
-    FROM geo.tl_2019_36_bg
+    SELECT geoid, ST_Extent(geom) AS bbox,
+      ST_AsGeoJSON(
+        ST_Collect(ST_Buffer(ST_Intersection(wkb_geometry, geom), 0.00125))
+      ) AS geom
+    FROM tl_2019_36_tract
+    JOIN conflation.conflation_map_2019_v0_6_0
+    ON ST_Intersects(wkb_geometry, geom)
     WHERE substring(geoid from 1 for 5) = ANY($1)
-    GROUP BY 1, 2
+    AND n > 1 AND n < 7
+    GROUP BY 1
   `
-  const res = await client.query(sql, [['36001','36083','36093','36091','36039','36021','36115','36113']]);
+  const res = await client.query(sql, [Counties]);
+
+  client.end();
+
+console.timeEnd("FINISHED QUERY");
 
   const rows = res.rows.map(row => ({
     geoid: row.geoid,
@@ -43,12 +61,15 @@ const main = async () => {
 
   const allData = [];
 
+console.log("RETRIEVING ACS DATA");
+console.time("RETREIVED ACS DATA");
   for (const [county, tracts] of byCounty) {
     const data = await fetch(getAcsUrl(county));
     allData.push(...data.slice(1));
   }
+console.timeEnd("RETREIVED ACS DATA");
 
-  const bgPopMap = allData.reduce((a, c) => {
+  const popMap = allData.reduce((a, c) => {
     a.set(c.slice(1).join(""), +c[0]);
     return a;
   }, new Map());
@@ -58,9 +79,13 @@ const main = async () => {
     features: []
   };
 
-  for (const row of rows) {
-    const { geoid, geom, bbox } = row;
-    const pop = bgPopMap.get(geoid);
+console.log("PROCESSING TRACTS");
+console.time("PROCESSED TRACTS");
+  rows.forEach(({ geoid, geom, bbox }, i) => {
+    const pop = popMap.get(geoid);
+
+console.log(`PROCESSING GEOID ${ geoid }`);
+console.time(`PROCESSED GEOID ${ geoid }`);
 
     const lngLatSet = new Set();
 
@@ -79,13 +104,15 @@ const main = async () => {
         collection.features.push(point);
       }
     }
-  }
-
-  const geoJSON = JSON.stringify(collection);
+console.timeEnd(`PROCESSED GEOID ${ geoid }`);
+const remaining = rows.length - 1 - i;
+remaining && console.log(`${ remaining } GEOIDs REMAINING`);
+  })
+console.timeEnd("PROCESSED TRACTS");
 
   await new Promise((resolve, reject) => {
     pipeline(
-      Readable.from([geoJSON]),
+      Readable.from([JSON.stringify(collection)]),
       fs.createWriteStream(outFile),
       // process.stdout,
       err => {
@@ -97,8 +124,6 @@ const main = async () => {
       }
     )
   });
-
-  client.end();
 }
 
 const randomFloat = (min, max) => {
@@ -122,8 +147,8 @@ const getAcsUrl = (county) =>
 	`${ acsYear }/acs/acs5?` +
 	`key=${ CensusApiKey }` +
 	`&get=B01003_001E` +
-  `&for=block+group:*` +
-  `&in=state:36+county:${ county }+tract:*`;
+  `&for=tract:*` +
+  `&in=state:36+county:${ county }`;
 
 const fetch = url => {
   return new Promise((resolve, reject) => {
