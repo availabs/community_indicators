@@ -411,43 +411,138 @@ let currentGroup = null;
 const CENSUS_FILTER_CONFIG = [
 
 //---------------------------------------------- OVERVIEW ----------------------------------------------
-//  { name: "Population 25 Years And Over with an Associate's degree",
-//    censusKeys: ["B15003_021E"],
-//    group: "Overview"
-//    type: "DotDensity"
-//  },
-//
-//  { name: "Civilian Employed Population 16 Years And Over by Industry",
-//    censusKeys: [
-//      "C24050_002E",
-//      "C24050_012E",
-//      "C24050_001E",
-//      "C24050_003E",
-//      "C24050_011E",
-//      "C24050_009E",
-//      "C24050_008E",
-//      "C24050_004E",
-//      "C24050_013E",
-//      ],
-//    censusKeyLabels: {
-//      "C24050_002E" : 'Agriculture, forestry, fishing and hunting, and mining',
-//      "C24050_012E" : 'Arts, entertainment, and recreation, and accommodation and food service',
-//      "C24050_001E" : 'Civilian Employed Population 16 Years And Over',
-//      "C24050_003E" : 'Construction',
-//      "C24050_011E" : 'Educational services, and health care and social assistance',
-//      "C24050_009E" : 'Finance and insurance, and real estate and rental and leasing',
-//      "C24050_008E" : 'Information',
-//      "C24050_004E" : 'Manufacturing',
-//      "C24050_013E" : 'Other services, except public administration',
-//      },
-//    group: "Overview"
-//    type: "DotDensity"
-//  },
-//
+  { name: "Population 25 Years And Over with an Associate's degree",
+    censusKeys: ["B15003_021E"],
+    group: "Overview",
+    type: "DotDensity",
+  },
 
+  { name: "Civilian Employed Population 16 Years And Over by Industry",
+    censusKeys: [
+      "C24050_002E",
+      "C24050_012E",
+      "C24050_001E",
+      "C24050_003E",
+      "C24050_011E",
+      "C24050_009E",
+      "C24050_008E",
+      "C24050_004E",
+      "C24050_013E",
+      ],
+    censusKeyLabels: {
+      "C24050_002E" : 'Agriculture, forestry, fishing and hunting, and mining',
+      "C24050_012E" : 'Arts, entertainment, and recreation, and accommodation and food service',
+      "C24050_001E" : 'Civilian Employed Population 16 Years And Over',
+      "C24050_003E" : 'Construction',
+      "C24050_011E" : 'Educational services, and health care and social assistance',
+      "C24050_009E" : 'Finance and insurance, and real estate and rental and leasing',
+      "C24050_008E" : 'Information',
+      "C24050_004E" : 'Manufacturing',
+      "C24050_013E" : 'Other services, except public administration',
+      },
+    group: "Overview",
+    type: "DotDensity"
+  },
 
   { name: "Total Population",
     censusKeys: ["B01003_001E"],
+    group: "Overview"
+  },
+
+// Choropleths
+
+ { name: "Percent Lived in the same house 1 year ago",
+    censusKeys: ['B07204_002E'],
+    divisorKeys: ['B07204_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Moved from abroad",
+    censusKeys: ['B07204_016E'],
+    divisorKeys: ['B07204_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Moved from different county within same state",
+    censusKeys: ['B07204_006E'],
+    divisorKeys: ['B07204_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Moved from different state",
+    censusKeys: ['B07204_011E'],
+    divisorKeys: ['B07204_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Moved within same county",
+    censusKeys: ['B07204_005E'],
+    divisorKeys: ['B07204_001E'],
+    group: "Overview"
+  },
+
+ { name: "Median age",
+    censusKeys: ['B01002_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent With A Disability",
+    censusKeys: ['B26108_062E'],
+    divisorKeys: ['B26108_061E'],
+    group: "Overview"
+  },
+
+ { name: "Percent American Indian and Alaska Native alone",
+    censusKeys: ['B02001_004E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Asian alone",
+    censusKeys: ['B02001_005E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Black or African American alone",
+    censusKeys: ['B02001_003E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Hispanic or Latino",
+    censusKeys: ['B03001_003E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Native Hawaiian and Other Pacific Islander alone",
+    censusKeys: ['B02001_006E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Not Hispanic or Latino",
+    censusKeys: ['B03001_002E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Some other race alone",
+    censusKeys: ['B02001_007E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent Two or more races",
+    censusKeys: ['B02001_008E'],
+    divisorKeys: ['B02001_001E'],
+    group: "Overview"
+  },
+
+ { name: "Percent White alone",
+    censusKeys: ['B02001_002E'],
+    divisorKeys: ['B02001_001E'],
     group: "Overview"
   },
 
@@ -466,6 +561,98 @@ const CENSUS_FILTER_CONFIG = [
       divisorKeys: ["B23025_001E"],
       group: "Economy"
 
+  },
+
+// Choropleths
+
+ { name: "Percent Agriculture, forestry, fishing and hunting, and mining",
+    censusKeys: ['C24050_002E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+      { name: "Percent Arts, entertainment, and recreation, and accommodation and food services",
+    censusKeys: ['C24050_012E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+      { name: "Percent Construction",
+    censusKeys: ['C24050_003E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+      { name: "Percent Educational services, and health care and social assistance",
+    censusKeys: ['C24050_011E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Finance and insurance, and real estate and rental and leasing",
+    censusKeys: ['C24050_009E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Information",
+    censusKeys: ['C24050_008E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Manufacturing",
+    censusKeys: ['C24050_004E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Other services, except public administration",
+    censusKeys: ['C24050_013E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Professional, scientific, and management, and administrative and waste management services",
+    censusKeys: ['C24050_010E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+   { name: "Percent Public administration",
+    censusKeys: ['C24050_014E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+   { name: "Percent Retail trade",
+    censusKeys: ['C24050_006E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+  
+  { name: "Percent Transportation and warehousing, and utilities",
+    censusKeys: ['C24050_007E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Wholesale trade",
+    censusKeys: ['C24050_005E'],
+    divisorKeys: ['C24050_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Population 16 years and over in the labor force",
+    censusKeys: ['B23025_002E'],
+    divisorKeys: ['B23025_001E'],
+    group: "Economy"
+  },
+
+  { name: "Percent Worked in county of residence",
+    censusKeys: ['B08016_002E'],
+    divisorKeys: ['B08016_001E'],
+    group: "Economy"
   },
 
 //---------------------------------------------- SOCIAL WELFARE ----------------------------------------------
@@ -487,6 +674,54 @@ const CENSUS_FILTER_CONFIG = [
     censusKeys: ["B19083_001E"],
     group: "Social Welfare",
     // format: "%,d",
+  },
+
+// Choropleths
+
+  { name: "Percent country entered 2000 to 2009",
+    censusKeys: ['B05005_009E'],
+    divisorKeys: ['B05005_001E'],
+    group: "Social Welfare"
+  },
+
+      { name: "Percent country entered 2010 or later",
+    censusKeys: ['B05005_009E'],
+    divisorKeys: ['B05005_001E'],
+    group: "Social Welfare"
+  },
+
+      { name: "Gini Index of Inequality",
+    censusKeys: ['B19083_001E'],
+    group: "Social Welfare"
+  },
+
+      { name: "Median household income",
+    censusKeys: ['B19013_001E'],
+    group: "Social Welfare"
+  },
+
+        { name: "Percent Housholds with $100,000 or more",
+    censusKeys: ['B19001_014E', 'B19001_015E', 'B19001_016E', 'B19001_017E'],
+    divisorKeys: ['B19001_001E'],
+    group: "Social Welfare"
+  },
+
+        { name: "Percent Housholds with Less than $24,999",
+    censusKeys: ['B19001_002E', 'B19001_003E', 'B19001_004E', 'B19001_005E'],
+    divisorKeys: ['B19001_001E'],
+    group: "Social Welfare"
+  },
+
+        { name: "Poverty Rate",
+    censusKeys: ['B17001_002E'],
+    divisorKeys: ['B17001_001E'],
+    group: "Social Welfare"
+  },
+
+        { name: "Percent Households receiving welfare",
+    censusKeys: ['B09010_002E'],
+    divisorKeys: ['B09010_001E'],
+    group: "Social Welfare"
   },
 
 //---------------------------------------------- HEALTH ----------------------------------------------
@@ -557,6 +792,92 @@ const CENSUS_FILTER_CONFIG = [
     group: "Education"
   },
 
+// Choropleths
+
+  { name: "Percent Associate's degree",
+    censusKeys: ['B15003_021E'],
+    divisorKeys: ['B15003_001E'],
+    group: "Education"
+  },
+
+  { name: "Percent Bachelor's degree",
+    censusKeys: ['B15003_022E'],
+    divisorKeys: ['B15003_001E'],
+    group: "Education"
+  },
+
+  { name: "Percent Doctorate degree",
+    censusKeys: ['B15003_025E'],
+    divisorKeys: ['B15003_001E'],
+    group: "Education"
+  },
+
+  { name: "Percent Master's degree",
+    censusKeys: ['B15003_023E'],
+    divisorKeys: ['B15003_001E'],
+    group: "Education"
+  },
+
+  { name: "Percent Professional school degree",
+    censusKeys: ['B15003_024E'],
+    divisorKeys: ['B15003_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Regular high school diploma",
+    censusKeys: ['B15003_017E'],
+    divisorKeys: ['B15003_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Enrolled in college, undergraduate years",
+    censusKeys: ['B14001_008E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Enrolled in grade 1 to grade 4",
+    censusKeys: ['B14001_005E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Enrolled in grade 5 to grade 8",
+    censusKeys: ['B14001_006E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Enrolled in grade 9 to grade 12",
+    censusKeys: ['B14001_007E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Enrolled in kindergarten",
+    censusKeys: ['B14001_004E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Enrolled in nursery school, preschool",
+    censusKeys: ['B14001_003E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
+    { name: "Percent Enrolled in school",
+    censusKeys: ['B14001_002E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
+      { name: "Percent Graduate or professional school",
+    censusKeys: ['B14001_009E'],
+    divisorKeys: ['B14001_001E'],
+    group: "Education"
+  },
+
 //---------------------------------------------- HOUSING ----------------------------------------------
   { name: "Percent Vacant Housing Units",
     censusKeys: ["B25002_003E"],
@@ -569,10 +890,147 @@ const CENSUS_FILTER_CONFIG = [
       divisorKeys: ['B25007_001E'],
       group: "Housing"
   },
+
+// Choropleths
+
+      { name: "Percent Housing Units Built 1939 or earlier",
+    censusKeys: ['B25034_011E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+      { name: "Percent Housing Units Built 1940 to 1949",
+    censusKeys: ['B25034_010E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+        { name: "Percent Housing Units Built 1950 to 1959",
+    censusKeys: ['B25034_009E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+      { name: "Percent Housing Units Built 1960 to 1969",
+    censusKeys: ['B25034_008E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+        { name: "Percent Housing Units Built 1970 to 1979",
+    censusKeys: ['B25034_007E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+      { name: "Percent Housing Units Built 1980 to 1989",
+    censusKeys: ['B25034_006E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+        { name: "Percent Housing units built 1990 to 1999",
+    censusKeys: ['B25034_005E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+      { name: "Percent Housing units built 2000 to 2009",
+    censusKeys: ['B25034_004E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+        { name: "Percent Housing units built 2010 or later",
+    censusKeys: ['B25034_003E', 'B25034_002E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+      { name: "Percent Occupied housing units",
+    censusKeys: ['B25002_002E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+        { name: "Percent Vacant housing units",
+    censusKeys: ['B25002_003E'],
+    divisorKeys: ['B25034_001E'],
+    group: "Housing"
+  },
+
+      { name: "Percent Owner occupied housing units",
+    censusKeys: ['B25117_002E'],
+    divisorKeys: ['B25117_001E'],
+    group: "Housing"
+  },
+
+        { name: "Percent Owner occupied housing units with Solar ",
+    censusKeys: ['B25117_009E'],
+    divisorKeys: ['B25117_001E'],
+    group: "Housing"
+  },
+
+      { name: "Percent Renter occupied housing units",
+    censusKeys: ['B25117_012E'],
+    divisorKeys: ['B25117_001E'],
+    group: "Housing"
+  },
+
+        { name: "Percent Renter occupied housing units with Solar",
+    censusKeys: ['B25117_019E'],
+    divisorKeys: ['B25117_001E'],
+    group: "Housing"
+  },
+
 //---------------------------------------------- TRANSPORTATION ----------------------------------------------
   { name: "Bike/Ped as a Percent of Total Commuters",
     censusKeys: ["B08006_014E", "B08006_015E"],
     divisorKeys: ["B23025_001E"],
+    group: "Transportation"
+  },
+
+// Choropleths
+
+ { name: "Percent Households with No Vehicles",
+    censusKeys: ['B08201_002E'],
+    divisorKeys: ['B08201_001E'],
+    group: "Transportation"
+  },
+
+ { name: "Percent Car, truck, or van - carpooled to work",
+    censusKeys: ['B08006_004E'],
+    divisorKeys: ['B080011_001E'],
+    group: "Transportation"
+  },
+
+ { name: "Percent Car, truck, or van - drove alone to work",
+    censusKeys: ['B08006_003E'],
+    divisorKeys: ['B080011_001E'],
+    group: "Transportation"
+  },
+
+ { name: "Percent Public transportation (excluding taxicab) to work",
+    censusKeys: ['B08006_008E'],
+    divisorKeys: ['B080011_001E'],
+    group: "Transportation"
+  },
+
+ { name: "Percent Taxicab, motorcycle, bicycle, or other means to work",
+    censusKeys: ['B08006_016E'],
+    divisorKeys: ['B080011_001E'],
+    group: "Transportation"
+  },
+
+ { name: "Percent Walked to work",
+    censusKeys: ['B08006_015E'],
+    divisorKeys: ['B080011_001E'],
+    group: "Transportation"
+  },
+
+ { name: "Percent Worked at home",
+    censusKeys: ['B08006_017E'],
+    divisorKeys: ['B080011_001E'],
     group: "Transportation"
   },
 
