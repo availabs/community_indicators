@@ -124,11 +124,9 @@ const CensusLegend = ({ layer }) => {
 }
 
 class BgPointsLayer extends MapLayer {
-  constructor(...args) {
-    super(...args);
+  constructor(options = {}) {
+    super("Dot Density", options);
 
-    this.name = "Dot Density";
-    this.active = true;
     this.version = 2.0; // ONLY SET THIS IF YOU KNOW WHAT IT MEANS!!!
 
     this.colors = {};
@@ -349,6 +347,6 @@ class BgPointsLayer extends MapLayer {
   ]
 }
 
-const bgPointsLayerFactory = () => new BgPointsLayer();
+const bgPointsLayerFactory = args => new BgPointsLayer(args);
 
 export default bgPointsLayerFactory;
