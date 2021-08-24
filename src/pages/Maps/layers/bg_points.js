@@ -282,9 +282,9 @@ const CensusConfig = [
   {
     name: "Race",
     variables: [
-      { key: 'B02001_001E',
-        name: "Total Population"
-      },
+//      { key: 'B02001_001E',
+//        name: "Total Population"
+//     },
       { key: 'B02001_004E',
         name: "American Indian and Alaska Native alone"
       },
@@ -294,14 +294,8 @@ const CensusConfig = [
       { key: 'B02001_003E',
         name: "Black or African American alone"
       },
-      { key: 'B03001_003E',
-        name: "Hispanic or Latino"
-      },
       { key: 'B02001_006E',
         name: "Native Hawaiian and Other Pacific Islander alone"
-      },
-      { key: 'B03001_002E',
-        name: "Not Hispanic or Latino"
       },
       { key: 'B02001_007E',
         name: "Some other race alone"
@@ -311,6 +305,18 @@ const CensusConfig = [
       },
       { key: 'B02001_002E',
         name: "White alone"
+      }
+    ]
+  },
+
+  {
+    name: "Ethnicity",
+    variables: [
+      { key: 'B03001_003E',
+        name: "Hispanic or Latino"
+      },
+      { key: 'B03001_002E',
+        name: "Not Hispanic or Latino"
       }
     ]
   },
