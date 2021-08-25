@@ -21,7 +21,7 @@ const SidebarHeader = ({}) =>
 class MapPage extends React.Component {
   // CensusLayer = censusLayerFactory({ active: false });
   ACS_Layer = acsLayerFactory({ active: true, props: this.props });
-  BG_Points = bgPointsLayerFactory({ active: false });
+  BG_Points = bgPointsLayerFactory({ active: true });
   render() {
     return (
       <div style={ { height: '100vh', paddingTop: "49px" } }>

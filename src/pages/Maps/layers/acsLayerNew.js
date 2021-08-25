@@ -679,7 +679,7 @@ const CENSUS_FILTER_CONFIG = [
   { name: "GINI Index",
     censusKeys: ["B19083_001E"],
     group: "Social Welfare",
-    // format: "%,d",
+    format: ".2f"
   },
 
 // Choropleths
