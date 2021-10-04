@@ -1,7 +1,8 @@
 import React from 'react'
 
 import CensusBarChart from "./bar/censusBarChart.js"
-import CensusStackedBarChart from "./bar/censusStackedBarChart.js"
+import CensusCompareBarChart from "./bar/censusCompareBarChart.js"
+import CensusStackedBarChart from "./bar/CensusStackedBarChart"
 import CensusLineChart from "./line/censusLineChart.js"
 import CensusPieChart from "./pie/CensusPieChart.js"
 import CensusStatBox from "./statBox/index.js"
@@ -26,6 +27,7 @@ const NA = ({ type }) =>
 export default {
   CensusTreemap,
   CensusBarChart,
+  CensusCompareBarChart,
   CensusStackedBarChart,
   CensusLineChart,
   CensusPieChart,

@@ -70,6 +70,23 @@ const processTreemap = node => {
   }, []);
 }
 
+const processStackedBars = config => {
+
+  const { bars, stackByYear, stacks } = config
+
+  if (stackByYear && stacks) {
+    return stacks.map(s => s.censusKey);
+  }
+  const censusKeys = [];
+
+  for (const bar of bars) {
+    for (const stack of bar.stacks) {
+      censusKeys.push(stack.censusKey);
+    }
+  }
+  return censusKeys;
+}
+
 export const configLoader = (BASE_CONFIG, props) => {
 
   const geoidLength = get(props, ["geoid", "length"], 0);
@@ -121,6 +138,9 @@ export const configLoader = (BASE_CONFIG, props) => {
       if (config.type === "CensusTreemap") {
         config.censusKeys = processTreemap(config.tree);
   // console.log("CensusTreemap", config.censusKeys);
+      }
+      if (config.type === "CensusStackedBarChart") {
+        config.censusKeys = processStackedBars(config);
       }
 
       if (config["censusKeys"]) {

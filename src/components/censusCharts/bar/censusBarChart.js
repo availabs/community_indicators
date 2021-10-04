@@ -33,7 +33,12 @@ const TooltipContainer = styled.div`
 
 const Tooltip = ({ color, value, label, id, removeLeading }) =>
   <TooltipContainer>
-    <div style={ { width: "15px", height: "15px", background: color, marginRight: "5px" } }/>
+    <div style={ {
+      width: "15px", height: "15px",
+      background: color,
+      marginRight: "5px"
+    } }/>
+
     <div>{ id }</div>
     <div style={ { marginRight: "5px", fontWeight: "bold" } }>
       { label }
@@ -218,7 +223,8 @@ class CensusBarChart extends ChartBase {
     const showDescription = Boolean(this.props.description.length),
       descriptionHeight = showDescription ? (this.props.description.length * 12 + 10) : 0;
 
-    return !this.state.loading && !this.props.barData.length ? <NoData { ...this.state }/> : (
+    return !this.state.loading && !this.props.barData.length ?
+      <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
         ref={ this.container }>
@@ -244,6 +250,7 @@ class CensusBarChart extends ChartBase {
               } }/>
           }
         </div>
+
         <div style={ { height: `calc(100% - 30px)`, position: "relative" } }>
           <ResponsiveBar indexBy="id"
             keys={ this.props.groupBy === "censusKeys" ? this.props.allGeoids : this.props.divisorKeys.length ? ["value"] : this.props.censusKeys }

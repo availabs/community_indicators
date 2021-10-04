@@ -12,7 +12,7 @@ export default [
   //     "w":4,"h":14,"x":0,"y":72,"i":"27","static":false
   //   }
   // },
-  // { "type":"CensusStackedBarChart",
+  // { "type":"CensusCompareBarChart",
   //   "censusKey":["B25118"],
   //   "layout": {
   //     "w":11,"h":17,"x":0,"y":17,"i":"28","static":true
@@ -202,7 +202,7 @@ export default [
       }
    },
 
-  { type:"CensusStackedBarChart",
+  { type:"CensusCompareBarChart",
     title: 'Homeowner Cost by % of Monthly Income',
     showCompareGeoid: false,
     orientation: 'horizontal',
@@ -248,7 +248,7 @@ export default [
     }
   },
 
-  { type: "CensusStackedBarChart",
+  { type: "CensusCompareBarChart",
     title: "Tenure by Household Income in the Past 12 Months",
     showCompareGeoid: false,
     marginLeft: 140,

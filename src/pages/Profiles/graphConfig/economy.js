@@ -60,7 +60,7 @@ export default [
    },
 
   {
-    type: "CensusStackedBarChart",
+    type: "CensusCompareBarChart",
     title: "Labor Force Participation",
     showCompareGeoid: false,
     orientation: "horizontal",
@@ -95,9 +95,15 @@ export default [
       "65 years and over In labor force Unemployed",
       "65 years and over Not in labor force"
     ]
-  },       
+  },
  { type: "QCEWStatBox",
       title: "Annual Average Employment Level",
+
+      source: [
+        "Put some stuff here",
+        "Each array item is a separate line",
+        "If this isn't sufficient, let me know..."
+      ],
 
 // THESWE ARE THE AVAILABLE DATA TYPES:
 // ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
@@ -144,6 +150,12 @@ export default [
     { type: "QCEWStackedBarChart",
       title: "Annual Average Employment Level",
 
+      source: [
+        "Put some stuff here",
+        "Each array item is a separate line",
+        "If this isn't sufficient, let me know..."
+      ],
+
 // THESWE ARE THE AVAILABLE DATA TYPES:
 // ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
       dataType: "annual_avg_emplvl",
@@ -160,6 +172,97 @@ export default [
         w: 9,
         h: 12
       }
+    },
+
+    { type: "CensusStackedBarChart",
+       title: "Industries by civilian employed population 16 years and over",
+       layout: {
+          w: 12,
+          h: 12
+       },
+       stackByYear: true,
+       stacks: [
+          { title: "Agriculture, forestry, fishing and hunting",
+            censusKey: "S2403_C01_003E",
+            color: "#e41a1c"
+          },
+          { title: "Utilities",
+            censusKey: "S2403_C01_011E",
+            color: "#8dd3c7"
+          },
+          { title: "Mining, quarrying, and oil and gas extraction",
+            censusKey: "S2403_C01_004E",
+            color: "#e41a1c"
+          },
+          { title: "Construction",
+            censusKey: "S2403_C01_005E",
+            color: "#377eb8"
+          },
+          { title: "Manufacturing",
+            censusKey: "S2403_C01_006E",
+            color: "#ffffb3"
+          },
+          { title: "Wholesale trade",
+            censusKey: "S2403_C01_007E",
+            color: "#4daf4a"
+          },
+          { title: "Retail trade",
+            censusKey: "S2403_C01_008E",
+            color: "#bebada"
+          },
+          { title: "Transportation and warehousing",
+            censusKey: "S2403_C01_010E",
+            color: "#984ea3"
+          },
+          { title: "Information",
+            censusKey: "S2403_C01_012E",
+            color: "#fb8072"
+          },
+          { title: "Finance and insurance",
+            censusKey: "S2403_C01_014E",
+            color: "#ff7f00"
+          },
+          { title: "Real estate and rental and leasing",
+            censusKey: "S2403_C01_015E",
+            color: "#80b1d3"
+          },
+          { title: "Professional, scientific, and technical services",
+            censusKey: "S2403_C01_017E",
+            color: "#ffff33"
+          },
+          { title: "Management of companies and enterprises",
+            censusKey: "S2403_C01_018E",
+            color: "#fdb462"
+          },
+          { title: "Administrative and support and waste management services",
+            censusKey: "S2403_C01_019E",
+            color: "#a65628"
+          },
+          { title: "Educational services",
+            censusKey: "S2403_C01_021E",
+            color: "#b3de69"
+          },
+          { title: "Health care and social assistance",
+            censusKey: "S2403_C01_022E",
+            color: "#f781bf"
+          },
+          { title: "Arts, entertainment, and recreation",
+            censusKey: "S2403_C01_024E",
+            color: "#fccde5"
+          },
+          { title: "Accommodation and food services",
+            censusKey: "S2403_C01_025E",
+            color: "#999999"
+          },
+          { title: "Other services, except public administration",
+            censusKey: "S2403_C01_026E",
+            color: "#d9d9d9"
+          },
+          { title: "Public administration",
+            censusKey: "S2403_C01_027E",
+            color: "#d9d9d9"
+          }
+       ]
     },
 
    { type: "CensusTreemap",
@@ -299,7 +402,7 @@ export default [
           },
         ],
       },
-    }, 
+    },
 
   {
     type: "CensusBarChart",

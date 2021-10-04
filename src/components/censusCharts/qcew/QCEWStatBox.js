@@ -20,6 +20,8 @@ import ChartBase, { LoadingIndicator, NoData } from "../ChartBase"
 
 import { fnum } from "utils/sheldusUtils"
 
+import QCEWTitle from "./QCEWTitle"
+
 const YearDiv = styled.div`
   position: absolute;
   text-align: left;
@@ -189,12 +191,9 @@ class QCEWStatBox extends ChartBase {
             justifyContent: "center",
             alignItems: "center"
           } }>
-          <div style={ {
-            padding: '8px 0px 0px 10px', fontSize: "1.2rem",
-            width: "100%", textAlign: "center"
-          } }>
-            { this.props.title }
-          </div>
+          <QCEWTitle center
+            title={ this.props.title }
+            source={ this.props.source }/>
           <ValueContainer>
             { this.renderStuff(this.props.geoids) }
             {
