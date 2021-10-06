@@ -45,7 +45,7 @@ class CensusStatBox extends ChartBase {
             ...this.props.subtractKeys
           ]
         ]
-      )
+      ).then(res => console.log("RES:", res))
     }
 
     calculateValues(geoids){
@@ -142,6 +142,7 @@ class CensusStatBox extends ChartBase {
     }
 
     renderStuff(geoids, compareStuff) {
+
         let { value, change } = this.calculateValues(geoids),
           growthColors = [this.props.increaseColor, this.props.decreaseColor];
         this.props.invertColors && growthColors.reverse();
@@ -233,7 +234,7 @@ class CensusStatBox extends ChartBase {
         censusKeys: [],
         geoids: [],
         compareGeoid: null,
-        years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018],
+        years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
         year:'2017',
         compareYear: null,
         maximumFractionDigits: 0,

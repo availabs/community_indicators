@@ -322,7 +322,10 @@ const LegendFactory = stackByYear =>
                     } }>
                     <rect width="15" height="15" fill={ c.colorMap[cc] }/>
                     <text x="19" y="13" fontFamily="sans-serif" fontSize="12px">
-                      { c.keyMap[cc] }
+                      { c.keyMap[cc].length > 40 ?
+                        c.keyMap[cc].slice(0, 40).trim() + "..." :
+                        c.keyMap[cc]
+                      }
                     </text>
                   </g>
                 )

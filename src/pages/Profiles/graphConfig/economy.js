@@ -186,13 +186,13 @@ export default [
             censusKey: "S2403_C01_003E",
             color: "#e41a1c"
           },
-          { title: "Utilities",
-            censusKey: "S2403_C01_011E",
-            color: "#8dd3c7"
-          },
           { title: "Mining, quarrying, and oil and gas extraction",
             censusKey: "S2403_C01_004E",
             color: "#e41a1c"
+          },
+          { title: "Utilities",
+            censusKey: "S2403_C01_011E",
+            color: "#8dd3c7"
           },
           { title: "Construction",
             censusKey: "S2403_C01_005E",
