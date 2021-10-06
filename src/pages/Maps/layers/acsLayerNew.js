@@ -892,12 +892,6 @@ const CENSUS_FILTER_CONFIG = [
   },
 
 //---------------------------------------------- HOUSING ----------------------------------------------
-  { name: "Percent Vacant Housing Units",
-    censusKeys: ["B25002_003E"],
-    divisorKeys: ['B25002_001E'],
-    group: "Housing"
-  },
-
   {   name: "Percent Homeowners 65 and Older",
       censusKeys:["B25007_009E", "B25007_010E", "B25007_011E"],
       divisorKeys: ['B25007_001E'],
@@ -966,7 +960,13 @@ const CENSUS_FILTER_CONFIG = [
     group: "Housing"
   },
 
-        { name: "Percent Vacant housing units",
+  { name: "Total Vacant Housing Units",
+    censusKeys: ["B25002_003E"],
+    // divisorKeys: ['B25002_001E'],
+    group: "Housing"
+  },
+
+  { name: "Percent Vacant housing units",
     censusKeys: ['B25002_003E'],
     divisorKeys: ['B25034_001E'],
     group: "Housing"
