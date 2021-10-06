@@ -33,7 +33,7 @@ export default [
 
         { title: "School Enrollment by Sex",
           showCompareGeoid: false,
-              type: "CensusStackedBarChart",
+              type: "CensusCompareBarChart",
               marginLeft: 310,
               layout: { h: 12 },
               left: {
@@ -225,7 +225,7 @@ export default [
 
         {
           title: "Sex by School Enrollment by Level of School by Type of School",
-          type: "CensusStackedBarChart",
+          type: "CensusCompareBarChart",
           showCompareGeoid: false,
           marginLeft: 310,
           hideWhenCompact: true,
@@ -269,7 +269,7 @@ export default [
 
         {
           title: "Median Earnings by Sex by Educational Attainment Ages 25 and Over",
-          type: "CensusStackedBarChart",
+          type: "CensusCompareBarChart",
           showCompareGeoid: false,
           yFormat: "$,d",
           marginLeft: 200,

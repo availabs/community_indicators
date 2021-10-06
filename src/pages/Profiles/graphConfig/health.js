@@ -160,7 +160,7 @@ const BASE_CONFIG = [
       }
    },
     {
-      type: "CensusStackedBarChart",
+      type: "CensusCompareBarChart",
       title: "Civilian Population 18 Years and Over",
       showCompareGeoid: false,
       orientation: "horizontal",

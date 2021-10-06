@@ -106,7 +106,7 @@ export default [
   {
     title: "Means of Transportation to Work by Sex",
     hideWhenCompact: true,
-    type: "CensusStackedBarChart",
+    type: "CensusCompareBarChart",
     showCompareGeoid: false,
     marginLeft: 340,
     left: {
@@ -408,7 +408,7 @@ export default [
 
 
   {
-    type: "CensusStackedBarChart",
+    type: "CensusCompareBarChart",
     title: "Travel Time to Work by Sex",
     showCompareGeoid: false,
     left: {

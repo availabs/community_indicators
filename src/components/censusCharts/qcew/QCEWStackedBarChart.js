@@ -20,6 +20,8 @@ import { fnum } from "utils/sheldusUtils"
 
 import { getColorRange } from 'constants/color-ranges'
 
+import QCEWTitle from "./QCEWTitle"
+
 const r1 = getColorRange(9, "Set1"),
   r2 = getColorRange(9, "Set3");
 
@@ -130,13 +132,8 @@ class QCEWStackedBarChart extends ChartBase {
 
         <div style={ { height: "30px" } }>
           <div style={ { maxWidth: this.props.showOptions ? "calc(100% - 285px)" : "100%" } }>
-            <div style={ {
-              padding: '8px 0px 0px 10px',
-              fontSize: "1.2rem",
-              width: "100%"
-            } }>
-              { this.props.title }
-            </div>
+            <QCEWTitle title={ this.props.title }
+              source={ this.props.source }/>
           </div>
           { !this.props.showOptions ? null :
             <Options tableTitle={ this.props.title }
@@ -170,7 +167,7 @@ class QCEWStackedBarChart extends ChartBase {
               LegendFactory(this.getNaicsTitle),
               'grid', 'axes', 'bars', 'markers', 'annotations'
             ] }
-            labelSkipWidth={ 100 }
+            labelSkipWidth={ 75 }
             labelSkipHeight={ 12 }
             labelFormat={ fmt }
             tooltip={

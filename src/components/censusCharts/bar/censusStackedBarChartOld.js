@@ -5,7 +5,7 @@ import {falcorGraph} from "store/falcorGraph";
 import {ResponsiveBar} from '@nivo/bar'
 var numeral = require('numeral')
 
-class CensusStackedBarChart extends React.Component {
+class CensusStackedBarChartOld extends React.Component {
     _isMounted = false;
     constructor(props) {
         super(props);
@@ -1542,4 +1542,4 @@ const mapStateToProps = (state,ownProps) => {
         graph: state.graph // so componentWillReceiveProps will get called.
     };
 };
-export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusStackedBarChart))
+export default connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(CensusStackedBarChartOld))

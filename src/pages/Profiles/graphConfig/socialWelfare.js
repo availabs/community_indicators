@@ -113,7 +113,7 @@ export default [
 
 
         {
-        type:'CensusStackedBarChart',
+        type:'CensusCompareBarChart',
         broadCensusKey: 'B17001',
         left: { key: "Below Poverty Level", slice: [0, 26] },
         right: { key: "Above Poverty Level", slice: [26, 52] },

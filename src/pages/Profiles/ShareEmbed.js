@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import get from "lodash.get";
 
 import CensusBarChart from "components/censusCharts/bar/censusBarChart"
-import CensusStackedBarChart from "components/censusCharts/bar/censusStackedBarChart"
+import CensusCompareBarChart from "components/censusCharts/bar/censusCompareBarChart"
 import CensusLineChart from "components/censusCharts/line/censusLineChart"
 import CensusMap from "components/censusCharts/map"
 import CensusPieChart from "components/censusCharts/pie/CensusPieChart"
@@ -15,7 +15,7 @@ import REGION_CONFIG from "pages/Profiles/regionConfig"
 
 const TYPES = {
   CensusBarChart,
-  CensusStackedBarChart,
+  CensusCompareBarChart,
   CensusLineChart,
   CensusMap,
   CensusPieChart,

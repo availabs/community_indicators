@@ -91,6 +91,8 @@ class CensusTreemap extends ChartBase {
       headerHeight = get(this.header, ["current", "clientHeight"], 0),
       gridHeight = get(this.grid, ["current", "clientHeight"], 0) - 5;
 
+// console.log("DATA:", treeData, num)
+
     return !this.state.loading && !this.props.treeData ? <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }
         id={ this.props.id }
@@ -181,7 +183,10 @@ const getCensusKeyLabels = (state, props) => {
 }
 
 const getTreeData = (state, props) => {
+
   const allGeoids = [...get(props, "geoids", []), props.compareGeoid].filter(Boolean);
+
+// console.log("GEOIDS:", allGeoids)
 
   const walkTree = (node, geoid, year, isRoot = false) => {
     if (node.children) {
@@ -202,10 +207,10 @@ const getTreeData = (state, props) => {
     return node;
   }
 
-  return allGeoids.map(geoid => {
+  return allGeoids.slice(0, 1).map(geoid => {
     return {
       geoid,
       data: walkTree(JSON.parse(JSON.stringify(props.tree)), geoid, props.year, true)
     };
-  }).slice(0, 1)
+  })
 }

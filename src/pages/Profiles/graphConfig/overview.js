@@ -160,7 +160,7 @@ export default [
      },
 
    {
-        type: 'CensusStackedBarChart',
+        type: 'CensusCompareBarChart',
         broadCensusKey: 'B01001',
         showCompareGeoid: false,
         left: { key: "Male", slice: [2, 25], color: maleColor },

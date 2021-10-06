@@ -68,12 +68,13 @@ class Profile extends React.Component{
   }
 
   fetchFalcorDeps() {
+    const geoids = [this.props.geoid, this.props.compareGeoid].filter(Boolean);
     return falcorChunkerNice(["acs", "meta", ALL_CENSUS_KEYS, "label"])
-      .then(() =>
-        this.props.falcor.get(
-          ["geo", [this.props.geoid, this.props.compareGeoid].filter(Boolean), "name"]
+      .then(() => {
+        return this.props.falcor.get(
+          ["geo", geoids, ["name", "zcta", "unsd"]]
         )
-      );
+      });
   }
 
 

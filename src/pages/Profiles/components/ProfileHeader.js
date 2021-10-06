@@ -87,6 +87,9 @@ class ProfileHeader extends Component {
     }
   }
     render () {
+
+console.log("PROFILE HEADER:", this.props)
+
         return (
                 <div>
 
