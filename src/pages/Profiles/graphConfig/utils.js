@@ -55,9 +55,6 @@ const expandKeyRange = key => {
   return [start];
 }
 
-let ID = -1;
-const getId = () => `profile-${ ++ID }`;
-
 const processTreemap = node => {
   const children = get(node, "children", []);
 
@@ -223,7 +220,6 @@ export const configLoader = (BASE_CONFIG, props) => {
         x += rect.w;
         y = rects.reduce((a, c) => Math.max(c.bottom(), a), y);
       }
-      config.id = getId();
 
       accum.push(config);
       return accum;

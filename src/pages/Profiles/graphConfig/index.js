@@ -9,6 +9,8 @@ import covid19 from "./covid19"
 
 import Links from "./links"
 
+import { getConfigId } from "./utils"
+
 const CONFIG = {
   // 'COVID-19': covid19,
   Overview,
@@ -21,9 +23,10 @@ const CONFIG = {
   Links
 }
 export default Object.keys(CONFIG)
-  .reduce((a, c) => {
-    a[c] = CONFIG[c].map((config, i) => {
-      config.graphId = `${ c }-${ i }`;
+  .reduce((a, c, i) => {
+    a[c] = CONFIG[c].map((config, ii) => {
+      config.graphId = `${ c }-${ ii }`;
+      config.id = config.id || `local-profile-${ config.type }-${ config.title || config.broadCensusKey }`;
       return config;
     })
     return a;
