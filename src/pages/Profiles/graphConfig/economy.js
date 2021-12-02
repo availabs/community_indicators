@@ -349,7 +349,7 @@ export default [
               },
             ]
           },
-          { title: "Professional, scientific, and management, and administrative and Waste management services",
+          { title: "Professional, scientific, and management, and administrative and waste management services",
             color: "#ffff33",
             children: [
               { title: "Professional, scientific, and technical services",
