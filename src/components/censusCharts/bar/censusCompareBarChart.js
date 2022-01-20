@@ -47,7 +47,7 @@ const Tooltip = ({ color, colors, left, right, above, below, label, geoid, leftP
 
 class StackedBarChart extends ChartBase {
   static defaultProps = {
-    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
     year: 2017,
     marginLeft: 100,
     marginTop: 10,
@@ -174,6 +174,8 @@ class StackedBarChart extends ChartBase {
       descriptionHeight = this.props.description.length ? (this.props.description.length * 12 + 10) : 0;
 
     const barData = this.getBarData();
+
+console.log("?????????", this.props, barData)
 
     return !this.state.loading && !barData.length ? <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }

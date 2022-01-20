@@ -49,7 +49,7 @@ const Tooltip = ({ color, value, label, id, removeLeading }) =>
 class CensusBarChart extends ChartBase {
   static defaultProps = {
     year: 2017,
-    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019],
     yFormat: ",d",
     marginLeft: 75,
     marginRight: 20,

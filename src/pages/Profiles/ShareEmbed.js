@@ -5,6 +5,7 @@ import get from "lodash.get";
 
 import CensusBarChart from "components/censusCharts/bar/censusBarChart"
 import CensusCompareBarChart from "components/censusCharts/bar/censusCompareBarChart"
+import CensusStackedBarChart from "components/censusCharts/bar/CensusStackedBarChart"
 import CensusLineChart from "components/censusCharts/line/censusLineChart"
 import CensusMap from "components/censusCharts/map"
 import CensusPieChart from "components/censusCharts/pie/CensusPieChart"
@@ -12,10 +13,12 @@ import CensusRadarChart from "components/censusCharts/radar"
 
 import PROFILE_CONFIG from "pages/Profiles/graphConfig"
 import REGION_CONFIG from "pages/Profiles/regionConfig"
+import { processBaseConfig } from "./graphConfig/utils"
 
 const TYPES = {
   CensusBarChart,
   CensusCompareBarChart,
+  CensusStackedBarChart,
   CensusLineChart,
   CensusMap,
   CensusPieChart,
@@ -25,8 +28,8 @@ const NotYetImplemented = ({ type }) =>
   <h1>{ type } NOT YET IMPLEMENTED</h1>
 
 const CONFIG_MAP = [
-  ...[].concat(...Object.values(PROFILE_CONFIG)),
-  ...[].concat(...Object.values(REGION_CONFIG)),
+  ...[].concat(...Object.values(processBaseConfig(PROFILE_CONFIG))),
+  ...[].concat(...Object.values(processBaseConfig(REGION_CONFIG))),
 ].reduce((a, c) => ({
   ...a,
   [c.id]: c
@@ -36,11 +39,12 @@ class ShareEmbed extends React.Component {
   render() {
     const { id, ...rest } = this.props.embedProps,
       config = get(CONFIG_MAP, id, {}),
-      { type } = config,
+      { type, ...configRest } = config,
       Chart = get(TYPES, type, () => <NotYetImplemented type={ type }/>);
+
     return (
       <div style={ { width: "100%", height: "100%" } }>
-        <Chart { ...rest } { ...config }
+        <Chart { ...rest } { ...configRest }
           showOptions={ false }/>
       </div>
     )

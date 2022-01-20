@@ -7,6 +7,8 @@ import Health from "./health"
 import Transportation from "./transportation"
 import Covid19 from "./covid19"
 
+import { getConfigId } from "../graphConfig/utils"
+
 const CONFIG = {
   // 'COVID-19': Covid19,
   Overview,
@@ -18,9 +20,10 @@ const CONFIG = {
   Transportation,
 }
 export default Object.keys(CONFIG)
-  .reduce((a, c) => {
-    a[c] = CONFIG[c].map((config, i) => {
-      config.graphId = `${ c }-${ i }`;
+  .reduce((a, c, i) => {
+    a[c] = CONFIG[c].map((config, ii) => {
+      config.graphId = `${ c }-${ ii }`;
+      config.id = config.id || `region-profile-${ config.type }-${ config.title || config.broadCensusKey }`;
       return config;
     })
     return a;

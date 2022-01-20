@@ -9,7 +9,7 @@ export default [
           header: "SOCIAL WELFARE",
           body: "Metrics related to the individual and collective social well-being of the Capital Region and it’s communities.",
           layout: {
-            h: 3,
+            h: 5,
             w: 12
              }
         },

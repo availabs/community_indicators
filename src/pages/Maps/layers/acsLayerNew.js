@@ -630,7 +630,7 @@ const CENSUS_FILTER_CONFIG = [
     divisorKeys: ['C24050_001E'],
     group: "Economy"
   },
-  
+
   { name: "Percent Transportation and warehousing, and utilities",
     censusKeys: ['C24050_007E'],
     divisorKeys: ['C24050_001E'],
@@ -1140,11 +1140,13 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     "counties": new Animator({ baseValue: "#fff" }),
     "cousubs": new Animator({ baseValue: "#fff" }),
     "tracts": new Animator({ baseValue: "#fff" }),
-    "blockgroup": new Animator({ baseValue: "#fff" })
+    "blockgroup": new Animator({ baseValue: "#fff" }),
+    "zcta": new Animator({ baseValue: "#fff" }),
+    "unsd": new Animator({ baseValue: "#fff" })
   },
 
   onHover: {
-    layers: ['counties', 'cousubs', 'tracts', 'blockgroup'],
+    layers: ['counties', 'cousubs', 'tracts', 'blockgroup', "zcta", "unsd"],
     // dataFunc: function(features, point, lngLat, layerName) {
     // 	// DO SOME STUFF
     // }
@@ -1160,7 +1162,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   },
 
   popover: {
-    layers: ["counties", "cousubs", "tracts", "blockgroup"],
+    layers: ["counties", "cousubs", "tracts", "blockgroup", "zcta", "unsd"],
     setPinnedState: true,
     onPinned: function(features, lngLat, point) {
       const geoid = get(features, [0, "properties", "geoid"], null);
@@ -1175,7 +1177,10 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       const data = [];
 
       let name = "";
-      if (geoid.length < 11) {
+      if (/^zcta-*/.test(geoid)) {
+        name = `ZIP Code ${ topFeature.properties.zcta }`
+      }
+      else if (geoid.length < 11) {
         name = get(this.falcorCache, ["geo", geoid, "name"], geoid);
       }
       else if (geoid.length === 11) {
@@ -1219,7 +1224,9 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         { name: "Counties", value: "counties" },
         { name: "Municipalities", value: "cousubs" },
         { name: "Tracts", value: "tracts" },
-        { name: "Block Groups", value: "blockgroup" }
+        { name: "Block Groups", value: "blockgroup" },
+        { name: "Zip Codes", value: "zcta" },
+        { name: "Unified School Districts", value: "unsd" }
       ],
       value: 'cousubs'
     },
@@ -1254,9 +1261,11 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       max: 1,
       onChange: function(oldValue, newValue) {
 // console.log("SLIDER:", oldValue, newValue)
-        this.map && ['counties', 'cousubs', 'tracts', 'blockgroup'].forEach(l => {
-          this.map.setPaintProperty(l, "fill-extrusion-opacity", newValue)
-        })
+        if (this.map) {
+          ['counties', 'cousubs', 'tracts', 'blockgroup', 'zcta', 'unsd'].forEach(l => {
+            this.map.setPaintProperty(l, "fill-extrusion-opacity", newValue)
+          })
+        }
       }
     }
   },
@@ -1383,11 +1392,22 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         'url': 'mapbox://am3081.2x2v9z60'
       },
     },
-    {
-      id: "blockgroup",
+    { id: "blockgroup",
       source: {
           'type': "vector",
           'url': 'mapbox://am3081.52dbm7po'
+      }
+    },
+    { id: "zcta",
+      source: {
+          'type': "vector",
+          'url': `https://tiles.availabs.org/data/zip_codes_2017.json`
+      }
+    },
+    { id: "unsd",
+      source: {
+          'type': "vector",
+          'url': 'https://tiles.availabs.org/data/school_districts_2017.json'
       }
     }
   ],
@@ -1411,10 +1431,21 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
-    {
-      id: "blockgroup",
+    { id: "blockgroup",
       source: "blockgroup",
       'source-layer': "blockgroups",
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+    { id: "zcta",
+      source: "zcta",
+      'source-layer': "tl_2017_36_zcta510",
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+    { id: "unsd",
+      source: "unsd",
+      'source-layer': "tl_2017_36_unsd",
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
