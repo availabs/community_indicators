@@ -411,7 +411,7 @@ export default [
     layout: { h: 12 },
     marginLeft: 480,
     yFormat: "$,d",
-    censusKeys: ["B24031_001E...B24031_028E"],
+    censusKeys: ["B24031_001E...B24031_027E"],
     removeLeading: 1,
     hideWhenCompact: true,
     layout:{
