@@ -3,8 +3,10 @@ import CensusCharts from 'components/censusCharts/'
 import TrackVisibility from 'react-on-screen';
 
 export default props => {
+
   const Graph = CensusCharts[props.type] || CensusCharts['NA'],
     useCompact = window.innerWidth < 992;
+
   return (
     <TrackVisibility partialVisibility style={ { height: '100%' } }>
     	<Hider keepVisible={ props.type === "CensusMap" }>

@@ -39,6 +39,46 @@ def getPlaces(cursor, geoid):
     '''
     cursor.execute(sql, [geoid])
     return [p for p in cursor]
+'''
+SELECT unsd_geoid, geoid
+FROM geo.unsd_lookup
+WHERE unsd_geoid = ANY($1)
+AND char_length(geoid) = $2;
+
+SELECT 'unsd-' || geoid20 AS geoid,
+  name20 AS name,
+  lograde20 || ' - ' || higrade20 AS grades
+FROM geo.tl_2020_36_unsd20
+WHERE geoid20 = ANY($1)
+
+      SELECT zcta_geoid, geoid
+      FROM geo.zcta_lookup
+      WHERE zcta_geoid = ANY($1)
+      AND char_length(geoid) = $2;
+
+        SELECT geoid, stusps AS name
+        FROM geo.tl_2017_us_state
+        WHERE geoid = ANY($1)
+'''
+def getUNSD(cursor, geoid):
+    sql = '''
+        SELECT unsd_geoid, name20
+        FROM geo.unsd_lookup AS l
+        JOIN geo.tl_2020_36_unsd20 AS u
+        ON l.unsd_geoid = 'unsd-' || u.geoid20
+        WHERE l.geoid = %s;
+    '''
+    cursor.execute(sql, [geoid])
+    return [unsd for unsd in cursor]
+
+def getZCTA(cursor, geoid):
+    sql = '''
+        SELECT zcta_geoid
+        FROM geo.zcta_lookup AS l
+        WHERE l.geoid = %s;
+    '''
+    cursor.execute(sql, [geoid])
+    return [(zcta[0], zcta[0].replace("-", " ").upper()) for zcta in cursor]
 
 def has(list, name):
     for n in list:
@@ -58,6 +98,7 @@ def getName(name, lsad=None):
         '47': " village"
     }
     return name + switch.get(lsad, "")
+
 
 def main():
     conn = psycopg2.connect(mars)
@@ -94,6 +135,32 @@ def main():
         county["children"] = sorted(county["children"], key=lambda d: d["name"])
 
     with open("submenu.json", "w") as out:
+        json.dump([menu], out, indent=3)
+
+# PROCESS ZCTAs
+    menu = [processCounty(*c) for c in counties]
+
+    for county in menu:
+        geoid = county["geoid"]
+
+        zctas = sorted(getZCTA(cursor, geoid), key=lambda d: d[0])
+
+        county["children"].extend([processChild(*z) for z in zctas])
+
+    with open("zcta_submenu.json", "w") as out:
+        json.dump([menu], out, indent=3)
+
+# PROCESS UNSDs
+    menu = [processCounty(*c) for c in counties]
+
+    for county in menu:
+        geoid = county["geoid"]
+
+        unsds = sorted(getUNSD(cursor, geoid), key=lambda d: d[1])
+
+        county["children"].extend([processChild(*z) for z in unsds])
+
+    with open("unsd_submenu.json", "w") as out:
         json.dump([menu], out, indent=3)
 
     cursor.close()

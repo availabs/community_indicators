@@ -1,0 +1,1052 @@
+[
+   [
+      {
+         "name": "Albany County",
+         "geoid": "36001",
+         "path": "/profile/36001",
+         "children": [
+            {
+               "name": "ZCTA 3612007",
+               "path": "/profile/zcta-3612007"
+            },
+            {
+               "name": "ZCTA 3612009",
+               "path": "/profile/zcta-3612009"
+            },
+            {
+               "name": "ZCTA 3612023",
+               "path": "/profile/zcta-3612023"
+            },
+            {
+               "name": "ZCTA 3612041",
+               "path": "/profile/zcta-3612041"
+            },
+            {
+               "name": "ZCTA 3612045",
+               "path": "/profile/zcta-3612045"
+            },
+            {
+               "name": "ZCTA 3612046",
+               "path": "/profile/zcta-3612046"
+            },
+            {
+               "name": "ZCTA 3612047",
+               "path": "/profile/zcta-3612047"
+            },
+            {
+               "name": "ZCTA 3612053",
+               "path": "/profile/zcta-3612053"
+            },
+            {
+               "name": "ZCTA 3612054",
+               "path": "/profile/zcta-3612054"
+            },
+            {
+               "name": "ZCTA 3612059",
+               "path": "/profile/zcta-3612059"
+            },
+            {
+               "name": "ZCTA 3612067",
+               "path": "/profile/zcta-3612067"
+            },
+            {
+               "name": "ZCTA 3612077",
+               "path": "/profile/zcta-3612077"
+            },
+            {
+               "name": "ZCTA 3612083",
+               "path": "/profile/zcta-3612083"
+            },
+            {
+               "name": "ZCTA 3612084",
+               "path": "/profile/zcta-3612084"
+            },
+            {
+               "name": "ZCTA 3612085",
+               "path": "/profile/zcta-3612085"
+            },
+            {
+               "name": "ZCTA 3612087",
+               "path": "/profile/zcta-3612087"
+            },
+            {
+               "name": "ZCTA 3612110",
+               "path": "/profile/zcta-3612110"
+            },
+            {
+               "name": "ZCTA 3612120",
+               "path": "/profile/zcta-3612120"
+            },
+            {
+               "name": "ZCTA 3612122",
+               "path": "/profile/zcta-3612122"
+            },
+            {
+               "name": "ZCTA 3612143",
+               "path": "/profile/zcta-3612143"
+            },
+            {
+               "name": "ZCTA 3612147",
+               "path": "/profile/zcta-3612147"
+            },
+            {
+               "name": "ZCTA 3612157",
+               "path": "/profile/zcta-3612157"
+            },
+            {
+               "name": "ZCTA 3612158",
+               "path": "/profile/zcta-3612158"
+            },
+            {
+               "name": "ZCTA 3612159",
+               "path": "/profile/zcta-3612159"
+            },
+            {
+               "name": "ZCTA 3612161",
+               "path": "/profile/zcta-3612161"
+            },
+            {
+               "name": "ZCTA 3612183",
+               "path": "/profile/zcta-3612183"
+            },
+            {
+               "name": "ZCTA 3612186",
+               "path": "/profile/zcta-3612186"
+            },
+            {
+               "name": "ZCTA 3612189",
+               "path": "/profile/zcta-3612189"
+            },
+            {
+               "name": "ZCTA 3612193",
+               "path": "/profile/zcta-3612193"
+            },
+            {
+               "name": "ZCTA 3612202",
+               "path": "/profile/zcta-3612202"
+            },
+            {
+               "name": "ZCTA 3612203",
+               "path": "/profile/zcta-3612203"
+            },
+            {
+               "name": "ZCTA 3612204",
+               "path": "/profile/zcta-3612204"
+            },
+            {
+               "name": "ZCTA 3612205",
+               "path": "/profile/zcta-3612205"
+            },
+            {
+               "name": "ZCTA 3612206",
+               "path": "/profile/zcta-3612206"
+            },
+            {
+               "name": "ZCTA 3612207",
+               "path": "/profile/zcta-3612207"
+            },
+            {
+               "name": "ZCTA 3612208",
+               "path": "/profile/zcta-3612208"
+            },
+            {
+               "name": "ZCTA 3612209",
+               "path": "/profile/zcta-3612209"
+            },
+            {
+               "name": "ZCTA 3612210",
+               "path": "/profile/zcta-3612210"
+            },
+            {
+               "name": "ZCTA 3612211",
+               "path": "/profile/zcta-3612211"
+            },
+            {
+               "name": "ZCTA 3612222",
+               "path": "/profile/zcta-3612222"
+            },
+            {
+               "name": "ZCTA 3612303",
+               "path": "/profile/zcta-3612303"
+            },
+            {
+               "name": "ZCTA 3612304",
+               "path": "/profile/zcta-3612304"
+            },
+            {
+               "name": "ZCTA 3612306",
+               "path": "/profile/zcta-3612306"
+            },
+            {
+               "name": "ZCTA 3612309",
+               "path": "/profile/zcta-3612309"
+            },
+            {
+               "name": "ZCTA 3612469",
+               "path": "/profile/zcta-3612469"
+            }
+         ]
+      },
+      {
+         "name": "Columbia County",
+         "geoid": "36021",
+         "path": "/profile/36021",
+         "children": [
+            {
+               "name": "ZCTA 3612017",
+               "path": "/profile/zcta-3612017"
+            },
+            {
+               "name": "ZCTA 3612024",
+               "path": "/profile/zcta-3612024"
+            },
+            {
+               "name": "ZCTA 3612029",
+               "path": "/profile/zcta-3612029"
+            },
+            {
+               "name": "ZCTA 3612037",
+               "path": "/profile/zcta-3612037"
+            },
+            {
+               "name": "ZCTA 3612060",
+               "path": "/profile/zcta-3612060"
+            },
+            {
+               "name": "ZCTA 3612062",
+               "path": "/profile/zcta-3612062"
+            },
+            {
+               "name": "ZCTA 3612075",
+               "path": "/profile/zcta-3612075"
+            },
+            {
+               "name": "ZCTA 3612106",
+               "path": "/profile/zcta-3612106"
+            },
+            {
+               "name": "ZCTA 3612115",
+               "path": "/profile/zcta-3612115"
+            },
+            {
+               "name": "ZCTA 3612125",
+               "path": "/profile/zcta-3612125"
+            },
+            {
+               "name": "ZCTA 3612130",
+               "path": "/profile/zcta-3612130"
+            },
+            {
+               "name": "ZCTA 3612132",
+               "path": "/profile/zcta-3612132"
+            },
+            {
+               "name": "ZCTA 3612136",
+               "path": "/profile/zcta-3612136"
+            },
+            {
+               "name": "ZCTA 3612156",
+               "path": "/profile/zcta-3612156"
+            },
+            {
+               "name": "ZCTA 3612165",
+               "path": "/profile/zcta-3612165"
+            },
+            {
+               "name": "ZCTA 3612172",
+               "path": "/profile/zcta-3612172"
+            },
+            {
+               "name": "ZCTA 3612173",
+               "path": "/profile/zcta-3612173"
+            },
+            {
+               "name": "ZCTA 3612174",
+               "path": "/profile/zcta-3612174"
+            },
+            {
+               "name": "ZCTA 3612184",
+               "path": "/profile/zcta-3612184"
+            },
+            {
+               "name": "ZCTA 3612195",
+               "path": "/profile/zcta-3612195"
+            },
+            {
+               "name": "ZCTA 3612502",
+               "path": "/profile/zcta-3612502"
+            },
+            {
+               "name": "ZCTA 3612503",
+               "path": "/profile/zcta-3612503"
+            },
+            {
+               "name": "ZCTA 3612513",
+               "path": "/profile/zcta-3612513"
+            },
+            {
+               "name": "ZCTA 3612516",
+               "path": "/profile/zcta-3612516"
+            },
+            {
+               "name": "ZCTA 3612517",
+               "path": "/profile/zcta-3612517"
+            },
+            {
+               "name": "ZCTA 3612521",
+               "path": "/profile/zcta-3612521"
+            },
+            {
+               "name": "ZCTA 3612523",
+               "path": "/profile/zcta-3612523"
+            },
+            {
+               "name": "ZCTA 3612526",
+               "path": "/profile/zcta-3612526"
+            },
+            {
+               "name": "ZCTA 3612529",
+               "path": "/profile/zcta-3612529"
+            },
+            {
+               "name": "ZCTA 3612530",
+               "path": "/profile/zcta-3612530"
+            },
+            {
+               "name": "ZCTA 3612534",
+               "path": "/profile/zcta-3612534"
+            },
+            {
+               "name": "ZCTA 3612546",
+               "path": "/profile/zcta-3612546"
+            },
+            {
+               "name": "ZCTA 3612565",
+               "path": "/profile/zcta-3612565"
+            },
+            {
+               "name": "ZCTA 3612567",
+               "path": "/profile/zcta-3612567"
+            },
+            {
+               "name": "ZCTA 3612571",
+               "path": "/profile/zcta-3612571"
+            },
+            {
+               "name": "ZCTA 3612583",
+               "path": "/profile/zcta-3612583"
+            }
+         ]
+      },
+      {
+         "name": "Greene County",
+         "geoid": "36039",
+         "path": "/profile/36039",
+         "children": [
+            {
+               "name": "ZCTA 3612015",
+               "path": "/profile/zcta-3612015"
+            },
+            {
+               "name": "ZCTA 3612042",
+               "path": "/profile/zcta-3612042"
+            },
+            {
+               "name": "ZCTA 3612046",
+               "path": "/profile/zcta-3612046"
+            },
+            {
+               "name": "ZCTA 3612051",
+               "path": "/profile/zcta-3612051"
+            },
+            {
+               "name": "ZCTA 3612058",
+               "path": "/profile/zcta-3612058"
+            },
+            {
+               "name": "ZCTA 3612083",
+               "path": "/profile/zcta-3612083"
+            },
+            {
+               "name": "ZCTA 3612087",
+               "path": "/profile/zcta-3612087"
+            },
+            {
+               "name": "ZCTA 3612120",
+               "path": "/profile/zcta-3612120"
+            },
+            {
+               "name": "ZCTA 3612124",
+               "path": "/profile/zcta-3612124"
+            },
+            {
+               "name": "ZCTA 3612143",
+               "path": "/profile/zcta-3612143"
+            },
+            {
+               "name": "ZCTA 3612176",
+               "path": "/profile/zcta-3612176"
+            },
+            {
+               "name": "ZCTA 3612192",
+               "path": "/profile/zcta-3612192"
+            },
+            {
+               "name": "ZCTA 3612405",
+               "path": "/profile/zcta-3612405"
+            },
+            {
+               "name": "ZCTA 3612407",
+               "path": "/profile/zcta-3612407"
+            },
+            {
+               "name": "ZCTA 3612413",
+               "path": "/profile/zcta-3612413"
+            },
+            {
+               "name": "ZCTA 3612414",
+               "path": "/profile/zcta-3612414"
+            },
+            {
+               "name": "ZCTA 3612418",
+               "path": "/profile/zcta-3612418"
+            },
+            {
+               "name": "ZCTA 3612422",
+               "path": "/profile/zcta-3612422"
+            },
+            {
+               "name": "ZCTA 3612423",
+               "path": "/profile/zcta-3612423"
+            },
+            {
+               "name": "ZCTA 3612424",
+               "path": "/profile/zcta-3612424"
+            },
+            {
+               "name": "ZCTA 3612427",
+               "path": "/profile/zcta-3612427"
+            },
+            {
+               "name": "ZCTA 3612430",
+               "path": "/profile/zcta-3612430"
+            },
+            {
+               "name": "ZCTA 3612431",
+               "path": "/profile/zcta-3612431"
+            },
+            {
+               "name": "ZCTA 3612436",
+               "path": "/profile/zcta-3612436"
+            },
+            {
+               "name": "ZCTA 3612439",
+               "path": "/profile/zcta-3612439"
+            },
+            {
+               "name": "ZCTA 3612442",
+               "path": "/profile/zcta-3612442"
+            },
+            {
+               "name": "ZCTA 3612444",
+               "path": "/profile/zcta-3612444"
+            },
+            {
+               "name": "ZCTA 3612450",
+               "path": "/profile/zcta-3612450"
+            },
+            {
+               "name": "ZCTA 3612451",
+               "path": "/profile/zcta-3612451"
+            },
+            {
+               "name": "ZCTA 3612452",
+               "path": "/profile/zcta-3612452"
+            },
+            {
+               "name": "ZCTA 3612454",
+               "path": "/profile/zcta-3612454"
+            },
+            {
+               "name": "ZCTA 3612460",
+               "path": "/profile/zcta-3612460"
+            },
+            {
+               "name": "ZCTA 3612463",
+               "path": "/profile/zcta-3612463"
+            },
+            {
+               "name": "ZCTA 3612468",
+               "path": "/profile/zcta-3612468"
+            },
+            {
+               "name": "ZCTA 3612469",
+               "path": "/profile/zcta-3612469"
+            },
+            {
+               "name": "ZCTA 3612470",
+               "path": "/profile/zcta-3612470"
+            },
+            {
+               "name": "ZCTA 3612473",
+               "path": "/profile/zcta-3612473"
+            },
+            {
+               "name": "ZCTA 3612480",
+               "path": "/profile/zcta-3612480"
+            },
+            {
+               "name": "ZCTA 3612482",
+               "path": "/profile/zcta-3612482"
+            },
+            {
+               "name": "ZCTA 3612485",
+               "path": "/profile/zcta-3612485"
+            },
+            {
+               "name": "ZCTA 3612492",
+               "path": "/profile/zcta-3612492"
+            },
+            {
+               "name": "ZCTA 3612496",
+               "path": "/profile/zcta-3612496"
+            }
+         ]
+      },
+      {
+         "name": "Rensselaer County",
+         "geoid": "36083",
+         "path": "/profile/36083",
+         "children": [
+            {
+               "name": "ZCTA 3612018",
+               "path": "/profile/zcta-3612018"
+            },
+            {
+               "name": "ZCTA 3612022",
+               "path": "/profile/zcta-3612022"
+            },
+            {
+               "name": "ZCTA 3612028",
+               "path": "/profile/zcta-3612028"
+            },
+            {
+               "name": "ZCTA 3612033",
+               "path": "/profile/zcta-3612033"
+            },
+            {
+               "name": "ZCTA 3612040",
+               "path": "/profile/zcta-3612040"
+            },
+            {
+               "name": "ZCTA 3612052",
+               "path": "/profile/zcta-3612052"
+            },
+            {
+               "name": "ZCTA 3612057",
+               "path": "/profile/zcta-3612057"
+            },
+            {
+               "name": "ZCTA 3612061",
+               "path": "/profile/zcta-3612061"
+            },
+            {
+               "name": "ZCTA 3612062",
+               "path": "/profile/zcta-3612062"
+            },
+            {
+               "name": "ZCTA 3612063",
+               "path": "/profile/zcta-3612063"
+            },
+            {
+               "name": "ZCTA 3612089",
+               "path": "/profile/zcta-3612089"
+            },
+            {
+               "name": "ZCTA 3612090",
+               "path": "/profile/zcta-3612090"
+            },
+            {
+               "name": "ZCTA 3612094",
+               "path": "/profile/zcta-3612094"
+            },
+            {
+               "name": "ZCTA 3612118",
+               "path": "/profile/zcta-3612118"
+            },
+            {
+               "name": "ZCTA 3612121",
+               "path": "/profile/zcta-3612121"
+            },
+            {
+               "name": "ZCTA 3612123",
+               "path": "/profile/zcta-3612123"
+            },
+            {
+               "name": "ZCTA 3612138",
+               "path": "/profile/zcta-3612138"
+            },
+            {
+               "name": "ZCTA 3612140",
+               "path": "/profile/zcta-3612140"
+            },
+            {
+               "name": "ZCTA 3612144",
+               "path": "/profile/zcta-3612144"
+            },
+            {
+               "name": "ZCTA 3612153",
+               "path": "/profile/zcta-3612153"
+            },
+            {
+               "name": "ZCTA 3612154",
+               "path": "/profile/zcta-3612154"
+            },
+            {
+               "name": "ZCTA 3612156",
+               "path": "/profile/zcta-3612156"
+            },
+            {
+               "name": "ZCTA 3612168",
+               "path": "/profile/zcta-3612168"
+            },
+            {
+               "name": "ZCTA 3612169",
+               "path": "/profile/zcta-3612169"
+            },
+            {
+               "name": "ZCTA 3612180",
+               "path": "/profile/zcta-3612180"
+            },
+            {
+               "name": "ZCTA 3612182",
+               "path": "/profile/zcta-3612182"
+            },
+            {
+               "name": "ZCTA 3612184",
+               "path": "/profile/zcta-3612184"
+            },
+            {
+               "name": "ZCTA 3612185",
+               "path": "/profile/zcta-3612185"
+            },
+            {
+               "name": "ZCTA 3612196",
+               "path": "/profile/zcta-3612196"
+            },
+            {
+               "name": "ZCTA 3612198",
+               "path": "/profile/zcta-3612198"
+            }
+         ]
+      },
+      {
+         "name": "Saratoga County",
+         "geoid": "36091",
+         "path": "/profile/36091",
+         "children": [
+            {
+               "name": "ZCTA 3612010",
+               "path": "/profile/zcta-3612010"
+            },
+            {
+               "name": "ZCTA 3612019",
+               "path": "/profile/zcta-3612019"
+            },
+            {
+               "name": "ZCTA 3612020",
+               "path": "/profile/zcta-3612020"
+            },
+            {
+               "name": "ZCTA 3612025",
+               "path": "/profile/zcta-3612025"
+            },
+            {
+               "name": "ZCTA 3612027",
+               "path": "/profile/zcta-3612027"
+            },
+            {
+               "name": "ZCTA 3612065",
+               "path": "/profile/zcta-3612065"
+            },
+            {
+               "name": "ZCTA 3612074",
+               "path": "/profile/zcta-3612074"
+            },
+            {
+               "name": "ZCTA 3612086",
+               "path": "/profile/zcta-3612086"
+            },
+            {
+               "name": "ZCTA 3612118",
+               "path": "/profile/zcta-3612118"
+            },
+            {
+               "name": "ZCTA 3612134",
+               "path": "/profile/zcta-3612134"
+            },
+            {
+               "name": "ZCTA 3612148",
+               "path": "/profile/zcta-3612148"
+            },
+            {
+               "name": "ZCTA 3612151",
+               "path": "/profile/zcta-3612151"
+            },
+            {
+               "name": "ZCTA 3612170",
+               "path": "/profile/zcta-3612170"
+            },
+            {
+               "name": "ZCTA 3612188",
+               "path": "/profile/zcta-3612188"
+            },
+            {
+               "name": "ZCTA 3612302",
+               "path": "/profile/zcta-3612302"
+            },
+            {
+               "name": "ZCTA 3612803",
+               "path": "/profile/zcta-3612803"
+            },
+            {
+               "name": "ZCTA 3612822",
+               "path": "/profile/zcta-3612822"
+            },
+            {
+               "name": "ZCTA 3612828",
+               "path": "/profile/zcta-3612828"
+            },
+            {
+               "name": "ZCTA 3612831",
+               "path": "/profile/zcta-3612831"
+            },
+            {
+               "name": "ZCTA 3612833",
+               "path": "/profile/zcta-3612833"
+            },
+            {
+               "name": "ZCTA 3612835",
+               "path": "/profile/zcta-3612835"
+            },
+            {
+               "name": "ZCTA 3612850",
+               "path": "/profile/zcta-3612850"
+            },
+            {
+               "name": "ZCTA 3612859",
+               "path": "/profile/zcta-3612859"
+            },
+            {
+               "name": "ZCTA 3612863",
+               "path": "/profile/zcta-3612863"
+            },
+            {
+               "name": "ZCTA 3612866",
+               "path": "/profile/zcta-3612866"
+            },
+            {
+               "name": "ZCTA 3612871",
+               "path": "/profile/zcta-3612871"
+            },
+            {
+               "name": "ZCTA 3612884",
+               "path": "/profile/zcta-3612884"
+            }
+         ]
+      },
+      {
+         "name": "Schenectady County",
+         "geoid": "36093",
+         "path": "/profile/36093",
+         "children": [
+            {
+               "name": "ZCTA 3612008",
+               "path": "/profile/zcta-3612008"
+            },
+            {
+               "name": "ZCTA 3612010",
+               "path": "/profile/zcta-3612010"
+            },
+            {
+               "name": "ZCTA 3612019",
+               "path": "/profile/zcta-3612019"
+            },
+            {
+               "name": "ZCTA 3612027",
+               "path": "/profile/zcta-3612027"
+            },
+            {
+               "name": "ZCTA 3612053",
+               "path": "/profile/zcta-3612053"
+            },
+            {
+               "name": "ZCTA 3612056",
+               "path": "/profile/zcta-3612056"
+            },
+            {
+               "name": "ZCTA 3612066",
+               "path": "/profile/zcta-3612066"
+            },
+            {
+               "name": "ZCTA 3612137",
+               "path": "/profile/zcta-3612137"
+            },
+            {
+               "name": "ZCTA 3612150",
+               "path": "/profile/zcta-3612150"
+            },
+            {
+               "name": "ZCTA 3612157",
+               "path": "/profile/zcta-3612157"
+            },
+            {
+               "name": "ZCTA 3612302",
+               "path": "/profile/zcta-3612302"
+            },
+            {
+               "name": "ZCTA 3612303",
+               "path": "/profile/zcta-3612303"
+            },
+            {
+               "name": "ZCTA 3612304",
+               "path": "/profile/zcta-3612304"
+            },
+            {
+               "name": "ZCTA 3612305",
+               "path": "/profile/zcta-3612305"
+            },
+            {
+               "name": "ZCTA 3612306",
+               "path": "/profile/zcta-3612306"
+            },
+            {
+               "name": "ZCTA 3612307",
+               "path": "/profile/zcta-3612307"
+            },
+            {
+               "name": "ZCTA 3612308",
+               "path": "/profile/zcta-3612308"
+            },
+            {
+               "name": "ZCTA 3612309",
+               "path": "/profile/zcta-3612309"
+            }
+         ]
+      },
+      {
+         "name": "Warren County",
+         "geoid": "36113",
+         "path": "/profile/36113",
+         "children": [
+            {
+               "name": "ZCTA 3612801",
+               "path": "/profile/zcta-3612801"
+            },
+            {
+               "name": "ZCTA 3612804",
+               "path": "/profile/zcta-3612804"
+            },
+            {
+               "name": "ZCTA 3612808",
+               "path": "/profile/zcta-3612808"
+            },
+            {
+               "name": "ZCTA 3612810",
+               "path": "/profile/zcta-3612810"
+            },
+            {
+               "name": "ZCTA 3612811",
+               "path": "/profile/zcta-3612811"
+            },
+            {
+               "name": "ZCTA 3612814",
+               "path": "/profile/zcta-3612814"
+            },
+            {
+               "name": "ZCTA 3612815",
+               "path": "/profile/zcta-3612815"
+            },
+            {
+               "name": "ZCTA 3612817",
+               "path": "/profile/zcta-3612817"
+            },
+            {
+               "name": "ZCTA 3612824",
+               "path": "/profile/zcta-3612824"
+            },
+            {
+               "name": "ZCTA 3612835",
+               "path": "/profile/zcta-3612835"
+            },
+            {
+               "name": "ZCTA 3612836",
+               "path": "/profile/zcta-3612836"
+            },
+            {
+               "name": "ZCTA 3612843",
+               "path": "/profile/zcta-3612843"
+            },
+            {
+               "name": "ZCTA 3612844",
+               "path": "/profile/zcta-3612844"
+            },
+            {
+               "name": "ZCTA 3612845",
+               "path": "/profile/zcta-3612845"
+            },
+            {
+               "name": "ZCTA 3612846",
+               "path": "/profile/zcta-3612846"
+            },
+            {
+               "name": "ZCTA 3612853",
+               "path": "/profile/zcta-3612853"
+            },
+            {
+               "name": "ZCTA 3612856",
+               "path": "/profile/zcta-3612856"
+            },
+            {
+               "name": "ZCTA 3612857",
+               "path": "/profile/zcta-3612857"
+            },
+            {
+               "name": "ZCTA 3612860",
+               "path": "/profile/zcta-3612860"
+            },
+            {
+               "name": "ZCTA 3612862",
+               "path": "/profile/zcta-3612862"
+            },
+            {
+               "name": "ZCTA 3612870",
+               "path": "/profile/zcta-3612870"
+            },
+            {
+               "name": "ZCTA 3612874",
+               "path": "/profile/zcta-3612874"
+            },
+            {
+               "name": "ZCTA 3612878",
+               "path": "/profile/zcta-3612878"
+            },
+            {
+               "name": "ZCTA 3612885",
+               "path": "/profile/zcta-3612885"
+            },
+            {
+               "name": "ZCTA 3612886",
+               "path": "/profile/zcta-3612886"
+            }
+         ]
+      },
+      {
+         "name": "Washington County",
+         "geoid": "36115",
+         "path": "/profile/36115",
+         "children": [
+            {
+               "name": "ZCTA 3612028",
+               "path": "/profile/zcta-3612028"
+            },
+            {
+               "name": "ZCTA 3612057",
+               "path": "/profile/zcta-3612057"
+            },
+            {
+               "name": "ZCTA 3612094",
+               "path": "/profile/zcta-3612094"
+            },
+            {
+               "name": "ZCTA 3612154",
+               "path": "/profile/zcta-3612154"
+            },
+            {
+               "name": "ZCTA 3612185",
+               "path": "/profile/zcta-3612185"
+            },
+            {
+               "name": "ZCTA 3612804",
+               "path": "/profile/zcta-3612804"
+            },
+            {
+               "name": "ZCTA 3612809",
+               "path": "/profile/zcta-3612809"
+            },
+            {
+               "name": "ZCTA 3612816",
+               "path": "/profile/zcta-3612816"
+            },
+            {
+               "name": "ZCTA 3612819",
+               "path": "/profile/zcta-3612819"
+            },
+            {
+               "name": "ZCTA 3612821",
+               "path": "/profile/zcta-3612821"
+            },
+            {
+               "name": "ZCTA 3612823",
+               "path": "/profile/zcta-3612823"
+            },
+            {
+               "name": "ZCTA 3612827",
+               "path": "/profile/zcta-3612827"
+            },
+            {
+               "name": "ZCTA 3612828",
+               "path": "/profile/zcta-3612828"
+            },
+            {
+               "name": "ZCTA 3612832",
+               "path": "/profile/zcta-3612832"
+            },
+            {
+               "name": "ZCTA 3612834",
+               "path": "/profile/zcta-3612834"
+            },
+            {
+               "name": "ZCTA 3612837",
+               "path": "/profile/zcta-3612837"
+            },
+            {
+               "name": "ZCTA 3612838",
+               "path": "/profile/zcta-3612838"
+            },
+            {
+               "name": "ZCTA 3612839",
+               "path": "/profile/zcta-3612839"
+            },
+            {
+               "name": "ZCTA 3612841",
+               "path": "/profile/zcta-3612841"
+            },
+            {
+               "name": "ZCTA 3612844",
+               "path": "/profile/zcta-3612844"
+            },
+            {
+               "name": "ZCTA 3612849",
+               "path": "/profile/zcta-3612849"
+            },
+            {
+               "name": "ZCTA 3612861",
+               "path": "/profile/zcta-3612861"
+            },
+            {
+               "name": "ZCTA 3612865",
+               "path": "/profile/zcta-3612865"
+            },
+            {
+               "name": "ZCTA 3612873",
+               "path": "/profile/zcta-3612873"
+            },
+            {
+               "name": "ZCTA 3612887",
+               "path": "/profile/zcta-3612887"
+            }
+         ]
+      }
+   ]
+]

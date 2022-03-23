@@ -238,7 +238,7 @@ const getBarData = (state, props) => {
 
     barData = years.map(year => {
       const bar = {
-        index: year,
+        index: String(year),
         keyMap: {},
         ckMap: {},
         colorMap: {}

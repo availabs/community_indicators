@@ -216,7 +216,7 @@ const getQCEWData = (state, props) => {
     return NAICS.reduce((a, c) => {
       a[c] = get(state, ["graph", "qcew", "annual", geoid, year, c, dataType], 0)
       return a;
-    }, { key: geoid });
+    }, { key: String(geoid) });
   });
 }
 

@@ -380,6 +380,8 @@ class CensusLayer extends MapLayer {
     // else {
     // }
 
+console.log("RENDER:", this.geolevel, this.geoids);
+
     if ((this.geoids.length === 1) && (this.geoids[0].length === 7)) {
       const geoid = this.geoids[0];
       map.setFilter("places-line", ["in", "geoid", geoid]);
@@ -387,8 +389,8 @@ class CensusLayer extends MapLayer {
       const name = get(this.falcorCache, ["geo", geoid, "name"], "");
       map.setLayoutProperty("places-symbol", "text-field", name);
 
-      map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
       map.setFilter("cousubs-line", ["in", "geoid", "none"]);
+      map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
     }
     else {
       map.setFilter("places-line", ["in", "geoid", "none"]);
@@ -400,9 +402,10 @@ class CensusLayer extends MapLayer {
           return a;
         }, {});
 
+      map.setFilter("cousubs-line", ["in", "geoid", ...this.geoids]);
       map.setLayoutProperty("cousubs-symbol", "text-field",
         ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
-      )
+      );
       map.setFilter("cousubs-symbol", ["in", "geoid", ...allCousubs]);
     }
 

@@ -36,7 +36,7 @@ class ZCTAList extends ChartBase {
         <div style={ { height: "calc(100% - 30px)" } }>
           <div style={ { display: "flex", flexWrap: "wrap", padding: "10px" } }>
             { this.props.zctaList.map(zcta => (
-                <Link key={ zcta } to={ `/profile/${ zcta }` }>
+                <Link key={ zcta } to={ `/profile/${ zcta }` } target="_top">
                   <div style={ { padding: "0.25rem 0.5rem" } }>
                     <GeoName geoid={ zcta }/>
                   </div>
