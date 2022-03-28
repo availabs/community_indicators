@@ -6,7 +6,7 @@ import ItemSelector from "components/common/item-selector/item-selector"
 import GroupedSelector from "components/common/item-selector/grouped-selector"
 import { ArrowRight } from 'components/common/icons';
 
-import SubMenu from "./submenu"
+import { submenu as SubMenu } from "./submenu"
 
 const regex = /\/profile\/(\d+)/;
 

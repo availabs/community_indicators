@@ -6,7 +6,11 @@ import GridLayout from 'pages/Analysis/GraphLayout/GridLayout.js'
 import { Link, Element , Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
 
 // import subMenus from './submenu.js'
-import subMenus from "./submenu"
+import {
+  submenu,
+  zcta_submenu,
+  unsd_submenu
+} from "./submenu"
 
 import Profiles from './Profile'
 import ShareEmbed from "./ShareEmbed"
@@ -169,39 +173,65 @@ const Factory = region =>
   ({ ...props }) => <Component { ...props } region={ region }/>
 
 export default [
-    {
-        icon: 'os-icon-home',
-        path: '/profiles',
-        mainNav: true,
-        exact: true,
-        menuSettings:{
-            image: 'none',
-            scheme: 'color-scheme-dark',
-            style: 'color-style-default'
-        },
-        name: 'Capital Region',
-        auth:false,
-        subMenus: [subMenus[0].filter(({ path }) =>
-          REGIONS['Capital Region'].reduce((a, c) =>
-            a || path.includes(c)
-          , false)
-        )],
-        component: Factory("Capital Region")
+    { icon: 'os-icon-home',
+      path: '/profiles',
+      mainNav: true,
+      exact: true,
+      menuSettings:{
+          image: 'none',
+          scheme: 'color-scheme-dark',
+          style: 'color-style-default'
+      },
+      name: 'Capital Region',
+      auth:false,
+      subMenus: [submenu[0].filter(({ path }) =>
+        REGIONS['Capital Region'].reduce((a, c) =>
+          a || path.includes(c)
+        , false)
+      )],
+      component: Factory("Capital Region")
     },
-    {
-        icon: 'os-icon-home',
-        path: '/profiles-greater',
-        mainNav: true,
-        exact: true,
-        menuSettings:{
-            image: 'none',
-            scheme: 'color-scheme-dark',
-            style: 'color-style-default'
-        },
-        name: 'Greater Capital Region',
-        auth:false,
-        subMenus: subMenus,
-        component: Factory("Greater Capital Region")
+    { icon: 'os-icon-home',
+      path: '/profiles-greater',
+      mainNav: true,
+      exact: true,
+      menuSettings:{
+          image: 'none',
+          scheme: 'color-scheme-dark',
+          style: 'color-style-default'
+      },
+      name: 'Greater Capital Region',
+      auth:false,
+      subMenus: submenu,
+      component: Factory("Greater Capital Region")
+    },
+    { icon: 'os-icon-home',
+      path: '/profiles-greater-zcta',
+      mainNav: true,
+      exact: true,
+      menuSettings:{
+          image: 'none',
+          scheme: 'color-scheme-dark',
+          style: 'color-style-default'
+      },
+      name: 'Greater Capital Region (ZCTA)',
+      auth:false,
+      subMenus: zcta_submenu,
+      component: Factory("Greater Capital Region")
+    },
+    { icon: 'os-icon-home',
+      path: '/profiles-greater-unsd',
+      mainNav: true,
+      exact: true,
+      menuSettings:{
+          image: 'none',
+          scheme: 'color-scheme-dark',
+          style: 'color-style-default'
+      },
+      name: 'Greater Capital Region (UNSD)',
+      auth:false,
+      subMenus: unsd_submenu,
+      component: Factory("Greater Capital Region")
     },
     { path: "/profile-tester",
       mainNav: false,

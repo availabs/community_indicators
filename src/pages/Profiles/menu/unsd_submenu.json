@@ -1,0 +1,524 @@
+[
+   [
+      {
+         "name": "Albany County",
+         "geoid": "36001",
+         "path": "/profile/36001",
+         "children": [
+            {
+               "name": "Albany City School District",
+               "path": "/profile/unsd-3602460"
+            },
+            {
+               "name": "Berne-Knox-Westerlo Central School District",
+               "path": "/profile/unsd-3604650"
+            },
+            {
+               "name": "Bethlehem Central School District",
+               "path": "/profile/unsd-3604710"
+            },
+            {
+               "name": "Cairo-Durham Central School District",
+               "path": "/profile/unsd-3606160"
+            },
+            {
+               "name": "Cohoes City School District",
+               "path": "/profile/unsd-3607980"
+            },
+            {
+               "name": "Duanesburg Central School District",
+               "path": "/profile/unsd-3609360"
+            },
+            {
+               "name": "Green Island Union Free School District",
+               "path": "/profile/unsd-3612660"
+            },
+            {
+               "name": "Greenville Central School District",
+               "path": "/profile/unsd-3612870"
+            },
+            {
+               "name": "Guilderland Central School District",
+               "path": "/profile/unsd-3613080"
+            },
+            {
+               "name": "Menands Union Free School District",
+               "path": "/profile/unsd-3618990"
+            },
+            {
+               "name": "Middleburgh Central School District",
+               "path": "/profile/unsd-3619260"
+            },
+            {
+               "name": "Niskayuna Central School District",
+               "path": "/profile/unsd-3620880"
+            },
+            {
+               "name": "North Colonie Central School District",
+               "path": "/profile/unsd-3600971"
+            },
+            {
+               "name": "Ravena-Coeymans-Selkirk Central School District",
+               "path": "/profile/unsd-3624150"
+            },
+            {
+               "name": "Rotterdam-Mohonasen Central School District",
+               "path": "/profile/unsd-3600004"
+            },
+            {
+               "name": "Schalmont Central School District",
+               "path": "/profile/unsd-3625980"
+            },
+            {
+               "name": "Schoharie Central School District",
+               "path": "/profile/unsd-3626100"
+            },
+            {
+               "name": "South Colonie Central School District",
+               "path": "/profile/unsd-3627210"
+            },
+            {
+               "name": "Voorheesville Central School District",
+               "path": "/profile/unsd-3629670"
+            },
+            {
+               "name": "Watervliet City School District",
+               "path": "/profile/unsd-3630210"
+            }
+         ]
+      },
+      {
+         "name": "Columbia County",
+         "geoid": "36021",
+         "path": "/profile/36021",
+         "children": [
+            {
+               "name": "Chatham Central School District",
+               "path": "/profile/unsd-3607110"
+            },
+            {
+               "name": "East Greenbush Central School District",
+               "path": "/profile/unsd-3609630"
+            },
+            {
+               "name": "Germantown Central School District",
+               "path": "/profile/unsd-3612030"
+            },
+            {
+               "name": "Hudson City School District",
+               "path": "/profile/unsd-3614940"
+            },
+            {
+               "name": "Kinderhook Central School District (Ichabod Crane)",
+               "path": "/profile/unsd-3615210"
+            },
+            {
+               "name": "New Lebanon Central School District",
+               "path": "/profile/unsd-3620430"
+            },
+            {
+               "name": "Northeast Central School District",
+               "path": "/profile/unsd-3630390"
+            },
+            {
+               "name": "Pine Plains Central School District",
+               "path": "/profile/unsd-3623040"
+            },
+            {
+               "name": "Red Hook Central School District",
+               "path": "/profile/unsd-3624240"
+            },
+            {
+               "name": "Schodack Central School District",
+               "path": "/profile/unsd-3626070"
+            },
+            {
+               "name": "Taconic Hills Central School District",
+               "path": "/profile/unsd-3628620"
+            }
+         ]
+      },
+      {
+         "name": "Greene County",
+         "geoid": "36039",
+         "path": "/profile/36039",
+         "children": [
+            {
+               "name": "Cairo-Durham Central School District",
+               "path": "/profile/unsd-3606160"
+            },
+            {
+               "name": "Catskill Central School District",
+               "path": "/profile/unsd-3606720"
+            },
+            {
+               "name": "Coxsackie-Athens Central School District",
+               "path": "/profile/unsd-3608490"
+            },
+            {
+               "name": "Gilboa-Conesville Central School District",
+               "path": "/profile/unsd-3612120"
+            },
+            {
+               "name": "Greenville Central School District",
+               "path": "/profile/unsd-3612870"
+            },
+            {
+               "name": "Hunter-Tannersville Central School District",
+               "path": "/profile/unsd-3615060"
+            },
+            {
+               "name": "Margaretville Central School District",
+               "path": "/profile/unsd-3618510"
+            },
+            {
+               "name": "Onteora Central School District",
+               "path": "/profile/unsd-3621840"
+            },
+            {
+               "name": "Ravena-Coeymans-Selkirk Central School District",
+               "path": "/profile/unsd-3624150"
+            },
+            {
+               "name": "Windham-Ashland-Jewett Central School District",
+               "path": "/profile/unsd-3631590"
+            }
+         ]
+      },
+      {
+         "name": "Rensselaer County",
+         "geoid": "36083",
+         "path": "/profile/36083",
+         "children": [
+            {
+               "name": "Averill Park Central School District",
+               "path": "/profile/unsd-3600016"
+            },
+            {
+               "name": "Berlin Central School District",
+               "path": "/profile/unsd-3604620"
+            },
+            {
+               "name": "Brunswick Central School District (Brittonkill)",
+               "path": "/profile/unsd-3605520"
+            },
+            {
+               "name": "Cambridge Central School District",
+               "path": "/profile/unsd-3606210"
+            },
+            {
+               "name": "East Greenbush Central School District",
+               "path": "/profile/unsd-3609630"
+            },
+            {
+               "name": "Hoosic Valley Central School District",
+               "path": "/profile/unsd-3614730"
+            },
+            {
+               "name": "Hoosick Falls Central School District",
+               "path": "/profile/unsd-3614760"
+            },
+            {
+               "name": "Kinderhook Central School District (Ichabod Crane)",
+               "path": "/profile/unsd-3615210"
+            },
+            {
+               "name": "Lansingburgh Central School District",
+               "path": "/profile/unsd-3616740"
+            },
+            {
+               "name": "Mechanicville City School District",
+               "path": "/profile/unsd-3618900"
+            },
+            {
+               "name": "New Lebanon Central School District",
+               "path": "/profile/unsd-3620430"
+            },
+            {
+               "name": "North Greenbush Common School District (Williams)",
+               "path": "/profile/unsd-3631410"
+            },
+            {
+               "name": "Rensselaer City School District",
+               "path": "/profile/unsd-3624450"
+            },
+            {
+               "name": "Schodack Central School District",
+               "path": "/profile/unsd-3626070"
+            },
+            {
+               "name": "Stillwater Central School District",
+               "path": "/profile/unsd-3628110"
+            },
+            {
+               "name": "Troy City School District",
+               "path": "/profile/unsd-3628950"
+            },
+            {
+               "name": "Wynantskill Union Free School District",
+               "path": "/profile/unsd-3631830"
+            }
+         ]
+      },
+      {
+         "name": "Saratoga County",
+         "geoid": "36091",
+         "path": "/profile/36091",
+         "children": [
+            {
+               "name": "Amsterdam City School District",
+               "path": "/profile/unsd-3602970"
+            },
+            {
+               "name": "Ballston Spa Central School District",
+               "path": "/profile/unsd-3603930"
+            },
+            {
+               "name": "Broadalbin-Perth Central School District",
+               "path": "/profile/unsd-3600005"
+            },
+            {
+               "name": "Burnt Hills-Ballston Lake Central School District",
+               "path": "/profile/unsd-3605940"
+            },
+            {
+               "name": "Corinth Central School District",
+               "path": "/profile/unsd-3608370"
+            },
+            {
+               "name": "Edinburg Common School District",
+               "path": "/profile/unsd-3610230"
+            },
+            {
+               "name": "Galway Central School District",
+               "path": "/profile/unsd-3611730"
+            },
+            {
+               "name": "Hadley-Luzerne Central School District",
+               "path": "/profile/unsd-3613110"
+            },
+            {
+               "name": "Hudson Falls Central School District",
+               "path": "/profile/unsd-3614970"
+            },
+            {
+               "name": "Mechanicville City School District",
+               "path": "/profile/unsd-3618900"
+            },
+            {
+               "name": "Niskayuna Central School District",
+               "path": "/profile/unsd-3620880"
+            },
+            {
+               "name": "Northville Central School District",
+               "path": "/profile/unsd-3621300"
+            },
+            {
+               "name": "Saratoga Springs City School District",
+               "path": "/profile/unsd-3625770"
+            },
+            {
+               "name": "Schuylerville Central School District",
+               "path": "/profile/unsd-3626160"
+            },
+            {
+               "name": "Scotia-Glenville Central School District",
+               "path": "/profile/unsd-3626310"
+            },
+            {
+               "name": "Shenendehowa Central School District",
+               "path": "/profile/unsd-3626670"
+            },
+            {
+               "name": "South Glens Falls Central School District",
+               "path": "/profile/unsd-3627240"
+            },
+            {
+               "name": "Stillwater Central School District",
+               "path": "/profile/unsd-3628110"
+            },
+            {
+               "name": "Waterford-Halfmoon Union Free School District",
+               "path": "/profile/unsd-3630060"
+            }
+         ]
+      },
+      {
+         "name": "Schenectady County",
+         "geoid": "36093",
+         "path": "/profile/36093",
+         "children": [
+            {
+               "name": "Amsterdam City School District",
+               "path": "/profile/unsd-3602970"
+            },
+            {
+               "name": "Burnt Hills-Ballston Lake Central School District",
+               "path": "/profile/unsd-3605940"
+            },
+            {
+               "name": "Duanesburg Central School District",
+               "path": "/profile/unsd-3609360"
+            },
+            {
+               "name": "Galway Central School District",
+               "path": "/profile/unsd-3611730"
+            },
+            {
+               "name": "Niskayuna Central School District",
+               "path": "/profile/unsd-3620880"
+            },
+            {
+               "name": "Rotterdam-Mohonasen Central School District",
+               "path": "/profile/unsd-3600004"
+            },
+            {
+               "name": "Schalmont Central School District",
+               "path": "/profile/unsd-3625980"
+            },
+            {
+               "name": "Schenectady City School District",
+               "path": "/profile/unsd-3626010"
+            },
+            {
+               "name": "Schoharie Central School District",
+               "path": "/profile/unsd-3626100"
+            },
+            {
+               "name": "Scotia-Glenville Central School District",
+               "path": "/profile/unsd-3626310"
+            },
+            {
+               "name": "South Colonie Central School District",
+               "path": "/profile/unsd-3627210"
+            }
+         ]
+      },
+      {
+         "name": "Warren County",
+         "geoid": "36113",
+         "path": "/profile/36113",
+         "children": [
+            {
+               "name": "Bolton Central School District",
+               "path": "/profile/unsd-3605010"
+            },
+            {
+               "name": "Glens Falls City School District",
+               "path": "/profile/unsd-3612240"
+            },
+            {
+               "name": "Glens Falls Common School District",
+               "path": "/profile/unsd-3602310"
+            },
+            {
+               "name": "Hadley-Luzerne Central School District",
+               "path": "/profile/unsd-3613110"
+            },
+            {
+               "name": "Hudson Falls Central School District",
+               "path": "/profile/unsd-3614970"
+            },
+            {
+               "name": "Johnsburg Central School District",
+               "path": "/profile/unsd-3615870"
+            },
+            {
+               "name": "Lake George Central School District",
+               "path": "/profile/unsd-3616470"
+            },
+            {
+               "name": "Minerva Central School District",
+               "path": "/profile/unsd-3619530"
+            },
+            {
+               "name": "North Warren Central School District",
+               "path": "/profile/unsd-3616960"
+            },
+            {
+               "name": "Queensbury Union Free School District",
+               "path": "/profile/unsd-3624030"
+            },
+            {
+               "name": "Ticonderoga Central School District",
+               "path": "/profile/unsd-3628680"
+            },
+            {
+               "name": "Warrensburg Central School District",
+               "path": "/profile/unsd-3629910"
+            }
+         ]
+      },
+      {
+         "name": "Washington County",
+         "geoid": "36115",
+         "path": "/profile/36115",
+         "children": [
+            {
+               "name": "Argyle Central School District",
+               "path": "/profile/unsd-3603210"
+            },
+            {
+               "name": "Cambridge Central School District",
+               "path": "/profile/unsd-3606210"
+            },
+            {
+               "name": "Fort Ann Central School District",
+               "path": "/profile/unsd-3611280"
+            },
+            {
+               "name": "Fort Edward Union Free School District",
+               "path": "/profile/unsd-3611310"
+            },
+            {
+               "name": "Granville Central School District",
+               "path": "/profile/unsd-3612450"
+            },
+            {
+               "name": "Greenwich Central School District",
+               "path": "/profile/unsd-3612900"
+            },
+            {
+               "name": "Hartford Central School District",
+               "path": "/profile/unsd-3613830"
+            },
+            {
+               "name": "Hoosic Valley Central School District",
+               "path": "/profile/unsd-3614730"
+            },
+            {
+               "name": "Hoosick Falls Central School District",
+               "path": "/profile/unsd-3614760"
+            },
+            {
+               "name": "Hudson Falls Central School District",
+               "path": "/profile/unsd-3614970"
+            },
+            {
+               "name": "Lake George Central School District",
+               "path": "/profile/unsd-3616470"
+            },
+            {
+               "name": "Putnam Central School District",
+               "path": "/profile/unsd-3623970"
+            },
+            {
+               "name": "Salem Central School District",
+               "path": "/profile/unsd-3625470"
+            },
+            {
+               "name": "Schuylerville Central School District",
+               "path": "/profile/unsd-3626160"
+            },
+            {
+               "name": "Stillwater Central School District",
+               "path": "/profile/unsd-3628110"
+            },
+            {
+               "name": "Whitehall Central School District",
+               "path": "/profile/unsd-3631290"
+            }
+         ]
+      }
+   ]
+]

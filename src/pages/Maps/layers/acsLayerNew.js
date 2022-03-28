@@ -107,18 +107,26 @@ class ACS_Layer extends MapLayer {
     register(this, REDUX_UPDATE, ["graph"]);
 
     return falcorGraph.get(
-      ["geo", COUNTIES, ["cousubs", "name"]]
+      ["geo", COUNTIES, ["cousubs", "zcta", "unsd", "name"]]
     )
     .then(res => {
+
+console.log("RES:", res);
+
       const cousubs = COUNTIES.reduce((a, c) => {
         a.push(...get(res, ["json", "geo", c, "cousubs"], []));
         return a;
-      }, [])
+      }, []);
+
+      const unsds = COUNTIES.reduce((a, c) => {
+        a.push(...get(res, ["json", "geo", c, "unsd"], []));
+        return a;
+      }, []);
 
       map.setFilter('cousubs-labels', ["in", "geoid", ...cousubs])
       map.setFilter('cousubs-outline', ["in", "geoid", ...cousubs])
 
-      return falcorChunkerNiceWithUpdate(["geo", cousubs, "name"])
+      return falcorChunkerNiceWithUpdate(["geo", [...cousubs, ...unsds], "name"])
         .then(() => {
           const nameMap = cousubs.reduce((a, c) => {
             a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
@@ -127,26 +135,7 @@ class ACS_Layer extends MapLayer {
           map.setLayoutProperty("cousubs-labels", "text-field",
             ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
           )
-          const cache = falcorGraph.getCache();
-          this.filters.area.domain = [
-            ...COUNTIES,
-            ...cousubs
-          ]
-          .sort((a, b) => {
-            if (a.length === b.length) {
-              return +a - +b;
-            }
-            if (a.length < b.length) {
-              return +a < +b.slice(0, 5);
-            }
-            if (a.length > b.length) {
-              return +a.slice(0, 5) - +b;
-            }
-          })
-          .map(geoid => ({
-            value: geoid,
-            name: get(cache, ["geo", geoid, "name"], geoid)
-          }))
+          this.filterAreas();
         })
     })
     .then(() => this.fetchData())
@@ -158,6 +147,89 @@ class ACS_Layer extends MapLayer {
   }
   onRemove(map) {
     unregister(this);
+  }
+
+  filterAreas() {
+    console.log("FILTER AREAS:", this);
+
+    const cache = falcorGraph.getCache();
+
+    const cousubs = COUNTIES.reduce((a, c) => {
+      a.push(...get(cache, ["geo", c, "cousubs", "value"], []));
+      return a;
+    }, []);
+
+    const zctas = COUNTIES.reduce((a, c) => {
+      a.push(...get(cache, ["geo", c, "zcta", "value"], []));
+      return a;
+    }, []);
+
+    const unsds = COUNTIES.reduce((a, c) => {
+      a.push(...get(cache, ["geo", c, "unsd", "value"], []));
+      return a;
+    }, []);
+
+    const filterMuni = this.filters.muni.value,
+      filterCounty = this.filters.county.value,
+      filterZCTA = this.filters.zcta.value,
+      filterUNSD = this.filters.unsd.value;
+
+    this.filters.area.domain = [
+      ...COUNTIES,
+      ...cousubs,
+      ...zctas,
+      ...unsds
+    ]
+    .filter(geoid => {
+      return (
+        !(filterMuni || filterCounty || filterZCTA || filterUNSD) ||
+        (filterMuni && (geoid.length === 10)) ||
+        (filterCounty && (geoid.length === 5)) ||
+        (filterZCTA && geoid.includes("zcta")) ||
+        (filterUNSD && geoid.includes("unsd"))
+      );
+    })
+    .map(geoid => ({
+      value: geoid,
+      name: /zcta/.test(geoid) ?
+        geoid.replace("-36", " ").toUpperCase() :
+        get(cache, ["geo", geoid, "name"], geoid)
+    }))
+    .sort((a, b) => {
+      if (/zcta/.test(a.value) && !/zcta/.test(b.value)) {
+        return 1;
+      }
+      else if (/zcta/.test(b.value) && !/zcta/.test(a.value)) {
+        return -1;
+      }
+      else if (/zcta/.test(b.value) && /zcta/.test(a.value)) {
+        return a.value.localeCompare(b.value);
+      }
+      else if (/unsd/.test(a.value) && !/unsd/.test(b.value)) {
+        return 1;
+      }
+      else if (/unsd/.test(b.value) && !/unsd/.test(a.value)) {
+        return -1;
+      }
+      else if (/unsd/.test(b.value) && /unsd/.test(a.value)) {
+        return a.name.localeCompare(b.name);
+      }
+      else if (a.value.length === b.value.length) {
+        return +a.value - +b.value;
+      }
+      else if (a.value.length < b.value.length) {
+        return +a.value < +b.value.slice(0, 5);
+      }
+      else if (a.value.length > b.value.length) {
+        return +a.value.slice(0, 5) - +b.value;
+      }
+    })
+  }
+  onFilterFetch(filterName, prev, curr) {
+    if (filterName in ["muni"]) {
+      return Promise.resolve();
+    }
+    return this.fetchData();
   }
 
 	receiveProps(oldProps, newProps) {
@@ -1211,6 +1283,38 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   },
 
   filters: {
+    county: {
+      name: "Counties",
+      type: "checkbox",
+      value: false,
+      onChange: function(prev, curr) {
+        this.filterAreas();
+      }
+    },
+    muni: {
+      name: "Municipalities",
+      type: "checkbox",
+      value: false,
+      onChange: function(prev, curr) {
+        this.filterAreas();
+      }
+    },
+    unsd: {
+      name: "UNSDs",
+      type: "checkbox",
+      value: false,
+      onChange: function(prev, curr) {
+        this.filterAreas();
+      }
+    },
+    zcta: {
+      name: "ZCTAs",
+      type: "checkbox",
+      value: false,
+      onChange: function(prev, curr) {
+        this.filterAreas();
+      }
+    },
     area: {
       name: "Area",
       type: "multi",
@@ -1242,10 +1346,11 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       domain: CENSUS_FILTER_CONFIG,
       value: CENSUS_FILTER_CONFIG[DEFAULT_CONFIG_INDEX].value,
       groups: CENSUS_FILTER_CONFIG.reduce((a, c) => {
-        if (c.group !== currentGroup) {
-          currentGroup = c.group;
+        if (get(a, [a.length - 1, "name"]) !== c.group) {
+        // if (c.group !== currentGroup) {
+          // currentGroup = c.group;
           a.push({
-            name: currentGroup,
+            name: c.group,
             options: []
           });
         }

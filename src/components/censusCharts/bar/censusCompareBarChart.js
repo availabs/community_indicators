@@ -175,7 +175,7 @@ class StackedBarChart extends ChartBase {
 
     const barData = this.getBarData();
 
-console.log("?????????", this.props, barData)
+// console.log("?????????", this.props, barData)
 
     return !this.state.loading && !barData.length ? <NoData { ...this.state }/> : (
       <div style={ { width: "100%", height: "100%", position: "relative" } }

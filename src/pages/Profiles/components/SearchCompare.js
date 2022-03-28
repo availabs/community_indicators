@@ -2,7 +2,7 @@ import React from 'react';
 import styled from "styled-components"
 import {Tokenizer} from 'react-typeahead'
 
-import geographies from '../submenu'
+import { submenu as geographies } from '../submenu'
 import './searchcompare.css'
 let geonames = geographies[0].reduce((acc, curr) =>{
 	return [...acc, curr.name, ...curr.children.map(d => d.name)]

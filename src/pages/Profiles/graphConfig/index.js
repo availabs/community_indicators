@@ -26,7 +26,7 @@ export default Object.keys(CONFIG)
   .reduce((a, c, i) => {
     a[c] = CONFIG[c].map((config, ii) => {
       config.graphId = `${ c }-${ ii }`;
-      config.id = config.id || `local-profile-${ config.type }-${ config.title || config.broadCensusKey }`;
+      config.id = config.id || `local-profile-${ config.type }-${ config.title || config.broadCensusKey || config.header }`;
       return config;
     })
     return a;

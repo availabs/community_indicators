@@ -73,7 +73,8 @@ class UNSDList extends ChartBase {
         <div style={ {
           padding: '8px 0px 0px 10px',
           fontSize: "1.2rem",
-          height: "30px", width: "100%"
+          height: "30px",
+          width: "100%"
         } }>
           { this.props.title }
         </div>
@@ -119,9 +120,11 @@ class UNSDList extends ChartBase {
             <tbody>
               { data.map(d => (
                   <tr key={ d.unsd }>
-                    <td><Link to={ `/profile/${ d.unsd }`}>
-                      { d.name }
-                    </Link></td>
+                    <td>
+                      <Link to={ `/profile/${ d.unsd }` } target="_top">
+                        { d.name }
+                      </Link>
+                    </td>
                     <td>{ d.grades }</td>
                     <td>{ d.lea }</td>
                   </tr>
