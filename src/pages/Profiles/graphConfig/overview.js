@@ -127,7 +127,7 @@ export default [
       type:"CensusStatBox",
       censusKeys:["B01003_001E"],
       showCompareYear: true,
-      title: "Population",
+      title: "Wizardry",
       layout:{
          w:3,
          h:6
