@@ -100,31 +100,46 @@ const COUNTIES = [
   '36039','36021','36115','36113'
 ].sort((a, b) => +a - +b);
 
-const YEARS = [2017, 2016, 2015, 2014];
+const YEARS = [2020, 2019, 2018, 2017, 2016, 2015, 2014];
+// const YEARS = [2019, 2018, 2017, 2016, 2015, 2014];
 
 class ACS_Layer extends MapLayer {
+  getLayerYears() {
+    const year = this.filters.year.value;
+
+    const lYear = year < 2020 ? 2017 : 2020;
+    const oYear = year < 2020 ? 2020 : 2017;
+
+    return [lYear, oYear];
+  }
   onAdd(map) {
+    const year = this.filters.year.value;
+
     register(this, REDUX_UPDATE, ["graph"]);
 
     return falcorGraph.get(
-      ["geo", COUNTIES, ["cousubs", "zcta", "unsd", "name"]]
+      ["geo", COUNTIES, year, ["cousubs", "zcta", "unsd"]],
+      ["geo", COUNTIES, "name"]
     )
     .then(res => {
 
-console.log("RES:", res);
-
       const cousubs = COUNTIES.reduce((a, c) => {
-        a.push(...get(res, ["json", "geo", c, "cousubs"], []));
+        a.push(...get(res, ["json", "geo", c, year, "cousubs"], []));
         return a;
       }, []);
 
       const unsds = COUNTIES.reduce((a, c) => {
-        a.push(...get(res, ["json", "geo", c, "unsd"], []));
+        a.push(...get(res, ["json", "geo", c, year, "unsd"], []));
         return a;
       }, []);
 
-      map.setFilter('cousubs-labels', ["in", "geoid", ...cousubs])
-      map.setFilter('cousubs-outline', ["in", "geoid", ...cousubs])
+      const years = this.getLayerYears();
+
+      map.setFilter(`cousubs-labels-${ years[0] }`, ["in", "geoid", ...cousubs]);
+      map.setFilter(`cousubs-outline-${ years[0] }`, ["in", "geoid", ...cousubs]);
+
+      map.setFilter(`cousubs-labels-${ years[1] }`, ["in", "geoid", "none"]);
+      map.setFilter(`cousubs-outline-${ years[1] }`, ["in", "geoid", "none"]);
 
       return falcorChunkerNiceWithUpdate(["geo", [...cousubs, ...unsds], "name"])
         .then(() => {
@@ -132,7 +147,10 @@ console.log("RES:", res);
             a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
             return a;
           }, {})
-          map.setLayoutProperty("cousubs-labels", "text-field",
+          map.setLayoutProperty("cousubs-labels-2017", "text-field",
+            ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
+          )
+          map.setLayoutProperty("cousubs-labels-2020", "text-field",
             ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
           )
           this.filterAreas();
@@ -150,22 +168,23 @@ console.log("RES:", res);
   }
 
   filterAreas() {
-    console.log("FILTER AREAS:", this);
+    // console.log("FILTER AREAS:", this);
+    const year = this.filters.year.value;
 
     const cache = falcorGraph.getCache();
 
     const cousubs = COUNTIES.reduce((a, c) => {
-      a.push(...get(cache, ["geo", c, "cousubs", "value"], []));
+      a.push(...get(cache, ["geo", c, year, "cousubs", "value"], []));
       return a;
     }, []);
 
     const zctas = COUNTIES.reduce((a, c) => {
-      a.push(...get(cache, ["geo", c, "zcta", "value"], []));
+      a.push(...get(cache, ["geo", c, year, "zcta", "value"], []));
       return a;
     }, []);
 
     const unsds = COUNTIES.reduce((a, c) => {
-      a.push(...get(cache, ["geo", c, "unsd", "value"], []));
+      a.push(...get(cache, ["geo", c, year, "unsd", "value"], []));
       return a;
     }, []);
 
@@ -251,9 +270,10 @@ console.log("RES:", res);
   }
   getGeoids() {
     const geolevel = this.filters.geolevel.value;
+    const year = this.filters.year.value;
 
     return this.getBaseGeoids().reduce((a, c) => {
-      a.push(...get(this.falcorCache, ["geo", c, geolevel, "value"], []));
+      a.push(...get(this.falcorCache, ["geo", c, year, geolevel, "value"], []));
       return a;
     }, []);
   }
@@ -298,15 +318,19 @@ console.log("RES:", res);
 
     const geoids = this.getBaseGeoids();
 
+    // falcorGraph.get(["geo", geoids.slice(0, 10), year, geolevel])
+    //   .then(res => console.log("RES:", res));
+
     return falcorChunkerNiceWithUpdate(
-      ["geo", geoids, geolevel]
+      ["geo", geoids, year, geolevel]
     )
     .then(() => {
       const cache = falcorGraph.getCache(),
         subGeoids = geoids.reduce((a, c) => {
-          a.push(...get(cache, ["geo", c, geolevel, "value"], []))
+          a.push(...get(cache, ["geo", c, year, geolevel, "value"], []))
           return a;
         }, []);
+
       return falcorChunkerNiceWithUpdate(
         ["acs", subGeoids, year, census]
       )
@@ -316,6 +340,7 @@ console.log("RES:", res);
     this.threeD = !this.threeD;
     const mapPitch = this.map.getPitch(),
       mapBearing = this.map.getBearing();
+
     if ((mapPitch < (65 * 0.5)) && this.threeD) {
       const bearing = Math.abs(mapBearing) < 45 ? (Math.sign(mapBearing) || 1) * 45 : mapBearing;
       this.map.easeTo({ pitch: 65, bearing, duration: 2000 });
@@ -324,19 +349,30 @@ console.log("RES:", res);
       this.map.easeTo({ pitch: 0, bearing: 0, duration: 2000 });
     }
     if (this.threeD) {
-      this.map.setLayoutProperty('cousubs-labels', "visibility", "none")
-      this.map.setLayoutProperty('cousubs-outline', "visibility", "none")
+      this.map.setLayoutProperty(`cousubs-labels-2017`, "visibility", "none")
+      this.map.setLayoutProperty(`cousubs-outline-2017`, "visibility", "none")
+
+      this.map.setLayoutProperty(`cousubs-labels-2020`, "visibility", "none")
+      this.map.setLayoutProperty(`cousubs-outline-2020`, "visibility", "none")
     }
     else {
-      this.map.setLayoutProperty('cousubs-labels', "visibility", "visible")
-      this.map.setLayoutProperty('cousubs-outline', "visibility", "visible")
+      const years = this.getLayerYears();
+
+      this.map.setLayoutProperty(`cousubs-labels-${ years[0] }`, "visibility", "visible")
+      this.map.setLayoutProperty(`cousubs-outline-${ years[0] }`, "visibility", "visible")
+
+      this.map.setLayoutProperty(`cousubs-labels-${ years[1] }`, "visibility", "none")
+      this.map.setLayoutProperty(`cousubs-outline-${ years[1] }`, "visibility", "none")
     }
   }
   render(map) {
+
     const cache = falcorGraph.getCache(),
       geoids = this.getGeoids(),
       threeD = this.threeD,
-      geolevel = this.filters.geolevel.value,
+
+      years = this.getLayerYears(),
+      geolevel = `${ this.filters.geolevel.value }-${ years[0] }`,
 
       year = this.filters.year.value,
 
@@ -417,6 +453,7 @@ console.log("RES:", res);
       }
       return {};
     }
+
     const filterAndPaint = prevMeta => {
       this.geoData = { ...this.geoData, ...valueMap };
 
@@ -1209,23 +1246,36 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
   animator: new Animator(),
   colorAnimators: {
-    "counties": new Animator({ baseValue: "#fff" }),
-    "cousubs": new Animator({ baseValue: "#fff" }),
-    "tracts": new Animator({ baseValue: "#fff" }),
-    "blockgroup": new Animator({ baseValue: "#fff" }),
-    "zcta": new Animator({ baseValue: "#fff" }),
-    "unsd": new Animator({ baseValue: "#fff" })
+    "counties-2017": new Animator({ baseValue: "#fff" }),
+    "cousubs-2017": new Animator({ baseValue: "#fff" }),
+    "tracts-2017": new Animator({ baseValue: "#fff" }),
+    "blockgroup-2017": new Animator({ baseValue: "#fff" }),
+    "zcta-2017": new Animator({ baseValue: "#fff" }),
+    "unsd-2017": new Animator({ baseValue: "#fff" }),
+
+    "counties-2020": new Animator({ baseValue: "#fff" }),
+    "cousubs-2020": new Animator({ baseValue: "#fff" }),
+    "tracts-2020": new Animator({ baseValue: "#fff" }),
+    "blockgroup-2020": new Animator({ baseValue: "#fff" }),
+    "zcta-2020": new Animator({ baseValue: "#fff" }),
+    "unsd-2020": new Animator({ baseValue: "#fff" }),
   },
 
   onHover: {
-    layers: ['counties', 'cousubs', 'tracts', 'blockgroup', "zcta", "unsd"],
+    layers: [
+      'counties-2017', 'cousubs-2017', 'tracts-2017', 'blockgroup-2017', "zcta-2017", "unsd-2017",
+      'counties-2020', 'cousubs-2020', 'tracts-2020', 'blockgroup-2020', "zcta-2020", "unsd-2020"
+    ],
     // dataFunc: function(features, point, lngLat, layerName) {
     // 	// DO SOME STUFF
     // }
   },
 
   onClick: {
-    layers: ["counties", "cousubs", "tracts", "blockgroup"],
+    layers: [
+      'counties-2017', 'cousubs-2017', 'tracts-2017', 'blockgroup-2017', "zcta-2017", "unsd-2017",
+      'counties-2020', 'cousubs-2020', 'tracts-2020', 'blockgroup-2020', "zcta-2020", "unsd-2020"
+    ],
     dataFunc: function(features, point, lngLat, layer, e) {
       const geoid = get(features, [0, "properties", "geoid"]);
       this.selectGeoid(geoid);
@@ -1234,7 +1284,10 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   },
 
   popover: {
-    layers: ["counties", "cousubs", "tracts", "blockgroup", "zcta", "unsd"],
+    layers: [
+      'counties-2017', 'cousubs-2017', 'tracts-2017', 'blockgroup-2017', "zcta-2017", "unsd-2017",
+      'counties-2020', 'cousubs-2020', 'tracts-2020', 'blockgroup-2020', "zcta-2020", "unsd-2020"
+    ],
     setPinnedState: true,
     onPinned: function(features, lngLat, point) {
       const geoid = get(features, [0, "properties", "geoid"], null);
@@ -1479,84 +1532,121 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     //     url: "mapbox://am3081.9rcqae8k"
     //   }
     // }
-    { id: "counties",
+    { id: "counties-2017",
       source: {
         'type': "vector",
         'url': 'mapbox://am3081.a8ndgl5n'
       },
     },
-    { id: "cousubs",
+    { id: "cousubs-2017",
       source: {
         'type': "vector",
         'url': 'mapbox://am3081.36lr7sic'
       },
     },
-    { id: "tracts",
+    { id: "tracts-2017",
       source: {
         'type': "vector",
         'url': 'mapbox://am3081.2x2v9z60'
       },
     },
-    { id: "blockgroup",
+    { id: "blockgroup-2017",
       source: {
           'type': "vector",
           'url': 'mapbox://am3081.52dbm7po'
       }
     },
-    { id: "zcta",
+    { id: "zcta-2017",
       source: {
           'type': "vector",
           'url': `https://tiles.availabs.org/data/zip_codes_2017.json`
       }
     },
-    { id: "unsd",
+    { id: "unsd-2017",
       source: {
           'type': "vector",
           'url': 'https://tiles.availabs.org/data/school_districts_2017.json'
+      }
+    },
+
+    { id: "counties-2020",
+      source: {
+        'type': "vector",
+        'url': 'https://tiles.availabs.org/data/tl_2020_36_county.json'
+      },
+    },
+    { id: "cousubs-2020",
+      source: {
+        'type': "vector",
+        'url': 'https://tiles.availabs.org/data/tl_2020_36_cousub.json'
+      },
+    },
+    { id: "tracts-2020",
+      source: {
+        'type': "vector",
+        'url': 'https://tiles.availabs.org/data/tl_2020_36_tract.json'
+      },
+    },
+    { id: "blockgroup-2020",
+      source: {
+          'type': "vector",
+          'url': 'https://tiles.availabs.org/data/tl_2020_36_bg.json'
+      }
+    },
+    { id: "zcta-2020",
+      source: {
+          'type': "vector",
+          'url': `https://tiles.availabs.org/data/tl_2020_36_zcta.json`
+      }
+    },
+    { id: "unsd-2020",
+      source: {
+          'type': "vector",
+          'url': 'https://tiles.availabs.org/data/tl_2020_36_unsd.json'
       }
     }
   ],
 
   layers: [
-    { 'id': 'counties',
-      'source': 'counties',
+    { 'id': 'counties-2017',
+      'source': 'counties-2017',
       'source-layer': 'counties',
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
-    { 'id': 'cousubs',
-      'source': 'cousubs',
+    { 'id': 'cousubs-2017',
+      'source': 'cousubs-2017',
       'source-layer': 'cousubs',
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
-    { 'id': 'tracts',
-      'source': 'tracts',
+    { 'id': 'tracts-2017',
+      'source': 'tracts-2017',
       'source-layer': 'tracts',
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
-    { id: "blockgroup",
-      source: "blockgroup",
+    { id: "blockgroup-2017",
+      source: "blockgroup-2017",
       'source-layer': "blockgroups",
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
-    { id: "zcta",
-      source: "zcta",
+    { id: "zcta-2017",
+      source: "zcta-2017",
       'source-layer': "tl_2017_36_zcta510",
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
-    { id: "unsd",
-      source: "unsd",
+    { id: "unsd-2017",
+      source: "unsd-2017",
       'source-layer': "tl_2017_36_unsd",
       'type': 'fill-extrusion',
       filter : ['in', 'geoid', 'none']
     },
 
-    { id: 'cousubs-outline',
-      source: 'cousubs',
+    { id: 'cousubs-outline-2017',
+      source: 'cousubs-2017',
       'source-layer': 'cousubs',
       type: 'line',
       filter : ['in', 'geoid', 'none'],
@@ -1566,8 +1656,8 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       }
     },
 
-    { 'id': 'counties-line',
-      'source': 'counties',
+    { 'id': 'counties-line-2017',
+      'source': 'counties-2017',
       'source-layer': 'counties',
       'type': 'line',
       paint: {
@@ -1580,8 +1670,8 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         ]
       }
     },
-    { 'id': 'cousubs-line',
-      'source': 'cousubs',
+    { 'id': 'cousubs-line-2017',
+      'source': 'cousubs-2017',
       'source-layer': 'cousubs',
       'type': 'line',
       paint: {
@@ -1594,8 +1684,8 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         ]
       }
     },
-    { 'id': 'tracts-line',
-      'source': 'tracts',
+    { 'id': 'tracts-line-2017',
+      'source': 'tracts-2017',
       'source-layer': 'tracts',
       'type': 'line',
       paint: {
@@ -1608,8 +1698,8 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         ]
       }
     },
-    { 'id': 'blockgroup-line',
-      'source': 'blockgroup',
+    { 'id': 'blockgroup-line-2017',
+      'source': 'blockgroup-2017',
       'source-layer': 'blockgroups',
       'type': 'line',
       paint: {
@@ -1623,9 +1713,129 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       }
     },
 
-    { id: 'cousubs-labels',
-      source: 'cousubs',
+    { id: 'cousubs-labels-2017',
+      source: 'cousubs-2017',
       'source-layer': 'cousubs',
+      type: 'symbol',
+      filter : ['in', 'geoid', 'none'],
+      layout: {
+        "symbol-placement": "point",
+        "text-size": 12
+      },
+      paint: {
+        "text-color": "#000"
+      }
+    },
+
+
+    { 'id': 'counties-2020',
+      'source': 'counties-2020',
+      'source-layer': 'tl_2020_us_county',
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+    { 'id': 'cousubs-2020',
+      'source': 'cousubs-2020',
+      'source-layer': 'tl_2020_36_cousub',
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+    { 'id': 'tracts-2020',
+      'source': 'tracts-2020',
+      'source-layer': 'tl_2020_36_tract',
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+    { id: "blockgroup-2020",
+      source: "blockgroup-2020",
+      'source-layer': "tl_2020_36_bg",
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+    { id: "zcta-2020",
+      source: "zcta-2020",
+      'source-layer': "tl_2020_36_zcta",
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+    { id: "unsd-2020",
+      source: "unsd-2020",
+      'source-layer': "tl_2020_36_unsd",
+      'type': 'fill-extrusion',
+      filter : ['in', 'geoid', 'none']
+    },
+
+    { id: 'cousubs-outline-2020',
+      source: 'cousubs-2020',
+      'source-layer': 'tl_2020_36_cousub',
+      type: 'line',
+      filter : ['in', 'geoid', 'none'],
+      paint: {
+        "line-color": "#ddd",
+        "line-width": 1
+      }
+    },
+
+    { 'id': 'counties-line-2020',
+      'source': 'counties-2020',
+      'source-layer': 'tl_2020_us_county',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
+    },
+    { 'id': 'cousubs-line-2020',
+      'source': 'cousubs-2020',
+      'source-layer': 'tl_2020_36_cousub',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
+    },
+    { 'id': 'tracts-line-2020',
+      'source': 'tracts-2020',
+      'source-layer': 'tl_2020_36_tract',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
+    },
+    { 'id': 'blockgroup-line-2020',
+      'source': 'blockgroup-2020',
+      'source-layer': 'tl_2020_36_bg',
+      'type': 'line',
+      paint: {
+        "line-width": 2,
+        "line-color": HOVER_COLOR,
+        "line-opacity": [
+          "case",
+          ["boolean", ["feature-state", "pinned"], false],
+          1.0, 0.0
+        ]
+      }
+    },
+
+    { id: 'cousubs-labels-2020',
+      source: 'cousubs-2020',
+      'source-layer': 'tl_2020_36_cousub',
       type: 'symbol',
       filter : ['in', 'geoid', 'none'],
       layout: {
