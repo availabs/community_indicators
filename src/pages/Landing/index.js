@@ -279,7 +279,7 @@ class Home extends Component {
                                     Data Sources
                                 </ContentHeader>
                                 <SectionBoxMain>
-                                    All information currently displayed herein is from the U.S. Census, American Communities Survey, 5-Year Estimates. The Default is set to 2018 and the comparison year is set to 2013.
+                                    All information currently displayed herein is from the U.S. Census, American Communities Survey, 5-Year Estimates. The Default is set to the latest year in the system and the comparison is set to 5 years prior. To view the visualization and methodolgy types <a href="https://docs.google.com/spreadsheets/d/1YOFMGZ7QydaqJl11aFlCZh3gC3SV3At3kqRaZyist7k/edit?usp=sharing/" target="blank"> click here.</a>
                                 </SectionBoxMain>
 
                                 <ContentHeader>

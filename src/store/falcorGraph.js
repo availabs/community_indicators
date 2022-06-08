@@ -6,7 +6,10 @@ import store from "store"
 import { update } from "utils/redux-falcor/components/duck"
 
 let host = 'https://graph.availabs.org/'
-// let host = "http://localhost:4444/"
+if (process.env.NODE_ENV === 'development') {
+  host = "http://localhost:4444/"
+}
+
 
 console.log("API HOST:", host)
 
@@ -51,7 +54,7 @@ export const falcorGraph = (() =>
     source: new CustomSource(host + 'graph', {
       crossDomain: true,
       withCredentials: false,
-      timeout: 120000
+      timeout: 600000
     }),
     errorSelector: (path, error) => {
       console.log('errorSelector', path, error);
