@@ -1283,6 +1283,10 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
   },
 
   filters: {
+    // areaFilterToggle: {
+    //   name: "Area Filter Toggles",
+    //   type: ""
+    // },
     county: {
       name: "Counties",
       type: "checkbox",
