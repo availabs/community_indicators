@@ -13,7 +13,7 @@ import GeoName from "../geoname"
 class ZCTAList extends ChartBase {
   getFalcorDeps() {
     return this.props.falcor.get(
-      ["geo", this.props.geoids, ["zcta"]]
+      ["geo", this.props.geoids, this.props.year, ["zcta"]]
     )
   }
   render() {
@@ -62,7 +62,7 @@ export default connect(mapStateToProps)(reduxFalcor(ZCTAList));
 
 const getZCTAList = (state, props) => {
   return props.geoids.reduce((a, c) => {
-    a.push(...get(state, ["graph", "geo", c, "zcta", "value"], []));
+    a.push(...get(state, ["graph", "geo", c, props.year, "zcta", "value"], []));
     return a;
   }, []).sort((a, b) => +a - +b);
 }

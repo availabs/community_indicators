@@ -1305,7 +1305,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       if (/^zcta-*/.test(geoid)) {
         name = `ZIP Code ${ topFeature.properties.zcta }`
       }
-      else if (geoid.length < 11) {
+      else if (/^unsd-*/.test(geoid) || geoid.length < 11) {
         name = get(this.falcorCache, ["geo", geoid, "name"], geoid);
       }
       else if (geoid.length === 11) {
@@ -1337,7 +1337,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
   filters: {
     county: {
-      name: "Counties",
+      name: "Show Counties in Area",
       type: "checkbox",
       value: false,
       onChange: function(prev, curr) {
@@ -1345,7 +1345,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       }
     },
     muni: {
-      name: "Municipalities",
+      name: "Show Municipalities in Area",
       type: "checkbox",
       value: false,
       onChange: function(prev, curr) {
@@ -1353,7 +1353,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       }
     },
     unsd: {
-      name: "UNSDs",
+      name: "Show UNSDs in Area",
       type: "checkbox",
       value: false,
       onChange: function(prev, curr) {
@@ -1361,7 +1361,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       }
     },
     zcta: {
-      name: "ZCTAs",
+      name: "Show ZCTAs in Area",
       type: "checkbox",
       value: false,
       onChange: function(prev, curr) {
