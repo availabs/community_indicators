@@ -24,10 +24,10 @@ class UNSDList extends ChartBase {
 
   getFalcorDeps() {
     return this.props.falcor.get(
-      ["geo", this.props.geoids, ["unsd"]]
+      ["geo", this.props.geoids, this.props.year, ["unsd"]]
     ).then(res => {
       const UNSDs = this.props.geoids.reduce((a, c) => {
-        const UNSDs = get(res, ["json", "geo", c, "unsd"], []);
+        const UNSDs = get(res, ["json", "geo", c, this.props.year, "unsd"], []);
         a.push(...UNSDs);
         return a;
       }, []);
@@ -150,7 +150,7 @@ export default connect(mapStateToProps)(reduxFalcor(UNSDList));
 
 const getUNSDList = (state, props) => {
   return props.geoids.reduce((a, c) => {
-    a.push(...get(state, ["graph", "geo", c, "unsd", "value"], []));
+    a.push(...get(state, ["graph", "geo", c, props.year, "unsd", "value"], []));
     return a;
   }, []).map(unsd => {
     return {

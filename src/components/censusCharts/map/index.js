@@ -230,12 +230,6 @@ class CensusLayer extends MapLayer {
     this.zoomToBounds = this.zoomToBounds || !deepequal(oldProps.geoids, newProps.geoids);
 	}
 
-  getGeoids() {
-    return this.geoids.reduce((a, c) => {
-      a.push(...get(this.falcorCache, ["geo", c, this.geolevel, "value"], []));
-      return a;
-    }, []);
-  }
   resetView() {
     if (!this.map) return false;
 
@@ -298,26 +292,25 @@ class CensusLayer extends MapLayer {
 
 // console.log("counties", counties)
     const requests = [
-      ["geo", counties, ["name", "cousubs"]],
-      ["geo", this.geoids, ["cousubs", this.geolevel, "boundingBox", "name"]]
+      ["geo", counties, "name"],
+      ["geo", counties, this.year, "cousubs"],
+      ["geo", this.geoids, ["boundingBox", "name"]],
+      ["geo", this.geoids, this.year, ['cousubs', this.geolevel]]
     ]
 
-    const getGeoms = this.geoids.reduce((a, c) => {
-      return a || regex.test(c);
-    }, false)
-    if (getGeoms) {
-      requests.push(["geo", this.geoids.filter(geoid => regex.test(geoid)), "geom"])
-    }
+    // const getGeoms = this.geoids.filter(geoid => regex.test(geoid))
+    // if (getGeoms.length) {
+    //   requests.push(["geo", getGeoms, "geom"])
+    // }
 
     return falcorChunkerNiceWithUpdate(...requests)
       .then(() => {
         const cousubs = this.getAllCousubs();
-
         return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", this.geolevel]])
       })
       .then(() => {
         const subGeoids = this.geoids.reduce((a, c) => {
-            a.push(...get(this.falcorCache, ["geo", c, this.geolevel, "value"], []))
+            a.push(...get(this.falcorCache, ["geo", c, this.year, this.geolevel, "value"], []))
             return a;
           }, []);
 
@@ -330,22 +323,28 @@ class CensusLayer extends MapLayer {
           ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "name"]
         )
       })
-      .then(() => {
-        if (getGeoms) {
-          this.map.getSource("geojson-geom")
-            .setData({
-              type: "FeatureCollection",
-              features: this.geoids
-                .filter(geoid => regex.test(geoid))
-                .map(geoid => {
-                  return {
-                    properties: { geoid },
-                    geometry: JSON.parse(get(this.falcorCache, ["geo", geoid, "geom", "value"]))
-                  }
-                })
-            })
-        }
-      })
+      // .then(() => {
+      //   if (getGeoms.length) {
+      //     this.map.getSource("geojson-geom")
+      //       .setData({
+      //         type: "FeatureCollection",
+      //         features: this.geoids
+      //           .filter(geoid => regex.test(geoid))
+      //           .map(geoid => {
+      //             return {
+      //               properties: { geoid },
+      //               geometry: JSON.parse(get(this.falcorCache, ["geo", geoid, "geom", "value"]))
+      //             }
+      //           })
+      //       })
+      //   }
+      // })
+  }
+  getGeoids() {
+    return this.geoids.reduce((a, c) => {
+      a.push(...get(this.falcorCache, ["geo", c, this.year, this.geolevel, "value"], []));
+      return a;
+    }, []);
   }
   getAllCousubs() {
     const regex = /zcta|unsd/
@@ -355,59 +354,100 @@ class CensusLayer extends MapLayer {
         return regex.test(geoid) ? geoid : geoid.slice(0, 5)
       })
       .reduce((a, c) => {
-        a.push(...get(this.falcorCache, ["geo", c, "cousubs", "value"], []));
+        a.push(...get(this.falcorCache, ["geo", c, this.year, "cousubs", "value"], []));
         return a;
       }, []);
   }
+  getLayerYears() {
+    const year = this.year;
+
+    const lYear = year < 2020 ? 2017 : 2020;
+    const oYear = year < 2020 ? 2020 : 2017;
+
+    return [lYear, oYear];
+  }
   render(map) {
     const geoids = this.getGeoids();
+    const [y1, y2] = this.getLayerYears();
 
-    map.setFilter(this.geolevel, ["in", "geoid", ...geoids]);
+    map.setFilter(`${ this.geolevel }-${ y1 }`, ["in", "geoid", ...geoids]);
 
-    // const cousubs = this.geoids.reduce((a, c) => {
-    //   if (c.length === 5) {
-    //     const d = get(this.falcorCache, ["geo", c, "cousubs", "value"], []);
-    //     a.push(...d);
-    //   }
-    //   else if (c.length === 10) {
-    //     a.push(c);
-    //   }
-    //   return a;
-    // }, [])
-    // if (cousubs.length > 0) {
-    //   map.setFilter("cousubs-line", ["in", "geoid", ...cousubs]);
-    // }
-    // else {
-    // }
+    const placeRegex = /^36\d{5}$/,
+      unsdRegex = /^unsd-/,
+      zctaRegex = /^zcta-/;
 
-console.log("RENDER:", this.geolevel, this.geoids);
+    const base = [
+      { geolevel: "places", geoids: [] },
+      { geolevel: "unsds", geoids: [] },
+      { geolevel: "zctas", geoids: [] },
+      { geolevel: "cousubs", geoids: [] }
+    ]
 
-    if ((this.geoids.length === 1) && (this.geoids[0].length === 7)) {
-      const geoid = this.geoids[0];
-      map.setFilter("places-line", ["in", "geoid", geoid]);
-      map.setFilter("places-symbol", ["in", "geoid", geoid]);
-      const name = get(this.falcorCache, ["geo", geoid, "name"], "");
-      map.setLayoutProperty("places-symbol", "text-field", name);
+    const reducedGeoids = this.geoids.reduce((a, c) => {
+      if (placeRegex.test(c)) {
+        a[0].geoids.push(c);
+      }
+      else if (unsdRegex.test(c)) {
+        a[1].geoids.push(c);
+      }
+      else if (zctaRegex.test(c)) {
+        a[2].geoids.push(c);
+      }
+      else {
+        a[3].geoids.push(
+          ...get(this.falcorCache, ["geo", c, this.year, "cousubs", "value"], [])
+        );
+      }
+      return a;
+    }, base);
 
-      map.setFilter("cousubs-line", ["in", "geoid", "none"]);
-      map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
-    }
-    else {
-      map.setFilter("places-line", ["in", "geoid", "none"]);
-      map.setFilter("places-symbol", ["in", "geoid", "none"]);
+    reducedGeoids.forEach(({ geolevel, geoids }) => {
+      map.setFilter(`${ geolevel }-line-${ y2 }`, ["in", "geoid", "none"]);
+      map.setFilter(`${ geolevel }-symbol-${ y2 }`, ["in", "geoid", "none"]);
 
-      const allCousubs = this.getAllCousubs(),
-        nameMap = allCousubs.reduce((a, c) => {
-          a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
+      if (geoids.length) {
+        map.setFilter(`${ geolevel }-line-${ y1 }`, ["in", "geoid", ...geoids]);
+        map.setFilter(`${ geolevel }-symbol-${ y1 }`, ["in", "geoid", ...geoids]);
+        const names = geoids.reduce((a, c) => {
+          a[c] = get(this.falcorCache, ["geo", c, "name"], c);
           return a;
         }, {});
+        map.setLayoutProperty(`${ geolevel }-symbol-${ y1 }`, "text-field",
+          ["get", ["to-string", ["get", "geoid"]], ["literal", names]]
+        );
+      }
+      else {
+        map.setFilter(`${ geolevel }-line-${ y1 }`, ["in", "geoid", "none"]);
+        map.setFilter(`${ geolevel }-symbol-${ y1 }`, ["in", "geoid", "none"]);
+      }
+    })
 
-      map.setFilter("cousubs-line", ["in", "geoid", ...this.geoids]);
-      map.setLayoutProperty("cousubs-symbol", "text-field",
-        ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
-      );
-      map.setFilter("cousubs-symbol", ["in", "geoid", ...allCousubs]);
-    }
+    // if ((this.geoids.length === 1) && (this.geoids[0].length === 7)) {
+    //   const geoid = this.geoids[0];
+    //   map.setFilter("places-line", ["in", "geoid", geoid]);
+    //   map.setFilter("places-symbol", ["in", "geoid", geoid]);
+    //   const name = get(this.falcorCache, ["geo", geoid, "name"], "");
+    //   map.setLayoutProperty("places-symbol", "text-field", name);
+    //
+    //   map.setFilter("cousubs-line", ["in", "geoid", "none"]);
+    //   map.setFilter("cousubs-symbol", ["in", "geoid", "none"]);
+    // }
+    // else {
+    //   map.setFilter("places-line", ["in", "geoid", "none"]);
+    //   map.setFilter("places-symbol", ["in", "geoid", "none"]);
+    //
+    //   const allCousubs = this.getAllCousubs(),
+    //     nameMap = allCousubs.reduce((a, c) => {
+    //       a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
+    //       return a;
+    //     }, {});
+    //
+    //   map.setFilter("cousubs-line", ["in", "geoid", ...this.geoids]);
+    //   map.setLayoutProperty("cousubs-symbol", "text-field",
+    //     ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
+    //   );
+    //   map.setFilter("cousubs-symbol", ["in", "geoid", ...allCousubs]);
+    // }
 
 
     this.zoomToBounds && this.resetView() && (this.zoomToBounds = false);
@@ -457,7 +497,7 @@ console.log("RENDER:", this.geolevel, this.geoids);
       colors[geoid] = get(colors, geoid, "#000")
     })
 
-    map.setPaintProperty(this.geolevel, "fill-color",
+    map.setPaintProperty(`${ this.geolevel }-${ y1 }`, "fill-color",
       ["case",
         ["boolean", ["feature-state", "hover"], false], HOVER_COLOR,
         ["case",
@@ -508,7 +548,10 @@ const LayerFactory = props => {
     geolevel: get(props, "geolevel", "blockgroup"), //"blockgroup",
 
     onClick: {
-      layers: ["blockgroup", "cousubs"],
+      layers: [
+        "blockgroup-2017", "cousubs-2017",
+        "blockgroup-2020", "cousubs-2020"
+      ],
       dataFunc: function(features) {
         const geoid = get(features, [0, "properties", "geoid"]);
         geoid && this.setGeoid(geoid);
@@ -516,7 +559,10 @@ const LayerFactory = props => {
     },
 
     popover: {
-      layers: ["blockgroup", "cousubs"],
+      layers: [
+        "blockgroup-2017", "cousubs-2017",
+        "blockgroup-2020", "cousubs-2020"
+      ],
       dataFunc: function(topFeature, features) {
         const geoid = get(topFeature, ["properties", "geoid"], null),
           county = geoid.slice(0, 5),
@@ -554,7 +600,10 @@ const LayerFactory = props => {
     },
 
     onHover: {
-      layers: ["blockgroup", "cousubs"]
+      layers: [
+        "blockgroup-2017", "cousubs-2017",
+        "blockgroup-2020", "cousubs-2020"
+      ]
     },
 
     sources: [
@@ -564,7 +613,7 @@ const LayerFactory = props => {
       //     'url': 'mapbox://am3081.a8ndgl5n'
       //   },
       // },
-      { id: "cousubs",
+      { id: "cousubs-2017",
         source: {
           'type': "vector",
           'url': 'mapbox://am3081.36lr7sic'
@@ -576,22 +625,77 @@ const LayerFactory = props => {
       //     'url': 'mapbox://am3081.2x2v9z60'
       //   },
       // },
-      { id: "blockgroup",
+      { id: "blockgroup-2017",
         source: {
             'type': "vector",
             'url': 'mapbox://am3081.52dbm7po'
         }
       },
-      { id: "places",
+      { id: "places-2017",
         source: {
           type: "vector",
           url: "mapbox://am3081.6u9e7oi9"
         }
       },
-      { id: "geojson-geom",
+      // { id: "geojson-geom",
+      //   source: {
+      //     type: "geojson",
+      //     data: { type: "FeatureCollection", features: [] }
+      //   }
+      // },
+      { id: "zctas-2017",
         source: {
-          type: "geojson",
-          data: { type: "FeatureCollection", features: [] }
+            'type': "vector",
+            'url': `https://tiles.availabs.org/data/zip_codes_2017.json`
+        }
+      },
+      { id: "unsds-2017",
+        source: {
+            'type': "vector",
+            'url': 'https://tiles.availabs.org/data/school_districts_2017.json'
+        }
+      },
+
+      // { id: "counties-2020",
+      //   source: {
+      //     'type': "vector",
+      //     'url': 'https://tiles.availabs.org/data/tl_2020_36_county.json'
+      //   },
+      // },
+      { id: "cousubs-2020",
+        source: {
+          'type': "vector",
+          'url': 'https://tiles.availabs.org/data/tl_2020_36_cousub.json'
+        },
+      },
+      // { id: "tracts-2020",
+      //   source: {
+      //     'type': "vector",
+      //     'url': 'https://tiles.availabs.org/data/tl_2020_36_tract.json'
+      //   },
+      // },
+      { id: "blockgroup-2020",
+        source: {
+            'type': "vector",
+            'url': 'https://tiles.availabs.org/data/tl_2020_36_bg.json'
+        }
+      },
+      { id: "places-2020",
+        source: {
+          type: "vector",
+          url: "https://tiles.availabs.org/data/tl_2020_36_place.json"
+        }
+      },
+      { id: "zctas-2020",
+        source: {
+            'type': "vector",
+            'url': `https://tiles.availabs.org/data/tl_2020_36_zcta.json`
+        }
+      },
+      { id: "unsds-2020",
+        source: {
+            'type': "vector",
+            'url': 'https://tiles.availabs.org/data/tl_2020_36_unsd.json'
         }
       }
     ],
@@ -610,9 +714,8 @@ const LayerFactory = props => {
       //   filter : ['in', 'geoid', 'none']
       // },
 
-      {
-        id: "blockgroup",
-        source: "blockgroup",
+      { id: "blockgroup-2017",
+        source: "blockgroup-2017",
         'source-layer': "blockgroups",
         'type': 'fill',
         filter : ['in', 'geoid', 'none'],
@@ -626,9 +729,8 @@ const LayerFactory = props => {
           ]
         }
       },
-
-      { 'id': 'cousubs',
-        'source': 'cousubs',
+      { 'id': 'cousubs-2017',
+        'source': 'cousubs-2017',
         'source-layer': 'cousubs',
         'type': 'fill',
         filter : ['in', 'geoid', 'none'],
@@ -642,9 +744,8 @@ const LayerFactory = props => {
           ]
         }
       },
-
-      { 'id': 'cousubs-line',
-        'source': 'cousubs',
+      { 'id': 'cousubs-line-2017',
+        'source': 'cousubs-2017',
         'source-layer': 'cousubs',
         'type': 'line',
         filter : ['in', 'geoid', 'none'],
@@ -653,8 +754,8 @@ const LayerFactory = props => {
           "line-width": 2
         }
       },
-      { 'id': 'cousubs-symbol',
-        'source': 'cousubs',
+      { 'id': 'cousubs-symbol-2017',
+        'source': 'cousubs-2017',
         'source-layer': 'cousubs',
         'type': 'symbol',
         filter : ['in', 'geoid', 'none'],
@@ -668,9 +769,8 @@ const LayerFactory = props => {
           "text-color": "#000"
         }
       },
-
-      { id: 'places-line',
-        source: 'places',
+      { id: 'places-line-2017',
+        source: 'places-2017',
         'source-layer': 'places',
         type: 'line',
         filter: ['in', 'geoid', 'none'],
@@ -679,8 +779,8 @@ const LayerFactory = props => {
           'line-width': 2
         }
       },
-      { id: 'places-symbol',
-        source: 'places',
+      { id: 'places-symbol-2017',
+        source: 'places-2017',
         'source-layer': 'places',
         type: 'symbol',
         filter: ['in', 'geoid', 'none'],
@@ -694,13 +794,194 @@ const LayerFactory = props => {
           "text-color": "#000"
         }
       },
-      { id: "geojson-geom",
-        source: "geojson-geom",
-        type: "line",
-        // filter : ['in', 'geoid', 'none'],
+      { id: 'zctas-line-2017',
+        source: 'zctas-2017',
+        'source-layer': 'tl_2017_36_zcta510',
+        type: 'line',
+        filter: ['in', 'geoid', 'none'],
+        paint: {
+          'line-color': BORDER_COLOR,
+          'line-width': 2
+        }
+      },
+      { id: 'zctas-symbol-2017',
+        source: 'zctas-2017',
+        'source-layer': 'tl_2017_36_zcta510',
+        type: 'symbol',
+        filter: ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
+        }
+      },
+      { id: 'unsds-line-2017',
+        source: 'unsds-2017',
+        'source-layer': 'tl_2017_36_unsd',
+        type: 'line',
+        filter: ['in', 'geoid', 'none'],
+        paint: {
+          'line-color': BORDER_COLOR,
+          'line-width': 2
+        }
+      },
+      { id: 'unsds-symbol-2017',
+        source: 'unsds-2017',
+        'source-layer': 'tl_2017_36_unsd',
+        type: 'symbol',
+        filter: ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
+        }
+      },
+      // { id: "geojson-geom",
+      //   source: "geojson-geom",
+      //   type: "line",
+      //   // filter : ['in', 'geoid', 'none'],
+      //   paint: {
+      //     "line-color": BORDER_COLOR,
+      //     "line-width": 2
+      //   }
+      // },
+
+      { id: "blockgroup-2020",
+        source: "blockgroup-2020",
+        'source-layer': "tl_2020_36_bg",
+        'type': 'fill',
+        filter : ['in', 'geoid', 'none'],
+        paint: {
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            6, 1.0,
+            12, 0.33
+          ]
+        }
+      },
+      { 'id': 'cousubs-2020',
+        'source': 'cousubs-2020',
+        'source-layer': 'tl_2020_36_cousub',
+        'type': 'fill',
+        filter : ['in', 'geoid', 'none'],
+        paint: {
+          "fill-opacity": [
+            "interpolate",
+            ["linear"],
+            ["zoom"],
+            10, 1.0,
+            20, 0.5
+          ]
+        }
+      },
+      { 'id': 'cousubs-line-2020',
+        'source': 'cousubs-2020',
+        'source-layer': 'tl_2020_36_cousub',
+        'type': 'line',
+        filter : ['in', 'geoid', 'none'],
         paint: {
           "line-color": BORDER_COLOR,
           "line-width": 2
+        }
+      },
+      { 'id': 'cousubs-symbol-2020',
+        'source': 'cousubs-2020',
+        'source-layer': 'tl_2020_36_cousub',
+        'type': 'symbol',
+        filter : ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
+        }
+      },
+      { id: 'places-line-2020',
+        source: 'places-2020',
+        'source-layer': 'tl_2020_36_place',
+        type: 'line',
+        filter: ['in', 'geoid', 'none'],
+        paint: {
+          'line-color': BORDER_COLOR,
+          'line-width': 2
+        }
+      },
+      { id: 'places-symbol-2020',
+        source: 'places-2020',
+        'source-layer': 'tl_2020_36_place',
+        type: 'symbol',
+        filter: ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
+        }
+      },
+      { id: 'zctas-line-2020',
+        source: 'zctas-2020',
+        'source-layer': 'tl_2020_36_zcta',
+        type: 'line',
+        filter: ['in', 'geoid', 'none'],
+        paint: {
+          'line-color': BORDER_COLOR,
+          'line-width': 2
+        }
+      },
+      { id: 'zctas-symbol-2020',
+        source: 'zctas-2020',
+        'source-layer': 'tl_2020_36_zcta',
+        type: 'symbol',
+        filter: ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
+        }
+      },
+      { id: 'unsds-line-2020',
+        source: 'unsds-2020',
+        'source-layer': 'tl_2020_36_unsd',
+        type: 'line',
+        filter: ['in', 'geoid', 'none'],
+        paint: {
+          'line-color': BORDER_COLOR,
+          'line-width': 2
+        }
+      },
+      { id: 'unsds-symbol-2020',
+        source: 'unsds-2020',
+        'source-layer': 'tl_2020_36_unsd',
+        type: 'symbol',
+        filter: ['in', 'geoid', 'none'],
+        layout: {
+          "symbol-placement": "point",
+          "text-size": 12,
+          // "text-allow-overlap": true,
+          // "text-ignore-placement": true
+        },
+        paint: {
+          "text-color": "#000"
         }
       },
     ]

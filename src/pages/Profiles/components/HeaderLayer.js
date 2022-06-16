@@ -42,10 +42,13 @@ class TractLayer extends MapLayer {
       cancelAnimationFrame(this.animation);
     }
     fetchData() {
-      return falcorChunkerNice(["geo", this.geoids, ["blockgroup", "boundingBox"]])
+      return falcorChunkerNice(
+          ["geo", this.geoids, "boundingBox"],
+          ["geo", this.geoids, this.year, "blockgroup"]
+        )
         .then(res => {
           this.blockgroups = this.geoids.reduce((a, c) => {
-            a.push(...get(res, ["json", "geo", c, "blockgroup"], []))
+            a.push(...get(res, ["json", "geo", c, this.year, "blockgroup"], []))
             return a;
           }, [])
 
