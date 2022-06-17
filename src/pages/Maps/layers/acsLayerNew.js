@@ -1303,7 +1303,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
 
       let name = "";
       if (/^zcta-*/.test(geoid)) {
-        name = `ZIP Code ${ topFeature.properties.zcta }`
+        name = `ZIP Code ${ geoid.slice(-5) }`
       }
       else if (/^unsd-*/.test(geoid) || geoid.length < 11) {
         name = get(this.falcorCache, ["geo", geoid, "name"], geoid);
