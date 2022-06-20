@@ -35,7 +35,7 @@ const DEFAULT_MARGIN = 10;
 class CensusTreemap extends ChartBase {
   static defaultProps = {
     year: 2017,
-    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017],
+    years: [2010, 2011, 2012, 2013, 2014, 2015, 2016, 2017, 2018, 2019, 2020],
     margin: DEFAULT_MARGIN,
     format: ",d",
     description: [],

@@ -146,6 +146,9 @@ class CensusMap extends React.Component {
     return newCanvas;//.toDataURL();//canvas.toDataURL();
   }
   render() {
+
+console.log("YEAR:", this.props.year)
+
     return (
       <div style={ { width: "100%", height: "100%", overflow: "hidden", borderRadius: "4px" } }>
         <div style={ { height: "30px", maxWidth: "calc(100% - 285px)", marginBottom: "5px" } }>
@@ -284,6 +287,9 @@ class CensusLayer extends MapLayer {
     }, new mapboxgl.LngLatBounds())
   }
   fetchData() {
+
+console.log("FETCH DATA:", this.year);
+
     const regex = /unsd|zcta/;
     const counties = this.geoids.reduce((a, c) => {
       c.length !== 7 && !regex.test(c) && a.push(c.slice(0, 5));
