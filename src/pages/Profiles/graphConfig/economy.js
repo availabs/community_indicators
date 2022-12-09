@@ -48,7 +48,7 @@ export default [
       title:'Percent of Labor Force Unemployed (census proxy for unemployment rate)',
       sumType: 'pct',
       censusKeys:["B23025_005E"],
-      divisorKey: "B23025_001E",
+      divisorKey: "B23025_002E",
       showCompareYear: true,
       valueSuffix: '%',
       invertColors: true,
