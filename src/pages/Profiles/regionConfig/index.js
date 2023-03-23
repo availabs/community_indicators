@@ -24,6 +24,7 @@ export default Object.keys(CONFIG)
     a[c] = CONFIG[c].map((config, ii) => {
       config.graphId = `${ c }-${ ii }`;
       config.id = config.id || `region-profile-${ config.type }-${ config.title || config.broadCensusKey }`;
+      config.id = config.id.replace(/\s/g, "_");
       return config;
     })
     return a;

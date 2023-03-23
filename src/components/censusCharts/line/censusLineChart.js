@@ -195,7 +195,7 @@ class CensusLineChart extends ChartBase {
         const legendWidth =
           this.props.compareGeoid &&
           this.props.showCompare &&
-          this.props.censusKeys.length > 1 ? this.props.legendWidth * 1.5 : this.props.legendWidth
+          this.props.censusKeys.length > 1 ? this.props.legendWidth * 1.5 : this.props.legendWidth;
 
         return !this.state.loading && !hasData ? <NoData { ...this.state }/> : (
             <div style={ { width: "100%", height: '100%', position: "relative" } }
