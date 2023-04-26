@@ -6,7 +6,7 @@ import {
 export default [
  {
       type:"CensusStatBox",
-      title:'Total Bike/Ped ',
+      title:'Total Bike-Ped ',
       censusKeys:["B08006_014E", "B08006_015E"],
       amount:true,
       yearPosition: "block",
@@ -19,7 +19,7 @@ export default [
    },
 
       {
-      title:'Bike/Ped as a Percent of Total Commuters',
+      title:'Bike-Ped as a Percent of Total Commuters',
       type: "CensusBarChart",
       censusKeys:["B08006_014E", "B08006_015E"],
       divisorKey: "B23025_001E",
@@ -33,7 +33,7 @@ export default [
 
   {
       type:"CensusStatBox",
-      title:'Bike/Ped as a Percent of Total Commuters',
+      title:'Bike-Ped as a Percent of Total Commuters',
       sumType: 'pct',
       yearPosition: "block",
       censusKeys:["B08006_014E", "B08006_015E"],

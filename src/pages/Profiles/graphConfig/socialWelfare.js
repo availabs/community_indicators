@@ -191,7 +191,7 @@ export default [
     {
 
       type: "CensusBarChart",
-      title: "Receipt of Food Stamps/SNAP by Race and Ethnicity",
+      title: "Receipt of SNAP by Race and Ethnicity",
       marginLeft: 75,
       showCompare: false,
       marginLeft: 250,

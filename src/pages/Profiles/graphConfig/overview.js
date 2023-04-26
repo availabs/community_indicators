@@ -241,7 +241,7 @@ export default [
    },
    {
       type:"CensusLineChart",
-      title: "% of Population with income in the past 12 months below poverty level",
+      title: "Pct of Population with Income in the Past 12 Months Below Poverty Level",
       censusKeys:["B17001_002E"],
       divisorKeys: ["B17001_001E"],
       sumType: 'pct',

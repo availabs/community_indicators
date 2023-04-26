@@ -173,7 +173,7 @@ export default [
 
       {
       type:"CensusStatBox",
-      title:'Number of Mortgages with Monthly Owner Costs Above 30%',
+      title:'Number of Mortgages with Monthly Owner Costs Above 30-Pct',
       censusKeys:["B25091_008E", "B25091_009E", "B25091_010E", "B25091_011E", "B25091_019E", "B25091_020E", "B25091_021E", "B25091_022E"],
       showCompareYear: true,
       invertColors: true,
@@ -186,7 +186,7 @@ export default [
 
       {
       type:"CensusLineChart",
-      title:'Number of Mortgages with Monthly Owner Costs Above 30%',
+      title:'Number of Mortgages with Monthly Owner Costs Above 30-Pct',
       censusKeys:["B25091_008E", "B25091_009E", "B25091_010E", "B25091_011E", "B25091_019E", "B25091_020E", "B25091_021E", "B25091_022E"],
       labels: [
                 'Units with a mortgage 30% to 34.9%',

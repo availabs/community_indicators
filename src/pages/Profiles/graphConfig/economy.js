@@ -100,9 +100,7 @@ export default [
       title: "Annual Average Employment Level",
 
       source: [
-        "Put some stuff here",
-        "Each array item is a separate line",
-        "If this isn't sufficient, let me know..."
+        "Quarterly Census of Empoloyment and Wages"
       ],
 
 // THESWE ARE THE AVAILABLE DATA TYPES:
@@ -127,6 +125,9 @@ export default [
       valuePrefix: "$",
       format: "fnum",
       title: "Total Annual Wages",
+      source: [
+        "Quarterly Census of Empoloyment and Wages"
+      ],
 
 // THESWE ARE THE AVAILABLE DATA TYPES:
 // ['annual_avg_emplvl', 'total_annual_wages', 'lq_annual_avg_emplvl', 'lq_total_annual_wages']
@@ -151,9 +152,7 @@ export default [
       title: "Annual Average Employment Level",
 
       source: [
-        "Put some stuff here",
-        "Each array item is a separate line",
-        "If this isn't sufficient, let me know..."
+        "Quarterly Census of Empoloyment and Wages"
       ],
 
 // THESWE ARE THE AVAILABLE DATA TYPES:

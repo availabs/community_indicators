@@ -46,7 +46,7 @@ export default [
       valueSuffix: '%',
       maximumFractionDigits: 1,
       invertColors: true,
-      title: "Percent of Households Receiving Food Stamps/SNAP",
+      title: "Percent of Households Receiving SNAP",
       yearPosition: "block",
       layout:{
          w:3,
@@ -60,7 +60,7 @@ export default [
         ],
         showCompareYear: true,
         invertColors: true,
-      title: "Households that Received Food Stamps/SNAP",
+      title: "Households that Received SNAP",
       yearPosition: "block",
       layout:{
          w:3,
@@ -70,7 +70,7 @@ export default [
    },
 
        {
-      title: "Percent of Households that Received Food Stamps/SNAP",
+      title: "Percent of Households that Received SNAP",
       type: "CensusBarChart",
       censusKeys: ["B22001_002E"],
       divisorKeys: ["B22001_001E"],
