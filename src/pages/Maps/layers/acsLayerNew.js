@@ -128,6 +128,11 @@ class ACS_Layer extends MapLayer {
         return a;
       }, []);
 
+      const zctas = COUNTIES.reduce((a, c) => {
+        a.push(...get(res, ["json", "geo", c, year, "zcta"], []));
+        return a;
+      }, []);
+
       const unsds = COUNTIES.reduce((a, c) => {
         a.push(...get(res, ["json", "geo", c, year, "unsd"], []));
         return a;
@@ -153,7 +158,41 @@ class ACS_Layer extends MapLayer {
           map.setLayoutProperty("cousubs-labels-2020", "text-field",
             ["get", ["to-string", ["get", "geoid"]], ["literal", nameMap]]
           )
-          this.filterAreas();
+
+          const cache = falcorGraph.getCache();
+
+          const areaGroups = [
+            { name: "Counties",
+              options: COUNTIES.map(geoid => ({
+                value: geoid,
+                name: get(cache, ["geo", geoid, "name"], geoid)
+              })).sort((a, b) => a.name.localeCompare(b.name))
+            },
+            { name: "Municipalities",
+              options: cousubs.map(geoid => ({
+                value: geoid,
+                name: get(cache, ["geo", geoid, "name"], geoid)
+              })).sort((a, b) => a.name.localeCompare(b.name))
+            },
+            { name: "UNSDs",
+              options: unsds.map(geoid => ({
+                value: geoid,
+                name: get(cache, ["geo", geoid, "name"], geoid)
+              })).sort((a, b) => a.name.localeCompare(b.name))
+            },
+            { name: "ZCTAs",
+              options: zctas.map(geoid => ({
+                value: geoid,
+                name: geoid.replace("-36", " ").toUpperCase()
+              })).sort((a, b) => a.name.localeCompare(b.name))
+            }
+          ]
+          this.filters.area.groups = areaGroups;
+          this.filters.area.domain = areaGroups.reduce((a, c) => {
+            a.push(...c.options);
+            return a;
+          }, []);
+          // this.filterAreas();
         })
     })
     .then(() => this.fetchData())
@@ -167,83 +206,83 @@ class ACS_Layer extends MapLayer {
     unregister(this);
   }
 
-  filterAreas() {
-    // console.log("FILTER AREAS:", this);
-    const year = this.filters.year.value;
-
-    const cache = falcorGraph.getCache();
-
-    const cousubs = COUNTIES.reduce((a, c) => {
-      a.push(...get(cache, ["geo", c, year, "cousubs", "value"], []));
-      return a;
-    }, []);
-
-    const zctas = COUNTIES.reduce((a, c) => {
-      a.push(...get(cache, ["geo", c, year, "zcta", "value"], []));
-      return a;
-    }, []);
-
-    const unsds = COUNTIES.reduce((a, c) => {
-      a.push(...get(cache, ["geo", c, year, "unsd", "value"], []));
-      return a;
-    }, []);
-
-    const filterMuni = this.filters.muni.value,
-      filterCounty = this.filters.county.value,
-      filterZCTA = this.filters.zcta.value,
-      filterUNSD = this.filters.unsd.value;
-
-    this.filters.area.domain = [
-      ...COUNTIES,
-      ...cousubs,
-      ...zctas,
-      ...unsds
-    ]
-    .filter(geoid => {
-      return (
-        !(filterMuni || filterCounty || filterZCTA || filterUNSD) ||
-        (filterMuni && (geoid.length === 10)) ||
-        (filterCounty && (geoid.length === 5)) ||
-        (filterZCTA && geoid.includes("zcta")) ||
-        (filterUNSD && geoid.includes("unsd"))
-      );
-    })
-    .map(geoid => ({
-      value: geoid,
-      name: /zcta/.test(geoid) ?
-        geoid.replace("-36", " ").toUpperCase() :
-        get(cache, ["geo", geoid, "name"], geoid)
-    }))
-    .sort((a, b) => {
-      if (/zcta/.test(a.value) && !/zcta/.test(b.value)) {
-        return 1;
-      }
-      else if (/zcta/.test(b.value) && !/zcta/.test(a.value)) {
-        return -1;
-      }
-      else if (/zcta/.test(b.value) && /zcta/.test(a.value)) {
-        return a.value.localeCompare(b.value);
-      }
-      else if (/unsd/.test(a.value) && !/unsd/.test(b.value)) {
-        return 1;
-      }
-      else if (/unsd/.test(b.value) && !/unsd/.test(a.value)) {
-        return -1;
-      }
-      else if (/unsd/.test(b.value) && /unsd/.test(a.value)) {
-        return a.name.localeCompare(b.name);
-      }
-      else if (a.value.length === b.value.length) {
-        return +a.value - +b.value;
-      }
-      else if (a.value.length < b.value.length) {
-        return +a.value < +b.value.slice(0, 5);
-      }
-      else if (a.value.length > b.value.length) {
-        return +a.value.slice(0, 5) - +b.value;
-      }
-    })
-  }
+  // filterAreas() {
+  //   // console.log("FILTER AREAS:", this);
+  //   const year = this.filters.year.value;
+  //
+  //   const cache = falcorGraph.getCache();
+  //
+  //   const cousubs = COUNTIES.reduce((a, c) => {
+  //     a.push(...get(cache, ["geo", c, year, "cousubs", "value"], []));
+  //     return a;
+  //   }, []);
+  //
+  //   const zctas = COUNTIES.reduce((a, c) => {
+  //     a.push(...get(cache, ["geo", c, year, "zcta", "value"], []));
+  //     return a;
+  //   }, []);
+  //
+  //   const unsds = COUNTIES.reduce((a, c) => {
+  //     a.push(...get(cache, ["geo", c, year, "unsd", "value"], []));
+  //     return a;
+  //   }, []);
+  //
+  //   const filterMuni = this.filters.muni.value,
+  //     filterCounty = this.filters.county.value,
+  //     filterZCTA = this.filters.zcta.value,
+  //     filterUNSD = this.filters.unsd.value;
+  //
+  //   this.filters.area.domain = [
+  //     ...COUNTIES,
+  //     ...cousubs,
+  //     ...zctas,
+  //     ...unsds
+  //   ]
+  //   .filter(geoid => {
+  //     return (
+  //       !(filterMuni || filterCounty || filterZCTA || filterUNSD) ||
+  //       (filterMuni && (geoid.length === 10)) ||
+  //       (filterCounty && (geoid.length === 5)) ||
+  //       (filterZCTA && geoid.includes("zcta")) ||
+  //       (filterUNSD && geoid.includes("unsd"))
+  //     );
+  //   })
+  //   .map(geoid => ({
+  //     value: geoid,
+  //     name: /zcta/.test(geoid) ?
+  //       geoid.replace("-36", " ").toUpperCase() :
+  //       get(cache, ["geo", geoid, "name"], geoid)
+  //   }))
+  //   .sort((a, b) => {
+  //     if (/zcta/.test(a.value) && !/zcta/.test(b.value)) {
+  //       return 1;
+  //     }
+  //     else if (/zcta/.test(b.value) && !/zcta/.test(a.value)) {
+  //       return -1;
+  //     }
+  //     else if (/zcta/.test(b.value) && /zcta/.test(a.value)) {
+  //       return a.value.localeCompare(b.value);
+  //     }
+  //     else if (/unsd/.test(a.value) && !/unsd/.test(b.value)) {
+  //       return 1;
+  //     }
+  //     else if (/unsd/.test(b.value) && !/unsd/.test(a.value)) {
+  //       return -1;
+  //     }
+  //     else if (/unsd/.test(b.value) && /unsd/.test(a.value)) {
+  //       return a.name.localeCompare(b.name);
+  //     }
+  //     else if (a.value.length === b.value.length) {
+  //       return +a.value - +b.value;
+  //     }
+  //     else if (a.value.length < b.value.length) {
+  //       return +a.value < +b.value.slice(0, 5);
+  //     }
+  //     else if (a.value.length > b.value.length) {
+  //       return +a.value.slice(0, 5) - +b.value;
+  //     }
+  //   })
+  // }
   onFilterFetch(filterName, prev, curr) {
     if (filterName in ["muni"]) {
       return Promise.resolve();
@@ -1340,43 +1379,44 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     //   name: "Area Filter Toggles",
     //   type: ""
     // },
-    county: {
-      name: "Show Counties in Area",
-      type: "checkbox",
-      value: false,
-      onChange: function(prev, curr) {
-        this.filterAreas();
-      }
-    },
-    muni: {
-      name: "Show Municipalities in Area",
-      type: "checkbox",
-      value: false,
-      onChange: function(prev, curr) {
-        this.filterAreas();
-      }
-    },
-    unsd: {
-      name: "Show UNSDs in Area",
-      type: "checkbox",
-      value: false,
-      onChange: function(prev, curr) {
-        this.filterAreas();
-      }
-    },
-    zcta: {
-      name: "Show ZCTAs in Area",
-      type: "checkbox",
-      value: false,
-      onChange: function(prev, curr) {
-        this.filterAreas();
-      }
-    },
+    // county: {
+    //   name: "Show Counties in Area",
+    //   type: "checkbox",
+    //   value: false,
+    //   onChange: function(prev, curr) {
+    //     this.filterAreas();
+    //   }
+    // },
+    // muni: {
+    //   name: "Show Municipalities in Area",
+    //   type: "checkbox",
+    //   value: false,
+    //   onChange: function(prev, curr) {
+    //     this.filterAreas();
+    //   }
+    // },
+    // unsd: {
+    //   name: "Show UNSDs in Area",
+    //   type: "checkbox",
+    //   value: false,
+    //   onChange: function(prev, curr) {
+    //     this.filterAreas();
+    //   }
+    // },
+    // zcta: {
+    //   name: "Show ZCTAs in Area",
+    //   type: "checkbox",
+    //   value: false,
+    //   onChange: function(prev, curr) {
+    //     this.filterAreas();
+    //   }
+    // },
     area: {
       name: "Area",
-      type: "multi",
+      type: "multi-grouped",
       value: [],
-      domain: []
+      domain: [],
+      groups: []
     },
     geolevel: {
       name: 'Geography Level',
@@ -1418,7 +1458,7 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     opacity: {
       name: "Opacity",
       type: "slider",
-      value: 0.8,
+      value: 1,
       min: 0,
       max: 1,
       onChange: function(oldValue, newValue) {

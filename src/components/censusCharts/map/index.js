@@ -146,9 +146,6 @@ class CensusMap extends React.Component {
     return newCanvas;//.toDataURL();//canvas.toDataURL();
   }
   render() {
-
-console.log("YEAR:", this.props.year)
-
     return (
       <div style={ { width: "100%", height: "100%", overflow: "hidden", borderRadius: "4px" } }>
         <div style={ { height: "30px", maxWidth: "calc(100% - 285px)", marginBottom: "5px" } }>
