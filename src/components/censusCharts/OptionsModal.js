@@ -161,33 +161,40 @@ class SaveImageTab extends React.Component {
     div.selectAll("*").remove();
 
     if (this.props.image) {
-      const svg = d3selection.select(`#${ this.props.image }`).select("svg").node().cloneNode(true);
+      const svg = d3selection.select(`#${ this.props.image }`).select("svg").node();
+
+      const clone = svg.cloneNode(true);
+
       if (!svg) return;
 
-      const height = +svg.getAttribute("height"),
-        width = +svg.getAttribute("width");
+      const height = +svg.clientHeight,
+        width = +svg.clientWidth;
 
       const newSvg = div.append("svg")
         .attr("id", "svg-to-save")
         .attr("height", height + 80)
         .attr("width", width + 20)
         .style("background-color", "#fff");
+
       const g = newSvg.append("g")
         .style("transform", "translate(10px, 10px)");
+
       g.append("text")
         .attr("y", 20)
         .style("font-size", "1.2rem")
         .style("font-family", "sans-serif")
         .text(this.props.title);
+
       g.append("text")
         .attr("y", height + 55)
         .style("font-size", "1.2rem")
         .style("font-family", "sans-serif")
         .text(`US Census ${ this.props.year } American Community Survey 5-Year Estimates`);
+        
       const appendTo = g.append("g")
           .style("transform", "translateY(30px)");
 
-      appendTo.node().append(svg);
+      appendTo.node().append(clone);
     }
     else if (this.props.href) {
       div.node().append(this.props.href);

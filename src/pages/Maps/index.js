@@ -27,7 +27,7 @@ class MapPage extends React.Component {
       <div style={ { height: '100vh', paddingTop: "49px" } }>
         <AvlMap id="haz-mit-avl-map"
           preserveDrawingBuffer={ true }
-          layers={ [this.BG_Points, this.ACS_Layer] }
+          layers={ [this.ACS_Layer, this.BG_Points] }
           header={ SidebarHeader }
           { ...this.ACS_Layer.baseMapSettings }
           header={ false }

@@ -1424,7 +1424,9 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
       onChange: function(oldValue, newValue) {
 // console.log("SLIDER:", oldValue, newValue)
         if (this.map) {
-          ['counties', 'cousubs', 'tracts', 'blockgroup', 'zcta', 'unsd'].forEach(l => {
+          ['counties-2017', 'cousubs-2017', 'tracts-2017', 'blockgroup-2017', 'zcta-2017', 'unsd-2017',
+            'counties-2020', 'cousubs-2020', 'tracts-2020', 'blockgroup-2020', 'zcta-2020', 'unsd-2020'
+          ].forEach(l => {
             this.map.setPaintProperty(l, "fill-extrusion-opacity", newValue)
           })
         }

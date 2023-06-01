@@ -131,12 +131,12 @@ const CensusConfig = [
       { key: 'B15003_017E',
         name: "Regular high school diploma"
       }
-    ]  
+    ]
   },
 
   {
     name: "School Enrollment by Level of School for the Population 3 Years and Over",
-    variables: [      
+    variables: [
       { key: 'B14001_008E',
         name: "Enrolled in college, undergraduate years"
       },
@@ -148,13 +148,13 @@ const CensusConfig = [
       },
       { key: 'B14001_007E',
         name: "Enrolled in grade 9 to grade 12"
-      },      
+      },
       { key: 'B14001_004E',
         name: "Enrolled in kindergarten"
       },
       { key: 'B14001_003E',
         name: "Enrolled in nursery school, preschool"
-      },  
+      },
       { key: 'Graduate or professional school',
         name: "B14001_009E"
       },
@@ -164,7 +164,7 @@ const CensusConfig = [
       { key: 'B14001_002E',
         name: "Total enrolled in school"
       }
-    ]  
+    ]
   },
 
 //----------------------------------Housing-------------------------------------
@@ -480,6 +480,8 @@ class BgPointsLayer extends MapLayer {
     this.version = 2.0; // ONLY SET THIS IF YOU KNOW WHAT IT MEANS!!!
 
     this.colors = {};
+
+    this.active = false;
 
     this.filters = {};
     this.filters.census = {
