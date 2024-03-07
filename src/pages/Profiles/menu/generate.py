@@ -1,6 +1,6 @@
 import psycopg2, json
 
-from config import mars
+from config import hazmit
 
 REGION = ['36001', '36083', '36093', '36091', '36039', '36021', '36115', '36113']
 
@@ -12,6 +12,8 @@ def getCounties(cursor):
     '''
     cursor.execute(sql, [REGION])
     return [c for c in cursor]
+# END getCounties
+
 def processCounty(geoid, name):
     return {
         "name": name,
@@ -19,6 +21,7 @@ def processCounty(geoid, name):
         "path": "/profile/" + geoid,
         "children": []
     }
+# END processCounty
 
 def getCousubs(cursor, geoid):
     sql = '''
@@ -28,6 +31,7 @@ def getCousubs(cursor, geoid):
     '''
     cursor.execute(sql, [geoid])
     return [c for c in cursor]
+# END getCousubs
 
 def getPlaces(cursor, geoid):
     sql = '''
@@ -39,6 +43,8 @@ def getPlaces(cursor, geoid):
     '''
     cursor.execute(sql, [geoid])
     return [p for p in cursor]
+# END getPlaces
+
 '''
 SELECT unsd_geoid, geoid
 FROM geo.unsd_lookup
@@ -70,6 +76,7 @@ def getUNSD(cursor, geoid):
     '''
     cursor.execute(sql, [geoid])
     return [unsd for unsd in cursor]
+# END getUNSD
 
 def getZCTA(cursor, geoid):
     sql = '''
@@ -79,17 +86,21 @@ def getZCTA(cursor, geoid):
     '''
     cursor.execute(sql, [geoid])
     return [(zcta[0], zcta[0].replace("-", " ").upper()) for zcta in cursor]
+# END getZCTA
 
 def has(list, name):
     for n in list:
         if name.lower() in n: return True
     return False
+# END has
 
 def processChild(geoid, name):
     return {
         "name": name,
         "path": "/profile/" + geoid
     }
+# END processChild
+
 def getName(name, lsad=None):
     switch = {
         '21': " borough",
@@ -98,10 +109,10 @@ def getName(name, lsad=None):
         '47': " village"
     }
     return name + switch.get(lsad, "")
-
+# END getName
 
 def main():
-    conn = psycopg2.connect(mars)
+    conn = psycopg2.connect(hazmit)
     cursor = conn.cursor()
 
     counties = sorted(getCounties(cursor), key=lambda c: c[1])
@@ -165,6 +176,7 @@ def main():
 
     cursor.close()
     conn.close()
+# END main
 
 if __name__ == "__main__":
     main()

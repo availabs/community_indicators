@@ -46,10 +46,6 @@
                "path": "/profile/3630521"
             },
             {
-               "name": "Greenville",
-               "path": "/profile/3630609"
-            },
-            {
                "name": "Guilderland town",
                "path": "/profile/3600131104"
             },
@@ -74,24 +70,8 @@
                "path": "/profile/3660675"
             },
             {
-               "name": "Rensselaer city",
-               "path": "/profile/3661148"
-            },
-            {
                "name": "Rensselaerville town",
                "path": "/profile/3600161181"
-            },
-            {
-               "name": "Rotterdam",
-               "path": "/profile/3663924"
-            },
-            {
-               "name": "Schenectady city",
-               "path": "/profile/3665508"
-            },
-            {
-               "name": "Troy city",
-               "path": "/profile/3675484"
             },
             {
                "name": "Voorheesville village",
@@ -121,20 +101,12 @@
                "path": "/profile/3602102099"
             },
             {
-               "name": "Athens village",
-               "path": "/profile/3602902"
-            },
-            {
                "name": "Austerlitz town",
                "path": "/profile/3602103287"
             },
             {
                "name": "Canaan town",
                "path": "/profile/3602112056"
-            },
-            {
-               "name": "Catskill village",
-               "path": "/profile/3613002"
             },
             {
                "name": "Chatham town",
@@ -171,14 +143,6 @@
             {
                "name": "Copake town",
                "path": "/profile/3602118102"
-            },
-            {
-               "name": "Coxsackie village",
-               "path": "/profile/3618718"
-            },
-            {
-               "name": "East Nassau village",
-               "path": "/profile/3622557"
             },
             {
                "name": "Gallatin town",
@@ -324,10 +288,6 @@
                "path": "/profile/3603931379"
             },
             {
-               "name": "Hudson city",
-               "path": "/profile/3635969"
-            },
-            {
                "name": "Hunter town",
                "path": "/profile/3603936178"
             },
@@ -368,14 +328,6 @@
                "path": "/profile/3603959751"
             },
             {
-               "name": "Preston-Potter Hollow",
-               "path": "/profile/3659831"
-            },
-            {
-               "name": "Ravena village",
-               "path": "/profile/3660675"
-            },
-            {
                "name": "Tannersville village",
                "path": "/profile/3673143"
             },
@@ -395,10 +347,6 @@
          "path": "/profile/36083",
          "children": [
             {
-               "name": "Albany city",
-               "path": "/profile/3601000"
-            },
-            {
                "name": "Averill Park",
                "path": "/profile/3603320"
             },
@@ -413,10 +361,6 @@
             {
                "name": "Castleton-on-Hudson village",
                "path": "/profile/3612870"
-            },
-            {
-               "name": "Cohoes city",
-               "path": "/profile/3616749"
             },
             {
                "name": "East Greenbush",
@@ -435,10 +379,6 @@
                "path": "/profile/3608329674"
             },
             {
-               "name": "Green Island village",
-               "path": "/profile/3630521"
-            },
-            {
                "name": "Hampton Manor",
                "path": "/profile/3631918"
             },
@@ -449,14 +389,6 @@
             {
                "name": "Hoosick town",
                "path": "/profile/3608335463"
-            },
-            {
-               "name": "Mechanicville city",
-               "path": "/profile/3646360"
-            },
-            {
-               "name": "Menands village",
-               "path": "/profile/3646536"
             },
             {
                "name": "Nassau town",
@@ -511,24 +443,12 @@
                "path": "/profile/3608371102"
             },
             {
-               "name": "Stillwater village",
-               "path": "/profile/3671322"
-            },
-            {
                "name": "Troy city",
                "path": "/profile/3675484"
             },
             {
                "name": "Valley Falls village",
                "path": "/profile/3676672"
-            },
-            {
-               "name": "Waterford village",
-               "path": "/profile/3678520"
-            },
-            {
-               "name": "Watervliet city",
-               "path": "/profile/3678674"
             },
             {
                "name": "West Sand Lake",
@@ -562,10 +482,6 @@
                "path": "/profile/3609116353"
             },
             {
-               "name": "Cohoes city",
-               "path": "/profile/3616749"
-            },
-            {
                "name": "Corinth town",
                "path": "/profile/3609118223"
             },
@@ -582,16 +498,8 @@
                "path": "/profile/3609119807"
             },
             {
-               "name": "East Glenville",
-               "path": "/profile/3622084"
-            },
-            {
                "name": "Edinburg town",
                "path": "/profile/3609123591"
-            },
-            {
-               "name": "Fort Edward village",
-               "path": "/profile/3626770"
             },
             {
                "name": "Galway town",
@@ -600,10 +508,6 @@
             {
                "name": "Galway village",
                "path": "/profile/3628101"
-            },
-            {
-               "name": "Glens Falls city",
-               "path": "/profile/3629333"
             },
             {
                "name": "Greenfield town",
@@ -620,14 +524,6 @@
             {
                "name": "Halfmoon town",
                "path": "/profile/3609131489"
-            },
-            {
-               "name": "Hudson Falls village",
-               "path": "/profile/3635980"
-            },
-            {
-               "name": "Lake Luzerne",
-               "path": "/profile/3640651"
             },
             {
                "name": "Malta town",
@@ -690,10 +586,6 @@
                "path": "/profile/3671322"
             },
             {
-               "name": "Troy city",
-               "path": "/profile/3675484"
-            },
-            {
                "name": "Victory village",
                "path": "/profile/3677431"
             },
@@ -704,10 +596,6 @@
             {
                "name": "Waterford village",
                "path": "/profile/3678520"
-            },
-            {
-               "name": "West Glens Falls",
-               "path": "/profile/3680082"
             },
             {
                "name": "Wilton town",
@@ -739,10 +627,6 @@
             {
                "name": "East Glenville",
                "path": "/profile/3622084"
-            },
-            {
-               "name": "Esperance village",
-               "path": "/profile/3624713"
             },
             {
                "name": "Glenville town",
@@ -804,10 +688,6 @@
                "path": "/profile/3615363"
             },
             {
-               "name": "Corinth village",
-               "path": "/profile/3618212"
-            },
-            {
                "name": "Glens Falls North",
                "path": "/profile/3629338"
             },
@@ -816,20 +696,12 @@
                "path": "/profile/3629333"
             },
             {
-               "name": "Hadley",
-               "path": "/profile/3631258"
-            },
-            {
                "name": "Hague town",
                "path": "/profile/3611331335"
             },
             {
                "name": "Horicon town",
                "path": "/profile/3611335639"
-            },
-            {
-               "name": "Hudson Falls village",
-               "path": "/profile/3635980"
             },
             {
                "name": "Johnsburg town",
@@ -862,10 +734,6 @@
             {
                "name": "Queensbury town",
                "path": "/profile/3611360356"
-            },
-            {
-               "name": "South Glens Falls village",
-               "path": "/profile/3669078"
             },
             {
                "name": "Stony Creek town",
@@ -985,14 +853,6 @@
             {
                "name": "Salem town",
                "path": "/profile/3611564782"
-            },
-            {
-               "name": "Schuylerville village",
-               "path": "/profile/3665750"
-            },
-            {
-               "name": "Stillwater village",
-               "path": "/profile/3671322"
             },
             {
                "name": "White Creek town",
