@@ -6,9 +6,9 @@ import store from "store"
 import { update } from "utils/redux-falcor/components/duck"
 
 let host = 'https://graph.availabs.org/'
-// if (process.env.NODE_ENV === 'development') {
-//   host = "http://localhost:4444/"
-// }
+if (process.env.NODE_ENV === 'development') {
+  host = "http://localhost:4444/"
+}
 
 
 console.log("API HOST:", host)

@@ -1,5 +1,7 @@
 import { sendSystemMessage } from "./messages"
 
+import { ACS_DATA_YEARS } from "../../pages/Profiles/graphConfig/utils"
+
 const HOST = 'https://availauth.availabs.org'
 
 // ------------------------------------
@@ -149,8 +151,8 @@ const initialState = {
   authLevel: 0,
   authed: false,
   attempts: 0,
-  year: 2021,
-  compareYear: 2016
+  year: ACS_DATA_YEARS[ACS_DATA_YEARS.length - 1],
+  compareYear: ACS_DATA_YEARS[ACS_DATA_YEARS.length - 6]
 };
 
 // ------------------------------------
