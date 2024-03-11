@@ -65,8 +65,6 @@ class CensusStatBox extends ChartBase {
         , 0)
       , 0)
 
-console.log("calculateValues", geoids, this.props.censusKeys, this.props.year, value, sub)
-
       value -= sub;
 
         // let value = geoids
@@ -157,8 +155,6 @@ console.log("calculateValues", geoids, this.props.censusKeys, this.props.year, v
 
         const growthColor = change ? growthColors[change > 0 ? 0 : 1] : "currentColor";
 
-console.log("renderStuff", geoids, value, change)
-
       return compareStuff && !value ? null : (
         <div style={ {
             color: growthColor,
@@ -204,8 +200,6 @@ console.log("renderStuff", geoids, value, change)
     }
 
     render() {
-
-console.log("GRAPH:", this.props.graph)
 
       return this.state.loading ? <LoadingIndicator /> : (
           <div style={ { height: "100%", position: "relative" } }>
