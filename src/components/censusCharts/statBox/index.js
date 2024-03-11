@@ -65,6 +65,8 @@ class CensusStatBox extends ChartBase {
         , 0)
       , 0)
 
+console.log("calculateValues", geoids, this.props.censusKeys, this.props.year, value, sub)
+
       value -= sub;
 
         // let value = geoids
@@ -142,7 +144,6 @@ class CensusStatBox extends ChartBase {
     }
 
     renderStuff(geoids, compareStuff) {
-
         let { value, change } = this.calculateValues(geoids),
           growthColors = [this.props.increaseColor, this.props.decreaseColor];
         this.props.invertColors && growthColors.reverse();
@@ -155,6 +156,8 @@ class CensusStatBox extends ChartBase {
         }
 
         const growthColor = change ? growthColors[change > 0 ? 0 : 1] : "currentColor";
+
+console.log("renderStuff", geoids, value, change)
 
       return compareStuff && !value ? null : (
         <div style={ {
@@ -183,7 +186,10 @@ class CensusStatBox extends ChartBase {
                 textAlign: "center"
               } }>
               { value && this.props.valuePrefix }
-              { value ? value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits}) : "This census data variable is not available at this geography." }
+              { value ?
+                value.toLocaleString('en-us',{maximumFractionDigits: this.props.maximumFractionDigits}) :
+                "This census data variable is not available at this geography."
+              }
               { value && this.props.valueSuffix }
             </div>
           </div>
@@ -198,6 +204,8 @@ class CensusStatBox extends ChartBase {
     }
 
     render() {
+
+console.log("GRAPH:", this.props.graph)
 
       return this.state.loading ? <LoadingIndicator /> : (
           <div style={ { height: "100%", position: "relative" } }>

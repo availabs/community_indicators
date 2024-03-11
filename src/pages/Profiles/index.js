@@ -133,7 +133,8 @@ class Profile extends React.Component{
               title={ this.props.region }
               geoids={ REGIONS[this.props.region] }
                 year={ this.props.year }
-                compareYear={ this.props.compareYear }/>
+                compareYear={ this.props.compareYear }
+                years={ ACS_DATA_YEARS }/>
 
             <div className='content-w' style={{ width: '100%', marginTop: '90vh', position: 'relative', zIndex: 4}}>
               <div className="os-tabs-controls content-w"  style={{position: 'sticky', top: 49, justifyContent: 'center',  zIndex:9999}}>
