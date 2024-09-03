@@ -240,8 +240,8 @@ class Home extends Component {
                                    <div className='container' style={{paddingBottom: '20px' }}>
                                      <div className='row' >
                                         <div className='col-sm'>
-                                            <a href="https://www.cdtcmpo.org/index.php" target="blank">
-                                                <RImg src="/Indicators/cdtcLogo.png" alt="Logo for the Capital District Transportation Committee" className='imageStyle'/>
+                                            <a href="https://www.capitalmpo.org/index.php" target="blank">
+                                                <RImg src="/Indicators/CRTC-Logo-RGB.png" alt="Logo for the Capital District Transportation Committee" className='imageStyle'/>
                                             </a>
                                         </div>
                                         <div className='col-sm'>
