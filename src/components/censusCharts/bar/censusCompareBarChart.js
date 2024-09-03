@@ -67,7 +67,7 @@ class StackedBarChart extends ChartBase {
           [...this.props.censusKeys,
             ...this.props.censusKeysMoE]
         ],
-        ["geo", this.props.allGeoids, "name"],
+        ["geo", this.props.allGeoids, "year", this.props.year, "name"],
         ["acs", "meta", this.props.censusKeys, "label"]
     );
   }
@@ -110,11 +110,13 @@ class StackedBarChart extends ChartBase {
       rightKeys = this.props.right.keys,
       rightLabel = this.props.right.key;
 
+    const year = this.props.year;
+
     this.props.labels.forEach((label, i) => {
       for (const geoid of this.props.allGeoids) {
         const baseRow = {
           geoid,
-          name: get(this.props.geoGraph, [geoid, "name"], geoid),
+          name: get(this.props.geoGraph, [geoid, "year", year, "name"], geoid),
           year: this.props.year
         }
 

@@ -7,7 +7,8 @@ class GeoName extends React.Component{
 
     fetchFalcorDeps(){
       return this.props.falcor
-        .get(['geo', this.props.geoids, 'name'])
+        .get(['geo', this.props.geoids, "year", this.props.year, 'name'])
+        // .then(res => console.log("GEONAME RES:", res))
     }
 
     render(){
@@ -15,7 +16,7 @@ class GeoName extends React.Component{
             <>
               {
                 this.props.geoids.map(geoid =>
-                  String(get(this.props, `geo[${ geoid }].name`, ''))
+                  String(get(this.props, `geo[${ geoid }].year.${ this.props.year }.name`, ''))
                     .toUpperCase()).join(' ')
               }
             </>
@@ -31,7 +32,8 @@ class GeoName extends React.Component{
 const mapStateToProps = (state, props) => {
     return {
         geo: state.graph.geo || {}, // so componentWillReceiveProps will get called.
-        geoids: [...get(props, "geoids", []), props.geoid].filter(Boolean)
+        geoids: [...get(props, "geoids", []), props.geoid].filter(Boolean),
+        year: +state.user.year
     };
 };
 export default connect(mapStateToProps, null)(reduxFalcor(GeoName))

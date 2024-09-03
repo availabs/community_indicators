@@ -52,7 +52,7 @@ class CensusTreemap extends ChartBase {
         [...this.props.censusKeys,
           ...this.props.censusKeysMoE]
       ],
-      ["geo", this.props.allGeoids, "name"],
+      ["geo", this.props.allGeoids, "year", this.props.year, "name"],
       ["acs", "meta", this.props.censusKeys, "label"]
     )
   }
@@ -72,7 +72,7 @@ class CensusTreemap extends ChartBase {
 
           a.push({
             geoid,
-            name: get(this.props.geoGraph, [geoid, "name"], geoid),
+            name: get(this.props.geoGraph, [geoid, "year", year, "name"], geoid),
             year,
             "census key": ck,
             "census label": getKeyLabel(ck),

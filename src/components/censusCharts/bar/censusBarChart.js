@@ -16,8 +16,7 @@ import { format } from "d3-format"
 import get from "lodash.get"
 import styled from "styled-components"
 
-import GeoName from 'components/censusCharts/geoname'
-import CensusLabel, { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
+import { getCensusKeyLabel } from 'components/censusCharts/CensusLabel'
 
 const DEFAULT_COLORS = getColorRange(8, "Set2")
 
@@ -80,7 +79,7 @@ class CensusBarChart extends ChartBase {
             ...this.props.censusKeysMoE, ...this.props.divisorKeysMoE
           ]
         ],
-        ["geo", this.props.allGeoids, "name"],
+        ["geo", this.props.allGeoids, "year", this.props.year, "name"],
         ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
     )
   }
@@ -89,6 +88,8 @@ class CensusBarChart extends ChartBase {
       getKeyName = key => key in this.props.censusKeyLabels ?
         this.props.censusKeyLabels[key] :
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
+
+    const year = get(this.props, "year", 2017);
 
     if (this.props.divisorKeys.length && this.props.groupBy === "geoids") {
       const data = [],
@@ -113,7 +114,7 @@ class CensusBarChart extends ChartBase {
       for (const geoid of this.props.allGeoids) {
         const row = { geoid };
         row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
-        row.year = get(this.props, "year", 2017);
+        row.year = year;
 
         this.props.censusKeys.forEach((k, i) => {
           row[`census key ${ i + 1 }`] = k;
@@ -157,14 +158,15 @@ class CensusBarChart extends ChartBase {
       }
       return { data, keys };
     }
+
     const data = [],
-      keys = ["geoid", "name", "year", "census key", "census label", "value", "moe"]
+      keys = ["geoid", "name", "year", "census key", "census label", "value", "moe"];
 
     for (const key of this.props.censusKeys) {
       for (const geoid of this.props.allGeoids) {
         const row = { geoid }
-        row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
-        row.year = get(this.props, "year", 2017);
+        row.name = get(this.props.geoGraph, [geoid, "year", year, "name"], geoid);
+        row.year = year;
         row["census key"] = key;
         row["census label"] = getKeyName(key);
         row.value = (get(this.props.acsGraph, [geoid, row.year, key], -666666666));
@@ -185,6 +187,8 @@ class CensusBarChart extends ChartBase {
       .domain(this.props.allGeoids)
       .range(DEFAULT_COLORS);
 
+    const year = get(this.props, "year", 2017);
+
     const fmt = format(this.props.yFormat);
     // console.log('data', this.props.barData)
     if (this.props.sorted) {
@@ -198,7 +202,7 @@ class CensusBarChart extends ChartBase {
         this.props.censusKeyLabels[key] :
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
       )
-      : get(this.props.geoGraph, [key, "name"], key);
+      : get(this.props.geoGraph, [key, "year", year, "name"], key);
 
     const getKeyName = key => this.props.groupBy === "censusKeys" ?
       (
@@ -206,7 +210,7 @@ class CensusBarChart extends ChartBase {
         this.props.censusKeyLabels[key] :
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
       )
-      : get(this.props.geoGraph, [key, "name"], key);
+      : get(this.props.geoGraph, [key, "year", year, "name"], key);
 
     const getLabel = key => this.props.groupBy === "censusKeys" ?
       (
@@ -215,7 +219,7 @@ class CensusBarChart extends ChartBase {
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
       )
       // : this.props.divisorKeys.length ? "Value"
-      : get(this.props.geoGraph, [key, "name"], key);
+      : get(this.props.geoGraph, [key, "year", year, "name"], key);
 
     const showLegend = this.props.showLegend && !this.props.useCompact &&
       (this.props.groupBy === "censusKeys" && this.props.compareGeoid);

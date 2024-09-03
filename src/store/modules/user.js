@@ -27,6 +27,15 @@ export const setCompareYear = year =>
       year
     })
 
+const SET_YEAR_AND_COMPARE_YEAR = "SET_YEAR_AND_COMPARE_YEAR"
+export const setYearAndCompareYear = (year, compareYear) =>
+  dispatch =>
+    dispatch({
+      type: SET_YEAR_AND_COMPARE_YEAR,
+      year,
+      compareYear
+    })
+
 // ------------------------------------
 // Actions
 // ------------------------------------
@@ -191,6 +200,13 @@ const ACTION_HANDLERS = {
     return {
       ...state,
       year: action.year
+    }
+  },
+  [SET_YEAR_AND_COMPARE_YEAR]: (state = initialState, action) => {
+    return {
+      ...state,
+      year: action.year,
+      compareYear: action.compareYear
     }
   }
 };

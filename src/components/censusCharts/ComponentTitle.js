@@ -34,6 +34,8 @@ export default ({ title, className = null, style = {}, center = false, ...props 
 
   const ref = React.useRef();
 
+// console.log("TITLE:", title)
+
   return !Boolean(title) ? null : (
     <div ref={ ref } className={ className }
       style={ {

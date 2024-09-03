@@ -95,7 +95,7 @@ class CensusPieGraph extends ChartBase {
     }
 
     const getGeoName = geoid =>
-      get(this.props.geoGraph, [geoid, "name"], geoid)
+      get(this.props.geoGraph, [geoid, "year", this.props.year, "name"], geoid)
 
     const svg = d3.select(_svg);
 
@@ -176,7 +176,7 @@ class CensusPieGraph extends ChartBase {
         [...this.props.censusKeys,
           ...this.props.censusKeysMoE]
       ],
-      ["geo", this.props.allGeoids, "name"],
+      ["geo", this.props.allGeoids, "year", this.props.year, "name"],
       ["acs", "meta", this.props.censusKeys, "label"]
     )
   }
@@ -246,7 +246,7 @@ class CensusPieGraph extends ChartBase {
         c.pie.forEach(d => {
           const row = {
             geoid: c.geoid,
-            name: get(this.props.geoGraph, [c.geoid, "name"], c.geoid),
+            name: get(this.props.geoGraph, [c.geoid, "year", this.props.year, "name"], c.geoid),
             year: this.props.year,
             "census key": d.key,
             "census label": getKeyLabel(d.key),

@@ -44,7 +44,7 @@ class RadarGraph extends ChartBase {
       ['acs', this.props.allGeoids, this.props.years,
         [...this.props.censusKeys, ...this.props.censusKeysMoE]
       ],
-      ["geo", this.props.allGeoids, "name"],
+      ["geo", this.props.allGeoids, "year", this.props.year, "name"],
       ["acs", "meta", this.props.censusKeys, "label"]
     )
   }
@@ -65,7 +65,7 @@ class RadarGraph extends ChartBase {
       this.props.allGeoids.forEach(g => {
         data.push({
           geoid: g,
-          name: get(this.props.geoGraph, [g, "name"], g),
+          name: get(this.props.geoGraph, [g, "year", y, "name"], g),
           year: y,
           "census key": k,
           "census label": getLabel(k),

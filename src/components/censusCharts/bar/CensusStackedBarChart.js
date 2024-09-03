@@ -79,7 +79,7 @@ class CensusStackedBarChart extends ChartBase {
             ...this.props.censusKeysMoE, ...this.props.divisorKeysMoE
           ]
         ],
-        ["geo", this.props.allGeoids, "name"],
+        ["geo", this.props.allGeoids, "year", this.props.year, "name"],
         ["acs", "meta", [...this.props.censusKeys, ...this.props.divisorKeys], "label"]
     )
   }
@@ -92,7 +92,7 @@ class CensusStackedBarChart extends ChartBase {
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading);
 
     const [geoid] = this.props.geoids,
-      name = get(this.props.geoGraph, [geoid, "name"], geoid);
+      name = get(this.props.geoGraph, [geoid, "year", this.props.year, "name"], geoid);
 
     const data = barData.reduce((a, c) => {
       keys.forEach(k => {
@@ -122,6 +122,8 @@ class CensusStackedBarChart extends ChartBase {
 
     const fmt = format(this.props.yFormat);
 
+    const year = this.props.year;
+
     const getIdName = key => this.props.groupBy === "geoids" ?
       (
         this.props.divisorKeys.length ? "Value" :
@@ -129,7 +131,7 @@ class CensusStackedBarChart extends ChartBase {
         this.props.censusKeyLabels[key] :
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
       )
-      : get(this.props.geoGraph, [key, "name"], key);
+      : get(this.props.geoGraph, [key, "year", year, "name"], key);
 
     const getKeyName = key => this.props.groupBy === "censusKeys" ?
       (
@@ -137,7 +139,7 @@ class CensusStackedBarChart extends ChartBase {
         this.props.censusKeyLabels[key] :
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
       )
-      : get(this.props.geoGraph, [key, "name"], key);
+      : get(this.props.geoGraph, [key, "year", year, "name"], key);
 
     const getLabel = key => this.props.groupBy === "censusKeys" ?
       (
@@ -146,7 +148,7 @@ class CensusStackedBarChart extends ChartBase {
         getCensusKeyLabel(key, this.props.acsGraph, this.props.removeLeading)
       )
       // : this.props.divisorKeys.length ? "Value"
-      : get(this.props.geoGraph, [key, "name"], key);
+      : get(this.props.geoGraph, [key, "year", year, "name"], key);
 
     return !this.state.loading && !barData.length ?
       <NoData { ...this.state }/> : (

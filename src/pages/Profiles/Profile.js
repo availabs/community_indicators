@@ -10,7 +10,11 @@ import { falcorChunkerNice } from "store/falcorGraph"
 import SearchCompare from './components/SearchCompare'
 import { withRouter } from "react-router-dom"
 
-import { setYear, setCompareYear } from "store/modules/user"
+import {
+  setYear,
+  setCompareYear,
+  setYearAndCompareYear
+} from "store/modules/user"
 
 import OptionsModal from "components/censusCharts/OptionsModal"
 
@@ -53,6 +57,13 @@ class Profile extends React.Component {
   }
   componentDidMount() {
     window.addEventListener("resize", this.loadConfig);
+
+    const year = get(this.props, ["match", "params", "year"], null);
+    const compareYear = get(this.props, ["match", "params", "compareYear"], null);
+
+    if (year && compareYear) {
+      this.props.setYearAndCompareYear(year, compareYear);
+    }
   }
   componentWillUnmount() {
     window.removeEventListener("resize", this.loadConfig);
@@ -234,18 +245,21 @@ const mapStateToProps = (state, ownProps) => ({
   user: state.user,
   year: state.user.year,
   compareYear: state.user.compareYear
+  // year: get(ownProps, ["match", "params", "year"], state.user.year),
+  // compareYear: get(ownProps, ["match", "params", "compareYear"], state.user.compareYear)
 })
 
 const mapDispatchToProps = {
   setYear,
-  setCompareYear
+  setCompareYear,
+  setYearAndCompareYear
 };
 
 const component = withRouter(connect(mapStateToProps, mapDispatchToProps)(reduxFalcor(Profile)));
 
 export default [
   {
-      path: ['/profile/:geoid', '/profile/:geoid/compare/:compare'],
+      path: ['/profile/:geoid', '/profile/:geoid/:year/:compareYear', '/profile/:geoid/compare/:compare', '/profile/:geoid/:year/compare/:compare/:compareYear'],
       exact: true,
       name: 'Profile',
       mainNav: false,

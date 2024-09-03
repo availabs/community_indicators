@@ -119,7 +119,7 @@ class ACS_Layer extends MapLayer {
 
     return falcorGraph.get(
       ["geo", COUNTIES, year, ["cousubs", "zcta", "unsd"]],
-      ["geo", COUNTIES, "name"]
+      ["geo", COUNTIES, "year", year, "name"]
     )
     .then(res => {
 
@@ -138,18 +138,18 @@ class ACS_Layer extends MapLayer {
         return a;
       }, []);
 
-      const years = this.getLayerYears();
+      const layerYears = this.getLayerYears();
 
-      map.setFilter(`cousubs-labels-${ years[0] }`, ["in", "geoid", ...cousubs]);
-      map.setFilter(`cousubs-outline-${ years[0] }`, ["in", "geoid", ...cousubs]);
+      map.setFilter(`cousubs-labels-${ layerYears[0] }`, ["in", "geoid", ...cousubs]);
+      map.setFilter(`cousubs-outline-${ layerYears[0] }`, ["in", "geoid", ...cousubs]);
 
-      map.setFilter(`cousubs-labels-${ years[1] }`, ["in", "geoid", "none"]);
-      map.setFilter(`cousubs-outline-${ years[1] }`, ["in", "geoid", "none"]);
+      map.setFilter(`cousubs-labels-${ layerYears[1] }`, ["in", "geoid", "none"]);
+      map.setFilter(`cousubs-outline-${ layerYears[1] }`, ["in", "geoid", "none"]);
 
-      return falcorChunkerNiceWithUpdate(["geo", [...cousubs, ...unsds], "name"])
+      return falcorChunkerNiceWithUpdate(["geo", [...cousubs, ...unsds], "year", year, "name"])
         .then(() => {
           const nameMap = cousubs.reduce((a, c) => {
-            a[c] = get(this.falcorCache, ["geo", c, "name"], `Cousub ${ c }`);
+            a[c] = get(this.falcorCache, ["geo", c, "year", year, "name"], `Cousub ${ c }`);
             return a;
           }, {})
           map.setLayoutProperty("cousubs-labels-2017", "text-field",
@@ -165,19 +165,19 @@ class ACS_Layer extends MapLayer {
             { name: "Counties",
               options: COUNTIES.map(geoid => ({
                 value: geoid,
-                name: get(cache, ["geo", geoid, "name"], geoid)
+                name: get(cache, ["geo", geoid, "year", year, "name"], geoid)
               })).sort((a, b) => a.name.localeCompare(b.name))
             },
             { name: "Municipalities",
               options: cousubs.map(geoid => ({
                 value: geoid,
-                name: get(cache, ["geo", geoid, "name"], geoid)
+                name: get(cache, ["geo", geoid, "year", year, "name"], geoid)
               })).sort((a, b) => a.name.localeCompare(b.name))
             },
             { name: "UNSDs",
               options: unsds.map(geoid => ({
                 value: geoid,
-                name: get(cache, ["geo", geoid, "name"], geoid)
+                name: get(cache, ["geo", geoid, "year", year, "name"], geoid)
               })).sort((a, b) => a.name.localeCompare(b.name))
             },
             { name: "ZCTAs",
@@ -1245,12 +1245,16 @@ const LinkButton = styled(Link)`
 
 const SelectedGeoids = ({ layer }) => {
   const [g1, g2] = layer.selectedGeoids;
+  const year = +layer.filters.year.value;
+
   const remove = React.useMemo(() => {
     return layer.removeSelectedGeoid.bind(layer);
   }, [layer]);
   const href = React.useMemo(() => {
-    return `/profile/${ g1 }${ g2 ? `/compare/${ g2 }` : "" }`;
-  }, [g1, g2]);
+console.log("YEAR:", year)
+    const cYear = Math.max(2010, year - 5);
+    return `/profile/${ g1 }/${ year }/${ cYear }${ g2 ? `/compare/${ g2 }/${ cYear }` : "" }`;
+  }, [g1, g2, year]);
   return (
     <div style={ {
       display: "flex",
@@ -1338,6 +1342,8 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
     dataFunc: function(topFeature, features) {
       let geoid = get(topFeature, ["properties", "geoid"], "");
 
+      const year = this.filters.year.value;
+
       const data = [];
 
       let name = "";
@@ -1345,14 +1351,14 @@ export default (options = {}) => new ACS_Layer("ACS Layer", {
         name = `ZIP Code ${ geoid.slice(-5) }`
       }
       else if (/^unsd-*/.test(geoid) || geoid.length < 11) {
-        name = get(this.falcorCache, ["geo", geoid, "name"], geoid);
+        name = get(this.falcorCache, ["geo", geoid, "year", year, "name"], geoid);
       }
       else if (geoid.length === 11) {
-        const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
+        const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "year", year, "name"], "County");
         name = county + " Tract " + geoid.slice(5);
       }
       else if (geoid.length === 12) {
-        const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "name"], "County");
+        const county = get(this.falcorCache, ["geo", geoid.slice(0, 5), "year", year, "name"], "County");
         name = county + " Block Group " + geoid.slice(5);
       }
       if (name) data.push(name);

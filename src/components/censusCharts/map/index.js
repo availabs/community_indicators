@@ -285,7 +285,7 @@ class CensusLayer extends MapLayer {
   }
   fetchData() {
 
-console.log("FETCH DATA:", this.year);
+// console.log("MAP COMPONENT FETCH DATA:", this.year);
 
     const regex = /unsd|zcta/;
     const counties = this.geoids.reduce((a, c) => {
@@ -295,9 +295,9 @@ console.log("FETCH DATA:", this.year);
 
 // console.log("counties", counties)
     const requests = [
-      ["geo", counties, "name"],
+      ["geo", [...counties, ...this.geoids], "year", this.year, "name"],
       ["geo", counties, this.year, "cousubs"],
-      ["geo", this.geoids, ["boundingBox", "name"]],
+      ["geo", this.geoids, "boundingBox"],
       ["geo", this.geoids, this.year, ['cousubs', this.geolevel]]
     ]
 
@@ -309,7 +309,10 @@ console.log("FETCH DATA:", this.year);
     return falcorChunkerNiceWithUpdate(...requests)
       .then(() => {
         const cousubs = this.getAllCousubs();
-        return falcorChunkerNiceWithUpdate(["geo", cousubs, ["name", this.geolevel]])
+        return falcorChunkerNiceWithUpdate(
+          ["geo", cousubs, this.geolevel],
+          ["geo", cousubs, "year", this.year, "name"]
+        )
       })
       .then(() => {
         const subGeoids = this.geoids.reduce((a, c) => {
@@ -323,7 +326,7 @@ console.log("FETCH DATA:", this.year);
             [...this.censusKeys, ...this.divisorKeys, ...this.subtractKeys]
           ],
           ["geo", subGeoids, "boundingBox"],
-          ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "name"]
+          ["geo", [...new Set(subGeoids.map(geoid => geoid.slice(0, 5)))], "year", this.year, "name"]
         )
       })
       // .then(() => {
@@ -412,7 +415,7 @@ console.log("FETCH DATA:", this.year);
         map.setFilter(`${ geolevel }-line-${ y1 }`, ["in", "geoid", ...geoids]);
         map.setFilter(`${ geolevel }-symbol-${ y1 }`, ["in", "geoid", ...geoids]);
         const names = geoids.reduce((a, c) => {
-          a[c] = get(this.falcorCache, ["geo", c, "name"], c);
+          a[c] = get(this.falcorCache, ["geo", c, "year", this.year, "name"], c);
           return a;
         }, {});
         map.setLayoutProperty(`${ geolevel }-symbol-${ y1 }`, "text-field",
@@ -569,7 +572,7 @@ const LayerFactory = props => {
       dataFunc: function(topFeature, features) {
         const geoid = get(topFeature, ["properties", "geoid"], null),
           county = geoid.slice(0, 5),
-          countyName = get(this.falcorCache, ["geo", county, "name"], ""),
+          countyName = get(this.falcorCache, ["geo", county, "year", this.year, "name"], ""),
           data = [
             [`${ countyName }${ countyName && " "}Blockgroup`, geoid.slice(5)]
           ],

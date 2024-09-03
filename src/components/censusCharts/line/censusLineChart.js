@@ -30,7 +30,7 @@ class CensusLineChart extends ChartBase {
                 ...this.props.subtractKeys, ...this.props.subtractKeysMoE
               ]
             ],
-            ["geo", geoids, "name"],
+            ["geo", geoids, "year", this.props.year, "name"],
             ["acs", "meta",
               [...this.props.censusKeys,
                 ...this.props.divisorKeys,
@@ -102,11 +102,13 @@ class CensusLineChart extends ChartBase {
 
         yFormat = format(this.props.yFormat);
 
+      const year = this.props.year;
+
       const data = [];
       for (const year of this.props.years) {
         this.props.censusKeys.forEach((key, i) => {
           const row = { geoid, year, "census key": key };
-          row.name = get(this.props.geoGraph, [geoid, "name"], geoid);
+          row.name = get(this.props.geoGraph, [geoid, "year", year, "name"], geoid);
           row["census label"] = getKeyName(key);
           let value = get(this.props, ['acs', geoid, year, key], 0);
 
@@ -169,10 +171,12 @@ class CensusLineChart extends ChartBase {
             key in this.props.censusKeyLabels ? this.props.censusKeyLabels[key] :
             getCensusKeyLabel(key, this.props.acs, this.props.removeLeading);
 
+        const year = this.props.year;
+
         const lineData = this.lineData(),
           hasData = lineData.reduce((a, c) => a || Boolean(get(c, ["data", "length"], 0)), false);
 
-        const getGeoName = g => get(this.props.geoGraph, [g, "name"], g),
+        const getGeoName = g => get(this.props.geoGraph, [g, "year", year, "name"], g),
           getCensusLabel = c =>
             c in this.props.censusKeyLabels ?
               this.props.censusKeyLabels[c] :

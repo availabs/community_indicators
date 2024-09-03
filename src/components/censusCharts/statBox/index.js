@@ -45,7 +45,7 @@ class CensusStatBox extends ChartBase {
             ...this.props.subtractKeys
           ]
         ]
-      )
+      )//.then(res => console.log("RES:", res))
     }
 
     calculateValues(geoids){
