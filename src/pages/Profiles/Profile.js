@@ -162,7 +162,10 @@ class Profile extends React.Component {
         const categories = Object.keys(this.state.GRAPH_CONFIG)
           .map((category, i) =>
               this.renderCategory(category, this.state.GRAPH_CONFIG[category], i)
-          )
+          );
+
+console.log("PROFILE RENDER PROPS:", this.props);
+
         return (
             <div>
                 <ProfileHeader geoids={ [this.props.geoid] }
@@ -259,7 +262,7 @@ const component = withRouter(connect(mapStateToProps, mapDispatchToProps)(reduxF
 
 export default [
   {
-      path: ['/profile/:geoid', '/profile/:geoid/:year/:compareYear', '/profile/:geoid/compare/:compare', '/profile/:geoid/:year/compare/:compare/:compareYear'],
+      path: ['/profile/:geoid', '/profile/:geoid/year/:compareYear', '/profile/:geoid/compare/:compare', '/profile/:geoid/:year/compare/:compare/:compareYear'],
       exact: true,
       name: 'Profile',
       mainNav: false,
