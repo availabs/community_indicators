@@ -1250,11 +1250,15 @@ const SelectedGeoids = ({ layer }) => {
   const remove = React.useMemo(() => {
     return layer.removeSelectedGeoid.bind(layer);
   }, [layer]);
+
   const href = React.useMemo(() => {
-console.log("YEAR:", year)
     const cYear = Math.max(2010, year - 5);
-    return `/profile/${ g1 }/${ year }/${ cYear }${ g2 ? `/compare/${ g2 }/${ cYear }` : "" }`;
+    if (g1 && g2) {
+      return `/profile/${ g1 }/${ year }/compare/${ g2 }/${ cYear }`;
+    }
+    return `/profile/${ g1 }/${ year }/${ cYear }`;
   }, [g1, g2, year]);
+
   return (
     <div style={ {
       display: "flex",
